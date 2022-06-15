@@ -30,7 +30,7 @@ class Territories(models.Model):
 		ter_id = vals.get('territory_id')
 		par_code = vals.get('parent_code')
 		terr_code = vals.get('territory_code')
-		name = f"[{ter_id}] "+str(par_code)+"/"+str(terr_code)
+		name = str(ter_id)+str(par_code)+"/"+str(terr_code)
 		vals['name'] = name
 		return super(Territories, self).create(vals)
 
