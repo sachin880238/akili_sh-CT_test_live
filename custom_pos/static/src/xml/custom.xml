@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+   
+     <t t-name="NumpadWidget">
+        <div class="numpad">
+            <button class="input-button number-char">1</button>
+            <button class="input-button number-char">2</button>
+            <button class="input-button number-char">3</button>
+            <!-- <button class="mode-button" data-mode='quantity'>Qty</button> -->
+            <br />
+            <button class="input-button number-char">4</button>
+            <button class="input-button number-char">5</button>
+            <button class="input-button number-char">6</button>
+            <!-- <button class="mode-button" data-mode='discount'>Disc</button> -->
+            <br />
+            <button class="input-button number-char">7</button>
+            <button class="input-button number-char">8</button>
+            <button class="input-button number-char">9</button>
+<!--<button class="mode-button" data-mode='price'>Price</button>-->            
+            <br />
+            <!-- <button class="input-button numpad-minus" >+/-</button> -->
+            <button class="input-button number-char">.</button>
+            <button class="input-button number-char">0</button>
+            <button class="input-button numpad-backspace">
+                <img style="pointer-events: none;" src="/point_of_sale/static/src/img/backspace.png" color='white' width="24" height="21" alt="Backspace"/>
+            </button>
+        </div>
+    </t>
+
+    <t t-extend="Chrome">
+    <t t-jquery="div.pos-rightheader" t-operation="append">
+     <!--  <div class="oe_status" >
+        <a title="Conversations" href="#">
+          <i role="img" aria-label="Customer" title="Customer" style=" background-color:skyblue; "/>
+            <t t-if="widget.pos.get_client()" >
+                <t t-esc="widget.pos.get_client().name" />
+            </t>
+            <t t-if="!widget.pos.get_client()" >
+                CUSTOMER
+            </t>
+          <span class="o_notification_counter"/>
+        </a>
+      </div<name /> -->
+    </t>
+  </t>
+     <t t-name="Printbutton">
+     	<!-- <div class="Print-button" >
+        	<button t-attf-class='Printbutton ' style=" background-color:#036a9a; width:68px; height:40px; " >
+                <span class="Print-button" style="color:white;">
+                    PRINT
+                </span>
+            </button>
+        </div> -->
+   	 </t>
+     <t t-name="MailButton">
+        <!-- <div class='Mail-button' >
+            <button t-attf-class='Mail ' style=" background-color:#036a9a; width:68px; height:40px; " >
+                <span class="Mail-button" style="color:white;">
+                    MAIL
+                </span>
+            </button>
+        </div> -->
+     </t>
+     <t t-name="SaveButton">
+       <!--  <div class='Save-button' >
+            <button t-attf-class='Save ' style=" background-color:#036a9a; width:68px; height:40px; " >
+                <span class="Save-button" style="color:white;">
+                    SAVE
+                </span>
+            </button>
+        </div> -->
+     </t>
+     <t t-name="OpenButton">
+        <!-- <div class='Open-button' >
+            <button t-attf-class='Open ' style=" background-color:#036a9a; width:68px; height:40px; " >
+                <span class="Open-button" style="color:white;">
+                    OPEN
+                </span>
+            </button>
+        </div> -->
+     </t>
+     
+     <t t-name="XButton">
+        <!-- <div class='X-button' >
+            <button t-attf-class='X ' style=" background-color:#036a9a; width:68px; height:40px; " >
+                <span class="X-button" style="color:white;">
+                    X
+                </span>
+            </button>
+        </div> -->
+     </t>
+     <t t-name="InfoButton">
+        <!-- <div class='Info-button' >
+            <button t-attf-class='Info ' style=" background-color:#036a9a; width:68px; height:40px; " >
+                <span class="Info-button" style="color:white;">
+                    INFO
+                </span>
+            </button>
+        </div> -->
+     </t>
+     <t t-name="ReturnButton">
+        <!-- <div class='Return-button' >
+            <button t-attf-class='Return ' style=" background-color:#036a9a; width:131px; height:47px;margin-left: 0px; " >
+                <span class="Return-button" style="color:white;">
+                    RETURN
+                </span>
+            </button>
+        </div> -->
+     </t>
+     <t t-name="PurchaseButton">
+        <!-- <div class='Purchase-button' >
+            <button t-attf-class='Purchase' style=" background-color:#036a9a;margin-left: 154PX; width:123px; height:47px; " >
+                <span class="Purchase-button" style="color:white;">
+                    PURCHASE
+                </span>
+            </button>
+        </div> -->
+     </t>
+   	<t t-name="ActionpadWidget">
+    <div class="actionpad" style="width:0px;height:0px">
+      <div>
+        <button t-attf-class='button set-customer #{ ( widget.pos.get_client() and widget.pos.get_client().name.length > 10) ? "decentered" : "" }' style="background-color:#036a9a;color:white;width: 155px;height: 54px;left: 1px;top: -9px;">
+            <!-- <i role="img" aria-label="Customer" title="Customer"  />
+            <t t-if="widget.pos.get_client()" >
+                <t t-esc="widget.pos.get_client().name" />
+            </t> -->
+            <!-- <t t-if="!widget.pos.get_client()" > -->
+                    ACCOUNT
+            <!-- </t> -->
+        </button>
+        <button class='button pay' style="width: 154px;margin-left: 157px;margin-top: -63px;height: 54px;">
+            PAY
+        </button>
+      </div>
+      <div>
+        <div style='float: left;'>
+          <button class='open_wiz' style="background-color:#036a9a;width: 156px;height:54px;" >
+              <span class="Open-button" style="color:white;">
+                  OPEN
+              </span>
+          </button>
+        </div>
+        <div style="float: right;width: 0px;">
+          <button t-attf-class='Open ' style="background-color:#036a9a;width: 156px;height:54px;" >
+              <span class="Open-button" style="color:white;">
+                  EDIT
+              </span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div style='float: left;'>
+          <button t-attf-class='Open ' style="background-color:#036a9a;width: 156px;height:54px;" >
+              <span class="Open-button" style="color:white;">
+                  SAVE
+              </span>
+          </button>
+        </div>
+        <div style="float: right;width: 0px;">
+          <button t-attf-class='Open ' style="background-color:#036a9a;width: 156px;height:54px;" >
+              <span class="Open-button" style="color:white;">
+                  DELETE
+              </span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div style='float: left;'>
+          <button t-attf-class='Open ' style="background-color:#036a9a;width: 156px;height:54px;" >
+              <span class="Open-button" style="color:white;">
+                  RETURN
+              </span>
+          </button>
+        </div>
+        <div style="float: right;width: 0px;">
+          <button t-attf-class='Open ' style="background-color:#036a9a;width: 156px;height:54px;" >
+              <span class="Open-button" style="color:white;">
+                  RECEIPT
+              </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    </t>
+
+    <t t-name="UsernameWidget">
+        <span class="username" style="margin-left: 4%;">
+            <i class="fa fa-user-circle" style="font-size: 26px;margin-top: 10%;"></i>
+            <span class="pos_user" style="margin-left: 8px;">
+              <t t-esc="widget.get_name()" />
+            </span>
+        </span>
+    </t>
+
+
+    <t t-name="Chrome">
+    <div class="pos">
+      <div class="pos-topheader">
+          <div class="pos-branding">
+              <!-- <img class="pos-logo" src="/custom_pos/static/src/img/logo.png" alt="Logo"/> -->
+              <!-- <strong>Conservation Technology</strong> -->
+              <div>
+                  <p class="copy-right" style="font-size: 26px;margin-top: 4%;color: aliceblue;margin-left: 4%;color:#863a3a;"><b>Conservation Technology</b></p>
+              </div>
+          </div>
+          <div class="pos-rightheader">
+              <span class="placeholder-OrderSelectorWidget"></span>
+              <!-- here goes header buttons -->
+          </div>
+      </div>
+      <!-- <div class="pos-footer">
+        <div class="pos-branding">
+            <span class="placeholder-UsernameWidget"></span>
+        </div>
+      </div>
+ -->
+      <div class="pos-content">
+        <div class='window'>
+          <div class='subwindow'>
+            <div class='subwindow-container'>
+              <div class='subwindow-container-fix screens'>
+                <!-- here go the screens -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="placeholder-OnscreenKeyboardWidget"></div>
+      </div>
+
+      <div class='popups'>
+          <!-- here go the popups -->
+      </div>
+
+      <div class="loader">
+        <div class='loader-feedback oe_hidden'>
+          <h1 class='message'>Loading</h1>
+          <div class='progressbar'>
+            <div class='progress' width='50%'></div>
+          </div>
+          <div class='oe_hidden button skip'>
+            Skip
+          </div>
+        </div>
+      </div>
+    </div>
+  </t>
+  
+
+  
+  <t t-name="ProductScreenWidget">
+      <div class="product-screen screen">
+        <div class="header-row">
+          <div class="header-cell">
+            <span class="placeholder-ProductCategoriesWidget" />
+          </div>
+        </div>
+
+
+        <div class="leftpane">
+          <table class="layout-table">
+            <!-- <tr class="header-row">
+              <td class="header-cell">
+                <span class="placeholder-ProductCategoriesWidget" />
+              </td>
+            </tr> -->
+            <tr class="content-row">
+              <td class="content-cell">
+                <div class="content-container">
+                  <span class="placeholder-ProductListWidget" />
+                </div>
+              </td>
+            </tr>
+
+          </table>
+        </div>
+        <div class="rightpane">
+          <div class='window'>
+              <div class='subwindow'>
+                <div class='subwindow-container'>
+                  <div class='subwindow-container-fix'>
+                    <div class="placeholder-OrderWidget"></div>
+                  </div>
+                </div>
+              </div>
+              <div class='subwindow collapsed'>
+                  <div class='subwindow-container'>
+                    <div class='subwindow-container-fix pads'>
+                        <div class="control-buttons oe_hidden"></div>
+                        <div class="placeholder-ActionpadWidget"></div>
+                        <div class="placeholder-NumpadWidget"></div>
+                    </div>
+                  </div>
+              </div>
+          </div>    
+        </div>
+      </div>
+    </t>
+     <t t-name="OrderSelectorWidget">
+        <div class="order-selector">
+            <span class="orders touch-scrollable">
+                <t t-foreach="widget.pos.get_order_list()" t-as="order">
+                    <t t-if='order === widget.pos.get_order()'>
+                        <span class="order-button select-order selected" t-att-data-uid="order.uid" style="text-transform: capitalize !important; border-radius: 35px; border: 3px solid #863a3a; width: 33px; height: 45px;">
+                          <t t-if="widget.pos.get_client()" >
+                            <t t-esc='widget.pos.get_client().icon_letters' />
+                            <!-- <t t-attf-src='widget.pos.get_client().image' t-style="color: ##863a3a;"/> -->
+                            <!-- <t t-esc='order.get_client()[0]'/>
+                            <t t-esc="order.get_client_name() ? order.get_client_name().split(' ')[order.get_client_name().split(' ').length-1][0] : ''"/> -->
+                             <!-- <img class="img rounded-circle" t-attf-src="/web/image?model=res.partner&amp;field=image_medium&amp;id=#{order.get_client().id}" style="width: 42px;"/> -->
+                          </t>
+                          <t t-if="!widget.pos.get_client()" >
+                            <span class='order-sequence'>
+                                <t t-esc='order.sequence_number' />
+                            </span>
+                            <!-- <t t-esc="moment(order.creation_date).format('hh:mm')"/> -->
+                          </t>
+                        </span>
+                    </t>
+                    <t t-if='order !== widget.pos.get_order()'>
+                        <span class="order-button select-order" t-att-data-uid="order.uid">
+                            <span class='order-sequence' style="text-transform: capitalize !important;">
+                              <t t-if="order.get_client_name()" >
+                                <t t-esc='order.get_client().icon_letters'/>
+                                <!-- <t t-esc="order.get_client_name() ? order.get_client_name().split(' ')[order.get_client_name().split(' ').length-1][0] : ''"/> -->
+                              </t>
+                              <t t-if="!order.get_client_name()" >
+                                <t t-esc='order.sequence_number' />
+                              </t>
+                            </span>
+                        </span>
+                    </t>
+                </t>
+            </span>
+            <span class="order-button square neworder-button">
+                <i class='fa fa-plus' role="img" aria-label="New order" title="New order"/>
+            </span>
+            <span class="order-button square deleteorder-button">
+                <i class='fa fa-minus' role="img" aria-label="Delete order" title="Delete order"/>
+            </span>
+        </div>
+    </t>
+
+
+    <t t-name="CategoryButton">
+        <span class='category-button js-category-switch' t-att-data-category-id="category.id" >
+            <div class="category-img">
+                <img t-att-src="image_url" alt="Category"/>
+            </div>
+            <div class="category-name">
+                <t t-esc="category.name"/>
+            </div>
+        </span>
+    </t>
+
+    <t t-name="CategorySimpleButton">
+        <span class='category-simple-button js-category-switch' t-att-data-category-id="category.id" >
+            <t t-esc="category.name"/>
+        </span>
+    </t>
+
+
+    <t t-name="ProductCategoriesWidget">
+        <div>
+        <header class='rightpane-header'>
+
+          <!-- <form action="/find-a-product" id="find-a-product" method="post">
+
+            <div class="form-group" style="margin-left: -15%;width: 73%;">
+                <select class="product_category form-control" id="parent_categ" name="parent_category">
+                    <t t-esc="QQQQQQQQQQQQQQQQ11111111122222233"/>
+                    <option class="select-placeholder" value="">all products</option>
+                    <t t-as="category" t-foreach="parent_category_ids or []">
+                        <option t-att-selected="category.id== parent_category" t-att-value="category.id">
+                            <t t-esc="category.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+
+            <div class="form-group" style="margin-left: -57%;width: 77%;">
+                <select class="product_category form-control" id="child_categ_1" name="child_categ_1">
+                    <option class="select-placeholder" value="">All</option>
+                    <t t-as="category" t-foreach="sub_category_1_ids or []">
+                        <option t-att-selected="str(category.id) == child_categ_1" t-att-value="category.id">
+                            <t t-esc="category.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+
+
+            <div class="form-group" style="margin-left: -59%;width: 80%;">
+                <select class="product_category form-control" id="child_categ_2" name="child_categ_2">
+                    <option class="select-placeholder" value="">All</option>
+                    <t t-as="category" t-foreach="sub_category_2_ids or []">
+                        <option t-att-selected="str(category.id) == child_categ_2" t-att-value="category.id">
+                            <t t-esc="category.name"/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+
+          </form>
+ -->
+
+            <div class="breadcrumbs">
+                <span class="breadcrumb">
+                    <span class=" breadcrumb-button breadcrumb-home js-category-switch">All Products
+                        <!-- <i class='fa fa-home' role="img" aria-label="Home" title="Home"></i> -->
+                    </span>
+                </span>
+                <t t-foreach="widget.breadcrumb" t-as="category">
+                    <span class="breadcrumb">
+                        <img src="/point_of_sale/static/src/img/bc-arrow-big.png" class="breadcrumb-arrow" alt="Slash"/>
+                        <span class="breadcrumb-button js-category-switch" t-att-data-category-id="category.id">
+                            <t t-esc="category.name"/>
+                        </span>
+                    </span>
+                </t>
+            </div>
+            
+            <div class="searchbox">
+                <input placeholder="Search Products" />
+                <span class="search-clear"></span>
+            </div>
+            
+        </header>
+       <t t-if="widget.subcategories.length > 0">
+            <div class="categories">
+                <div class="category-list-scroller touch-scrollable">
+                    <div class="category-list">
+                    </div>
+                </div>
+            </div>
+        </t>
+        </div>
+    </t>
+
+    <t t-name="Product">
+        <article class='product' t-att-data-product-id="product.id" tabindex="0" t-attf-aria-labelledby="article_product_#{product.id}">
+            <div class="product-img">
+                <img t-att-src='image_url' alt="Product image"/>
+                <!-- <t t-if="!product.to_weight">
+                    <span class="price-tag">
+                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')"/>
+                    </span>
+                </t>
+                <t t-if="product.to_weight">
+                    <span class="price-tag">
+                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                    </span>
+                </t> -->
+            </div>
+            <div class="product-price" style="margin-top: -28%;margin-left: 33%;">
+                Price: $<t t-esc="product.lst_price"/>
+            </div>    
+            <div class="product-name" t-attf-id="article_product_#{product.id}">
+                <t t-esc="product.display_name"/>
+            </div>
+        </article>
+    </t>
+
+        <t t-name="OrderWidget">
+        <div class="order-container">
+            <div class="order-scroller touch-scrollable">
+                <div class="order">
+                    <t t-if="orderlines.length === 0" >
+                        <div class='order-empty'>
+                            <i class='fa fa-shopping-cart' role="img" aria-label="Shopping cart" title="Shopping cart"/>
+                            <h1>Your shopping cart is empty</h1>
+                        </div>
+                    </t>
+                    <t t-if="orderlines.length > 0">
+                      <div class="row" style="margin-bottom: 80px;">
+                        <div class="col" style="width: 47%;float: left;    margin-top: 20px;">
+                          <t t-esc='widget.pos.get_client().name'/>
+                          <br/>
+                          <t t-esc='widget.pos.get_client().address'/>
+                        </div>
+
+                        <div class="col" style="width: 47%;float: right;">
+                          <t t-esc="moment(order.creation_date).format('MMMM DD,YYYY')"/>
+                          <br/>
+                          <t t-esc='widget.pos.get_client().email'/>
+                           <br/>
+                          <t t-esc='widget.pos.get_client().phone'/>
+                        </div>
+                      </div>
+                        <ul class="orderlines"></ul>
+                        <div class="summary clearfix">
+                            <div class="line">
+                                <div class='entry total'>
+                                    <span class="badge">Total: </span> <span class="value">0.00 €</span>
+                                    <div class='subentry'>Taxes: <span class="value">0.00€</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

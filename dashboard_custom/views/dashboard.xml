@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="dashboard_title_kanban_view">
+        <field name="name">My Dashboard Kanban</field>
+        <field name="model">dashboard.tile</field>
+        <field name="type">kanban</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban">
+                <field name="name" readonly="1"/>
+                <templates>
+                     
+                    <t t-name="kanban-box"> 
+                        <div class="oe_kanban_global_click">
+                            <style>
+
+                                .fa-downcase-q-link:before {
+                                font-family: arial, sans-serif;
+                                font-weight: bold;
+                                font-style: normal !important;
+                                content: 'QU';
+                                font-size: 32px;
+                                background: #1E77C5;
+                            }
+
+                                .o_kanban_view .o_kanban_record .o_kanban_record_title {
+                                color: inherit;
+                                font-size: 17px;
+                                font-weight: 800;
+                                padding: unset !important;
+                                }
+
+                                .o_kanban_view.o_kanban_dashboard .o_kanban_record {
+                               
+                                font-size: large;
+                                justify-content: space-between;
+                                padding: 0 0;
+                                }
+
+                                .img-fluid {
+
+                                max-width: 76%;
+                                height: 72px;
+                                }
+                               
+                                .demo3{
+                                display: inline-table;
+                                width: 180px;
+                                white-space: nowrap;
+                                overflow: hidden !important;
+                                text-overflow: ellipsis;
+                            }
+                                  
+
+                            </style> 
+                            <button name="get_dashboard_action"
+                              type="object"
+                              class="oe_stat_button" style="background-color: #ffffff; padding: 1% !important; border: none; outline: none;"> 
+
+                              <div class="oe_kanban_details row" style="margin-left: 0px; margin-left:0px;">
+                                <div style="padding-left: 8px;padding-top: 8px;padding-bottom: 8px;">
+                                    <div class="col-xs-6">
+                                    <i class="fa-downcase-q-link" ></i>
+                                        <!-- <field name="image" widget="image"/> -->
+                                    </div>
+                                    </div> 
+                                    <div class="row">
+
+                                    <div class="col">
+                                        
+                                        <div class="col" style="text-align: left;">
+                                        <div class="dash_count" style="text-align: left;padding-top: 4%;">    
+                                            <field name="dash_count" />
+                                     
+                                    <div class="row">
+                                      
+                                           
+                                        <span class="demo3" style="padding-left: inherit;     margin-left: 8%; ">   
+                                            <field  name="name" /></span>
+                                            <!-- <field name="dash_count" /> -->
+                                        </div>
+                                     </div>
+                                    </div>
+                                  
+                                    </div>           
+                                </div>
+                                <div style="position: absolute;right: 2%;">
+                                    <span>
+                                <field name="priority" widget="priority" class="o_priority o_field_widget pull-right"/></span>
+                            </div>
+                              </div>
+                          
+                        
+                            </button>
+                          
+                        </div>
+
+                    </t>
+                </templates>    
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="dashboard_title_tree_view">
+        <field name="name">My Dashboard Tree</field>
+        <field name="model">dashboard.tile</field>
+        <field name="type">tree</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <tree string="My Dashboard">
+                <field name="name" string="Tile"/>
+                <field name="dashboad_id"/>
+                <field name="menuitem_id" string="Menu" />
+                <field name="view_type"/>
+                <field name="dash_search"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="dashboard_title_form_view">
+        <field name="name">My Dashboard Form</field>
+        <field name="model">dashboard.tile</field>
+        <field name="type">form</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <form string="My Dashboard">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <h1>
+                            <!-- <i class="fas fa-cogs" style="font-size:60px;"></i> -->
+                            <i class="fa fa-th-large" style="font-size:51px;"></i>
+                        </h1>
+                        <h1>
+                            <field name="name" style="margin: 1.5% 0% 0% -89%; width: 85%;"/>
+                        </h1>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="dashboad_id" readonly="1"/>
+                            <field name="model_id" invisible="1"/>
+                            <field name="menuitem_id" required="1" readonly="1"/>
+                            <field name="view_type" readonly="1"/>
+                            <field name="dash_search" widget="domain" options="{'model': 'model_id'}" readonly="1"/>
+                            <field name="image" widget="image" readonly="1"/>
+                            <!-- <field name="team_ids" widget="many2many_tags"/> -->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="TEAMS" name="team">
+                            <field name="team_ids">
+                                <tree>
+                                    <field name="visible"/>
+                                    <field name="name"/>
+                                    <field name="display"/>
+                                </tree>
+                            </field>
+                        </page>            
+        
+                        <page string="USERS" name="user">
+                            <field name="user_ids">
+                                <tree>
+                                    <field name="visible"/>
+                                    <field name="name"/>
+                                    <field name="display"/>
+                                </tree>
+                            </field>
+                        </page> 
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="dashboard_title_action">
+        <field name="name">Dashboard Tiles</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'create':False}</field>
+
+        
+    </record>
+
+    <record model="ir.actions.act_window" id="sale_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('sale.sale_menu_root'))]"></field>
+        
+    </record>  
+    <record model="ir.actions.act_window" id="master_dashboard__title_action">
+        <field name="name">Master Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="domain">[('priority', '=', '1')]</field>
+        <field name="context">{'create':False,'edit':False}</field>
+        
+    </record>  
+
+
+
+
+    <!-- <menuitem 
+            id="board.menu_board_my_dash"
+            parent="base.menu_board_root"
+            action="dashboard_custommaster_dashboard__title_action"
+            sequence="5"/> -->
+
+    <menuitem id="custom_menu_dashboard_title"
+        name="Master Dashboard"
+        action="master_dashboard__title_action" sequence="1"
+               parent="base.menu_board_root" active="0"/>
+
+
+    <menuitem id="menu_dashboard_title"
+        name="Dashboard"
+        action="dashboard_title_action" 
+        sequence="0"
+        parent="base.menu_administration" />
+
+    <menuitem name="Dashboarddd" id="web_settings_dashboard.web_dashboard_menu" action="web_settings_dashboard.web_settings_dashboard_action" parent="base.menu_administration" sequence="-1" active="false" groups="base.group_system"/> 
+
+    <menuitem id="sale_custom_dashboard" action="dashboard_custom.sale_dashboard_title_action" name="Dashboard" parent="sale.sale_menu_root" sequence="1"/>
+
+<!-- ==================================my code==========================================================
+
+
+
+
+ --><record model="ir.actions.act_window" id="account_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('account.menu_finance'))]"></field>
+
+    </record> 
+
+
+     <menuitem id="account_custom_dashboard" action="dashboard_custom.account_dashboard_title_action"
+      name="Dashboard" parent="account.menu_finance" sequence="1"/>
+
+
+
+    <record model="ir.actions.act_window" id="communication_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('ct_communication.menu_ct_commu'))]"></field>
+
+    </record> 
+
+     <menuitem id="communication_custom_dashboard" action="dashboard_custom.communication_dashboard_title_action"
+      name="Dashboard" parent="ct_communication.menu_ct_commu" sequence="1"/>
+
+
+  
+
+    <record model="ir.actions.act_window" id="emp_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('hr.menu_hr_root'))]"></field>
+
+    </record> 
+
+
+     <menuitem id="emp_custom_dashboard" action="dashboard_custom.emp_dashboard_title_action"
+      name="Dashboard" parent="hr.menu_hr_root" sequence="1"/>
+
+      
+    <record model="ir.actions.act_window" id="inventory_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('stock.menu_stock_root'))]"></field>
+
+    </record> 
+
+     <menuitem id="employees_custom_dashboard" action="dashboard_custom.inventory_dashboard_title_action"
+      name="Dashboard" parent="stock.menu_stock_root" sequence="0"/>
+
+
+    <record model="ir.actions.act_window" id="manufacturing_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('mrp.menu_mrp_root'))]"></field>
+
+    </record> 
+
+     <menuitem id="manufacturing_custom_dashboard" action="dashboard_custom.manufacturing_dashboard_title_action"
+      name="Dashboard" parent="mrp.menu_mrp_root" sequence="1"/>
+
+
+
+    <record model="ir.actions.act_window" id="project_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('project.menu_main_pm'))]"></field>
+
+    </record> 
+
+     <menuitem id="project_custom_dashboard" action="dashboard_custom.project_dashboard_title_action"
+      name="Dashboard" parent="project.menu_main_pm" sequence="1"/>
+
+
+    <record model="ir.actions.act_window" id="purchasing_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('purchase.menu_purchase_root'))]"></field>
+
+    </record> 
+
+     <menuitem id="purchasing_custom_dashboard" action="dashboard_custom.purchasing_dashboard_title_action"
+      name="Dashboard" parent="purchase.menu_purchase_root" sequence="1"/>
+
+
+    <record model="ir.actions.act_window" id="support_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('helpdesk_lite.menu_root'))]"></field>
+
+    </record> 
+
+     <menuitem id="support_custom_dashboard" action="dashboard_custom.support_dashboard_title_action"
+      name="Dashboard" parent="helpdesk_lite.menu_root" sequence="1"/>
+
+
+
+
+    <record model="ir.actions.act_window" id="pos_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('point_of_sale.menu_point_root'))]"></field>
+
+    </record> 
+
+     <menuitem id="pos_custom_dashboard" action="dashboard_custom.pos_dashboard_title_action"
+      name="Dashboard" parent="point_of_sale.menu_point_root" sequence="0"/>
+
+      <record model="ir.actions.act_window" id="message_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('fetchmail.act_server_history'))]"></field>
+
+    </record> 
+
+     <menuitem id="message_custom_dashboard" action="dashboard_custom.message_dashboard_title_action"
+      name="Dashboard" parent="fetchmail.act_server_history" sequence="0"/>
+
+
+    <record model="ir.actions.act_window" id="schedule_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('schedule_activity.menu_schedule'))]"></field>
+
+    </record> 
+
+     <menuitem id="schedule_custom_dashboard" action="dashboard_custom.schedule_dashboard_title_action"
+      name="Dashboard" parent="schedule_activity.menu_schedule" sequence="0"/>
+
+
+
+    <!-- <record model="ir.actions.act_window" id="website_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('website.menu_website_configuration'))]"></field>
+
+    </record> 
+
+     <menuitem id="website_custom_dashboard" action="dashboard_custom.website_dashboard_title_action"
+      name="Dashboard" parent="website.menu_website_configuration" sequence="0"/> -->
+
+
+
+    <record model="ir.actions.act_window" id="calendar_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('calendar.mail_menu_calendar'))]"></field>
+
+    </record> 
+
+     <menuitem id="calendar_custom_dashboard" action="dashboard_custom.calendar_dashboard_title_action"
+      name="Dashboard" parent="calendar.mail_menu_calendar" sequence="0"/>
+
+
+
+
+
+
+      <record model="ir.actions.act_window" id="msg_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('mail.menu_root_discuss'))]">
+            
+        </field>
+
+    </record> 
+
+     <menuitem id="msg_custom_dashboard" action="dashboard_custom.msg_dashboard_title_action"
+      name="Dashboard" parent="mail.menu_root_discuss" sequence="0"/>
+
+
+
+<record model="ir.actions.act_window" id="dash_dashboard_title_action">
+        <field name="name">Dashboard</field>
+        <field name="res_model">dashboard.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="dashboard_title_kanban_view"/>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="domain" eval="[('menuitem_id','=',ref('board.open_board_my_dash_action'))]">
+            
+        </field>
+
+    </record> 
+
+     <menuitem id="dash_custom_dashboard" action="dashboard_custom.dash_dashboard_title_action"
+      name="Dashboard" parent="board.open_board_my_dash_action" sequence="0"/>
+
+
+
+
+
+<!-- ===================================my code=========================================
+ -->
+
+
+
+    <record model="ir.ui.view" id="view_window_action_form_inherit">
+        <field name="name">ir.actions.act_window.form</field>
+        <field name="model">ir.actions.act_window</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_window_action_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='src_model']" position="after">
+                <field name="icon_type" widget="radio" invisible="1"/>
+                <field name="class_name" onchange="icon_function(this);" invisible="1" attrs="{'invisible':[('icon_type','=','image')]}" />
+                <field name="image" attrs="{'invisible':[('icon_type','=','class_icon')]}"/>
+            </xpath>
+
+        </field>
+    </record>              
+    
+    <menuitem id="base.menu_board_root" name="Home" sequence="305" web_icon="base,static/description/board.png" groups="base.group_user"/>
+    <menuitem id="ct_fields" sequence="0" name="Fields" parent="backend_menuitem.system_fields_menu" action="base.action_model_fields"/>    
+
+  </data>
+</odoo>

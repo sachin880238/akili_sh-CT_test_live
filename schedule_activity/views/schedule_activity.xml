@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_schedule_task_form" model="ir.ui.view">
+      <field name="name">schedule.task.form</field>
+      <field name="model">calendar.event</field>
+      <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+      <field name="arch" type="xml">
+      	<xpath expr="//form/sheet" position="before">
+      		<header>
+    				<button name="action_button_confirm" string="COMPLETE" class="oe_highlight" type="object"/>
+						<button name="action_button_cancel" string="CANCEL" type="object"/>
+						<field name="states" widget="statusbar" statusbar_visible="draft,schedule,done"/>
+            <field name="parent_state" invisible="1"/>
+   				</header>
+      	</xpath>
+	      <xpath expr="//form/sheet/div[@class='oe_title']" position="replace">
+           <div class="row">
+
+         <div class="col-12 col-md-8 oe_read_only name_space_row">
+	      	
+            <i class="fas fa-clock name_space_icon" style="font-size:60px;font-size:60px;"></i>
+            <h1>
+	            <field name="name" placeholder="e. g. Attend Meeting..." class="name_carts name_left2"/>
+	          </h1>
+          </div>
+	      	</div>
+          
+	      	 <div class="row">
+
+         <div class="col-8 col-md-6 oe_edit_only  name_space_row">
+          				<i class="fas fa-clock name_space_icon" style="font-size:60px;font-size:60px;"></i>
+          			<h1>
+            			<field name="name" placeholder="e. g. Attend Meeting..." class="name_carts name_left2"/>
+          			</h1>
+                </div>
+             </div>
+        
+        	<group>
+        		<group>
+        			<field name="user_id" readonly="1" string="Creator"/>
+        			<field name="user_id" string="For"/>
+        			<field name="activity_link_to"/>
+        			<field name="activity_link_id"/>
+        			<field name="privacy"/>
+        			<field name="activity_repeat"/>
+        			<field name="description" string="Comments"/>
+        		</group>
+        		<group>
+        			<field name="start" string="Start Date" widget="date"/>
+        			<field name="start_time" widget="timepicker"/>
+        			<field name="stop" string="Due Date" widget="date"/>
+        			<field name="due_time" widget="timepicker"/>
+        			<field name="duration" string="Time"/>
+        			<field name="is_activity_fixed"/>
+        			<field name="activity_priority" widget="priority"/>
+        			<!-- <field name="alarm_ids" string="Warning" widget="many2many_tags"/> -->
+        		</group>
+        	</group>
+        </xpath>
+      </field>
+    </record>
+
+    <!--.............ADDING DRAG & DROP IN LIST VIEW OF CALENDER............. -->
+
+     <record id="Inherit_view_calendar_event_tree" model="ir.ui.view">
+        <field name="name">calendar.event.tree</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_tree" />
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='name']" position="before">
+              <field name="sequence" widget="handle" />
+          </xpath>
+          <xpath expr="//field[@name='duration']" position="after">
+            <field name="states"/>
+            <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+          </xpath>
+        </field>
+    </record>
+    
+
+    <record model="ir.actions.act_window" id="action_view_schedule_task">
+      <field name="name">Tasks</field>
+      <field name="res_model">calendar.event</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="domain">[]</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">Create new task</p>
+      </field>
+    </record>
+
+    <record id="action_make_testing" model="ir.actions.server">
+    	<field name="name">Schedule</field>
+    	<field name="condition">True</field>
+    	<field name="type">ir.actions.server</field>
+    	<field name="model_id" ref="model_calendar_event" />
+    	<field name="state">code</field>
+    	<field name="code">action =  env.get('calendar.event').get_schedule_activity_tree_view()</field>
+    </record>
+
+    <menuitem id="menu_schedule" name="Schedule"/>
+    <menuitem 
+    	id="schedule_activity_dashboard" 
+    	name="Dashboard" 
+    	parent="menu_schedule" 
+    	action="action_view_schedule_task"
+      groups="schedule_user,schedule_manager"
+    	sequence="1"/>
+    <menuitem 
+    	id="schedule_activity_task" 
+    	name="Tasks" 
+    	parent="menu_schedule" 
+    	action="action_make_testing"
+      groups="schedule_user,schedule_manager"
+    	sequence="2"/>
+    <menuitem 
+    	id="=schedule_activity_report" 
+    	name="Reports" 
+    	parent="menu_schedule" 
+    	action="action_view_schedule_task"
+      groups="schedule_user,schedule_manager"
+    	sequence="3"/>
+    <menuitem 
+    	id="schedule_activity_settings" 
+    	name="Settings" 
+    	parent="menu_schedule" 
+    	action="action_view_schedule_task"
+      groups="schedule_manager"
+    	sequence="4"/>
+	</data>
+</odoo>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_portal_my_invoices" name="My Sales Orders">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container o_my_saved_carts_table">
+                    <div class="row mt32">
+                        <ol class="breadcrumb" style="margin-left: 1%;">
+                            <li class="breadcrumb-item">
+                                <a href="/my/home">Your Account</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <span>Invoices</span>
+                            </li>
+                        </ol>
+                        <div class="form-group col-md-12">
+                            <t t-if="not invoices">
+                                <p>There are currently no invoices for your account.</p>
+                            </t>
+                            <t t-if="invoices">
+                                <div class="table_overflow">
+                                    <table class="table table-hover o_my_invoice_table">
+                                        <thead style="border: 1px solid #dee2e6;background-color: #f9f9f9;">
+                                            <tr class="active">
+                                                <th>Invoice #</th>
+                                                <th>Date</th>
+                                                <th>Due</th>
+                                                <th>Terms</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
+                                                <th>Unpaid</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-as="invoice" t-foreach="invoices">
+                                            <tr>
+                                                <td class="cell_overflow">
+                                                    <a t-attf-href="/my/invoices/#{invoice.id}?#{keep_query()}">
+                                                        <t t-esc="invoice.number"/>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span t-field="invoice.date_invoice"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="invoice.date_due"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="invoice.payment_term_id"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="invoice.state == 'open'">
+                                                        <span class="label label-default">Waiting for Payment</span>
+                                                    </t>
+                                                    <t t-if="invoice.state == 'paid'">
+                                                        <span class="label label-default">
+                                                            <i class="fa fa-fw fa-check"/>Paid</span>
+                                                    </t>
+                                                    <t t-if="invoice.state == 'cancel'">
+                                                        <span class="label label-default">
+                                                            <i class="fa fa-fw fa-remove"/>Cancelled</span>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <span t-field="invoice.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: invoice.currency_id}"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="invoice.residual" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: invoice.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                                <div class="o_portal_pager text-center" t-if="pager">
+                                    <t t-call="website.pager"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="custom_invoices_followup" name="Invoice">
+        <t t-call="website.layout">
+            <div class="orders_followup" id="wrap">
+                <div class="container">
+                    <div class="oe_structure">
+                        <div class="row">
+                            <ol class="breadcrumb mt8">
+                                <li class="breadcrumb-item">
+                                    <a href="/my/home">Your Account</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a t-attf-href="/my/invoices?{{ keep_query()}}">Invoices
+                                        </a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Invoice
+                                    <t t-esc="invoice.number"/>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div id="optional_placeholder"/>
+                    <div class="panel-header mb16">
+                        <div class="clearfix"/>
+                        <div class="col-md-12 mt32 mb32 page_desc_div">
+                            <span>
+                                <span>Invoice </span>
+                                <span t-esc="invoice.number"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Date: </strong>
+                                <span t-field="invoice.create_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Your Reference: </strong>
+                                <span t-field="invoice.name"/>
+                            </div>
+                        </div>
+                        <div class="row mt8">
+                            <div class="col-md-6">
+                                <div>
+                                    <strong>Billing Address:</strong>
+                                </div>
+                                <div>
+                                    <address t-field="invoice.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;email&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True}"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="shipping_address">
+                                <div>
+                                    <strong>Shipping Address:</strong>
+                                </div>
+                                <div>
+                                    <address t-field="invoice.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;email&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt8">
+                            <div class="col-md-6">
+                                <strong>Payment Terms: </strong>
+                                <span t-field="invoice.payment_term_id"/>
+                            </div>
+                            <div class="col-md-6" id="shipping_address">
+                                <strong>Shipping Terms: </strong>
+                                <span>prepay and add</span>
+                            </div>
+                        </div>
+                        <div class="row mt8">
+                            <div class="col-md-6">
+                                <strong>Payment Method: </strong>
+                                <span>credit card</span>
+                            </div>
+                            <div class="col-md-6" id="shipping_address">
+                                <strong>Shipped Via: </strong>
+                                <span>UPS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="follow_up invoice_table">
+                        <table class="table cart-table">
+                            <thead style="border: 1px solid #dee2e6;background-color: #f9f9f9;"> 
+                                <tr class="active">
+                                    <th width="50"/>
+                                    <th width="200">Product</th>
+                                    <th width="100">Quantity</th>
+                                    <th width="100">Unit</th>
+                                    <th width="100" style="width:1%;" >Extended</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-as="line" t-foreach="invoice.invoice_line_ids">
+                                    <tr>
+                                        <td align="center" t-if="line.product_id.product_tmpl_id">
+                                            <t t-if="line.product_id.get_line_images()">
+                                               <span t-field="line.product_id.get_line_images().image" t-options="{'widget': 'image', 'class': 'img-rounded'}"/> 
+
+                                            </t>
+                                            <t t-else='1'>
+                                                <span t-field="line.product_id.image_small" t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
+                                            </t> 
+                                        </td>
+                                        <td t-if="line.product_id.product_tmpl_id">
+                                            <div>
+                                                <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }">
+                                                    <strong t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+                                                </a>
+                                            </div>
+                                            <div class="text-muted">
+                                                <t t-as="name_line" t-foreach="line.name.splitlines()[1:]">
+                                                    <span>
+                                                        <t t-esc="name_line"/>
+                                                    </span>
+                                                    <br/>
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <t t-esc="int(line.quantity)"/>
+                                        </td>
+                                        <td>
+                                            <span style="white-space: nowrap;" t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        </td>
+                                        <td>
+                                            <span style="white-space: nowrap;" t-field="line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row order_total">
+                        <div class="col-sm-9">
+                            <p>
+                                <span>
+                                    <strong >Comments: </strong>
+                                </span>
+                                <span t-field="invoice.comment"/>
+                            </p>
+                            <p class="mt32">
+                                <span>
+                                    <strong >Payments Received: </strong>
+                                </span>
+                                <!--  <span t-field="invoice.comment"/>-->
+                            </p>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="total">
+                                <p>
+                                    <span>
+                                        <strong style="margin-left: 42%;">Products: </strong>
+                                    </span>
+                                    <span t-field="invoice.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;}"/>
+                                </p>
+                                <p>
+                                    <span>
+                                        <strong style="margin-left: 42%;">Sales Tax: </strong>
+                                    </span>
+                                    <span t-field="invoice.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;}"/>
+                                </p>
+                                <p>
+                                    <span>
+                                        <strong style="margin-left: 42%;">Shipping: </strong>
+                                    </span>
+                                    <span/>
+                                </p>
+                                <p>
+                                    <span>
+                                        <strong style="margin-left: 42%;">Total: </strong>
+                                    </span>
+                                    <span t-field="invoice.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;}"/>
+                                </p>
+                                <p>
+                                    <span>
+                                        <strong style="margin-left: 42%;">Paid: </strong>
+                                    </span>
+                                    <span t-field="invoice.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;}"/>
+                                </p>
+                                <p>
+                                    <span>
+                                        <strong style="margin-left: 42%;">Balance Due: </strong>
+                                    </span>
+                                    <span t-field="invoice.residual" t-options="{&quot;widget&quot;: &quot;monetary&quot;}"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure mb32"/>
+                    <section class="hidden-print" id="discussion">
+                        <h1>Messages</h1>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="invoice"/>
+                            <t t-set="token_field" t-value="'access_token'"/>
+                            <t t-set="chatter_mode" t-value="'json'"/>
+                        </t>
+                    </section>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

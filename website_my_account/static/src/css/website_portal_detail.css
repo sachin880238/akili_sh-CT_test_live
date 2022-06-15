@@ -1,0 +1,160 @@
+.page_desc_div{
+	background: #f5f4f0;
+	padding: 10px;
+	font-size: 20px;
+	border: 1px solid #eeeeee;
+}
+@media (max-width: 430px){
+	.page_desc_div{
+		font-size: 15px;
+		margin-left: 4%;
+	}
+}
+@media (max-width: 420px){
+	.page-title{
+		font-size:24px;
+	}
+	.page-title-btn{
+		font-size: 12px;
+		padding: 3px 6px;
+	}
+}
+/*.custom_portal_home .page-header{
+	border-bottom: 1px solid black;
+}*/
+.page-header > small{
+	color: black;
+}
+.badge{
+	min-width: 30px;
+}
+.badge-danger{
+	background: #ed424a;
+}
+.badge-common{
+	background: #231f20;
+}
+
+.custom_portal_home  .col-xs-10, .custom_portal_home  .col-xs-2{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+@media (min-width: 768px){
+	.custom_portal_home .col-sm-2{
+		text-align: right;
+	}
+}
+
+#wrapwrap.o_portal {
+    background-color: white !important;
+    color: #212529;
+}
+
+.breadcrumb{
+	background: none;
+	padding-left: 0px;
+	padding-bottom: 0px;
+}
+
+/* START ACCOUNT SETTINGS CSS */
+.div_ac_type label{
+	padding: initial;
+	/*margin-right: -35px;*/
+}
+@media (max-width: 768px){
+	.div_ac_type label{
+		margin-right: 0px;
+	}
+}
+
+.reset-password{
+	float: right;
+}
+.show-password{
+	float: right;
+}
+
+@media (max-width: 420px){
+	.show-password{
+		margin-right: 42px !important;
+		
+	}
+}
+
+@media (max-width: 320px){
+	.show-password{
+		margin-top: -11%;
+	}
+}
+/* END ACCOUNT SETTINGS CSS */
+
+/* START CUSTOMER TICKET CSS */
+.support-chatter .o_website_chatter_form div{
+	width: 90%;
+}
+/* END CUSTOMER TICKET CSS */
+
+/* START ACCOUNT-ORDER,QUATATION CSS */
+.order-chatter .o_website_chatter_form div{
+	width: 90%;
+}
+/* END ACCOUNT-ORDER,QUATATION CSS */
+
+
+/*payment Approved page*/
+
+.purchase_approved_radio {
+	height: 20px;
+	width: 20px;
+}
+
+.credit_card_purchase {
+	margin-left: -58px;
+	margin-top: 3px;
+}
+
+.card_details{
+	margin-left: 8px;
+}
+
+
+.card_expiry {
+	margin-left: 7px;
+	margin-right: 6px;
+}
+
+
+.modal-footer-custom {
+    padding: 15px;
+    text-align: right;
+    /*border-top: 1px solid #e5e5e5; */
+}
+
+#signature{
+width: 100%;
+height: auto;
+border: 1px solid black;
+}
+
+
+.clear_signature{
+	margin: 15px;
+    font-size: 27px;
+}
+
+.o_my_order_table{
+	margin-bottom: 0rem !important;
+}
+
+.table thead th{
+	border-bottom: 1px solid #dee2e6 !important;
+}
+.checkout_autoformat{
+	width: 100% !important;
+}
+.td-unit-price{
+	border-bottom: 0px solid #dee2e6 !important;
+}
+/*form label {
+	margin-left: -5% !important;
+}*/

@@ -1,0 +1,183 @@
+<odoo>
+    <template id="portal_purchase_approved" name="Purchase Approved Page">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container oe_website_sale">
+                    <form action="/approve/purchase" method="post">
+                    <h1 class="mb32">Payment</h1>
+                    <div class="col-md-12 extra_info-custom address-kanban-info">
+                        <div class="col-md-12 col-sm-11 col-xs-12 t_para_size">
+                            <b>Select a method of payment and approve your order.</b>If the shipping terms in
+                            your quotation are marked “estimated”, that means we are unable to determine the
+                            exact shipping cost until we pack your order. If the cost is higher than estimated, we
+                            will contact you to confirm you wish to proceed. For your protection, financial
+                            information you provide is encrypted in compliance with PCI DSS standards.
+                        </div>
+                    </div><br/><br/>
+                    <div class="col-md-12">
+                        <div class="col-mad-12 review_billing_add float-left">
+                            <b>Quotation:</b><span t-field="order_sale.name"/><br/><br/>
+                            <b>Total Due:</b> <span t-field="order_sale.amount_total" t-options='{"widget": "monetary", "display_currency": order_sale.pricelist_id.currency_id}'/><br/><br/>
+                            <b>Shipping Terms:</b><span t-field="order_sale.shipping_terms"/><br/><br/>
+                            <b>Method of Payment:</b><br/>
+                        </div>
+                    </div> 
+                    <div class="col-md-12">
+                        <div class="col-md-12" style="display: flex;">
+                            <div class="col-md-1">  
+                                 <label class="container">
+                                      <input type="radio" class="purchase_approved_radio payment_select" value="credit_card" name="radio"/>
+                                      <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="col-md-4 credit_card_purchase">     
+                                <span><b>Charge Credit or debit card</b></span>
+
+                                <div class="col-mad-12 card_detail d-none">
+                                    <t t-if="credit_card_details">
+                                        <t t-if="len(credit_card_details)&gt;0">
+                                            <t t-foreach="credit_card_details" t-as="credit_card_detail">
+                                                 <label>
+                                                      <input type="radio" name="radio_card" t-att-value="credit_card_detail.id" t-att-id="credit_card_detail.id" t-att-debit_card_no="credit_card_detail.debit_card_no" t-att-month="credit_card_detail.month" t-att-year="credit_card_detail.year" t-att-card_holder_name="credit_card_detail.card_holder_name" class="purchase_approved_radio card_select"/>
+                                                      <span class="checkmark"></span>
+                                                </label><b><span class="card_details"><t t-esc="credit_card_detail.debit_card_no_encrypt"/></span><span class="card_expiry">exp</span><span><t t-esc="credit_card_detail.card_expiry_date"/></span></b><br/>
+                                            </t>    
+                                        </t>
+                                        <t t-if="len(credit_card_details) == 1">
+                                        </t>    
+                                    </t>    
+                                </div>  
+                            </div>
+                            <div class="col-md-7 add_change_card d-none">   
+                                <span><b><a t-att-href="'/Add_update/card/%s' %(order_sale.id)" id="add_change_card_click_check" style="color: dodgerblue;" class="add_change_card_click_check">Add or Change Card</a></b></span> 
+                                <t t-if="warning">
+                                    <span class="control-label text-danger"><t t-esc="warning"/></span>
+                                </t>
+
+                            </div>  
+                        </div>
+                        <div class="col-md-12" style="display: flex;">     
+                            <div class="col-md-1">  
+                                 <label class="container">
+                                      <input type="radio" name="radio" class="purchase_approved_radio payment_select" value="pay_electrical"/>
+                                      <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="col-md-3 credit_card_purchase">
+                                <span><b>Pay electronically by check</b></span>
+                            </div>
+                            <div class="col-md-8 credit_card_electrical d-none">
+                                <span><b><a style="color: dodgerblue;" class="">Enter check information</a></b></span>
+                            </div>
+                        </div>  
+                        <div class="col-md-12" style="display: flex;">
+                            <div class="col-md-1">  
+                                 <label class="container">
+                                      <input type="radio" name="radio" class="purchase_approved_radio payment_select" value="manual"/>
+                                      <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="col-md-6 credit_card_purchase">
+                                <span><b>Bill me (only customers with pre-established credit)</b></span>
+                            </div>  
+                        </div>
+                    </div>
+                    <input type="hidden" name="sale_order_id" id="sale_order_id" t-att-value="order_sale.id"/>
+                    <input type="hidden" name="partner_id" id="partner_id" t-att-value="order_sale.partner_id.id"/>
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                    <input type="hidden" name="submitted" value="1"/>
+                    <div class="clearfix"/>
+                    <div class="col-md-12 btn-address-custom">
+                        <a t-att-href="'/my/orders/%s' %(order_sale.id)" class="btn btn-default btn-primary mb32">
+                            <span class="fa fa-long-arrow-left" /> Cancel
+                        </a>
+                        <button type="submit" value="approve" class="btn btn-default btn-primary float-right mb32 a-submit a-submit-disable a-submit-loading submit_approve_purchase">
+                            Approve
+                        </button>
+                    </div>
+                </form>         
+                </div>
+            </div>      
+     </t>   
+
+
+      <!-- Upload Document POP-UP -->
+        <div class="modal fade" id="oe_credit_add_change">
+            <div class="modal-dialog modal-content">
+                <form action="" method="post" id="credit_add_change_form" enctype="multipart/form-data">
+                    <div class="modal-header alert alert-info mb0">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                        <h4 class="modal-title">Manage Debit or Credit Card</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="credit_card_detail_id" id="credit_card_detail_id"/>
+                        <input type="hidden" name="partner_id_model" id="partner_id_model"/>
+                        <input type="hidden" name="sale_order_id_model" id="sale_order_id_model"/>
+                        <input type="hidden" name="card_value_add_or_change" id="card_value_add_or_change"/>
+                        <!-- <input type="file" name="slae_order_doc" id="slae_order_doc"/> -->
+                        <div class="row">
+                        <div class="clearfix" />
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="debit_card_no">
+                                Credit or debit card No
+                            </label>
+                            <input type="text" name="debit_card_no" id="debit_card_no"  maxlength="16" pattern="[0-9]{16}" class="form-control" required="True"/>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="card_holder_name">Card Holder Name Number</label>
+                            <input type="text" name="card_holder_name" id="card_holder_name" class="form-control" required="True"/>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="clearfix" />
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="month">Month</label>
+                            <select name="month" id="month" class="form-control" required="True">
+                                <option value="" selected="selected" class="select-placeholder">Month</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label" for="year">Year</label>
+                            <select name="year" id="year" class="form-control" required="True">
+                                <option value="" selected="selected" class="select-placeholder">Year</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="modal-footer-custom">
+                        <button type="submit" value="add" class="btn btn-primary submit_add_change_card d-none" id="add_card">Add</button>
+                         <button type="submit" id="remove_card" value="remove" class="btn btn-primary submit_add_change_card d-none"    >Remove</button>
+                        <button type="submit" id="change_card" value="change" class="btn btn-primary submit_add_change_card d-none" >Change</button>
+                        <button id="cancel" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+</odoo>
+

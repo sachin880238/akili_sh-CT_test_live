@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="FiltersMenuGenerator">
+        <t t-jquery=".o_add_custom_filter" t-operation="replace">
+            <button t-if="Object.keys(widget.fields).length !== 0" type="button" class="dropdown-item o_add_custom_filter o_closed_menu" aria-expanded="false" t-attr-style="font-style:italic;">create filter</button>
+        </t>
+    </t>
+
+    <t t-name="GroupbyMenuGenerator">
+        <div t-if="Object.keys(widget.presentedFields).length !== 0 &amp;&amp; widget.items.length !== 0" role="separator" class="dropdown-divider o_generator_menu"/>
+        
+        <button t-if="Object.keys(widget.presentedFields).length !== 0" type="button" class="dropdown-item o_generator_menu o_add_custom_group" aria-expanded="false" t-attr-style="font-style:italic;">create group</button>
+        
+        <div id='group_selector' t-if="widget.generatorMenuIsOpen" class="dropdown-item-text o_generator_menu">
+            <select class="w-auto o_input o_group_selector o_add_group">
+                <t t-foreach="widget.presentedFields" t-as="field">
+                    <option t-att-value="field.name"><t t-esc="field.string"/></option>
+                </t>
+            </select>
+            <span class="o_searchview_extended_delete_prop fa fa-trash-o" role="img" aria-label="Delete" title="Delete"></span>
+        </div>
+        
+        <div t-if="widget.generatorMenuIsOpen" class="dropdown-item-text o_generator_menu">
+            <button type="button" class="btn btn-primary o_apply_group o_add_group">Apply</button>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,85 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<!-- Copyright 2016-17 Sodexis 
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo> 
+  <record id="add_payment_wizard_view" model="ir.ui.view">
+    <field name="name">analyze.form</field>
+    <field name="model">add.payment</field>
+    <field name="arch" type="xml">
+   <form string="Order Analyses"> 
+        <group>     
+          <group>     
+            <field name="currency_id" invisible='1' />   
+          </group> 
+          <group>        
+          </group> 
+          <div  style="float: left;width:200px;margin-top: -33px;">
+            <label for="total" style="font-weight: bold;" string="Total" /> <br/>
+            <label for="pay_apply" style="font-weight: bold;" string="Payments Applied" /> <br/>
+            <label for="bal_due" style="font-weight: bold;" string="Balance Due" /> <br/>
+            <label for="new_pay" style="font-weight: bold;" string="New Payment" /> 
+          </div>
+          <div  style="float: left;width:200px;margin-top: -33px;">
+            <field name="total" widget='monetary' options="{'currency_field': 'currency_id'}"/> <br/>
+            <field name="pay_apply" widget='monetary' options="{'currency_field': 'currency_id'}"/> <br/>
+            <field name='bal_due' widget='monetary' options="{'currency_field': 'currency_id'}"/><br/>
+            <field name='new_pay' widget='monetary' options="{'currency_field': 'currency_id'}"/>
+          </div>  
+        </group> 
+
+        <div  style="float: left;width:127px;">
+          <label for="action" string="Payment Method:" /> 
+        </div>
+        <div  style="float: left;width:130px;">
+          <field name="action"  widget="radio" /> 
+        </div>
+        <div  style="margin-left: 300px;width:650px;" attrs="{'invisible':[('action','!=','open')]}"> 
+          <label style="width:100px;" for="credit_avl" string="Credit Available"  /> 
+          <field style="width:300px;" name="credit_avl" nolabel='1' attrs="{'required': [('action', '=', 'open')]}" />  
+        </div>
+
+        <div  style="margin-left: 300px;width:650px;padding-top: 24px;" attrs="{'invisible':[('action','!=','ccard')]}" > 
+          <label style="width:100px;" for="card_id" string="Card" /> 
+          <field style="width:300px;" name="card_id" nolabel='1' attrs="{'required': [('action', '=', 'ccard')]}" /><br/> 
+          <label style="width:100px;" for="conf" string="Confirmation" /> 
+          <field style="width:300px;" name="conf" nolabel='1' attrs="{'required': [('action', '=', 'ccard')]}" />   
+        </div>  
+
+        <div  style="margin-left: 300px;width:650px;padding-top: 47px;" attrs="{'invisible':[('action','!=','check')]}"> 
+          <label style="width:100px;" for="check_type" string="Check Type"  /> 
+          <field style="width:300px;" name="check_type" nolabel='1' attrs="{'required': [('action', '=', 'check')]}" /><br/> 
+          <label style="width:100px;" for="check_no" string="Check Number"  /> 
+          <field style="width:300px;" name="check_no" nolabel='1' attrs="{'required': [('action', '=', 'check')],}" /><br/> 
+          <label style="width:100px;" for="check_bank" string="Bank ABA"  /> 
+          <field style="width:300px;" name="check_bank" nolabel='1' attrs="{'required': [('action', '=', 'check')],}" /><br/> 
+          <label style="width:100px;" for="check_bank_acc" string="Bank Account" /> 
+          <field style="width:300px;" name="check_bank_acc" nolabel='1' attrs="{'required': [('action', '=', 'check')]}" />  
+        </div>  
+  
+        <div  style="margin-left: 300px;width:650px;padding-top: 70px;" attrs="{'invisible':[('action','!=','bkt')]}"> 
+          <label style="width:100px;" for="conf" string="Confirmation"  /> 
+          <field style="width:300px;" name="conf" nolabel='1' attrs="{'required': [('action', '=', 'bkt')]}" /> 
+        </div> 
+     
+        <div  style="margin-left: 300px;width:650px;padding-top: 93px;" attrs="{'invisible':[('action','!=','cash')]}"> 
+          <label style="width:100px;" for="env_id" string="Envelope ID"  /> 
+          <field style="width:300px;" name="env_id" nolabel='1' attrs="{'required': [('action', '=', 'cash')]}" /> 
+        </div> 
+
+       
+        <footer>
+          <button name="action_apply" string="Save" type="object" class="btn-primary"/>
+          <button string="Cancel" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record id="action_add_payment_wizard" model="ir.actions.act_window">
+    <field name="name">Add a Payment</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">add.payment</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record> 
+</odoo>

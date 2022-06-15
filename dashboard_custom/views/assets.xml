@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="_assets_backend_dashbord" inherit_id="web.assets_backend">
+     <xpath expr="." position="inside">
+      <link href="/dashboard_custom/static/src/css/custom.css" rel="stylesheet" type="text/css"/>
+      <script type="text/javascript" src="/dashboard_custom/static/src/js/favorites_menu.js"/>
+      <script type="text/javascript" src="/dashboard_custom/static/src/js/search_view.js"/>
+    </xpath>
+    <xpath expr="//script[@src='/web/static/src/js/chrome/menu.js']" position="replace">  
+      <script type="text/javascript" src="/dashboard_custom/static/src/js/menu.js"/>
+    </xpath>
+    <xpath expr="//script[@src='/board/static/src/js/favorite_menu.js']" position="replace">  
+        <script type="text/javascript" src="/dashboard_custom/static/src/js/favorite_menu.js"/>
+    </xpath>
+     <xpath expr="//script[@src='/board/static/src/js/board_view.js']" position="replace">  
+        <script type="text/javascript" src="/dashboard_custom/static/src/js/board_view.js"/>
+    </xpath>
+  </template>
+</odoo>

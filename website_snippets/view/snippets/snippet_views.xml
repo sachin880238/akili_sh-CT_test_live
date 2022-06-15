@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="product_variant_snippet_options" inherit_id="website.snippets" name="Snippet Blog">
+	    <xpath expr="//div[@id='o_scroll']" position="inside">
+	        <div class="o_panel">
+	            <div class="o_panel_header">
+	                Odoo V14 Snippets
+	            </div>
+	            <div class="o_panel_body">
+
+	               <t t-snippet="website_snippets.snippet_numbers" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_numbers.svg">
+	                <keywords>statistics, stats, KPI</keywords>
+	               </t> 
+
+	               <t t-snippet="website_snippets.s_images_wall" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_images_wall.svg"/>
+
+	               <t t-snippet="website_snippets.s_media_list" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_media_list.svg"/>
+
+	               <t t-snippet="website_snippets.s_showcase" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_showcase.svg"/>
+
+	               <t t-snippet="website_snippets.s_color_blocks_2" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_color_blocks_2.svg">
+                        <keywords>big</keywords>
+                    </t>
+
+                    <t t-snippet="website_snippets.s_masonry_block" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_masonry_block.svg">
+                        <keywords>masonry, grid</keywords>
+                    </t>
+
+                    <t t-snippet="website_snippets.s_table_of_content" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_table_of_content.svg"/>
+
+                    <t t-snippet="website_snippets.s_product_catalog" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_product_catalog.svg">
+                        <keywords>menu, pricing</keywords>
+                    </t>
+
+                     <t t-snippet="website_snippets.s_product_list" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_product_list.svg"/>
+
+                     <t t-snippet="website_snippets.s_timeline" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_timeline.svg"/>
+
+                     <t t-snippet="website_snippets.s_process_steps" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_process_steps.svg"/>
+
+                     <t t-snippet="website_snippets.s_text_highlight" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_text_highlight.svg"/>
+
+                    <!-- <t t-snippet="website_snippets.s_chart" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_chart.svg">
+                        <keywords>chart, table, diagram, pie</keywords>
+                    </t>
+ -->
+                    <t t-snippet="website_snippets.s_badge" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_badge.svg"/>
+
+                    <t t-snippet="website_snippets.s_progress_bar" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_progress_bar.svg">
+                        <keywords>evolution, growth</keywords>
+                    </t>
+
+                    <t t-snippet="website_snippets.s_blockquote" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_blockquote.svg">
+                        <keywords>cite</keywords>
+                    </t>
+
+                    <t t-snippet="website_snippets.s_speaker_bio" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_speaker_bio.svg"/>
+
+                     <t t-snippet="website_snippets.s_latest_posts" t-thumbnail="/website_snippets/static/src/img/s_latest_posts.svg"/>
+
+                     <t t-snippet="website_snippets.s_products_searchbar_input" t-thumbnail="/website_snippets/static/src/img/snippets_thumbs/s_products_searchbar_inline.svg"/>
+
+	            </div>
+	        </div>
+	    </xpath>
+	</template>
+
+
+
+	<template id="assets_editor" inherit_id="website.assets_editor">
+        <xpath expr="." position="inside">
+   
+		    <script type="text/javascript" src="/website_snippets/static/src/snippets/s_showcase/options.js"/>
+		    <script type="text/javascript" src="/website_snippets/static/src/snippets/s_table_of_content/options.js"/>
+		    <script type="text/javascript" src="/website_snippets/static/src/snippets/s_product_catalog/options.js"/>
+		    <script type="text/javascript" src="/website_snippets/static/src/snippets/s_timeline/options.js"/>
+		    <!-- <script type="text/javascript" src="/website_snippets/static/src/snippets/s_chart/options.js"/> -->
+
+		    <script type="text/javascript" src="/website_snippets/static/src/snippets/s_progress_bar/options.js"/>
+		    <script type="text/javascript" src="/website_snippets/static/src/snippets/s_blockquote/options.js"/>
+
+		    <script type="text/javascript" src="/website_snippets/static/src/snippets/s_latest_posts/options.js"/>
+
+		</xpath>    
+    
+</template>
+
+<!-- <template id="snippet_options1" inherit_id="website.snippet_options">
+    <xpath expr="//*[@t-set='so_content_addition_selector']" position="inside">, .oe_country_events, .s_speaker_bio</xpath>
+</template>
+ -->
+
+</odoo>	

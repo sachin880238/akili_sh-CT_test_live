@@ -1,0 +1,37 @@
+{
+    'name' : 'Shipment',
+    'version' : '1.0',
+    'summary': 'Stock Shipment',
+    'sequence': 15,
+    'description': """
+                Custom Shipment Process
+                   """,
+    'category': 'stock',    
+    'company': "Akili Systems Pvt. Ltd.",
+    'author': "Akili Systems Pvt. Ltd.",
+    'website': "http://www.akilisystems.in/",
+    'depends' : ['stock', 'sale', 'base', 'product_extension', 'crm'],
+    'data': [ 
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        'data/shipment_config_data.xml',
+        'data/multi_state_data.xml',
+        'views/stock_picking_view.xml',
+        'views/stock_move_view.xml',
+        'views/stock_container_view.xml',
+        'views/stock_container_type_view.xml',
+        'views/stock_contents_view.xml',
+        'views/stock_production_lot.xml',   
+        'views/stock_location.xml',
+        'views/res_users_view.xml',
+        'views/container_type_icon.xml',
+        'views/stock_moves.xml',
+        'views/inventory_menu.xml',
+        'views/assets.xml',
+        
+    ],  
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'pre_init_hook': 'uninstall_procurement_jit', 
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
+<defs>
+<font id="ct-calendar" horiz-adv-x="1000" >
+<font-face font-family="ct-calendar" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="calendar-alt" unicode="&#xe904;" d="M289 288h-78c-13 0-23 10-23 23v78c0 13 10 24 23 24h78c13 0 24-11 24-24v-78c0-13-11-23-24-23z m211 23v78c0 13-10 24-23 24h-79c-12 0-23-11-23-24v-78c0-13 11-23 23-23h79c13 0 23 10 23 23z m188 0v78c0 13-11 24-24 24h-78c-13 0-23-11-23-24v-78c0-13 10-23 23-23h78c13 0 24 10 24 23z m-188-188v79c0 13-10 23-23 23h-79c-12 0-23-10-23-23v-79c0-12 11-23 23-23h79c13 0 23 11 23 23z m-187 0v79c0 13-11 23-24 23h-78c-13 0-23-10-23-23v-79c0-12 10-23 23-23h78c13 0 24 11 24 23z m375 0v79c0 13-11 23-24 23h-78c-13 0-23-10-23-23v-79c0-12 10-23 23-23h78c13 0 24 11 24 23z m187 508v-687c0-52-42-94-94-94h-687c-52 0-94 42-94 94v687c0 52 42 94 94 94h94v102c0 13 10 23 23 23h78c13 0 24-10 24-23v-102h250v102c0 13 10 23 23 23h78c13 0 24-10 24-23v-102h93c52 0 94-42 94-94z m-94-676v583h-687v-583c0-6 5-11 12-11h664c6 0 11 5 11 11z" horiz-adv-x="875" />
+</font>
+</defs>
+</svg>

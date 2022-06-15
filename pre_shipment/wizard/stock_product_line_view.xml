@@ -1,0 +1,32 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<!-- Copyright 2016-17 Sodexis 
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo> 
+  <record id="stock_product_line_wizard_view" model="ir.ui.view">
+    <field name="name">stock.product.line.form</field>
+    <field name="model">stock.product.line</field>
+    <field name="arch" type="xml">
+      <form string="Merge Pre Shipments">
+        <group>
+        <field name="route_id" string="Route" />
+        <field name="carrier_id" string="Via" />
+        <field name="latest_date" string="Date"/>
+      </group>
+        <footer>
+          <!-- <button name="merge_shipments" string="Merge" type="object" class="btn-primary"/> -->
+          <button string="Cancel" class="btn-default" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+  
+  <record id="action_stock_product_line_wizard" model="ir.actions.act_window">
+    <field name="name">product line</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">stock.product.line</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="stock_product_line_wizard_view" />
+    <field name="target">new</field>
+  </record> 
+</odoo>

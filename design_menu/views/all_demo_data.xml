@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="all_config_1" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Addresses</field>
+            <field name="name">Default Country</field>
+            <field name="field_type">selection</field>
+            <field name="def_color_value">United States</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="all_config_2" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Addresses</field>
+            <field name="name">Default Language</field>
+            <field name="field_type">selection</field>
+            <field name="def_color_value">English</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="all_config_3" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Documents</field>
+            <field name="name">Document Format</field>
+            <field name="field_type">selection</field>
+            <field name="def_color_value">US Letter</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="all_config_4" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Documents</field>
+            <field name="name">Document Template</field>
+            <field name="field_type">link</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+       
+        <record id="all_config_7" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Header Colors</field>
+            <field name="name">Header Icon Warning Color</field>
+            <field name="field_type">color</field>
+            <field name="def_color_value">#EC1C24</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment">indicates overdue or new tasks/communication (other graphic warnings are possible)</field>
+        </record>
+
+       
+
+        <record id="all_config_9" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Printing</field>
+            <field name="name">Print Both Sides</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">snailmail_duplex</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="all_config_10" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Printing</field>
+            <field name="name">Print in Color</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">snailmail_color</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="all_config_11" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Status</field>
+            <field name="name">Normal Status Color</field>
+            <field name="field_type">color</field>
+            <field name="def_color_value">#6ABD45</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="all_config_12" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Status</field>
+            <field name="name">Urgent Status Color</field>
+            <field name="field_type">color</field>
+            <field name="def_color_value">#EC1C24</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="all_config_13" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Status</field>
+            <field name="name">Warning Status Color</field>
+            <field name="field_type">color</field>
+            <field name="def_color_value">#FFDD15</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="all_config_14" model="system.config">
+            <field name="app_name">All</field>
+            <field name="cat_name">Telephones</field>
+            <field name="name">Use Standard International Telephone Formatting</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">add country telephone format to Countries form view, make is_editable</field>
+        </record>
+
+    </data>
+</odoo>
+
+

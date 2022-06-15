@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="order_line_options_form_views" model="ir.ui.view">
+        <field name="name">Add Line</field>
+        <field name="model">sale.order.option</field>
+        <field name="arch" type="xml">
+            <form string="Sales Order Option">
+                <group>
+                    <field name="order_id" invisible="1" string="Sale Order"/>
+                    <field name="product_id"/>
+                    <field name="name" string='Note'/>     
+                    <field name="quantity"/> 
+                    <field name="price_unit" string='List' />  
+                    <field name="discount"  string="Discount"  />
+                    <field name="uom_id" groups="product.group_uom"/>  
+                    <field name="route_id" />  
+                    <field name="carrier_id" />
+                    <field name="availability"/>
+                    <field name="expected_by"/> 
+                    <field name="delivery_date" /> 
+                    <field name="reserve_qty" readonly='1' />
+                    <!-- <field name="layout_category_id" groups="sale.group_sale_layout"/> -->
+                </group>
+               <footer>
+                    <button name="add_order_line_option" string="SAVE" type="object" class="btn-primary" />
+                    <button string="CANCEL" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

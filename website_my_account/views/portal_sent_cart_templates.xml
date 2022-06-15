@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_sent_carts" name="My Quotations">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container o_my_saved_carts_table">
+                    <div class="mt32 mb32">
+                        <div class="form-group col-md-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/my/home">Your Account</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span>RFQ (Requests for Quotation)</span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="clearfix"/>
+                        <div class="form-group col-md-12">
+                            <h2>RFQ (Requests for Quotation)</h2>
+                            <br/>
+                            <t t-if="not quotations">
+                                <p>There are currently no quotes for your account.</p>
+                            </t>
+                            <t t-if="quotations">
+                                <div class="table_overflow">
+                                    <table class="table o_my_saved_carts_table">
+                                        <thead style="border: 1px solid #dee2e6;background-color: #f9f9f9;">
+                                            <tr class="active">
+                                                <th>Date</th>
+                                                <th>Your Reference</th>
+                                                <th/>
+                                                <th style="width: 1%;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-as="quotation" t-foreach="quotations">
+                                            <tr>
+                                                <td>
+                                                    <a t-attf-href="/my/sent-carts/#{quotation.id}?#{keep_query()}">
+                                                        <span t-field="quotation.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span t-field="quotation.client_order_ref"/>
+                                                </td>
+                                                <td/>
+                                                <td>
+                                                    <span t-field="quotation.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: quotation.pricelist_id.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                                <div class="o_portal_pager text-center" t-if="pager">
+                                    <t t-call="website.pager"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="orders_sent_cart" name="Cart Order">
+        <t t-call="website.layout">
+            <style>
+                .img-fluid {
+                    max-width: 31%;
+                }
+                .cart_box{
+                    margin-left: 0%;
+                    width: 100%;
+                }
+                .table_overflow {
+                    margin-right: 0%;
+                }
+            </style>   
+            <div class="cart-activate-page" id="wrap">
+                <div class="container">
+                    <div class="mt32">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/my/home">Your Account</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="/my/sent_carts">RFQ (Requests for Quotation)</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <span>Cart </span>
+                                <span t-field="order.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="col-md-12 mb32 page_desc_div cart_box">
+                        <span>
+                            <span>Cart </span>
+                            <span t-field="order.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                        </span>
+                        <span class="float-right">
+                            <a class="btn btn-danger" t-if="order.state == 'draft'" t-att-href="'/my/sent-carts/%s?action=cancel'%(order.id)">Cancel</a>
+                            <a class="btn btn-primary" t-if="order.state == 'cancel'" t-att-href="'/my/sent-carts/%s?action=activate'%(order.id)">Activate</a>
+                        </span>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="table_overflow">
+                        <table class="table cart-table">
+                            <thead style="border: 1px solid #dee2e6;background-color: #f9f9f9;">
+                                <tr class="active">
+                                    <th width="50"/>
+                                    <th width="200">Product</th>
+                                    <th width="100">Quantity</th>
+                                    <th width="100">Unit</th>
+                                    <th width="100" style="width:1%;">Extended</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-as="line" t-foreach="order.cart_line">
+                                    <tr>
+                                        <td t-if="line.product_id.product_tmpl_id">
+                                            <t t-if="line.product_id.get_line_images()">
+                                               <span t-field="line.product_id.get_line_images().image" t-options="{'widget': 'image', 'class': 'img-rounded'}"/> 
+
+                                            </t>
+                                            <t t-else='1'>
+                                                <span t-field="line.product_id.image_small" t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
+                                            </t> 
+                                        </td>
+                                        <td t-if="line.product_id.product_tmpl_id">
+                                            <div>
+                                                <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }">
+                                                    <strong t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+                                                </a>
+                                            </div>
+                                            <div class="text-muted">
+                                                <t t-as="name_line" t-foreach="line.name.splitlines()[1:]">
+                                                    <span>
+                                                        <t t-esc="name_line"/>
+                                                    </span>
+                                                    <br/>
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <t t-esc="int(line.product_uom_qty)"/>
+                                        </td>
+                                        <td>
+                                            <span style="white-space: nowrap;" t-field="line.price_reduce_taxexcl" t-options="{'widget': 'monetary', 'from_currency': order.pricelist_id.currency_id, 'display_currency': website.currency_id}"/>
+                                        </td>
+                                        <td>
+                                            <span style="white-space: nowrap;" t-field="line.price_reduce_taxinc" t-options="{'widget': 'monetary', 'from_currency': order.pricelist_id.currency_id, 'display_currency': website.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <span>
+                                <strong>Reference: </strong>
+                            </span>
+                            <span t-field="order.partner_id"/>
+                        </div>
+                        <div class="col-md-2 total_amount">
+                            <span>
+                                <strong style="margin-left: 27%;">Total: </strong>
+                                <span t-field="order.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="oe_structure mb32"/>
+                    
+
+                    <div class="form-group col-md-12 order-chatter">
+                        <section class="hidden-print" id="discussion">
+                            <h3>
+                                <strong>Messages</strong>
+                            </h3>
+                            <h4>
+                                <strong>Ask questions or request changes:</strong>
+                            </h4>
+                            <t t-call="portal.message_thread">
+                                <t t-set="object" t-value="order"/>
+                                <t t-set="token_field" t-value="'access_token'"/>
+                                <t t-set="chatter_mode" t-value="'json'"/>
+                            </t>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

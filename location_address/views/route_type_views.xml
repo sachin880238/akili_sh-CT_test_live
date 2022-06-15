@@ -1,0 +1,117 @@
+<odoo>
+  <data>
+    <!-- Route type tree view -->
+    <record id="route_type_tree" model="ir.ui.view">
+      <field name="name">route_type_tree</field>
+      <field name="model">route.type</field>  
+      <field name="arch" type="xml">
+        <tree string="Route Type">
+          <field name="code"/>
+          <field name="description"/>
+          <field name="application"/>
+          <field name="stage"/>
+          <field name="sequence" widget="handle"/>
+        </tree>
+      </field> 
+    </record>
+
+    <!-- Route type form view -->
+    <record id="route_type_form" model="ir.ui.view">
+      <field name="name">route_type_form</field>
+      <field name="model">route.type</field>
+      <field name="arch" type="xml"> 
+        <form string="Route Type">
+          <header>
+            <button 
+              class="btn btn-primary"
+              name="activate_route" 
+              type="object"
+              string="ACTIVE"
+              attrs="{'invisible':[('stage','=', 'active')]}"/>
+            <button
+              class="btn btn-secondary" 
+              name="inactivate_route" 
+              type="object"
+              string="INACTIVE"
+              attrs="{'invisible':[('stage','in', ['inactive','draft'])]}"/>
+            <button
+              class="btn btn-secondary"
+              name="reset_route"
+              type="object"
+              string="RESET TO DRAFT"
+              attrs="{'invisible':[('stage','=', 'draft')]}"/>
+            <field name="stage" widget="statusbar"/>
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button
+                string="Routes"
+                class="oe_stat_button"
+                icon="fa-route"
+                name="%(stock.act_product_location_open)d"
+                type="action">
+              </button>
+            </div>
+            <div class="row col-sm-12">
+              <div>
+                <i class="fas fa-route" style="font-size: 40px;margin-left: 31%;"/>
+                <h1>
+                  <field name="name" nolabel='1' readonly="1" class="name_carts name_left2 location_name"/>
+                </h1>
+              </div>
+            </div> 
+            <group>
+              <group string='General'>
+                <field name="application"/>
+                <field name="code"/>
+                <field name="description"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Rules">  
+                <field name="rule_lines_ids" colspan="4" nolabel="1">
+                  <tree>
+                    <field name="picking_type_id"/>
+                    <field name="action"/>
+                    <field name="origin"/>
+                    <field name="destination"/>
+                    <field name="sequence" widget="handle"/>
+                  </tree>
+                  <form>
+                    <group>
+                      <group>
+                        <field name="picking_type_id"/>
+                        <field name="action"/>
+                        <field name="origin"/>
+                        <field name="destination"/>
+                        <field name="auto"/>
+                        <field name="procure_method"/>
+                      </group>
+                    </group>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field> 
+    </record>
+
+    <!-- Route Type action -->
+    <record id="action_route_type" model="ir.actions.act_window">
+      <field name="name">Route Types</field>
+      <field name="res_model">route.type</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field> 
+    </record>
+
+    <!-- Route Type menuitem-->
+    <menuitem id="action_route_rule_type_config"
+              action="action_route_type" 
+              name="Route Types"
+              parent="stock.menu_warehouse_config"
+              sequence="4"
+              groups="stock.group_adv_location"/>
+  </data>
+</odoo>

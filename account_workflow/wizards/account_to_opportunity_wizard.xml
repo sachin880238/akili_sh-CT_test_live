@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_account_to_opportunity_wizard" model="ir.ui.view">
+      <field name="name">Account To Opportunity Wizard</field>
+      <field name="model">account.opportunity</field>
+      <field name="arch" type="xml">
+        <form string="Convert to opportunity">
+          <script>$(document).ready(function(){ $('.modal-dialog').css({'max-width': '510px'});
+            $('.modal-content').css({'max-height': '100%'});
+            });
+          </script>
+          <group string="Customer">
+            <field name="partner_wizard" string="Account" readonly="1"/>
+            <field name="contact_wizard" string="Contact" domain="[('parent_id.name','=',partner_wizard),('parent_id','!=',False),('type_extend','=','contact')]"/>
+          </group>
+          <group string="Assignment">
+            <field  name="team_id" string='Sales Team'/>
+            <field  name="user_id" domain="[('sale_team_id.id','=',team_id)]" string="Salesperson"/>
+            <field name="opportunity_wizard" string="Opportunity" readonly="0" required="1"/>
+          </group>
+          <footer>
+            <button name="action_create_opportunity" string="ASSIGN" type="object" class="btn-primary"/>
+            <button string="CANCEL" class="btn-secondary" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record id="act_view_account_to_opportunity_wizard" model="ir.actions.act_window">
+  	  <field name="name">Assign Account</field>
+  	  <field name="type">ir.actions.act_window</field>
+  	  <field name="res_model">account.opportunity</field>
+  	  <field name="view_type">form</field>
+  	  <field name="view_mode">form</field>
+  	  <field name="context">{}</field>
+  	  <field name="target">new</field>
+  	</record>
+  </data>
+</odoo>

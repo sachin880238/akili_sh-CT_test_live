@@ -1,0 +1,273 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="mrp_bom_form_view_inherit" model="ir.ui.view">
+    <field name="name">mrp.bom.form.inherit</field>
+    <field name="model">mrp.bom</field>
+    <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+    <field name="arch" type="xml">
+
+    <xpath expr="//form[1]" position="attributes">
+      <attribute name="create">false</attribute>
+    </xpath>
+
+    <xpath expr="//form/sheet" position="before">  
+      <header>
+        <field name="parent_state" invisible="1"/>
+        <field name="state" widget="statusbar" statusbar_visible="done,active,inactive"/>   
+         <button name="set_state_active" type="object"  string="Active" class="oe_highlight" attrs="{'invisible': [('state', 'in', 'active')]}"/> 
+          <button name="reset_to_draft" type="object"  string="Reset to draft" class="oe_highlight" attrs="{'invisible': [('state', 'in', ['draft'])]}"/>
+          <button name="set_to_inactive" type="object"  string="Inactive" class="btn btn-secondary" attrs="{'invisible': [('state', 'in', ['inactive'])]}"/>
+      </header>
+    </xpath>
+
+    <xpath expr="//form/sheet/group" position="before">
+      <div class ="oe_read_only">
+        <div class="o_row">
+          <h1>
+            <i class="fa fa-flask" style="font-size:60px;">
+            <strong><field name="name" style="margin-left:10px; font-size:40px;font-family: sans-serif;"/></strong>
+            <field invisible="1" name="read_only"/></i>
+          </h1>
+        </div>
+      </div>
+      <div class = "oe_edit_only"> 
+        <h1>
+          <field name="name" placeholder="Bom Name...." required="1" style="width:50%; margin-left:12%" invisible="1"/>
+          <field invisible="1" name="read_only"/>
+        </h1>
+      </div>
+    </xpath>
+    
+
+    <xpath expr="//notebook/page/field/tree/field[@name='product_uom_id']" 
+      position="replace">
+      <field name="product_uom_id" string="UOM"/>
+    </xpath>
+     
+
+    <xpath expr="//notebook/page[1]/field[@name='bom_line_ids']" position="attributes">
+      <attribute name="attrs">{'invisible':[('type','in',['bundle'])]}</attribute>
+    </xpath>
+    
+    <xpath expr="//notebook/page[1]/field[@name='bom_line_ids']" position="after">
+      <page string="Bundle Components" >
+      <field name="bom_line_component_ids" string="Bundle Components" widget="one2many_list" attrs="{'invisible': [('type','not in',['bundle'])]}">
+        <tree editable="bottom">
+          <field name="select_product_temp" string="Selector" required="1"/>
+          <field name="select_product_variant" string="Selection" />
+          <field name="minimum_product" string="Minimum" required="1"/>
+          <field name="maximum_product" string="Maximum" required="1"/>
+          <field name="product_source" string="Source" required="1"/>
+          <field name="product_description" string="Description" required="1"/>
+        </tree>
+      </field>
+    </page>
+  </xpath>
+
+
+      <xpath expr="//notebook/page/field/tree/field[@name='attribute_value_ids']" position="replace">
+        <field name="attribute_value_ids" invisible="0" string="Variants"/>
+      </xpath>
+      <!--<xpath expr="//notebook/page[1]" position="replace">
+        <page string="Components">
+          <field attrs="{'readonly':[('read_only','=',True)],  'invisible':[('from_product','=',True),('have_product','=',False)]}" name="bom_line_ids" widget="one2many_list">
+            <tree editable="bottom" string="Components">
+              <field name="sequence" widget="handle"/>
+              <field context="{'default_type': 'product'}" domain="[('product_type','in', ['product', 'consu', 'service'])]" name="product_id"/>
+              <field invisible="1" name="has_attachments"/>
+              <button attrs="{'invisible':[('has_attachments', '=', False)]}" icon="fa-files-o" name="action_see_attachments" string="Documents" type="object"/>
+              <button attrs="{'invisible': [('has_attachments', '=', True)]}" icon="fa-file" name="action_see_attachments" string="Documents" type="object"/>
+              <field name="product_qty" string="Quantity" style="text-align: right;"/>
+              <field groups="product.group_uom" name="product_uom_id" options="{'no_open':True,'no_create':True}" string="UOM"/>
+              <field domain="[('product_ids.product_tmpl_id', '=', parent.product_tmpl_id)]" groups="product.group_product_variant" name="attribute_value_ids" widget="many2many_tags"/>
+              <field domain="[('routing_id', '=', parent.routing_id)]" groups="mrp.group_mrp_routings" name="operation_id" options="{'no_quick_create':True,'no_create_edit':True}"/>
+            </tree>
+          </field>
+          <field attrs="{'readonly':[('read_only','=',True)], 'invisible':['|',('from_temp','=',True),('have_product','=',True)]}" name="bom_line_ids_compute" widget="one2many_list">
+            <tree editable="bottom" string="Components">
+              <field name="sequence" widget="handle"/>
+              <field context="{'default_type': 'product'}" domain="[('product_type','in', ['product', 'consu', 'service'])]" name="product_id"/>
+              <field invisible="1" name="has_attachments"/>
+              <button attrs="{'invisible':[('has_attachments', '=', False)]}" icon="fa-files-o" name="action_see_attachments" string="Documents" type="object"/>
+              <button attrs="{'invisible': [('has_attachments', '=', True)]}" icon="fa-file" name="action_see_attachments" string="Documents" type="object"/>
+              <field name="product_qty" string="Quantity" style="text-align: right;"/>
+              <field groups="product.group_uom" name="product_uom_id" options="{'no_open':True,'no_create':True}" string="UOM"/>
+              <field domain="[('product_ids.product_tmpl_id', '=', parent.product_tmpl_id)]" groups="product.group_product_variant" name="attribute_value_ids" widget="many2many_tags"/>
+              <field domain="[('routing_id', '=', parent.routing_id)]" groups="mrp.group_mrp_routings" name="operation_id" options="{'no_quick_create':True,'no_create_edit':True}"/>
+            </tree>
+          </field>
+        </page>
+      </xpath>-->
+      <xpath expr="//sheet/group/group[2]/p" position="replace">
+        <p attrs="{'invisible': [('type','in',['normal','set','bundle'])]}" class="oe_grey" colspan="2">
+          <ul>
+            <li>If the product is a finished product: When processing a sales
+                                    order for this product, the delivery order will contain the raw
+                                    materials, instead of the finished product.
+                                </li>
+            <li>If the product is a semi-finished product: When processing a
+                                    manufacturing order that contains that product as component,
+                                    the raw materials of that product will be added to the
+                                    manufacturing order of the final product.
+                                </li>
+          </ul>
+        </p>
+        <p attrs="{'invisible': [('type','not in',['bundle'])]}" class="oe_grey" colspan="2">
+          <ul>
+            <li>
+                When processing a sales order for this product, the delivery order
+                will contain the raw materials, instead of the finished product.
+            </li> 
+          </ul>
+        </p>
+       </xpath>
+
+      <xpath expr="//form/sheet/group/group/label" position="replace"> 
+        <label for="product_qty" string="Resulting Quantity" attrs="{'invisible' : [('type','in',['set'])]}"/> 
+      </xpath> 
+
+      <!-- <xpath expr="//sheet/group/group/label" position="attributes">
+        <attribute name="invisible">[('type','in',['set'])]</attribute>
+      </xpath> --> 
+
+      <xpath expr="//sheet/group/group/div" position="replace">
+        <div attrs="{'invisible': [('type','in',['set'])]}" class="o_row">
+          <field attrs="{'readonly':[('read_only','=',True)]}" name="product_qty"/>
+          <field attrs="{'readonly':[('read_only','=',True)]}" groups="uom.group_uom" name="product_uom_id" options="{'no_open':True,'no_create':True}"/>
+        </div>
+        <label attrs="{'invisible': [('type','not in',['set'])]}" for="set_default" string="Set as Default"/>
+        <div attrs="{'invisible': [('type','not in',['set'])]}" class="o_row">
+          <field invisible="1" name="readonly_default"/>
+          <field attrs="{'readonly': [('readonly_default','=',True)]}" name="set_default"/>
+        </div>
+      </xpath>
+      <field name="code" position="attributes">
+        <attribute name="string">Description</attribute>
+        <attribute name="attrs">{'readonly':[('read_only','=',True)]}</attribute>
+      </field>
+      <!-- <field name="code" position="attributes">
+        <attribute name="string">BoM Description</attribute>
+        <attribute name="attrs">{'readonly':[('read_only','=',True)]}</attribute>
+      </field> -->
+      <field name="type" position="attributes">
+        <attribute name="attrs">{'readonly':[('read_only','=',True)]}</attribute>
+      </field>
+      <field name="sequence" position="replace">
+        <!-- <attribute name="attrs">{'readonly':[('read_only','=',True)]}</attribute>-->
+      </field>
+      <field name="ready_to_produce" position="attributes">
+        <attribute name="attrs">{'readonly':[('read_only','=',True)]}</attribute>
+      </field>
+      <field name="picking_type_id" position="attributes">
+        <attribute name="attrs">{'readonly':[('read_only','=',True)]}</attribute>
+      </field>
+      <field name="product_tmpl_id" position="before">
+        <field invisible="1" name="from_temp"/>
+        <field invisible="1" name="from_product"/>
+        <field invisible="1" name="have_product"/>
+        <field invisible="1" name="have_temp_product"/>
+        <!-- <field attrs="{'invisible':['|',('have_product','=',True),('from_temp','=',True)]}" name="product_id_as_per_redirect" string="Apply to Product"/> -->
+      </field>
+
+      <field name="product_id" position="attributes">
+        <!-- <attribute name="attrs">{'invisible':['|',('from_temp','=',True),('have_product','=',False)],'readonly':[('read_only','=',True)]}</attribute> -->
+        <attribute name="attrs">{'readonly':[('from_temp','=',True)]}</attribute>
+        <attribute name="attrs">{'invisible':['|',('from_temp','=',True),('have_temp_product','=',True)]}</attribute>
+        <attribute name="string">Apply to Product</attribute>
+      </field>
+      <field name="product_tmpl_id" position="attributes">
+        <!-- <attribute name="attrs">{'readonly':[('from_product','=',True)],'readonly':[('read_only','=',True)]}</attribute> -->
+        <attribute name="attrs">{'readonly':[('from_product','=',True)]}</attribute>
+        <attribute name="attrs">{'invisible':['|',('from_product','=',True),('have_product','=',True)]}</attribute>
+      </field>
+      <!-- <field name="product_tmpl_id" position="before">
+        <field name="prod_tmpl_prod" string="Apply to Template" attrs="{'readonly' : [('from_product','=',True)],'invisible': [('from_temp', '=', True)]}"/>
+      </field> -->
+     
+     <!--  <xpath expr="//notebook/page/field/tree/field[@name='attribute_value_ids']" position="replace">
+        <field domain="[('product_ids.product_tmpl_id', '=', parent.product_tmpl_id)]" groups="product.group_product_variant" name="attribute_value_ids" options="{'no_create':True}" placeholder="All Variants" widget="many2many_tags"/>
+      </xpath> -->
+      <xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_uom_id']" position="replace">
+         <field name="product_uom_id" options="{'no_open':True,'no_create':True}" groups="uom.group_uom" invisible="1"/>
+      </xpath>
+      <xpath expr="//notebook/page/field/tree/field[@name='product_id']" position="replace">
+        <field name="product_id" context="{'default_type': 'product'}" string="Product"/>
+      </xpath>
+
+     <!--  <xpath expr="//notebook/page/field/tree/field[@name='product_qty']" position="after">
+        <field name="product_source" string="Source" required="1"/>
+        <field name="product_description" string="Description" required="1"/>
+      </xpath> -->
+      <!-- <xpath expr="//form/sheet/notebook/page[1]" position="attributes">
+        <attribute name="attrs">{'invisible': [('type','not in',['normal']), ('type','not in',['phantom'])]}</attribute>
+      </xpath> -->
+      <xpath expr="//field[@name='routing_id']" 
+      position="before">
+      <field name="max_quantity" attrs="{'invisible': [('type','not in',['set']),('type','not in',['bundle'])]}"/>
+      <field name="temp_quantity_equal" invisible="1"/>
+    </xpath>
+    </field>
+  </record>
+
+  <record id="mrp_bom_tree_view_inherit" model="ir.ui.view">
+    <field name="name">mrp.bom.tree.inherit</field>
+    <field name="model">mrp.bom</field>
+    <field name="inherit_id" ref="mrp.mrp_bom_tree_view"/>
+    <field name="arch" type="xml">
+      <field name="product_tmpl_id" position="before">
+       <field name="sequence" widget="handle"/>
+      </field>
+      <field name="product_tmpl_id" position="replace">
+        <field name="product_tmpl_id" string="Template"/>
+      </field>
+      <field name="product_id" position="replace">
+        <field name="product_id" string="Product"/>
+      </field>
+      <field name="code" position="replace">
+        <field name="code" string="Description"/>
+      </field>
+      <field name="product_qty" position="replace">
+        <field name="product_qty" invisible="1"/>
+      </field>
+      <field name="product_uom_id" position="replace">
+        <field name="product_uom_id" invisible="1"/>
+      </field>
+      <!--<xpath expr="//field[@name='product_tmpl_id']" position="after">
+          <field name="sequence" string="Sequence"/>
+      </xpath>
+       <xpath expr="//field[@name='code']" position="after">
+          <field name="name" string="BOM"/>
+      </xpath> -->
+      <xpath expr="//field[@name='product_id']" position="after">
+        <field name="type" string="Type"/>
+      </xpath>
+      <xpath expr="//field[@name='type']" position="after">
+        <field name="state" string="Status"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+    </field>
+</record>
+
+
+  <record id="mrp.template_open_bom" model="ir.actions.act_window">
+    <field name="context">{'default_product_tmpl_id': active_id, 'search_default_product_tmpl_id': active_id, 
+                                   'default_from_temp':True, 'search_default_from_temp':True }</field>
+    <field name="name">Bill of Materials</field>
+    <field name="res_model">mrp.bom</field>
+    <field name="view_type">form</field>
+  </record>
+  
+  <record id="mrp.product_open_bom" model="ir.actions.act_window">
+    <field name="context">{'default_product_id': active_id, 'search_default_product_id': active_id, 
+                                   'default_from_product': True, 'search_default_from_product': True }</field>
+    <field name="name">Bill of Materials</field>
+    <field name="res_model">mrp.bom</field>
+    <field name="domain">[]</field>
+    <!-- Force empty -->
+    <field name="view_type">form</field>
+  </record>
+
+  <record id="mrp.mrp_bom_form_action" model="ir.actions.act_window">
+      <field name="name">Bills of Material</field>
+  </record>
+</odoo>

@@ -1,0 +1,29 @@
+/*.o_form_editable .cf_button_merge{
+	margin-left: 704px;
+}*/
+/*.o_form_editable .cf_button_array{
+	margin-top: -33px;
+}*/
+/*.order_line_scroll{
+	max-height: 200px;
+	overflow: auto;
+}*/
+/*.bom_line_action_button{
+	display: inline-block;
+	position: relative;
+	z-index: 2;
+}*/
+
+.sale_order_custom_button{
+	margin-right:4px;
+	margin-top: 1px;
+}
+
+.o_form_readonly .o_list_record_selector{
+	display: none;
+}
+
+
+/*split line
+
+style="margin-right:4px;margin-bottom:2px;margin-top: 2px;"*/

@@ -1,0 +1,76 @@
+<odoo>
+  <data>
+    <record id="operation_tree_view" model="ir.ui.view">
+      <field name="name">operation.tree.view</field>
+      <field name="model">stock.rule</field>
+      <field name="priority">1</field>
+      <field name="arch" type="xml">
+        <tree string="Rules">
+          <field name="picking_type_id" string="Type"/>
+          <field name="description"/>
+          <field name="location_src_id" string="Origin"/>
+          <field name="location_id" string="Destination"/>
+          <field name="stage"/>
+          <field name="sequence" widget="handle"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="operation_form_View" model="ir.ui.view">
+      <field name="name">operation.form.view</field>
+      <field name="model">stock.rule</field>
+      <field name="priority">1</field>
+      <field name="arch" type="xml">
+        <form string="Rules">
+          <header>
+            <button 
+              class="btn btn-primary"
+              name="activate_stock_rule" 
+              type="object"
+              string="ACTIVE"
+              attrs="{'invisible':[('stage','=', 'active')]}"/>
+            <button
+              class="btn btn-secondary" 
+              name="inactivate_stock_rule" 
+              type="object"
+              string="INACTIVE"
+              attrs="{'invisible':[('stage','in', ['inactive','draft'])]}"/>
+            <button
+              class="btn btn-secondary"
+              name="reset_stock_rule"
+              type="object"
+              string="RESET TO DRAFT"
+              attrs="{'invisible':[('stage','=', 'draft')]}"/>
+            <field name="stage" widget="statusbar"/>
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button 
+                name="default_data"
+                class="oe_stat_button"
+                ><i class="icon-route" style="font-size:24px;color:black;"/>
+                <span class="o_stat_text o_stat_info">Routes</span>
+              </button>
+            </div>
+            <div class="row col-sm-12">
+              <div>
+                <i class="fa fa-list-ol name_space_icon" style="font-size: 40px;margin-left: 31%;"/>
+                <h1>
+                  <field name="picking_type_id" nolabel='1' readonly="1" class="name_carts name_left2" options="{'no_open': True}"/>
+                </h1>
+              </div>
+            </div>
+            <group>
+              <group>
+                <field name="picking_type_id" string="Type" readonly="1" options="{'no_open': True}"/>
+                <field name="description" readonly="1"/>
+                <field name="location_src_id" string="Origin"/>
+                <field name="location_id" string="Destination"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="purchase.seq_purchase_order" model="ir.sequence">
+    <field name="name">Purchase Order</field>
+    <field name="code">purchase.order</field>
+    <field name="prefix"></field>
+    <field name="padding">5</field>
+    <field name="company_id" eval="False"/>
+  </record>
+  
+  <record id="purchase_order_tree_inherit" model="ir.ui.view">
+    <field name="name">purchase.order.tree</field>
+    <field name="model">purchase.order</field>
+    <field name="arch" type="xml">
+      <tree decoration-bf="message_unread==True" decoration-muted="state=='cancel'" decoration-info="state in ('wait','confirmed')" string="Purchase Order">
+        <field name="sequence" widget="handle" />
+        <field name="message_unread" invisible="1"/>
+        <field name="date_planned" invisible="context.get('quotation_only', False)" string="Due"/>
+        <field name="name" string="Purchase"/>
+        <field name="partner_id"/>
+        <field name="products"/>
+        <field name="user_id" string="Purchaser"/>
+        <field name="amount_total" sum="Total amount" widget="monetary"/>
+        <field name="sub_state2" string="Stage"/>
+        <field name="state" nolabel="1"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </tree>
+    </field>
+  </record> 
+
+  <record id="purchase_form_action_inherit" model="ir.actions.act_window">
+    <field name="name">Purchases</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">purchase.order</field>
+    <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+    <field name="domain">[('state','in',('purchase', 'done'))]</field>
+    <field name="context">{'create':False}</field>
+    <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+    <field name="view_id" ref="purchase_order_tree_inherit"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Purchase Order
+      </p><p>
+        Shipments also can be tracked from here.
+      </p>
+    </field>
+  </record>
+    <data>
+        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="name">Accounts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('supplier','=',True)]</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="context">{'default_customer': 0,'default_supplier': 1, 'default_is_company': True,'address_view':1}</field>
+            <field name="filter" eval="True"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new vendor in your address book
+              </p><p>
+                Odoo helps you easily track all activities related to a vendor.
+              </p>
+            </field>
+        </record>
+        <record id="base.action_partner_vendor_form_view1" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="base.res_partner_kanban_view"/>
+            <field name="act_window_id" ref="base.action_partner_supplier_form"/>
+        </record>
+        <record id="base.action_partner_vendor_form_view2" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account_contacts.view_partner_vendor_tree"/>
+            <field name="act_window_id" ref="base.action_partner_supplier_form"/>
+            
+        </record>
+        <record id="base.action_partner_vendor_form_view3" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="base.view_partner_form"/>
+            <field name="act_window_id" ref="base.action_partner_supplier_form"/>
+        </record>
+    </data>
+
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="after">
+                <header> 
+                    <button name="analyze_order" 
+                            type="object" string="ANALYZE" 
+                            class="oe_highlight"
+                            attrs="{'invisible':['|',('sub_state2','not in',['create']),
+                            ('state','in',['cancel','done'])]}"/>
+
+                    <button name="action_ready" 
+                            type="object" 
+                            string="REVIEW" 
+                            class="oe_highlight"
+                            attrs="{'invisible':['|',('sub_state2','not in',['create','revise']),
+                            ('state','in',['cancel','done'])]}"/>
+
+                    <button name="button_confirm" 
+                            type="object" 
+                            string="CONFIRM"
+                            class="btn-primary"
+                            help="begin shipping process"
+                            attrs="{'invisible':['|',('sub_state2','not in',['confirm']),
+                            ('state','in',['cancel','done','purchase'])]}"
+                            />
+
+                    <button name="action_ready" 
+                            type="object" 
+                            string="REVIEW"
+                            attrs="{'invisible':['|',('sub_state2','not in',['confirm']),
+                            ('state','in',['cancel','done','purchase'])]}"/>
+
+                    <button name="action_po_accept" 
+                            string="APPROVE" 
+                            type="object" 
+                            class="oe_highlight oe_right"
+                            attrs="{'invisible':['|',('sub_state2','not in',['review']),
+                            ('state','in',['cancel','done'])]}"
+                            help= "Vendor approves"/>
+
+                    <button name="action_po_revise" 
+                            string="REVISE"
+                            type="object"
+                            class="oe_highlight oe_right" 
+                            attrs="{'invisible':['|',('sub_state2','not in',['review']),('state','in',['cancel'])]}" 
+                            help="return to po creater for modifications"/>
+
+                    <button name="action_rfq_send" 
+                            string="RFQ" 
+                            type="object"
+                            class="oe_highlight oe_right"
+                            attrs="{'invisible':['|',('sub_state2','not in',['review']),
+                            ('state','in',['cancel','done'])]}" 
+                            context="{'send_rfq':True}"/>
+
+                    <button name="analyze_order" 
+                            type="object" string="ANALYZE"
+                            attrs="{'invisible':['|',('sub_state2','not in',['review','revise']),
+                            ('state','in',['cancel','done'])]}"/>
+
+                    <button name="send_po" 
+                            type="object" 
+                            string="SEND"
+                            attrs="{'invisible':['|',('sub_state2','not in',['wait']),
+                            ('state','in',['cancel','done'])]}"/>
+
+                    <button name="action_rfq_send" 
+                            string="EMAIL" 
+                            type="object"
+                            class="oe_highlight oe_right"
+                            attrs="{'invisible':['|',('sub_state2','not in',['send']),
+                            ('state','in',['cancel','done'])]}" 
+                            context="{'send_rfq':True}"/>
+
+                    <button name="purchase.print_quotation" 
+                            string="PRINT"
+                            type="object"
+                            attrs="{'invisible':['|',('sub_state2','not in',['send']),
+                            ('state','in',['cancel','done'])]}"  
+                            class="oe_highlight" 
+                            groups="base.group_user"/>
+
+                    <button name="action_rfq_send" 
+                            string="EMAIL" 
+                            type="object"
+                            attrs="{'invisible':['|',('sub_state2','not in',['confirm','purchase']),
+                            ('state','in',['cancel','done'])]}" 
+                            context="{'send_rfq':True}"/>
+
+                    <button name="purchase.print_quotation" 
+                            string="PRINT"
+                            type="object"
+                            attrs="{'invisible':['|',('sub_state2','not in',['confirm','purchase']),
+                            ('state','in',['cancel','done'])]}"
+                            groups="base.group_user"/>
+
+                    <button name="button_done" 
+                            type="object" 
+                            string="LOCK"
+                            attrs="{'invisible':['|',('sub_state2','in',['confirm','purchase'])]}"/>
+
+                    <button name="button_undone" 
+                            type="object" 
+                            string="UNLOCK"
+                            attrs="{'invisible':['|',('sub_state2','not in',['confirm','purchase'])]}"/>
+
+
+                    <button name="button_cancel" 
+                            type="object" 
+                            string="CANCEL"/> 
+
+                    <field name="sub_state1" widget="statusbar" attrs="{'invisible' : [('state','not in',['purchase'])]}"/>
+                    <field name="sub_state2" widget="statusbar" attrs="{'invisible' : [('state','in',['purchase'])]}"/>
+                    <field name="parent_state" invisible="1"/>
+                </header>
+            </xpath>
+            <xpath expr="//form/sheet/div" position="inside">
+                <button name="action_view_opportunity_1" type="object"  class="oe_stat_button"  icon="fa-star" >
+                    <field name="opp_count" widget="statinfo" string="Opportunities"/>
+                </button>
+                <button name="action_view_tasks" type="object"  class="oe_stat_button"  icon="fa-clock" >
+                    <field name="task_count" widget="statinfo" string="Tasks"/>
+                </button>
+                <button name="action_view_projects" type="object"  class="oe_stat_button"  icon="fa-project-diagram">
+                    <field name="project_count" widget="statinfo" string="Projects"/>
+                </button>
+                <button name="action_view_payments" type="object"  class="oe_stat_button"  icon="fa-dollar">
+                    <field name="payment_count" widget="statinfo" string="Payments"/>
+                </button>
+                <button name="action_view_cards" type="object"  class="oe_stat_button"  icon="fa-credit-card" invisible="1">
+                    <field name="card_count" widget="statinfo" string="Cards" invisible="1"/>
+                </button>
+                <button name="action_view_invoice" type="object"  class="oe_stat_button"  icon="fa-file">
+                    <field name="doc_count" widget="statinfo" string="Documents"/>
+                </button>
+            </xpath>
+            <xpath expr="//form/header/field[@name='state']" position="replace">
+              <field name="state" widget="statusbar" readonly="1" invisible="1"/>
+            </xpath>
+            <xpath expr="//form/header/button[9]" position="replace">
+            </xpath>
+            <xpath expr="//button[@name='action_rfq_send']" position="replace"> 
+            </xpath>
+            <xpath expr="//button[@name='print_quotation']" position="replace"> 
+            </xpath> 
+           <!--  <xpath expr="//button[@name='button_confirm']" position="replace"> 
+            </xpath> -->
+            <xpath expr="//button[@name='button_approve']" position="replace"> 
+            </xpath>
+            <xpath expr="//button[@name='action_view_invoice']" position="replace"> 
+            </xpath> 
+            <xpath expr="//button[@name='action_rfq_send']" position="replace"> 
+            </xpath> 
+            <xpath expr="//button[@name='button_draft']" position="replace"> 
+            </xpath> 
+            <xpath expr="//button[@name='button_cancel']" position="replace"> 
+            </xpath> 
+            <xpath expr="//button[@name='action_rfq_send']" position="replace"> 
+            </xpath>
+            <xpath expr="//button[@name='button_done']" position="replace"> 
+            </xpath>
+            <xpath expr="//button[@name='button_unlock']" position="replace"> 
+            </xpath>
+            <xpath expr="//button[@name='action_view_picking']" position="replace"> 
+            </xpath>
+            <xpath expr="//button[@name='button_confirm']" position="replace"> 
+            </xpath>
+            <xpath expr="//button[@name='action_view_invoice']" position="replace"> 
+            </xpath>
+
+
+            <xpath expr="sheet/notebook/page[1]" position="replace">
+            </xpath>
+            <xpath expr="sheet/notebook/page" position="replace">
+                <page string="VENDOR">
+                    <field name="update_price" invisible="1"/>
+                    <div class="bom_line_action_button">
+
+                        <button type="object"
+                            name="add_vend_stockable_product" 
+                            string="Product"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button" 
+                            default_focus="1"/>
+                        
+                        <button type="object"
+                            name="add_po_line_section" 
+                            string="Section"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button" 
+                            default_focus="1"/>
+                        
+                        <button type="object"
+                            name="add_po_line_note" 
+                            string="Note"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button" 
+                            default_focus="1"/>
+                        
+                        <button type="object"
+                            name="po_line_set_route" 
+                            string="Route"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>    
+                        
+                        <button type="object"
+                            name="po_line_set_via" 
+                            string="Via"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_line_set_date" 
+                            string="Date"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_line_set_discount" 
+                            string="Disc"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_sort_order_lines" 
+                            string="Sort"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_merge_order_lines" string="Merge"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+
+                        <button type="object"
+                            name="po_split_order_lines" string="Split"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>        
+                    </div>
+
+                    <field name="v_order_line" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}" widget="one2many_checkbox" context='{"default_vendor_tab": True}'>
+                      <tree string="Purchase Order Lines" create="false" decoration-bf="is_section==True">
+                        <field name="partner_id" invisible="1"/>
+                        <field name="is_section" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="source_name"/>
+                        <field name="vendor_prod_qty"/>
+                        <field name="vendor_product_uom"/>
+                        <field name="route_id"/>
+                        <field name="carrier_id"/>
+                        <field name="date_planned" string="Date" widget='date'/>
+                        <field name="lst_price" widget="monetary" string="List"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="discount" widget="monetary" string="Disc"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="vendor_prod_unit_price" widget="monetary" string="Unit" 
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="vendor_prod_net_price" widget="monetary" string='Net'
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="sequence" widget="handle"/>
+                      </tree>
+                      <form>
+                        <sheet>
+                          <group>
+                            <group string="Vendor">
+                                <field name="vendor_tab"/>
+                              <field name="source_id" string="Product" domain="[('vendor_id', '=', partner_id)]" options="{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}"/>
+                              <field name="vendor_product_uom"/>
+                              <field name="vendor_prod_minimum"/>
+                              <field name="vendor_prod_multiple"/>
+                              <field name="vendor_prod_qty"/>
+                              <field name="route_id" force_save="1"/>
+                              <field name="carrier_id" force_save="1"/>
+                              <field name="delivery_date"/>
+                              <field name="vendor_prod_lst_price" widget="monetary" options="{'currency_field': 'currency_id'}" string="List Price"/>
+                              <label for="vendor_discount"/>
+                              <div name="vendor_discount">
+                                <field name="vendor_discount" class="oe_inline"/> %%
+                              </div>
+                              <!-- <field name="vendor_discount"/> -->
+                              <field name="vendor_prod_unit_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                              <field name="vendor_prod_net_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                              <field name="partner_id" invisible="1"/>
+                              <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group string="Company">
+                              <field name="product_id" readonly="1" force_save="1"/>
+                              <field name="product_uom" readonly="1"/>
+                              <field name="product_minimum" readonly="1"/>
+                              <field name="product_multiple" readonly="1"/>
+                              <field name="product_qty" readonly="1"/>
+                              <field name="route_id" readonly="1" force_save="1"/>
+                              <field name="carrier_id" readonly="1" force_save="1"/>
+                              <field name="delivery_date"/>
+                              <field name="lst_price" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" string="List Price"/>
+                              <label for="discount"/>
+                              <div name="discount">
+                                <field name="discount" class="oe_inline"/> %%
+                              </div>
+                              <!-- <field name="discount"/> -->
+                              <field name="price_unit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                              <field name="net_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                          </group>
+                        </sheet>
+                      </form>
+                    </field>
+                    <group class="oe_subtotal_footer oe_right">
+                      <field name="vendor_amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                      <field name="vendor_amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                      <div class="oe_subtotal_footer_separator oe_inline">
+                        <label for="vendor_amount_total"/>
+                      </div>
+                      <field name="vendor_amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                    <field name="notes" class="oe_inline" placeholder="Define your terms and conditions ..."/>
+                    <div class="oe_clear"/>
+                </page>
+                <page string="COMPANY">
+                    <field name="update_price" invisible="1"/>
+                    <div class="bom_line_action_button">
+                        <button type="object"
+                            name="add_stockable_product" 
+                            string="Product"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button" 
+                            default_focus="1"/>
+                        
+                        <button type="object"
+                            name=" " 
+                            string="Configure"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button" 
+                            default_focus="1"/>
+                        
+                        <button type="object"
+                            name="add_po_set_product" 
+                            string="Set"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="add_po_bundle_product" 
+                            string="Bundle"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"
+                            attrs="{'invisible': [('update_price','=',True)]}"/>
+                        
+                        <button type="object"
+                            name="remove_bundle_product" 
+                            string="Unbundle"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"
+                            attrs="{'invisible': [('update_price','=',False)]}"/>
+                        
+                        <button type="object"
+                            name="add_po_line_section" 
+                            string="Section"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button" 
+                            default_focus="1"/>
+                        
+                        <button type="object"
+                            name="add_po_line_note" 
+                            string="Note"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button" 
+                            default_focus="1"/>
+
+                        <button type="object"
+                            name="po_line_check_stock" 
+                            string="Stock"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_line_set_route" 
+                            string="Route"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>    
+                        
+                        <button type="object"
+                            name="po_line_set_via" 
+                            string="Via"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_line_set_date" 
+                            string="Date"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_line_set_discount" 
+                            string="Disc"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_sort_order_lines" 
+                            string="Sort"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+                        
+                        <button type="object"
+                            name="po_merge_order_lines" string="Merge"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>
+
+                        <button type="object"
+                            name="po_split_order_lines" string="Split"
+                            class="oe_button oe_highlight oe_edit_only po_custom_button"/>        
+                    </div>
+                    <field name="order_line" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}" widget="one2many_checkbox">
+                      <tree string="Purchase Order Lines" decoration-bf="is_section==True" create="0">
+                        <field name="partner_id" invisible="1"/>
+                        <field name="is_section" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="name"/>
+                        <field name="product_qty"/>
+                        <field name="product_uom" string="Unit"/>
+                        <field name="route_id"/>
+                        <field name="carrier_id"/>
+                        <field name="delivery_date" string="Date"/>
+                        <field name="lst_price" widget="monetary" string="List"
+                               options="{'currency_field': 'currency_id'}" />
+                        <field name="discount" widget="monetary" string="Disc"
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="price_unit" widget="monetary" string="Unit" 
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="price_subtotal" widget="monetary" string='Net'
+                               options="{'currency_field': 'currency_id'}"/>
+                        <field name="sequence" widget="handle"/>
+                      </tree>
+                      <form string="Purchase Order Line">
+                        <sheet>
+                          <group>
+                            <group string="Company">
+                                <field name="vendor_tab"/>
+                              <field name="source_id" string="Product" domain="[('vendor_id', '=', partner_id)]" options="{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}"/>
+                              <field name="product_uom"/>
+                              <field name="product_minimum"/>
+                              <field name="product_multiple"/>
+                              <field name="product_qty"/>
+                              <field name="route_id"/>
+                              <field name="carrier_id"/>
+                              <field name="delivery_date"/>
+                              <field name="lst_price" widget="monetary" options="{'currency_field': 'currency_id'}" string="List Price"/>
+                              <label for="discount"/>
+                              <div name="discount">
+                                <field name="discount" class="oe_inline"/> %%
+                              </div>
+                              <field name="price_unit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                              <field name="net_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <group string="Vendor">
+                              <field name="vendor_product_id" string="Product"/>
+                              <field name="vendor_product_uom"/>
+                              <field name="vendor_prod_minimum"/>
+                              <field name="vendor_prod_multiple"/>
+                              <field name="vendor_prod_qty" readonly="1"/>
+                              <field name="route_id" readonly="1"/>
+                              <field name="carrier_id" readonly="1"/>
+                              <field name="delivery_date"/>
+                              <field name="vendor_prod_lst_price" widget="monetary" options="{'currency_field': 'currency_id'}" string="List Price"/>
+                              <label for="vendor_discount"/>
+                              <div name="vendor_discount">
+                                <field name="vendor_discount" class="oe_inline"/> %%
+                              </div>
+                              <field name="vendor_prod_unit_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                              <field name="vendor_prod_net_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                              <field name="partner_id" invisible="1"/>
+                              <field name="currency_id" invisible="1"/>
+                            </group>
+                          </group>
+                        </sheet>
+                      </form>
+                    </field>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        <div class="oe_subtotal_footer_separator oe_inline">
+                            <label for="amount_total"/>
+                        </div>
+                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                    <field name="notes" class="oe_inline" placeholder="Define your terms and conditions ..."/>
+                    <div class="oe_clear"/>
+                </page>
+                <page string="DELIVERIES" name="purchase_delivery_invoice">
+                    <field name="picking_ids"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    
+  <!-- custom orders tree view -->
+  <record id="po_tree_view_inherit" model="ir.ui.view">
+    <field name="name">po.tree.view.inherit</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_tree" />
+    <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='state']" position="after">
+          <field name="sequence" widget="handle" />
+        </xpath>
+      
+
+      <xpath expr="//field[@name='name']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//field[@name='date_order']" position="attributes">
+        <attribute name="string">Created</attribute>
+        <attribute name="widget">date</attribute>
+      </xpath>
+      <xpath expr="//field[@name='date_planned']" position="attributes">
+        <attribute name="widget">date</attribute>
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//field[@name='date_order']" position="after">
+        <field name="date_planned" string="Due" widget='date'/>
+        <field name="priority" widget='priority'/>
+      </xpath>
+      <xpath expr="//field[@name='partner_id']" position="before">
+        <field name="name" string="Order"/>
+      </xpath>
+      <xpath expr="//field[@name='partner_id']" position="after">
+        <field name="products" />
+      </xpath>
+      <xpath expr="//field[@name='user_id']" position="attributes">
+        <attribute name="string">Purchaser</attribute>
+      </xpath>
+      <xpath expr="//field[@name='user_id']" position="after">
+        <field name="reviewer_id"/>
+      </xpath>
+      <xpath expr="//field[@name='origin']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//field[@name='amount_total']" position="after">
+        <field name="sub_state2" string="Stage"/>
+      </xpath>
+      <xpath expr="//field[@name='state']" position="after">
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- custom orders form view -->
+  <record id="po_form_view_inherit" model="ir.ui.view">
+    <field name="name">po.form.view.inherit</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//form/sheet/group/group[1]" position="replace">
+        <group class="oe_read_only">
+          <field name="partner_id" context="{'default_type':'contact','search_default_supplier': 1,'show_custom_address': True,'default_parent_id': partner_id,}" options="{'no_create': True, 'no_open': True, 'always_reload': True}" domain="[('parent_id','=',False),('supplier', '=', True),('vendor_state','!=','inactive')]" string="Account" force_save="1"/>
+          
+          <label for="partner_contact_phone"  string="Contact"/>
+          <field name="partner_contact_phone" nolabel='1'/>
+
+          <label for="partner_purchase_address" string="Purchasing"/>
+          <field name="partner_purchase_address" nolabel='1'/>
+          
+          <label for="partner_invoice_address" string="Payment"/>
+          <field name="partner_invoice_address" nolabel='1'/>
+         
+          <label for="partner_delivery_address" string="Shipping"/> 
+          <field name="partner_delivery_address" nolabel='1'/>
+          
+        </group>
+        <group class="oe_edit_only">
+          <field name="partner_id" context="{'default_type':'contact','search_default_supplier': 1,'show_custom_address': True,'default_parent_id': partner_id,}" options="{'no_create': True, 'no_open': True, 'always_reload': True}" domain="[('parent_id','=',False),('supplier', '=', True),('vendor_state','!=','inactive')]" string="Account" force_save="1" attrs="{'readonly': [('name','!=','New')]}"/>
+
+          <label for="partner_contact_id" string="Contact"/>
+          <field name="partner_contact_id" nolabel='1' domain="[('vendor_addr_type', '=', 'contact'),('parent_id', '=', partner_id)]"
+                 context="{'default_type':'contact','search_default_supplier': 1,'show_custom_address': True,'default_parent_id': partner_id,}" options="{'no_create': True, 'no_open': True, 'always_reload': True}"/>
+
+          <label for="partner_purchase_id" string="Purchasing"/>
+          <field name="partner_purchase_id" nolabel='1' domain="[('vendor_addr_type', '=', 'purchase'),('parent_id', '=', partner_id)]"
+                 context="{'default_type':'other','search_default_supplier': 1,'show_custom_address': True,'default_parent_id': partner_id,}" options="{'no_create': True, 'no_open': True, 'always_reload': True}"/>
+
+          <label for="partner_invoice_id" string="Payment"/>
+          <field name="partner_invoice_id" nolabel='1' domain="[('vendor_addr_type', '=', 'invoice'),('parent_id', '=', partner_id)]"
+                 context="{'default_type':'invoice','search_default_supplier': 1,'show_custom_address': True,'default_parent_id': partner_id,}" options="{'no_create': True, 'no_open': True, 'always_reload': True}"/>
+
+          <label for="partner_delivery_id" string="Shipping"/> 
+          <field name="partner_delivery_id" nolabel='1' domain="[('company_address_id', '=', company_id),('is_company_address','=',True),('vendor_addr_type','=','delivery')]" context="{'default_type':'delivery','show_custom_address': True,'default_is_company_address':True}" options="{'no_create': True, 'no_open': True, 'always_reload': True}"/>
+        </group>
+      </xpath>
+
+      <xpath expr="//div[@class='oe_title']" position="replace">
+        
+        <div class="row col-sm-12">
+         
+            <i class="fa-downcase-p" style="font-style: inherit !important;" />
+        
+       
+           
+            <field name="name" invisible='1'/>
+            <div class="oe_title row align-items-start">
+            <h1>
+                <field name="order_name" nolabel='1' class="name_carts name_left"/>
+            </h1>
+        </div>
+         
+        </div>
+    
+        <field name="name" invisible='1'/>
+        <field name="order_name" style="padding-left:20px;padding-top: 8px;font-size:2.16666667rem;font-weight:bold;" nolabel='1' invisible="1"/>
+       
+      </xpath>
+      <xpath expr="//field[@name='date_order']" position="attributes">
+        <attribute name="string">Last Modified</attribute>
+        <attribute name="widget">date</attribute>
+      </xpath>
+      <xpath expr="//field[@name='date_order']" position="before">
+        <field name="name" string="Purchase ID"/>
+      </xpath>
+      <xpath expr="//field[@name='date_order']" position="after">
+        <field name="partner_ref" string="Vendor Reference"/>
+        <field name="payment_term_id" string="Payment Terms" />
+        <field name="shipping_terms" string="Shipping Terms" />
+        <field name="priority" widget="priority" invisible="1" />
+        <field name="ship_via" />
+        <field name="ship_date" />
+        <field name="backorders" />
+        <field name="user_id" string="Purchaser" options="{'no_create_edit': True, 'no_open':True}"/>
+        <field name="reviewer_id" />
+      </xpath>
+    </field>
+  </record>
+  
+  <!-- orders action -->
+  <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+    <field name="name">Purchase Orders</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">purchase.order</field>
+    <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+    <field name="domain">[('state','not in',('purchase', 'done'))]</field>
+    <field name="context">{}</field>
+    <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a request for quotation
+      </p>
+      <p>
+        The quotation contains the history of the discussion
+        you had with your vendor.
+      </p>
+    </field>
+  </record>
+
+  <!-- purchase process order-purchase view actions -->
+  <record id="vendor_rfq_list" model="ir.actions.act_window">
+    <field name="name">Orders</field>
+    <field name="res_model">purchase.order</field>
+    <field name="view_id" ref="purchase_workflow.po_tree_view_inherit"/>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form,graph</field>
+    <field name="domain">[('partner_id','=',context.get('active_id', False))]</field>
+    <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+  </record>
+
+  <record id="vendor_purchase_list" model="ir.actions.act_window">
+    <field name="name">Purchases</field>
+    <field name="res_model">purchase.order</field>
+    <field name="view_id" ref="purchase_workflow.po_tree_view_inherit"/>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form,graph</field>
+    <field name="context">{'create':False}</field>
+    <field name="domain">[('partner_id','=',context.get('active_id', False))]</field>
+    <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+  </record>    
+</odoo> 

@@ -1,0 +1,27 @@
+.o_form_view .oe_avatar {
+    float: left;
+}
+
+.o_ct_kanban_image {
+    margin-left: 0.9rem;
+    margin-top: 0.4rem;
+}
+
+.oe_ct_kanban_details {    
+    padding-right: 30px;
+    padding-left: 95px !important;
+    line-height: 1.3;
+}
+
+.o_account_status {
+    margin-left: 0.6rem;
+    margin-top: 1.1rem;
+}
+
+.o_ct_kanban_record {
+    max-width: 90% !important;
+}
+.autocreate_button{
+    margin: 10px 0px 0px 197px;
+    position: absolute;
+}

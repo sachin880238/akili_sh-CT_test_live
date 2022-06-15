@@ -1,0 +1,250 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="inventory_config_1" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Costing</field>
+            <field name="field_name">module_stock_landed_costs</field>
+            <field name="name">Landed Costs</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">O_booleandoo</field>
+        </record>
+
+        <record id="inventory_config_2" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Operations</field>
+            <field name="field_name">module_stock_picking_batch</field>
+            <field name="name">Batch Pickings</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="inventory_config_3" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Operations</field>
+            <field name="field_name">module_stock_tracking_lot</field>
+            <field name="name">Delivery Packages</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">O_booleandoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="inventory_config_4" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Operations</field>
+            <field name="field_name">module_stock_barcode</field>
+            <field name="name">Enable Barcode Scanner</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="inventory_config_5" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Operations</field>
+            <field name="field_name">default_picking_policy</field>
+            <field name="name">Picking Policy</field>
+            <field name="field_type">selection</field>
+            <field name="default_default_picking_policy">direct</field>
+            <field name="current_default_picking_policy">direct</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="inventory_config_6" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Operations</field>
+            <field name="field_name">module_procurement_jit</field>
+            <field name="name">Reservation</field>
+            <field name="field_type">selection</field>
+            <field name="default_module_procurement_jit">0</field>
+            <field name="current_module_procurement_jit">0</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <!-- <record id="inventory_config_7" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Operations</field>
+            <field name="field_name"></field>
+            <field name="name">Warnings</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+<field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record> -->
+
+        <record id="inventory_config_8" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Products</field>
+            <field name="field_name"></field>
+            <field name="name">Default Measurement Units</field>
+            <field name="field_type">selection</field>
+            <field name="default_value_char">inches</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT?</field>
+        </record>
+
+        <record id="inventory_config_9" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Products</field>
+            <field name="field_name">product_weight_in_lbs</field>
+            <field name="name">Default Weight Units</field>
+            <field name="field_type">selection</field>
+            <field name="default_product_weight_in_lbs">1</field>
+            <field name="current_product_weight_in_lbs">1</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="inventory_config_10" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Products</field>
+            <field name="field_name"></field>
+            <field name="name">Months Until Product Inactive</field>
+            <field name="field_type">integer</field>
+            <field name="default_value_integer">24</field>
+            <field name="current_value_integer">24</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="inventory_config_11" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Scheduling</field>
+            <field name="field_name">use_po_lead</field>
+            <field name="name">Lead Time for Purchases</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="inventory_config_12" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Scheduling</field>
+            <field name="field_name">use_security_lead</field>
+            <field name="name">Lead Time for Sales</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="inventory_config_13" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Scheduling</field>
+            <field name="field_name">use_propagation_minimum_delta</field>
+            <field name="name">No Rescheduling Propagation</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="inventory_config_14" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Traceability</field>
+            <field name="field_name">group_stock_tracking_owner</field>
+            <field name="name">Consignment</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">O_booleandoo</field>
+        </record>
+
+        <record id="inventory_config_15" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Traceability</field>
+            <field name="field_name">group_lot_on_delivery_slip</field>
+            <field name="name">Display Lots and Serial Numbers</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">O_booleandoo</field>
+        </record>
+
+        <record id="inventory_config_16" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Traceability</field>
+            <field name="field_name">group_stock_production_lot</field>
+            <field name="name">Enable Lots and Serial Numbers</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable"></field>
+            <field name="source">O_booleandoo</field>
+        </record>
+
+        <record id="inventory_config_17" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Traceability</field>
+            <field name="field_name">module_product_expiry</field>
+            <field name="name">Expiration Date</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable"></field>
+            <field name="source">O_booleandoo</field>
+        </record>
+
+        <record id="inventory_config_18" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Warehouse</field>
+            <field name="field_name">group_stock_multi_warehouses</field>
+            <field name="name">Multi Warehouses</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="inventory_config_19" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Warehouse</field>
+            <field name="field_name">group_stock_adv_location</field>
+            <field name="name">Multi-step Routes</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="inventory_config_19" model="system.config">
+            <field name="app_name">Inventory</field>
+            <field name="cat_name">Warehouse</field>
+            <field name="field_name">group_stock_multi_locations</field>
+            <field name="name">Storage Locations</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+        </record>
+
+    </data>
+</odoo>

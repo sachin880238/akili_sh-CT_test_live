@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!--  <menuitem id="sale.sale_order_menu"
+            name="Records"
+            parent="sale.sale_menu_root"
+            sequence="2"/>     
+ -->
+  
+   <!-- Active false addsons meniitem  -->
+                  
+ <!--    <menuitem id="sale.product_menu_catalog" name="Products" active="True" action="sale.product_template_action" parent="sale.sale_menu_root" sequence="4" groups="sales_team.group_sale_salesman"/>
+ -->
+  <record id="view_order_tree_inherit" model="ir.ui.view">
+    <field name="name">sale.order.tree</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//tree" position="replace">
+        <tree string="Sales Orders" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'">
+          <field name="sequence" widget="handle" />
+          <field name="message_needaction" invisible="1"/>
+          <field name="confirmation_date"  string="Created"/>
+          <field name="commitment_date" string="Due"/>
+          <field name="priority"/>
+           <field name="sequence" widget="handle" invisible="1"/>
+          <field name="name" string="ID"/>
+          <field name="partner_id" string="Account"/>
+          <field name="expected_date" groups="sale.group_sale_order_dates" invisible="1"/>
+          <field name="user_id"/>
+          <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+          <field name="currency_id" invisible="1"/>
+          <field name="invoice_status" invisible="1"/>
+          <field name="state" invisible="1"/>
+          <field name="order_stage"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_order_form" model="ir.ui.view">
+    <field name="name">sale.order.form</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//form/header" position="inside">
+        <field name="cart_state" widget="statusbar" attrs="{'invisible': [('state', '=', 'sale')]}" statusbar_visible='active,saved,rfq,quote'/>
+        <field name="parent_state" invisible="1"/>
+        <field name="so_state" widget="statusbar" states='sale'/>
+        <button name="so_workflow.act_view_assign_cart_to_quotation" 
+                string="ASSIGN" 
+                type="action" 
+                class="oe_highlight oe_right"
+                attrs="{'invisible': [('cart_state','!=','rfq')]}" 
+                help="Create a Cart line send to quoation state"/>
+        <button name="action_cancel"
+                type="object" 
+                string="CANCEL"
+                help='prevent further action'
+                attrs="{'invisible': [('cart_state','!=','rfq')]}"/>
+        <button name=" " 
+                type="object" 
+                string="STOP" 
+                attrs="{'invisible': [('state', '!=', 'sale')]}"/>
+
+        <button name=" " 
+                type="object" 
+                string="SHIP" 
+                class="oe_highlight" 
+                attrs="{'invisible': [('state', '!=', 'sale')]}"
+                invisible="1"/>
+        
+        <button name="%(sale.action_view_sale_advance_payment_inv)d" 
+                string="INVOICE"
+                class="oe_highlight"
+                type="action" 
+                context="{'default_advance_payment_method': 'percentage'}"
+                attrs="{'invisible': ['|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]}"/> 
+        
+        <button name="locks"
+                type="object" 
+                string="LOCK"
+                attrs="{'invisible': ['|',('lock','=',True),('state','in',['draft','cancel','sent'])]}"
+                help="do not allow changes" />
+        
+        <button name="unlocks" 
+                type="object" 
+                string="UNLOCK" 
+                states="done" 
+                groups="sales_team.group_sale_manager"
+                attrs="{'invisible': ['|',('lock','!=',True),('state','in',['draft','cancel','sent'])]}"/>
+      </xpath>
+
+      <xpath expr="//form/sheet/div/button[@name='action_view_payments']" position="before">
+        <button name="view_so_shipments" 
+                type="object"  
+                class="oe_stat_button"  
+                icon="fa-truck" 
+                attrs="{'invisible': [('shipment_count', '=', 0)]}" groups="base.group_user">
+          <field name="shipment_count" widget="statinfo" string="Shipments"/>
+        </button>
+
+        <button name="view_so_returns" 
+                type="object"  
+                class="oe_stat_button"  
+                icon="fa-truck fa-flip-horizontal"  
+                attrs="{'invisible': [('state','not in',['sale','done'])]}">
+          <field name="so_returns" widget="statinfo" string="Returns"/>
+        </button>
+        
+        <button name="view_so_packages" 
+                type="object"  
+                class="oe_stat_button"
+                icon="fa-box"
+                attrs="{'invisible': [('state','not in',['sale','done'])]}">
+          <field name="so_packages" widget="statinfo" string="Packages"/>
+        </button>
+
+        <button name="view_so_bol" 
+                type="object"  
+                class="oe_stat_button"
+                icon="fa-money-bill" 
+                attrs="{'invisible': [('state','not in',['sale','done'])]}">
+          <field name="so_bol" widget="statinfo" string="BOL"/>
+        </button>
+
+        <button name="action_view_opportunity" 
+                type="object" 
+                class="oe_stat_button"  
+                icon="fa-search-dollar fa-flip-horizontal"
+                attrs="{'invisible': [('state', '=', 'draft')]}" >
+          <field name="opp_count" widget="statinfo" string="Opportunities"/>
+        </button>
+
+        <button name="action_view_tasks" 
+                type="object"  
+                class="oe_stat_button"  
+                icon="fa-clock" 
+                attrs="{'invisible': [('state', '=', 'draft')]}" >
+          <field name="task_count" widget="statinfo" string="Tasks"/>
+        </button>
+
+        <button name="action_view_projects" 
+                type="object"  
+                class="oe_stat_button"  
+                icon="fa-project-diagram" 
+                attrs="{'invisible': [('state', '=', 'draft')]}" >
+          <field name="project_count" widget="statinfo" string="Projects"/>
+        </button>
+
+        <button name="view_so_invoices" 
+                type="object"  
+                class="oe_stat_button"  
+                attrs="{'invisible': [('state','not in',['sale','done'])]}">
+          <i class="fa-downcase-i-link" style="margin-left:2%; font-style:normal;"></i>
+          <field name="so_invoices" widget="statinfo" string="Invoices" style="margin-left:2%;"/>
+        </button>
+
+        <button name="view_so_credit" 
+                type="object"  
+                class="oe_stat_button" 
+                attrs="{'invisible': [('state','not in',['sale','done'])]}">
+          <i class="fa-downcase-c-link" style="margin-left:2%; font-style:normal;"></i>
+          <field name="so_credit" widget="statinfo" string="Credit" style="margin-left:5%;"/>
+        </button>
+
+        <button name="view_so_refund" 
+                type="object" 
+                class="oe_stat_button" 
+                icon="fa-dollar" 
+                attrs="{'invisible': [('state','not in',['sale','done'])]}">
+          <field name="so_refund" widget="statinfo" string="Refunds"/>
+        </button>
+
+        <button name="view_so_support" 
+                type="object" 
+                class="oe_stat_button" 
+                icon="fa-question" attrs="{'invisible': [('state','not in',['sale','done'])]}">
+          <field name="so_support" widget="statinfo" string="Support"/>
+        </button>
+      </xpath>
+      <xpath expr="//form/header/field[@name='state']" position="attributes">
+        <attribute name='invisible'>True</attribute> 
+      </xpath>
+      <xpath expr="//button[@name='action_draft']" position="attributes">
+        <attribute name='string'>ACTIVATE</attribute>
+        <attribute name='class'>btn-primary</attribute>
+      </xpath>
+      <xpath expr="//button[@name='action_quotation_send']" position="replace"> 
+      </xpath> 
+      <xpath expr="//button[@name='action_quotation_send']" position="replace"> 
+      </xpath> 
+      <xpath expr="//button[@name='action_quotation_send']" position="replace"> 
+      </xpath>
+      <xpath expr="//button[@name='action_quotation_send']" position="replace"> 
+      </xpath>
+      <xpath expr="//button[@name='print_quotation']" position="replace"> 
+      </xpath> 
+      <xpath expr="//button[@name='print_quotation']" position="replace"> 
+      </xpath> 
+      <xpath expr="//button[@name='action_confirm']" position="replace"> 
+      </xpath> 
+      <xpath expr="//button[@name='action_confirm']" position="replace"> 
+      </xpath> 
+      <xpath expr="//button[@name='preview_sale_order']" position="replace"> 
+      </xpath>
+      <xpath expr="//button[@name='action_cancel']" position="replace"> 
+      </xpath>
+      <xpath expr="//button[@name='action_done']" position="replace"> 
+      </xpath>
+      <xpath expr="//button[@name='action_unlock']" position="replace"> 
+      </xpath>
+      <xpath expr="//form/header" position="inside">
+        
+      </xpath> 
+      <xpath expr="//field[@name='sale_order_template_id']" position="replace">
+      </xpath>
+      <xpath expr="//sheet/group/group[1]" position="replace">
+        <group>
+          <field name="partner_id"  domain="[('parent_id', '=', False),('customer','=',True),('is_company_address','=',False)]" options="{'no_create':1,'no_create_edit':1}" attrs="{'readonly': [('name','!=','New')]}" string="Account" readonly="context.get('default_partner_id')" context="{'default_type':'contact','search_default_customer': 1,'show_custom_address': True,'default_parent_id': partner_id,}"/>
+
+          <label for="partner_contact_phone" class="oe_read_only" string="Contact"/>
+
+          <field name="partner_contact_phone" class="oe_read_only" nolabel='1'/>
+
+          <label for="partner_contact_id" class="oe_edit_only"/>
+
+          <field name="partner_contact_id" groups="sale.group_delivery_invoice_address" 
+                 domain="[('type', '=', 'other'),('parent_id', '=', partner_id)]"
+                 context="{'default_type':'contact','search_default_customer': 1,'show_custom_address': True,'default_parent_id': partner_id,}" nolabel='1' options="{'no_create': True, 'no_open': True, 'always_reload': True}" class="oe_edit_only"/>
+
+          <label for="partner_invoice_addr1" string="Billing" class="oe_read_only"/>
+
+          <field name="partner_invoice_addr1" class="oe_read_only" nolabel="1" string="Billing"/>
+
+          <label for="partner_invoice_id" string="Billing" class="oe_edit_only"/>
+
+          <field name="partner_invoice_id"  groups="sale.group_delivery_invoice_address" domain="[('type', '=', 'invoice'),('parent_id', '=', partner_id)]"
+                 context="{'default_type':'invoice','search_default_customer': 1,'show_custom_address': True,'default_parent_id': partner_id,}" nolabel='1' required="0" options="{'no_create': True, 'no_open': True, 'always_reload': True}" class="oe_edit_only"/>
+            <label for="partner_ship_addr1" string="Shipping" class="oe_read_only"/>
+
+            <field name="partner_ship_addr1" class="oe_read_only" nolabel="1" string="Shipping"/>
+
+            <label for="partner_shipping_id" string="Shipping" class="oe_edit_only"/>
+            <field name="partner_shipping_id" groups="sale.group_delivery_invoice_address" domain="[('type', '=', 'delivery'),('parent_id', '=', partner_id)]"
+                 context="{'default_type':'delivery','search_default_customer': 1,'show_custom_address': True,'default_parent_id': partner_id,}" nolabel="1" required="0" options="{'no_create': True, 'no_open': True, 'always_reload': True}" class="oe_edit_only"/>
+        </group>
+      </xpath>
+      <xpath expr="//sheet/group/group[2]" position="replace">
+        <group>
+          <field name="name" string='Document ID' readonly='1'/>
+          <field name="date_order" string="Date Last Modified" readonly="1"/>
+          <!-- <field name="review_category_id" attrs="{'required' :[('quote_stage','in',['review'])]}" 
+                     context="{'default_sales_team':True,}"/>
+              <field name="reviewed_by" /> -->
+          <field name="client_order_ref"/>
+          <field name="pricelist_id" groups="product.group_sale_pricelist" string="Price List" readonly="1" options="{'no_open': True}" force_save="1"/>
+          <field name="lock" invisible="1"/>
+          <field name="currency_id" invisible="1"/>
+          <!-- <field name="so_pricelist" string="Price List" readonly="1"/> -->
+          <field name="payment_term_id" options="{'no_create': True, 'no_open': True}" readonly="1" force_save="1"/>
+          <field name="shipping_terms" readonly='1'/>
+          <field name="priority"/>
+          <field name="so_authorized" readonly="1" attrs="{'invisible':[('state','in',['draft'])]}"/>
+          <!--<field name="sale_order_template_id" context="{'company_id': company_id}" 
+                 options="{'no_create': True, 'no_open': True}"/>
+          <field name="signature"/>
+          <field name="customer_priority"/> 
+          <field name="approved_by" attrs="{'readonly': [('sub_state3','in',['ship'])]}" invisible='1'/>
+          <field name="hold_lastval" readonly='1' string='Authorized'/> -->
+          <field name="reason_approve" invisible='1'/>
+          <field name="hide_button" invisible="1"/> 
+        </group>
+      </xpath>
+      <xpath expr="//notebook/page[@name='other_information']" position="replace">
+        <page string="OTHER" name="other_information">
+        <!--<group name="sales" string='Sales'>
+          <field name="stock_reserved" />
+          <field name="commitment_date"/>
+          <field name="expected_date"/>
+           <field name="sale_order_template_id" context="{'company_id': company_id}" 
+             options="{'no_create': True, 'no_open': True}"/>
+          <field name="customer_priority"/>
+          <field name="approved_by" attrs="{'readonly': [('sub_state3','in',['ship'])]}" invisible='1'/>
+          <field name="hold_lastval" readonly='1' string='Authorized'/>
+        </group> -->
+        <group>
+          <group string="Sales" name="sale_shipping">
+            <field name="source_id" />
+            <field name="user_id" />  
+            <field name="review_category_id" context="{'default_sales_team':True,}"/>
+            <field name="reviewed_by" attrs="{'invisible': [('cart_state', 'in', ['active','saved','rfq','quote'])]}"/>
+            <field name="stock_reserved" invisible="1"/>
+            <field name="update_reserve_stock" invisible="1"/>
+            <field name="issue_reserve_stock" invisible="1"/>
+            <field name="expected_date" groups="sale.group_sale_order_dates"/>
+            <field name="commitment_date" groups="sale.group_sale_order_dates"/>
+          </group>
+          <group string="General" name="sales_person" attrs="{'invisible': [('state', 'in', ['draft'])]}"> 
+            <field name="validity_date" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}"
+                   string="Expiration Date" />
+            <field name="back_orders"/>
+            <field name="quote_template" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}"/>
+            <field name="signature" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}"/>
+            <field name="team_id" options="{'no_create': True}" invisible="1"/>
+            <field name="client_order_ref" invisible="1"/>
+            <field name="require_signature" invisible="1"/>
+            <field name="require_payment" invisible="1"/>
+            <field name="reference" readonly="1" attrs="{'invisible': [('reference', '=', False)]}"/> 
+            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+            <field name="analytic_account_id" context="{'default_partner_id':partner_invoice_id, 'default_name':name}" 
+                   attrs="{'readonly': [('invoice_count','!=',0),('state','=','sale')]}"
+                   groups="analytic.group_analytic_accounting" force_save="1"/>
+          </group>
+          <group name="sale_pay" string="Invoicing" invisible="1">
+            <field name="date_order" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+            <field name="fiscal_position_id" options="{'no_create': True}"/>
+            <field name="invoice_status" states="sale,done" invisible="1"/>
+          </group>
+          <group string="Reporting" name="technical" groups="base.group_no_one" attrs="{'invisible': [('cart_state', 'in', ['active','saved','rfq','quote'])]}">
+            <field groups="base.group_no_one" name="origin"/>
+          </group>
+          <group name="utm_link" groups="base.group_no_one"/>
+        </group>        
+        <group>
+          <group name="addi_info" string="Note" attrs="{'invisible': ['|',('state', 'in', ['draft']),('state','in',['sale','done'])]}">
+            <field name="quote_draft_warning"/>
+            <field name="quote_warning"/>
+            <field name="quote_comment"/>
+          </group>
+          <group name="add_info" string="Note" attrs="{'invisible':[('state','not in',['sale','done'])]}">
+            <field name="sale_assign_warn"/>
+            <field name="sale_release_warn"/>
+            <field name="sale_invoice_warn"/>
+            <field name="quote_comment"/>
+          </group>
+        </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="sale.action_quotations_salesteams" model="ir.actions.act_window">
+    <field name="name">Quotations</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">sale.order</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="sale.view_quotation_tree"/>
+    <field name="view_mode">tree,form,calendar,graph,kanban,pivot</field>
+    <field name="context">{
+      'search_default_team_id': [active_id],
+      'default_team_id': active_id,
+      'show_address': 1,
+      'is_quote':True
+      }
+    </field>
+    <field name="domain">[]</field>
+    <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a new quotation, the first step of a new sale!
+      </p>
+      <p>
+        Once the quotation is confirmed by the customer, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
+      </p>
+    </field>
+  </record>
+
+  <record id="sale.action_orders" model="ir.actions.act_window">
+    <field name="name">Sales</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">sale.order</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+    <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+    <field name="context">{'create':False}</field>
+    <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel','order'))]</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a new quotation, the first step of a new sale!
+      </p>
+      <p>
+        Once the quotation is confirmed, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
+      </p>
+    </field>
+  </record>
+
+  <record id="view_order_form_quote_order_inherit_view" model="ir.ui.view">
+    <field name="name">sale.order.line.form.view</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale_order_line_button.view_order_form_quote_order" />
+    <field name="arch" type="xml">
+      <xpath expr="//tree/field[@name='route_id']" position="before">
+        <field name='reserved_qty' invisible="1"/>
+        <field name='differ_qty' invisible="1" />
+      </xpath>
+    </field>
+  </record>
+  
+  <record id="sale_management.sale_order_view_form" model="ir.ui.view">
+    <field name="name">sale.order.form</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//group[@name='sale_pay']/field[@name='invoice_status']" position="attributes">
+        <attribute name="invisible" eval="False"/>
+      </xpath>
+      <xpath expr="//button[@name='action_quotation_send']" position="before">
+        <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+          type="action" class="btn-primary"
+          attrs="{'invisible': [('invoice_status', '!=', 'to invoice')]}" invisible="1"/>
+        <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+          type="action" context="{'default_advance_payment_method': 'percentage'}"
+          attrs="{'invisible': ['|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]}" invisible="1"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_inherit_sale_stock_view" model="ir.ui.view">
+    <field name="name">sale.stock.inherit.view</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+    <field name="arch" type="xml">
+      <xpath expr="//button[@name='action_view_delivery']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+    </field>
+  </record>
+</odoo>

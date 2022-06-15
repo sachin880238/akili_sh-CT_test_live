@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="base.res_partner_kanban_view">
+      <field name="name">res.partner.kanban</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+        <kanban class="o_res_partner_kanban">
+          <field name="id"/>
+          <field name="color"/>
+          <field name="display_name"/>
+          <field name="title"/>
+          <field name="email"/>
+          <field name="parent_id"/>
+          <field name="is_company"/>
+          <field name="function"/>
+          <field name="phone"/>
+          <field name="street"/>
+          <field name="street2"/>
+          <field name="street3"/>
+          <field name="zip"/>
+          <field name="city"/>
+          <field name="country_id"/>
+          <field name="mobile"/>
+          <field name="state_id" invisible="1" />
+          <field name="state_code"/>
+          <field name="category_id"/>
+          <field name="image_small"/>
+          <field name="type"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click">
+                <div class="o_kanban_image o_ct_kanban_image">
+                  <img alt="Avatar" class="o_ct_kanban_record" t-att-src="kanban_image('res.partner', 'image', record.id.raw_value)"/>
+                  <div class="o_account_status">
+                    <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+                  </div>
+                </div>
+                <div class="oe_kanban_details oe_ct_kanban_details">
+                  <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                  <ul>
+                    <li class="mt-1">
+                      <strong>
+                        <field name="display_name"/>
+                      </strong>
+                    </li>
+                    <li t-if="record.street.raw_value and record.street2.raw_value and record.street3.raw_value" class="o_text_overflow">
+                      <field name="street"/>, <field name="street2"/>, <field name="street3"/>
+                    </li>
+                    <li t-elif="record.street.raw_value and record.street2.raw_value" class="o_text_overflow">
+                      <field name="street"/>, <field name="street2"/>
+                    </li>
+                    <li t-elif="record.street.raw_value and record.street3.raw_value" class="o_text_overflow">
+                      <field name="street"/>, <field name="street3"/>
+                    </li>
+                    <li t-elif="record.street2.raw_value and record.street3.raw_value" class="o_text_overflow">
+                      <field name="street2"/>, <field name="street3"/>
+                    </li>
+                    <li t-elif="record.street.raw_value" class="o_text_overflow">
+                      <field name="street"/>
+                    </li>
+                    <li t-elif="record.street2.raw_value" class="o_text_overflow">
+                      <field name="street2"/>
+                    </li>
+                    <li t-elif="record.street3.raw_value" class="o_text_overflow">
+                      <field name="street3"/>
+                    </li>
+                    <li t-if="record.city.raw_value and record.state_code.raw_value and record.zip.raw_value">
+                      <field name="city"/> <field name="state_code"/> <field name="zip"/>
+                    </li>
+                    <li t-elif="record.city.raw_value and record.state_code.raw_value">
+                      <field name="city"/> <field name="state_code"/>
+                    </li>
+                    <li t-elif="record.city.raw_value and record.zip.raw_value">
+                      <field name="city"/> <field name="zip"/>
+                    </li>
+                    <li t-elif="record.state_code.raw_value and record.zip.raw_value">
+                      <field name="state_code"/> <field name="zip"/>
+                    </li>
+                    <li t-elif="record.city.raw_value and record.state_code.raw_value and record.zip.raw_value">
+                      <field name="city"/> <field name="state_code"/> <field name="zip"/>
+                    </li>
+                    <li t-elif="record.city.raw_value">
+                      <field name="city"/>
+                    </li>
+                    <li t-elif="record.state_code.raw_value">
+                      <field name="state_code"/>
+                    </li>
+                    <li t-elif="record.zip.raw_value">
+                      <field name="zip"/>
+                    </li>
+                    <li t-if="record.country_id.raw_value">
+                      <field name="country_id"/>
+                    </li>
+                    <li class="mt-2">
+                      <li t-if="record.email.raw_value" class="o_text_overflow">
+                        <field name="email"/>
+                      </li>
+                      <li t-if="record.phone.raw_value">
+                        <field name="phone"/>
+                      </li>
+                    </li>
+                  </ul>
+                  <div class="oe_kanban_partner_links"/>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record id="customer_carts_list" model="ir.actions.act_window">
+      <field name="name">Carts</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_id" ref="so_workflow.view_cart_tree"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="context">{'create':False,'edit':False}</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False)),('state', '=', 'draft')]</field>
+    </record>
+
+    <record id="customer_quotations_list" model="ir.actions.act_window">
+      <field name="name">Quotations</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_id" ref="so_workflow.view_quotation_tree_quote"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False)),('state', 'in', ('sent', 'cancel'))]</field>
+      <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('so_workflow.view_quotation_tree_quote')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('so_workflow.sales_quotation_form')})]"/>
+      <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+    <record id="customer_orders_list" model="ir.actions.act_window">
+      <field name="name">Sales</field>
+      <field name="res_model">sale.order</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+      <field name="context">{'create':False}</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False)),('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
+    </record>
+
+    <!-- custom orders tree view -->
+    <record id="po_tree_view_inherit" model="ir.ui.view">
+      <field name="name">po.tree.view.inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_tree" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <xpath expr="//field[@name='date_order']" position="attributes">
+          <attribute name="string">Created</attribute>
+          <attribute name="widget">date</attribute>
+        </xpath>
+        <xpath expr="//field[@name='date_planned']" position="attributes">
+          <attribute name="widget">date</attribute>
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <xpath expr="//field[@name='date_order']" position="after">
+          <field name="date_planned" string="Due" widget='date'/>
+        </xpath>
+        <!-- <xpath expr="//field[@name='partner_id']" position="before">
+          <field name="name" string="Order"/>
+        </xpath> -->
+       <!--  <xpath expr="//field[@name='partner_id']" position="after">
+          <field name="products" />
+        </xpath> -->
+        <xpath expr="//field[@name='user_id']" position="attributes">
+          <attribute name="string">Purchaser</attribute>
+        </xpath>
+        <!-- <xpath expr="//field[@name='user_id']" position="after">
+          <field name="reviewer_id" />
+        </xpath> -->
+        <xpath expr="//field[@name='origin']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <!-- <xpath expr="//field[@name='amount_total']" position="after">
+          <field name="sub_state2" string="Stage"/>
+        </xpath> -->
+      </field>
+    </record>
+
+    <!-- purchase process order-purchase view actions -->
+    <record id="vendor_rfq_list" model="ir.actions.act_window">
+      <field name="name">Orders</field>
+      <field name="res_model">purchase.order</field>
+      <field name="view_id" ref="account_contacts.po_tree_view_inherit"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False))]</field>
+      <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+
+    <record id="vendor_order_list_view" model="ir.actions.act_window">
+      <field name="name">Orders</field>
+      <field name="res_model">purchase.order</field>
+      <field name="view_id" ref="account_contacts.po_tree_view_inherit"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="context">{'create':False}</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False))]</field>
+      <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+
+    <record id="vendor_purchase_list" model="ir.actions.act_window">
+      <field name="name">Purchases</field>
+      <field name="res_model">purchase.order</field>
+      <field name="view_id" ref="account_contacts.po_tree_view_inherit"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="context">{'create':False}</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False))]</field>
+      <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+
+    <record id="base.action_partner_form" model="ir.actions.act_window">
+      <field name="context">{}</field>
+      <field name="domain">[('customer','=',True),('parent_id','=',False)]
+      </field>
+    </record>
+
+    <record id="base.view_partner_tree" model="ir.ui.view">
+      <field name="name">res.partner.tree</field>
+      <field name="model">res.partner</field>
+      <field eval="8" name="priority" />
+      <field name="arch" type="xml">
+        <tree string="Customers">
+          <field name="sequence" widget="handle"/>
+          <field name="name" string="Account" />
+          <field name="street_address"/>
+          <field name="city" />
+          <field name="state_code" />
+          <field name="zip" string="Zipcode" />
+          <field name="country_id" options="{'no_open': True}"/>
+          <field name="phone" string="Telephone"  />
+          <field name="vendor_state" string="Stage" invisible="1"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}" readonly="1"/>
+
+          <field name="function" invisible="1" />
+          <field name="user_id" invisible="1" />
+          <field name="is_company" invisible="1" />
+          <field name="parent_id" invisible="1" />
+          <field name="active" invisible="1" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_partner_vendor_tree" model="ir.ui.view">
+      <field name="name">res.partner.tree</field>
+      <field name="model">res.partner</field>
+      <field eval="8" name="priority" />
+      <field name="arch" type="xml">
+        <tree string="Customers">
+          <field name="sequence" widget="handle"/>
+          <field name="name" string="Vendor" />
+          <field name="street_address"/>
+          <field name="city" />
+          <field name="state_code" />
+          <field name="zip" string="Zipcode" />
+          <field name="country_id" />
+          <field name="phone" string="Telephone"/>
+          <field name="function" invisible="1" />
+          <field name="user_id" invisible="1" />
+          <field name="is_company" invisible="1" />
+          <field name="parent_id" invisible="1" />
+          <field name="active" invisible="1" />
+          <field name="vendor_state" string="Stage"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_partner_form1"  model="ir.ui.view" >
+      <field name="name">res.partner.form.inherit1</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='toggle_active']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//form" position='attributes'>
+          <attribute name="create">false</attribute>
+        </xpath> 
+        <xpath expr="//field[@name='company_type']" position='attributes'>
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//form/sheet/group/group/field[@name='type']" position='after'>
+          <field name="company_type" string="Type" required="1"/>
+        </xpath>
+        <xpath expr="/form/sheet/div/h1/field[@name='name']" position='replace'/>
+         <xpath expr="/form/sheet/field[@name='image']" position='replace'> 
+       
+     <div class="row col-sm-12 oe_read_only">
+          
+                   <!--  <div class="oe_read_only">  --> 
+          <field name="image" widget='image' class="oe_avatar oe_left name_space" options='{"preview_image": "image"}'/>
+         
+           
+          <h1 >
+
+          <field name="name" default_focus="0" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}" class="name_carts"/>
+          </h1>
+        
+        
+        
+      </div>
+      
+   
+    
+
+        <div class="row col-sm-12 oe_edit_only">
+          
+
+                 
+          <field name="image" widget='image' class="oe_avatar oe_left name_space"  options='{"preview_image": "image"}'/>
+         
+         
+           <h1>
+
+          <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}" class="name_name"/>
+          </h1>
+        
+      
+      
+      
+    </div>
+        </xpath>
+
+
+
+
+
+        <xpath expr="//page[@name='internal_notes']" position='replace'/>
+        <xpath expr="//field[@name='parent_id']" position='attributes'>
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//form/sheet/group/group/label" position="replace">
+          <label for="street" string="Address" class="oe_edit_only"/>
+        </xpath>
+        <xpath expr="//form/sheet/group/group/div" position="replace">
+          <div class="o_address_format oe_edit_only" name="div_address">
+            <field name="street" placeholder="Street..." class="o_address_street"/>
+            <field name="street2" placeholder="Street 2..." class="o_address_street" />
+            <field name="street3" placeholder="Street 3..." class="o_address_street" />
+            <field name="city" placeholder="City" class="o_address_city"/>
+            <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}' />
+            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+            <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only" options='{"no_open": True, "no_create": True}' nolabel="1"/>
+          </div>
+          <field name="country_code" invisible='1'/>
+          <label for="complete_address" string="Address" class="oe_read_only"/>
+          <field name="complete_address" class="oe_read_only" nolabel="1"/>
+        </xpath>
+
+        <xpath expr="//field[@name='vat']" position='replace'>
+          <field name="copy_contacts"  invisible="1"/>
+        </xpath>
+        <xpath expr="//group/group[2]" position="replace">
+          <group class="oe_edit_only">
+            <field name="function" placeholder="e.g. Sales Director" invisible='1'/>
+            <field name="user_ids" invisible="1"/>
+            <field style="width: 100%;" name="email" widget="email" />
+            <label for="div" string="Telephone"/>
+            <div>
+            <field style="width: 68%;" name="phone" widget="phone" string="Telephone"/>
+            <field style="padding-left: 10px;width: 32%" name="primary_tel_type"
+                    context="{'default_for_phone':True}" search_more="0" required='0' options="{'no_open': True,'no_create': True, 'no_create_edit': True}" string=""/>
+            </div>
+            <label for="div" string="Other"/>
+            <div>
+            <field style="width: 68%;" name="alternate_communication_1" widget="phone"  string="Other"/>
+            <field style="padding-left: 10px;width: 32%" name="alternate_commu_type_1"
+                   domain="[('for_other','=',True)]" context="{'default_for_other':True}" string="Other" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+            </div>
+            <label for="div" string="Other"/>
+            <div>
+            <field style="width: 68%;" name="alternate_communication_2"  widget="phone" string=""/>
+            <field style="padding-left: 10px;width: 32%;" name="alternate_commu_type_2"
+                   context="{'default_for_other':True}" domain="[('for_other','=',True)]" string="" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+            </div>
+            <field style="width: 100%;" name="website"/>
+            <field style="width: 100%;" name="lang"/>
+          </group>
+          <group class="oe_read_only">
+            <field name="get_email" attrs="{'required': [('user_ids','!=', [])]}"/>
+            <field name='get_telephone'/>
+            <field name='get_other1'/>
+            <field name='get_other2'/>
+            <field name='get_website' widget="url"/>
+            <field name='get_lang'/>
+          </group>
+        </xpath>
+        <xpath expr="//notebook/page[1]" position="replace">
+          <page name='addresses' string="ADDRESSES" autofocus="autofocus">
+            <div class="oe_edit_only">
+              <button
+                  name="auto_create_customer_address"
+                  class="oe_highlight autocreate_button"
+                  type="object"
+                  string="AUTOCREATE"
+                  edit_only="True"
+                  attrs="{'invisible': [('hide_button', '=', True)]}"/>
+              <field name="hide_button" invisible="1"/>
+            </div>
+            <field name="child_ids" string="Address" mode="tree" context="{'default_parent_id': active_id,'default_supplier': False, 'default_customer': False, 'default_street': False, 'default_street2': False, 'default_street3': False, 'default_city': False, 'default_state_id': False, 'default_zip': False, 'default_country_id': False, 'default_lang': lang,'address_view':True}">
+              <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="default_address" string='Default'/>
+                <field name="type_extend" string='Type' invisible="1"/>
+                <field name="addr_type" />
+                <field name="vendor_addr_type" string='Type' invisible="1"/>
+                <field name="name" string='Person'/>
+                <field name="comp_name" string='Company' />
+                <field name="current_default" invisible='1'  />
+                <field name="street_address"/>
+                <field name="city" string='City' />
+                <field name="state_code" />
+                <field name="zip" string="Zipcode" invisible="1"/>
+                <field name="country_id" string='Country' options='{"no_open": True, "no_create": True}' />
+                <field name="desc" string="Description" attrs="{'column_invisible': [('parent.customer', '=', False)]}"/>
+                <field name="phone" string="Telephone" invisible="1"/> 
+                <field name="pur_desc_id" string='Description' attrs="{'column_invisible': [('parent.customer', '=', True)]}"/>
+              </tree>
+              <form string="Contact">
+                <sheet>
+                  <div style='float:left;' >
+                    <div style='float:left;' >
+                      <div style='float:left;' >
+                        <label for='type_extend' string='Type' attrs="{'invisible':[('is_supplier','=',True)]}"/>
+                        <label for='vendor_addr_type' string='Type' attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                      </div>
+                      <div style='float:left; ' >
+                        <field name="type_extend" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',True)]}"/>
+                        <field name="vendor_addr_type" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                      </div>
+                    </div>
+                    <div style='float:left; margin-left:20px;' >
+                      <label for='default_address' string='Default' />
+                      <field name='default_address'/>
+                    </div>
+                    <div style='float:left; margin-left:20px;'>
+                      <label for='use_acc_comm' string='Same as Account' />
+                      <field name='use_acc_comm' />
+                      <label for='type' string='Type' invisible='1' />
+                      <field name="type" required="1" widget="radio" options="{'horizontal': true}"  invisible='1' />
+                    </div>
+                  </div>
+                  <group>
+                    <group style='width: 50%;'>
+                      <field name="is_supplier" invisible="1" />
+                      <field name="company_required" invisible="1" />
+                      <field name="name" string="Person" attrs="{'required':[('type_extend','=','contact')]}" />
+                      <field name="comp_name" string="Company" attrs="{'required':[('company_required','=',True)]}"/>
+                      <field name="icon_letters" string="Icon"/>
+                    </group>
+              
+                    <group >
+                      <field name="image" widget="image"  class="oe_avatar" 
+                        options='{"preview_image": "image", "size": [70, 70]}' style="margin-right: 73%;"/>
+                    </group>
+                  </group>
+                 
+                  <group style="margin-top:0%;">
+                    <group name='address'>
+                      <label for="street" string="Address" class="oe_edit_only"/>
+                      <div>
+                        <div class="o_address_format oe_edit_only" name="div_address">
+                          <field name="street" placeholder="Street..." class="o_address_street" required='0'/>
+                          <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                          <field name="street3" placeholder="Street 3..." class="o_address_street" />
+                          <field name="city" placeholder="City" class="o_address_city" required='0' />
+                          <field name="country_code" invisible='1'/>
+                          <field name="state_code" class="o_address_state oe_read_only" />
+                          <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}'
+                          context="{'country_id': country_id, 'zip': zip}"/>
+                          <field name="zip" placeholder="ZIP" class="o_address_zip" required='0'/>
+                          <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only" options='{"no_open": True, "no_create": True}' required='0' nolabel="1"/>
+                          </div>
+                        </div>
+                        <label for="complete_address" string="Address" class="oe_read_only"/>
+                        <field name="complete_address" class="oe_read_only" nolabel="1"/>
+                        <field name="category_id" widget="many2many_tags" placeholder="Tags..." options="{'no_create_edit': True, 'no_create': True}" string="Tags" context="{'show_type': is_supplier}" domain="['|',('type','=',type_extend),('type_vendor','=',vendor_addr_type),('for_vendor','=',is_supplier)]" />
+                        <field name="comment" string="Notes" placeholder="internal notes..."/>
+                    </group>
+
+                    <group class="oe_edit_only">
+                      <field name="function" placeholder="e.g. Sales Director" invisible='1'/>
+                      <field name="user_ids" invisible="1"/>
+                      <field style="width: 270px;" name="email" widget="email" attrs="{'required': ['|',('user_ids','!=', [])]}"/>
+                      <label for="div" string="Telephone"/>
+                      <div>
+                      <field style="width: 190px;" name="phone" widget="phone"/>
+                      <field style="padding-left: 10px;width: 80px;" name="primary_tel_type" context="{'default_for_phone':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/><br/>
+                      </div>
+                      <label for="div" string="Other"/>
+                      <div>
+                      <field style="width: 190px;" name="alternate_communication_1" widget="phone" />
+                      <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_1" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}" /><br/>
+                      </div>
+                      <label for="div" string="Other"/>
+                      <div>
+                      <field style="width: 190px;" name="alternate_communication_2"  widget="phone" />
+                      <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_2" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                      </div>
+                      <field style="width: 270px;" name="website" invisible="1"/>
+                      <field style="width: 270px;" name="lang"/>
+                      <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                      <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                    </group>
+                    <group class="oe_read_only">
+                      <field name="get_email" attrs="{'required': [('user_ids','!=', [])]}"/>
+                      <field name='get_telephone'  />
+                      <field name='get_other1'   />
+                      <field name='get_other2'   />
+                      <field name='get_website' widget="url"/>
+                      <field name='get_lang'  />
+                      <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                      <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                    </group>
+                  </group>
+                  <field name="supplier" invisible="True"/>
+                  <field name="customer" invisible="True"/>
+                </sheet>
+              </form>
+            </field>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="action_partner_tree_inherit" model="ir.actions.act_window">
+      <field name="name">Accounts</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,kanban,form</field>
+      <field name="context">{'address_view':1}</field>
+      <field name="search_view_id" ref="base.view_res_partner_filter"/>
+      <field name="domain">[('customer','=',True),('parent_id','=',False),('is_company_address','=',False)]</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create a new customer in your address book
+        </p><p>
+          Odoo helps you easily track all activities related to a customer.
+        </p>
+      </field>
+    </record> 
+
+<!-- ..........BUTTON ON RES PARTNER........ -->
+
+    <record id="inherit_view_partners_form_crm1" model="ir.ui.view">
+      <field name="name">view.res.partner.form.crm.inherited1</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <data>
+          <button name="toggle_active" position="before">
+
+             <button class="oe_stat_button button_change" type="object"
+              name="action_cust_credit_res_part">
+              <i class="fa-downcase-c-link o_button_icon" style="font-size: 0px!important;"></i>
+              <field string="Credits" name="cust_credit" widget="statinfo"/>
+            </button>
+
+            <button class="oe_stat_button button_change_small_dollar" type="object"
+              name="action_total_payments_res_part"
+              icon="fa-usd">
+              <i class="fa fa-fw o_button_icon fa-plus minus-plus"></i>
+              <field string="Payments" name="total_payments" widget="statinfo"/>
+            </button>
+
+            <button class="oe_stat_button button_change_small_dollar" type="object"
+              name="action_total_refunds_res_part"
+              icon="fa-usd">
+              <i class="fa fa-fw o_button_icon fa-minus minus-plus"></i>
+              <field string="Refunds" name="total_refunds" widget="statinfo"/>
+            </button>
+
+            <button class="oe_stat_button button_change" type="object"
+              name="action_current_balance_res_part">
+              <i class="fa fa-balance-scale balance-btn-clr o_button_icon"></i>
+              <field string="Balance" name="current_balance" widget="statinfo"/>
+            </button>
+
+            <button class="oe_stat_button button_change" type="object"
+              name="action_card_count_res_part"
+              icon="fa-credit-card"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Cards" name="card_count" widget="statinfo"/>
+            </button>
+            
+            <button class="oe_stat_button button_change_small" type="object"
+              name="action_support_res_part"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <i class="fa fa-question support-btn-clr o_button_icon"></i>
+              <field string="Support" name="support" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" type="object"
+              name="action_documents_count_res_part"
+              icon="fa-file"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Documents" name="documents_count" widget="statinfo"/>
+            </button>
+          </button>
+        </data>
+      </field>
+    </record>
+
+
+
+<!-- .........HIDE  CONTEXTUAL BUTTON  RES PARTNER VIEW....... -->
+    
+   <!--  <record id="res_partner_view_purchase_buttons_inherit" model="ir.ui.view">
+      <field name="name">res.partner.view.purchase.buttons</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="purchase.res_partner_view_purchase_buttons" />
+      <field name="arch" type="xml">
+        <button name="%(purchase.act_res_partner_2_purchase_order)d" position="replace">
+          <button class="oe_stat_button" name="%(purchase.act_res_partner_2_purchase_order)d" type="action"
+            groups="purchase.group_purchase_user"
+            attrs="{'invisible': [('supplier', '=', False)]}" icon="fa-shopping-cart" invisible="1" >
+          </button>
+        </button>
+      </field>
+    </record> -->
+
+    <record model="ir.ui.view" id="partner_view_buttons_inherit">
+      <field name="name">partner.view.buttons</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="account.partner_view_buttons" />
+      <field name="arch" type="xml">
+        <button name="action_view_partner_invoices" position="replace">
+          <button class="oe_stat_button button_change" type="object"
+            name="action_task_count_res_part">
+            <i class="fas fa-clock o_button_icon task-btn-clr"></i>
+            <field string="Tasks" name="task_count" widget="statinfo"/>
+          </button>
+          <button class="oe_stat_button button_change" type="object"
+            name="action_project_count_res_part"
+            icon="fa-project-diagram">
+            <field string="Projects" name="project_count" widget="statinfo"/>
+          </button>
+          <button class="oe_stat_button button_change" type="object"
+              name="action_project_count_res_part"
+              icon="fa-file"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+            <field string="Documents" name="documents_count" widget="statinfo"/>
+          </button>
+          <button type="object" class="oe_stat_button button_change" name="get_invoice_view"
+          attrs="{'invisible': [('customer', '=', False)]}" context="{'default_partner_id': active_id}">
+          <i class="fa-downcase-i-link o_button_icon"></i>
+          <div class="o_form_field o_stat_info" style="width: 70%;">
+          <span class="o_stat_value">
+            <field name="total_invoiced" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+          </span>
+          <span class="o_stat_text">Invoices</span>
+          </div>
+          </button>
+        </button>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="partner_view_button_contracts_count_inherit">
+      <field name="name">partner.view.button.contracts_count</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="account.partner_view_button_contracts_count"/>
+      <field name="arch" type="xml">
+        <button name="%(account.action_open_partner_analytic_accounts)d" position="replace">
+          <button class="oe_stat_button" type="action" name="%(account.action_open_partner_analytic_accounts)d"
+          groups="account.group_account_invoice"
+          icon="fa-book" title="Analytic Accounts" invisible="1">
+          </button>
+        </button>
+      </field>
+    </record>
+
+    <!-- Hide Base Sales Button -->
+    <record id="sale_order_smart_button_view" model="ir.ui.view">
+      <field name="name">sale.order.smart.button.view</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='%(sale.act_res_partner_2_sale_order)d']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- Hide Base Meetings Button and Added Some New Smart Buttons -->
+    <record id="meetings_smart_button_view" model="ir.ui.view">
+      <field name="name">meeting.smart.button.view</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='schedule_meeting']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="before">
+          <button class="oe_stat_button button_change" type="object"
+              name="get_cart_view"
+              icon="fa-shopping-cart"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Carts" name="cart_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" type="object"
+              name="get_quotation_view"
+              context="{'default_partner_id': active_id}"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <i class="fa-downcase-q-link o_button_icon" style="font-size: 0px!important;" attrs="{'invisible' : [('quote_icon_color', '!=', '1')]}"></i>
+              <i class="fa-downcase-q-link-yellow o_button_icon" style="font-size: 0px!important;" attrs="{'invisible' : [('quote_icon_color', '!=', '2')]}"></i>
+              <i class="fa-downcase-q-link-green o_button_icon" style="font-size: 0px!important;" attrs="{'invisible' : [('quote_icon_color', '!=', '3')]}"></i>
+              <i class="fa-downcase-q-link-black o_button_icon" style="font-size: 0px!important;" attrs="{'invisible' : [('quote_icon_color', '!=', '0')]}"></i>
+              <field name="quote_icon_color" invisible="1" nolabel="1"/>
+              <field string="Quotations" name="quotation_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" type="object" name="get_so_view" 
+              groups="sales_team.group_sale_salesman"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <i class="fa-downcase-s-link o_button_icon" style="font-size: 0px!important;"></i>
+              <field string="Sales" name="sale_order_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" type="object"
+              name="get_shipments_view"
+              icon="fa-truck"
+              context="{'default_partner_id': active_id}"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Shipments" name="shipment_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" type="object"
+              name="action_return_count_res_part"
+              icon="fa-truck fa-flip-horizontal"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Returns" name="return_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" name="get_rfq_view" type="object"
+              groups="purchase.group_purchase_user"
+              context="{'default_partner_id': active_id}"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <i class="fa-downcase-o-link o_button_icon"></i>
+              <field string="Orders" name="order_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" name="get_purchase_view" type="object"
+              groups="purchase.group_purchase_user"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <i class="fa-downcase-p-link o_button_icon"></i>
+              <field string="Purchases" name="purchase_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" type="object"
+              name="get_delivery_count"
+              icon="fa-truck fa-flip-horizontal"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <field string="Deliveries" name="delivery_count" widget="statinfo"/>
+            </button>
+            <button class="oe_stat_button button_change" type="object"
+              name="action_return_count_res_part"
+              icon="fa-truck"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <field string="Returns" name="return_count" widget="statinfo"/>
+            </button>
+        </xpath>
+      </field>
+    </record>
+    <record id="res_partner_purchase_count_button" model="ir.ui.view">
+      <field name="name">res.partner.purchase.count.button</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="purchase.res_partner_view_purchase_buttons"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='%(purchase.act_res_partner_2_purchase_order)d']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+    <record id="res_partner_vendor_bills_button" model="ir.ui.view">
+      <field name="name">res.partner.vendor.bills.button</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="purchase.res_partner_view_purchase_account_buttons" />
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='%(purchase.act_res_partner_2_supplier_invoices)d']" position="replace">
+          <button class="oe_stat_button" 
+                  name="%(purchase.act_res_partner_2_supplier_invoices)d" 
+                  type="action"
+                  attrs="{'invisible': [('supplier', '=', False)]}" 
+                  help="Vendor Bills">
+                  <i class="fa-downcase-i-link o_button_icon"></i>
+                  <field string="Invoices" name="supplier_invoice_count" widget="statinfo"/>
+          </button>
+        </xpath>
+      </field>
+    </record>
+    <record id="website_partners_form_view" model="ir.ui.view">
+      <field name="name">website.res.partner.form.view</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="website_partner.view_partners_form_website"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='website_publish_button']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

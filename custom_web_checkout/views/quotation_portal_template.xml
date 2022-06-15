@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_signature_inherit" inherit_id="sale.sale_order_portal_content" name="Signature">
+        <xpath expr="//section[@id='signature']" position="replace">
+            <section t-if="sale_order.signature and not sale_order.signature == 'no'" id="signature" name="Signature">
+                <div class="row mt-4" name="signature">
+                    <div t-attf-class="#{'col-3' if report_type != 'html' else 'col-sm-7 col-md-4'} ml-auto text-center">
+                        <h5>Signature</h5>
+                        <img t-att-src="image_data_uri(sale_order.signature)" style="max-height: 6rem; max-width: 100%;"/>
+                        <p t-field="sale_order.signed_by"/>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </template>
+
+    <template id="report_signature_inherit" inherit_id="sale.report_saleorder_document" name="Signature">
+        <xpath expr="//div[@name='signature']" position="replace">
+            <div t-if="doc.signature or not doc.signature == 'no'" class="row mt32" name="signature">
+                <div class="offset-8 col-4">
+                    <strong>Signature</strong>
+                </div>
+                <div class="offset-8 col-4">
+                    <!--<img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>-->
+                </div>
+                <div class="offset-8 col-4 text-center">
+                    <p t-field="doc.signed_by"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

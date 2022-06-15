@@ -1,0 +1,62 @@
+<?xml version ="1.0" encoding="utf-8"?>
+
+<odoo>
+  <record id="virtual_package_tree_view" model="ir.ui.view">
+    <field name="name">virtual.package.tree</field>
+    <field name="model">virtual.package</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="sequence" widget="handle"/>
+        <field name="name"/>
+        <field name="container_id"/>
+        <field name="surcharge"/>
+        <field name="additional_handling_charges"/>
+        <field name="extended_area_charge"/>
+        <field name="rate"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="virtual_package_form_view" model="ir.ui.view">
+    <field name="name">virtual.package.form</field>
+    <field name="model">virtual.package</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="shipment_id" attrs="{'invisible': [('order_id', '!=', False)]}"/>
+              <field name="order_id" attrs="{'invisible': [('shipment_id', '!=', False)]}"/>
+              <field name="contents"/>
+              <field name="dim1"/>
+              <field name="dim2"/>
+              <field name="dim3"/>
+              <field name="weight"/>
+              <field name="dim_weight"/>
+            </group>
+            <group>
+              <field name="billing_weight"/>
+              <field name="container_id"/>
+              <field name="container_name"/>
+              <field name="surcharge"/>
+              <field name="additional_handling_charges"/>
+              <field name="extended_area_charge"/>
+              <field name="rate"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="virtual_package_action" model="ir.actions.act_window">
+    <field name="name">Virtual Packages</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">virtual.package</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[]</field>
+  </record>
+  <menuitem name="Virtual Packages" id="menu_virtual_packages" action="virtual_package_action" parent="shipping_estimator.menu_shipping_estimator" />
+</odoo>

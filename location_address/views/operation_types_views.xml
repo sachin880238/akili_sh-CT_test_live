@@ -1,0 +1,96 @@
+<odoo>
+  <data>
+    <!-- Operation Types tree view -->
+    <record model="ir.ui.view" id="view_operation_type_list">
+      <field name="name">operation.type.list</field>
+      <field name="model">stock.picking.type</field>
+      <field name="priority">1</field>
+      <field name="arch" type="xml">
+        <tree string="Operation Type">
+          <field name="type_code"/>
+          <field name="name" string="Name"/>
+          <field name="code"/>
+          <field name="stage"/>
+          <field name="sequence" widget="handle"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Operation types form view -->
+    <record id="view_operation_type_form" model="ir.ui.view">
+      <field name="name">operation.type.form</field>
+      <field name="model">stock.picking.type</field>
+      <field name="priority">1</field>
+      <field name="arch" type="xml"> 
+        <form string="Operation Type">
+          <header>
+            <button 
+              class="btn btn-primary"
+              name="activate_operation_type" 
+              type="object"
+              string="ACTIVE"
+              attrs="{'invisible':[('stage','=', 'active')]}"/>
+            <button
+              class="btn btn-secondary" 
+              name="inactivate_operation_type" 
+              type="object"
+              string="INACTIVE"
+              attrs="{'invisible':[('stage','in', ['inactive','draft'])]}"/>
+            <button
+              class="btn btn-secondary"
+              name="reset_operation_type"
+              type="object"
+              string="RESET TO DRAFT"
+              attrs="{'invisible':[('stage','=', 'draft')]}"/>
+            <field name="stage" widget="statusbar"/>
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button
+                string="Routes"
+                class="oe_stat_button"
+                icon="fa-route"
+                name="%(stock.act_product_location_open)d"
+                type="action">
+              </button>
+            </div>
+            <div class="row col-sm-12">
+              <div>
+                <i class="fa fa-list-ol name_space_icon" style="font-size: 40px;margin-left: 31%;"/>
+                <h1>
+                  <field name="name" nolabel='1' readonly="1" class="name_carts name_left2 location_name"/>
+                </h1>
+              </div>
+            </div> 
+            <group>
+              <group>
+                <field name="name" string="Name"/>
+                <field name="type_code"/>
+                <field name="code"/>
+                <field name="company_id"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+    <!-- Operations action -->
+    <record id="stock.action_rules_form" model="ir.actions.act_window">
+      <field name="name">Operations</field>
+    </record>
+
+    <!-- Operation Types -->
+    <record id="stock.action_picking_type_list" model="ir.actions.act_window">
+      <field name="name">Operation Types</field>
+    </record>
+
+    <!-- Operations menuitem -->
+    <menuitem id="stock.menu_action_rules_form"
+              action="stock.action_rules_form"
+              name="Operations"
+              parent="stock.menu_warehouse_config"
+              sequence="3"
+              groups="stock.group_adv_location"/>
+  </data>
+</odoo>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Product child Menu -->
+  <menuitem id="stock.menu_stock_inventory_control"
+            name="Products" 
+            parent="stock.menu_stock_root"
+            sequence="1"
+            action="product.product_normal_action_sell"/>
+  
+  <menuitem id="stock.menu_product_variant_config_stock"
+            name="Product Templates"
+            parent="stock.menu_stock_inventory_control"
+            sequence="2"
+            action="sale.product_template_action"/>
+
+  <menuitem id="vendor_product_menu"
+            name="Vendor Products"
+            parent="stock.menu_stock_inventory_control"
+            sequence="3"
+            action="vendor_product.product_normal_action_sell"/>
+
+  <menuitem id="vendor_product_template_menu"
+            name="Vendor Product Templates"
+            parent="stock.menu_stock_inventory_control"
+            sequence="4"
+            action="vendor_product.product_template_action"/>
+
+  <menuitem id="bills_of_material_menu"
+            name="Bills of Material"
+            parent="stock.menu_stock_inventory_control"
+            sequence="5"
+            action="vendor_product.product_template_action"/>
+  
+  <menuitem id="reserve_products_menu"
+            name="Reserved Products"
+            parent="stock.menu_stock_inventory_control"
+            sequence="6"
+            action="stock.stock_product_normal_action"/>
+
+  <menuitem id="inventory_adjustments_menu"
+            name="Inventory Adjustments (Counts)"
+            parent="stock.menu_stock_inventory_control"
+            sequence="7"
+            action="stock.action_inventory_form"/>
+  
+  <menuitem id="stock.menu_stock_scrap"
+            name="Scrap"
+            parent="stock.menu_stock_inventory_control"
+            sequence="8"
+            action="stock.action_stock_scrap"/>
+
+  <menuitem
+            id="stock.menu_reordering_rules_config"
+            action="stock.action_orderpoint_form"
+            name="Replenishment Rules" 
+            sequence="9"
+            parent="stock.menu_stock_inventory_control"/>
+
+  <!--Operation Child Menu  -->
+
+  <menuitem id="inventory_operations_menu"
+            name="Operations"
+            sequence="3"
+            parent="stock.menu_stock_root"/>
+
+  <menuitem
+            id="sale_order_list_menu"
+            action="sale.action_orders"
+            name="Sales Orders" 
+            sequence="1"
+            parent="inventory_operations_menu"/>
+
+  <menuitem
+            id="sale_order_return_list_menu"
+            action="sale.action_orders"
+            name="Sales Returns" 
+            sequence="2"
+            parent="inventory_operations_menu"/>
+
+  <!-- <menuitem
+            id="purchase_order_list_menu"
+            action="purchase_workflow.purchase_form_action_inherit"
+            name="Purchase Orders" 
+            sequence="3"
+            parent="inventory_operations_menu"/>
+
+  <menuitem
+            id="purchase_order_return_list_menu"
+            action="purchase_workflow.purchase_form_action_inherit"
+            name="Purchase Returns" 
+            sequence="4"
+            parent="inventory_operations_menu"/> -->
+
+  <menuitem
+            id="manufacturing_order_list_menu"
+            action="mrp.mrp_production_action"
+            name="Manufacturing Orders" 
+            sequence="5"
+            parent="inventory_operations_menu"/>
+
+  <menuitem
+            id="transfer_order_list_menu"
+            action="stock.action_picking_tree_all"
+            name="Transfer Orders" 
+            sequence="6"
+            parent="inventory_operations_menu"/>
+
+  <menuitem
+            id="transfers_list_menu"
+            action="stock_internal_transfer.transfer_order_action"
+            name="Transfer" 
+            sequence="7"
+            parent="inventory_operations_menu"/>
+
+  <menuitem
+            id="stock_moves_list_menu"
+            action="stock.stock_move_action"
+            name="Stock Moves" 
+            sequence="8"
+            parent="inventory_operations_menu"/>
+
+  <menuitem
+            id="containers_list_menu"
+            action="shipment.stock_container_action"
+            name="Containers" 
+            sequence="9"
+            parent="inventory_operations_menu"/>
+
+  <menuitem
+            id="containers_list_menu"
+            action="shipment.stock_container_action"
+            name="Contents" 
+            sequence="10"
+            parent="inventory_operations_menu"/>
+
+  
+
+
+
+
+  <menuitem id="stock.menu_warehouse_report"
+            name="Reports"
+            parent="stock.menu_stock_root"
+            groups="stock.group_stock_manager"/>
+
+  <menuitem id="stock.menu_valuation"
+            name="Inventory"
+            parent="stock.menu_warehouse_report"
+            sequence="100"
+            action="stock.action_stock_quantity_history"/>
+
+  <menuitem id="menu_stock_shippings"
+            name="Shipping"
+            parent="stock.menu_stock_root"
+            sequence="1"/>
+
+  <menuitem id="shipments_menu"
+            name="Shipments"
+            parent="menu_stock_shippings"
+            sequence="1"
+            action="shipment.custom_picking_view"/>
+
+  <menuitem id="shipments_line_menu"
+            name="Products"
+            parent="menu_stock_shippings"
+            sequence="2"
+            action="shipment.custom_shipping_lines_action"/>
+      
+  <menuitem id="freight_bills_menu"
+            name="Freight Bills"
+            parent="menu_stock_shippings"
+            sequence="8"
+            action="stock.stock_product_normal_action"/>
+
+  <menuitem id="menu_stock_receiving"
+            name="Receiving"
+            parent="stock.menu_stock_root"
+            sequence="2"/>
+
+  <menuitem id="deliveries_menu"
+            name="Deliveries"
+            parent="menu_stock_receiving"
+            sequence="1"
+            action="stock.stock_product_normal_action"/>
+
+  <menuitem id="delivery_line_menu"
+            name="Delivery Lines"
+            parent="menu_stock_receiving"
+            sequence="2"
+            action="stock.stock_product_normal_action"/>
+
+  <menuitem id="handling_units_delivery_menu"
+            name="Handling Units"
+            parent="menu_stock_receiving"
+            sequence="5"
+            action="stock.stock_product_normal_action"/>
+      
+  <menuitem id="freight_bills_delivery_menu"
+            name="Freight Bills"
+            parent="menu_stock_receiving"
+            sequence="6"
+            action="stock.stock_product_normal_action"/>    
+
+  <menuitem id="stock.menu_stock_warehouse_mgmt"
+            name="Transfers"
+            parent="stock.menu_stock_root"
+            sequence="3"/>
+
+  <menuitem action="shipment.stock_container_action" 
+            id="menu_action_container_form"
+            parent="stock.menu_warehouse_config" 
+            name="Containers" 
+            sequence="3"/>
+  
+  <menuitem action="shipment.container_type_action"
+            id="menu_action_container_type_form"
+            parent="stock.menu_warehouse_config" 
+            name="Container Types" 
+            sequence="4"/>       
+  <menuitem action="shipment.container_type_icon_action"
+            id="menu_action_container_type_icons_form"
+            parent="stock.menu_warehouse_config" 
+            name="Container Types Icons" 
+            />
+
+  <menuitem id="stock.stock_picking_type_menu"
+            name="DashBoard"
+            parent="stock.menu_stock_root"
+      />
+</odoo>

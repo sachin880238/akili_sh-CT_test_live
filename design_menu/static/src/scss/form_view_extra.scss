@@ -1,0 +1,14 @@
+.o_form_view {  
+
+// Avatar
+    .oe_avatar {
+        float: right;
+        > img {
+            max-height: 70px;
+            max-width: 70px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            border-radius:50%;
+        }
+    }
+ }

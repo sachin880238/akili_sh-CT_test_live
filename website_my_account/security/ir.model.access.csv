@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_project,project,project.model_project_project,,1,1,1,1
+access_project_task,project task,project.model_project_task,,1,1,1,1
+access_sale_order,sale order,sale.model_sale_order,,1,1,1,1
+access_purchase_order,purchase order,purchase.model_purchase_order,,1,1,1,1
+access_account_invoice,account invoice,account.model_account_invoice,,1,1,1,1
+access_credit_card_detail,access_credit_card_detail,model_credit_card_detail,base.group_user,1,0,0,0

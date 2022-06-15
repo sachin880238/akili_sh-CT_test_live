@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sort_orderline_views" model="ir.ui.view">
+        <field name="name">Sort Orderline</field>
+        <field name="model">sort.order.line</field>
+        <field name="arch" type="xml">
+            <form string="Sort Lines">
+                <field name="sort_lines" widget="radio" nolabel="1"/>
+                <footer>
+                    <button name="sort_order_lines" type="object" string="SORT" class="btn-primary" />
+                    <button string="CANCEL" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_sort_orderline" model="ir.actions.act_window">
+        <field name="name">Sort OrderLine</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sort.order.line</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

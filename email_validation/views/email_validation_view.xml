@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- res partner form view inherit -->
+  <record id="partner_form_view_inherit"  model="ir.ui.view" >
+    <field name="name">partner.form.view.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="account_contacts.view_partner_form1" />
+    <field name="arch" type="xml">
+      <xpath expr="//group/field[@name='get_email']" position="before">
+        <field name='valid_email' invisible='1' />
+        <field name="email_address" style='color:red !important;' attrs="{'invisible': [('valid_email','=', True)]}" />
+      </xpath>
+      <xpath expr="//group/field[@name='get_email']" position="attributes">
+        <attribute name='attrs'>{'invisible': [('valid_email','!=', True)],'required': [('user_ids','!=', [])]}</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- crm lead form view inherit -->
+  <record id="lead_form_view_inherit" model="ir.ui.view">
+    <field name="name">lead.form.view.inherit</field>
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="lead_process.crm_case_form_view_leads" />
+    <field name="arch" type="xml">
+      <xpath expr="//group[@class='oe_read_only']/field[@name='email_from']" position="before">
+        <field name="valid_email" invisible="1" />
+        <field name="email_address" style='color:red !important;' attrs="{'invisible': [('valid_email','=', True)]}"/> 
+      </xpath>
+      <xpath expr="//group[@class='oe_read_only']/field[@name='email_from']" position="attributes">
+        <attribute name='attrs'>{'invisible': [('valid_email','!=', True)]}</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- crm opportunity form view inherit -->
+  <record id="opportunity_form_view_inherit" model="ir.ui.view">
+    <field name="name">opportunity.form.view.inherit</field>
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="lead_process.opportunity_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//group[@class='oe_read_only']/field[@name='email_from']" position="before">
+        <field name="valid_email" invisible="1" />
+        <field name="email_address" style='color:red !important;' attrs="{'invisible': [('valid_email','=', True)]}"/> 
+      </xpath>
+      <xpath expr="//group[@class='oe_read_only']/field[@name='email_from']" position="attributes">
+        <attribute name='attrs'>{'invisible': [('valid_email','!=', True)]}</attribute>
+      </xpath>
+    </field>
+  </record>
+</odoo>

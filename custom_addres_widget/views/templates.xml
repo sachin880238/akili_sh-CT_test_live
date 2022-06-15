@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+       <template id="assets_backend" name="mail assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                 <script type="text/javascript" src="/custom_addres_widget/static/src/js/custom.js"></script>
+                 <link href="/custom_addres_widget/static/src/css/pos_so.css" rel="stylesheet" type="text/css"/>
+                 
+            </xpath>
+      </template>
+      
+  </data>
+</odoo>

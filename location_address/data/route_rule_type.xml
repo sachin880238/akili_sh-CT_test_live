@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="route_rule_type_sc" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_out'/>
+      <field name="origin">shipping</field>
+      <field name="destination">customer</field>
+      <field name="auto">manual</field>
+    </record>
+    <record id="route_rule_type_sv" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_out'/>
+      <field name="origin">shipping</field>
+      <field name="destination">vendor</field>
+      <field name="auto">manual</field>
+    </record>
+    <record id="route_rule_type_psc1" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_internal'/>
+      <field name="origin">stock</field>
+      <field name="destination">shipping</field>
+      <field name="auto">manual</field>
+    </record>
+    <record id="route_rule_type_psc2" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_out'/>
+      <field name="origin">shipping</field>
+      <field name="destination">customer</field>
+      <field name="auto">manual</field>
+    </record>
+    <record id="route_rule_type_psv1" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_internal'/>
+      <field name="origin">stock</field>
+      <field name="destination">shipping</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_stock</field>
+    </record>
+    <record id="route_rule_type_psv2" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_out'/>
+      <field name="origin">shipping</field>
+      <field name="destination">vendor</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    <record id="route_rule_type_ppsc1" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_internal'/>
+      <field name="origin">stock</field>
+      <field name="destination">packing</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    <record id="route_rule_type_ppsc2" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_internal'/>
+      <field name="origin">packing</field>
+      <field name="destination">shipping</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    <record id="route_rule_type_ppsc3" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_out'/>
+      <field name="origin">shipping</field>
+      <field name="destination">customer</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    <record id="route_rule_type_ppsv1" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_internal'/>
+      <field name="origin">stock</field>
+      <field name="destination">packing</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    <record id="route_rule_type_ppsv2" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_internal'/>
+      <field name="origin">packing</field>
+      <field name="destination">shipping</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+     <record id="route_rule_type_ppsv3" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_out'/>
+      <field name="origin">shipping</field>
+      <field name="destination">vendor</field>
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    <record id="route_rule_type_bsc1" model="route.rule.type">
+      <field name="action">buy</field>
+      <field name="picking_type_id" ref='stock.picking_type_in'/> 
+      <field name="destination">stock</field> 
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    <record id="route_rule_type_bsc2" model="route.rule.type">
+      <field name="action">pull</field>
+      <field name="picking_type_id" ref='stock.picking_type_out'/>
+      <field name="origin">vendor</field> 
+      <field name="destination">customer</field> 
+      <field name="auto">manual</field>
+      <field name="procure_method">make_to_order</field>
+    </record>
+    </data>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="help_menu_wizard_view" model="ir.ui.view">
+        <field name="name">erp.help.wizard</field>
+        <field name="model">erp.help.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Help Wizard">
+                <div class="oe_title" style="margin-top: -4.2%;" attrs="{'invisible': [('is_created', '=', False)]}">
+                    <h1  style=" margin-left: -82px ">
+                        <field name="name"  style="font-size:25px; font-weight:bold; font-family: sans-serif;margin-bottom:-10px;"/>
+                    </h1>
+                </div>
+                <div style="margin-top: 1%; padding-left:4px;">
+                    <field name="is_created" invisible="True"/>
+                    <field name="have_action" invisible="True"/>
+                    <field name="description" widget="html" readonly='True'/>
+                </div>
+                <footer attrs="{'invisible': [('have_action', '=', False)]}"> 
+                    <button name="create_help" type='object' class="oe_highlight" string='CREATE' attrs="{'invisible': [('is_created', '=', True)]}" groups="system_app.system_help_group_manager"/>
+                    <button name="close_help" type='object' class="btn-primary" string='CLOSE'/>
+                    <button name="update_help" type='object' class="btn-secondary" string='EDIT' attrs="{'invisible': [('is_created', '=', False)]}" groups="system_app.system_help_group_manager"/>
+                    <!-- <button name="close_help" type='object' class="fa fa-question" style="margin-left: 82%;background-color: #fff;color: #1e76c5;"/> -->
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="show_help_wizard" model="ir.actions.act_window">
+        <field name="name">show wizard view</field>
+        <field name="res_model">erp.help.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>    
+
+
+
+

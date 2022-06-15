@@ -1,0 +1,223 @@
+.navbar-default{
+	border-radius: 0px;
+	border-color: black;
+}
+.navbar-default a.navbar-brand{
+	color: black;
+}
+.o_portal_submenu.navbar-nav li a{
+	color: #27aae1;
+}
+.o_portal_submenu.navbar-nav li a.active{
+	color: black;
+	cursor: auto;
+}
+.o_my_home_content h3.page-header{
+	border-bottom: 1px solid black;
+}
+.o_my_home_content h3.page-header a{
+	color: #27aae1;
+}
+.o_my_home_content .badge{
+	border-radius: 6px;
+	background-color: #27aae1;
+	vertical-align: text-bottom;
+	padding: 3px 9px;
+}
+
+
+
+/*SAVED CARTS PAGGE CSSs*/
+.o_my_saved_carts_table thead{
+	border: 1px solid black;
+}
+.o_my_saved_carts_table > thead > tr > th{
+	border-bottom: 1px solid black;
+}
+.o_my_saved_carts_table th:nth-child(1) , .o_my_saved_carts_table td:nth-child(1){
+    max-width: 12px !important;
+    text-align: left;
+}
+.o_my_saved_carts_table th:nth-last-child(1) , .o_my_saved_carts_table td:nth-last-child(1){
+    width: 120px;
+    text-align: right;
+}
+.button_activate{
+	margin-top: -2.5px !important;
+}
+
+/*CART ACTIVATE PAGE CSS*/
+.cart-activate-div{
+	border: 1px solid black;
+	background-color: #f5f5f5;
+	padding: 11px;
+}
+.cart-activate-div div{
+	display: inline;
+}
+.cart-activate-div span{
+	font-size: 20px;
+}
+.cart-activate-div a{
+	float: right;
+	border-radius: 0px;
+}
+
+.cart-activate-page .cart-table thead, .cart-activate-page .cart-table tr{
+	border: 1px solid black;
+}
+.cart-activate-page .cart-table thead th, .cart-activate-page .cart-table tr td{
+	border-bottom: 1px solid black;
+}
+.cart-activate-page .cart-table th, .cart-activate-page .cart-table td {
+	text-align: right;
+}
+.cart-activate-page .cart-table th:nth-child(2) , .cart-activate-page .cart-table td:nth-child(2){
+    text-align: left;
+}
+.cart-activate-page .total_amount span{
+	float: right;
+}
+
+/*MY QUOTATION CSS*/
+.o_my_quotation_table thead{
+	border: 1px solid black;
+}
+.o_my_quotation_table > thead > tr > th{
+	border-bottom: 1px solid black;
+}
+.o_my_quotation_table th:nth-last-child(1), .o_my_quotation_table td:nth-last-child(1){
+	text-align: right;
+}
+
+/*MY ORDERS CSS*/
+.o_my_orders_table thead{
+	border: 1px solid black;
+}
+.o_my_orders_table > thead > tr > th{
+	border-bottom: 1px solid black;
+}
+.o_my_orders_table th:nth-last-child(1), .o_my_orders_table td:nth-last-child(1){
+	text-align: right;
+}
+
+/*MY INVOICES CSS*/
+.o_my_invoice_table thead{
+	border: 1px solid black;
+}
+.o_my_invoice_table > thead > tr > th{
+	border-bottom: 1px solid black;
+}
+.o_my_invoice_table th:nth-last-child(1), .o_my_invoice_table td:nth-last-child(1){
+	text-align: right;
+}
+.o_my_invoice_table th:nth-last-child(2), .o_my_invoice_table td:nth-last-child(2){
+	text-align: right;
+}
+.o_my_invoice_table .label{
+	padding: 0.8em;
+	border-radius: 0.0em;
+	color: white;
+}
+.o_my_invoice_table .label-default{
+	background-color: #a9a7a7;
+}
+
+
+/*FOLLOW UP LIST CSS*/
+.orders_followup .breadcrumb{
+	border-radius: 0px;
+}
+.panel-header{
+	border: 1px solid black;
+	background-color: #f5f5f5;
+	padding: 11px;
+}
+.panel-header div{
+	display: inline;
+}
+.panel-header a{
+	float: right;
+	border-radius: 0px;
+}
+.panel-header span{
+	font-size: 20px;
+}
+.panel-body{
+	min-height: 0px !important;
+}
+.panel-body table{
+	
+}
+
+.follow_up table tr{
+	border: 1px solid black;
+}
+.follow_up > .table > thead > tr > th{
+	border-bottom: 1px solid black;
+}
+.follow_up  .table > tbody > tr > td{
+	border-top: 1px solid black;
+}
+
+.saved_cart th:nth-last-child(1), .saved_cart td:nth-last-child(1){
+	text-align: right;
+}
+.saved_cart th:nth-last-child(2), .saved_cart td:nth-last-child(2){
+	text-align: right;
+}
+.saved_cart th:nth-last-child(3), .saved_cart td:nth-last-child(3){
+	text-align: right;
+}
+
+.quotation th:nth-last-child(1), .quotation td:nth-last-child(1){
+	text-align: right;
+}
+.quotation th:nth-last-child(2), .quotation td:nth-last-child(2){
+	text-align: right;
+}
+.quotation th:nth-last-child(3), .quotation td:nth-last-child(3){
+	text-align: right;
+}
+
+.order th:nth-last-child(1), .order td:nth-last-child(1){
+	text-align: right;
+}
+.order th:nth-last-child(2), .order td:nth-last-child(2){
+	text-align: right;
+}
+.order th:nth-last-child(3), .order td:nth-last-child(3){
+	text-align: right;
+}
+.order th:nth-last-child(4), .order td:nth-last-child(4){
+	text-align: right;
+}
+
+
+.order_total .total{
+	float: right;
+	display: table;
+}
+/*.order_total .total span{
+	display: table-cell;
+}*/
+
+
+.invoice_table th:nth-last-child(1), .invoice_table td:nth-last-child(1){
+	text-align: right;
+}
+.invoice_table th:nth-last-child(2), .invoice_table td:nth-last-child(2){
+	text-align: right;
+}
+.invoice_table th:nth-last-child(3), .invoice_table td:nth-last-child(3){
+	text-align: right;
+}
+
+
+/*CHATTER CSS*/
+form.o_website_chatter_form div{
+	width: 90% !important;
+}
+button.o_website_chatter_json{
+	border-radius: 0px;
+}

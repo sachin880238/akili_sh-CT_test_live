@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ir_config_parameter_system,ir_config_parameter_system,base.model_ir_config_parameter,,1,1,1,1
+access_ir_ui_view,ir_ui_view,base.model_ir_ui_view,,1,1,1,0
+access_mail_channel,mail_channel,mail.model_mail_channel,,1,1,1,0
+access_ir_ui_menu,ir_ui_menu,base.model_ir_ui_menu,,1,1,1,0
+access_ir_model,ir_model,base.model_ir_model,,1,1,1,0
+access_res_partner,res_partner,base.model_res_partner,,1,1,1,0

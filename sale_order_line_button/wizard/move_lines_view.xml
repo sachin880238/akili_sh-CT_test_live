@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="move_lines_option_views" model="ir.ui.view">
+        <field name="name">Move linese option</field>
+        <field name="model">move.lines.option</field>
+        <field name="arch" type="xml">
+            <form string="Warning">
+                <p>
+                    Confirm that you want to move the selected lines
+                    to the OPTIONS tab.
+                </p>
+                <footer>
+                    <button name="move_orderlines_to_option" type="object" string="MOVE" class="btn-primary" />
+                    <button string="CANCEL" class="btn-secondary" special="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_move_lines_option" model="ir.actions.act_window">
+        <field name="name">Move to Options</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">move.lines.option</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

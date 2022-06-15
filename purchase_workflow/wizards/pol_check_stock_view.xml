@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <record id="pol_check_stock_form" model="ir.ui.view">
+    <field name="name">pol.check.stock</field>
+    <field name="model">pol.check.stock</field>    
+    <field name="arch" type="xml">
+      <form string="Check Stock"> 
+        <field name='data_line' readonly="1">
+          <tree editable="bottom" create="false">
+            <field name='product_id' />
+            <field name='requested_qty' />
+            <field name='current_stock' />
+            <!-- <field name='supply_days' /> -->
+            <field name='incoming_stock' />
+            <field name='expected_date' />
+          </tree>
+          <form>
+            <group>
+              <field name='product_id' />
+              <field name='requested_qty' />
+              <field name='current_stock' />
+              <!-- <field name='supply_days' /> -->
+              <field name='incoming_stock' />
+              <field name='expected_date' />
+            </group>
+          </form>
+        </field>
+        <group>
+          <group>
+          </group>
+          <group>
+            <field name='completed_date' readonly="1"/>
+          </group>
+        </group>
+        <footer>
+            <!-- <button name="update_lines" string="Save" type="object" class="btn-primary"/> -->
+          <button string="CLOSE" class="btn-primary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,27 @@
+.o_form_view {  
+
+// Avatar
+    .oe_avatar {
+        float: right;
+        > img {
+            max-height: 90px;
+            max-width: 90px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+            border: none;
+        }
+        + .oe_title {
+            padding-left: 0px;
+            margin-left: 0px;
+            padding-top: 30px;
+        }
+    }
+ }
+
+// Search more window
+
+.modal.o_technical_modal .modal-content .modal-body .o_modal_header .o_pager {
+    float: right;
+    margin-top: 2.5%;
+    margin-bottom : 0.5%;
+    }

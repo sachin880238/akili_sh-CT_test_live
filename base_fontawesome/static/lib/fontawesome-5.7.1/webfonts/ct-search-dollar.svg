@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
+<defs>
+<font id="ct-search-dollar" horiz-adv-x="1000" >
+<font-face font-family="ct-search-dollar" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="search-dollar" unicode="&#xe903;" d="M986-15l-194 195c-9 9-21 14-33 14h-32c54 69 86 156 86 250 0 224-182 406-407 406s-406-182-406-406 182-406 406-406c95 0 181 32 250 86v-32c0-13 5-25 14-33l195-195c18-19 48-19 66 0l55 55c19 18 19 48 0 66z m-580 178c-155 0-281 125-281 281 0 155 126 281 281 281 156 0 282-126 282-281 0-155-126-281-282-281z m53 298l-88 26c-10 3-17 13-17 25 0 14 11 26 23 26h55c9 0 18-3 25-8 7-4 15-3 20 2l23 22c7 6 6 18-1 23-18 14-39 21-61 22v32c0 9-7 16-16 16h-31c-9 0-16-7-16-16v-31c-46-1-83-40-83-88 0-39 25-74 61-85l88-26c10-3 17-14 17-25 0-14-10-26-23-26h-54c-9 0-18 3-26 7-6 4-14 4-19-1l-23-22c-7-7-7-18 1-24 18-13 39-21 61-22v-32c0-8 7-15 16-15h31c9 0 16 7 16 15v32c46 1 83 40 83 88 0 39-25 74-62 85z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

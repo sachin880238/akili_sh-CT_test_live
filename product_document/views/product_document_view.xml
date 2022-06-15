@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="product_normal_form_view_inherit_product_document" model="ir.ui.view">
+      <field name="name">product.product.form</field>
+      <field name="model">product.product</field>
+      <field name="mode">extension</field>
+      <field eval="8" name="priority"/>
+      <field name="inherit_id" ref="product.product_normal_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form//notebook/page[5]" position="after">
+          <page string="DOWNLOADS">
+            <field name="product_documents_ids">
+              <tree string="Product Document">
+                <field name="sequence" widget="handle"/>
+                <field name="public" string='Website'/>
+                <field name="name" string="Document"/>
+                <field name="file_type" invisible='1'/>
+                <field name="datas" string="File/Link"/>
+                <field name="create_date"/>
+                <field name="description"/>
+              </tree>
+              <form string="Product Document">
+                <group>
+                  <field name="name" string="Document" required="1"/>
+                  <field name="file_type"/>
+                  <field name="datas" context="{'default_public':True}" filename="datas_fname" />
+                  <field name="datas_fname" invisible="1"  class="oe_inline oe_right"/>
+                  <field name="create_date"/>
+                  <field name="public"/>
+                  <field name="description" invisible="0"/>
+                </group>
+              </form>
+            </field>    
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="product_template_only_form_view_inherit_product_document" model="ir.ui.view">
+      <field name="name">product.template.inherit.product.document</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//form//notebook/page[6]" position="after">
+          <page string="DOWNLOADS">
+            <field name="product_documents_ids">
+              <tree string="Product Document">
+                <field name="sequence" widget="handle"/>
+                <field name="public" string='Website'/>
+                <field name="name" string="Document"/>
+                <field name="file_type" invisible='1'/>
+                <field name="datas" string="File/Link"/>
+                <field name="create_date"/>
+                <field name="description"/>
+              </tree>
+              <form string="Product Document">
+                <group>
+                  <field name="name" string="Document" required="1"/>
+                  <field name="file_type"/>
+                  <field name="datas" context="{'default_public':True}" filename="datas_fname" />
+                  <field name="datas_fname" invisible="1"  class="oe_inline oe_right"/>
+                  <field name="create_date"/>
+                  <field name="public"/>
+                  <field name="description" invisible="0"/>
+                </group>
+              </form>
+            </field>    
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+       
+  </data>
+</odoo>

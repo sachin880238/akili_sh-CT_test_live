@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+   
+     
+
+
+     <t t-name="productVideo">
+        <div class="">
+            <style>
+                .icon-user {
+                  position: absolute;
+                  
+                  background: red;
+                  width: 16px;
+                  height: 16px;
+                  left: 6px;
+                  bottom: 0px;
+                }
+            </style>
+            <span class="search_icon fa fa-search fa fa-rotate-90" style="position: relative;top: 12px;left: 386px;color: #1e77c5;"></span>
+            <span class="delete_icon  fa fa-trash" style="position: relative;top: 56px;left: 366px;color: #1e77c5;"></span>
+            <span class="edit_icon  fa fa-pencil-square-o" style="position: relative;top: 102px;left: 346px;color: #1e77c5;"></span>
+            <textarea id="text_data" name="text_data" class="text_data" rows="4" cols="50" readonly="" style="min-height: 120px;margin-top: -16px;margin-bottom: 0px;resize: none;"/>
+             
+        </div>
+    </t>
+    <t t-name="billing_address">
+        <div class="">
+            <style>
+                .icon-user {
+                  position: absolute;
+                  
+                  background: red;
+                  width: 16px;
+                  height: 16px;
+                  left: 6px;
+                  bottom: 0px;
+                }
+            </style>
+            <span class="search_icon fa fa-search fa fa-rotate-90" style="position: relative;top: 11px;left: 386px;color: #1e77c5;"></span>
+            <span class="delete_icon  fa fa-trash" style="position: relative;top: 54px;left: 365px;color: #1e77c5;"></span>
+            <span class="edit_icon  fa fa-pencil-square-o" style="position: relative;top: 102px;left: 346px;color: #1e77c5;"></span>
+            <textarea id="billing_text_data" name="text_data" class="billing_text_data" rows="4" cols="50" readonly="" style="min-height: 120px;margin-top: -15px;resize: none;"/>
+             
+        </div>
+    </t>
+    <t t-name="shipping_address">
+        <div class="">
+            <style>
+                .icon-user {
+                  position: absolute;
+                  
+                  background: red;
+                  width: 16px;
+                  height: 16px;
+                  left: 6px;
+                  bottom: 0px;
+                }
+            </style>
+            <span class="search_icon fa fa-search fa fa-rotate-90" style="position: relative;top: 12px;left: 387px;color: #1e77c5;"></span>
+            <span class="delete_icon  fa fa-trash" style="position: relative;top: 57px;left: 367px;color: #1e77c5;"></span>
+            <span class="edit_icon  fa fa-pencil-square-o" style="position: relative;top: 103px;left: 347px;color: #1e77c5;"></span>
+            <textarea id="billing_text_data" name="text_data" class="shipping_text_data" rows="4" cols="50" readonly="" style="min-height: 120px;margin-top: -15px;resize: none;"/>
+             
+        </div>
+    </t>
+
+     
+</templates>
+
+

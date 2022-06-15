@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="sale.model_sale_order" model="ir.model">
+      <field name="website_form_access" eval="True"/>
+      <field name="website_form_label">Sale Order</field>
+    </record>
+
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+      <value>sale.order</value>
+      <value eval="['client_order_ref','priority','note','partner_invoice_id', 'partner_shipping_id','attachment', 'attachment_name',]"/>
+    </function>
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+      <value>res.partner</value>
+      <value eval="['company_type', 'use_acc_comm', 'default_address', 'comp_name', 'type','is_company','primary_tel_type','alternate_communication_1','alternate_commu_type_1','alternate_communication_2', 'alternate_commu_type_2','street2'
+        ]"/>
+    </function>
+  </data>
+</odoo>

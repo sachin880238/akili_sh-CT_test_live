@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">  
+        <record id="website_config_4" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Instructions</field>
+            <field name="name">Cart</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="website_config_5" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Instructions</field>
+            <field name="name">Find A Product</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="website_config_6" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Instructions</field>
+            <field name="name">Account</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="website_config_7" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Instructions</field>
+            <field name="name">Sign In</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="website_config_8" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Instructions</field>
+            <field name="name">Password</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="website_config_9" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Instructions</field>
+            <field name="name">Security Code</field>
+            <field name="source">CT</field>
+        </record>
+
+        <record id="website_config_10" model="system.config">
+            <field name="cat_name">Instructions</field>
+            <field name="name">New Customer Individual</field>
+        </record>
+
+        <record id="website_config_11" model="system.config">
+            <field name="cat_name">Instructions</field>
+            <field name="name">New Customer Company</field>
+        </record>
+
+    </data>
+</odoo>

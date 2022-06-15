@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+  	<record model="ir.ui.view" id="teams_form_view_inherit">
+      <field name="name">Teams</field>
+      <field name="model">crm.team</field>
+      <field name="priority" eval="1"/>
+      <field name="arch" type="xml">
+        <form string="Teams">
+          <header>
+            <button 
+            	name="set_team_state_2_active" 
+            	type="object" 
+            	class="btn-primary"
+            	string="ACTIVATE" 
+            	help="Activate team." 
+            	attrs="{'invisible':[('state','in',['active','inactive'])]}"/>
+            
+            <button 
+            	name="set_team_state_2_inactive" 
+            	type="object" 
+            	class="btn-primary"
+              attrs="{'invisible':[('state','in',['draft','inactive'])]}"
+            	string="DEACTIVATE" 
+            	help="Deactivate team."/>
+
+            <button 
+            	name="set_team_state_2_draft" 
+            	type="object" 
+            	class="oe_button  oe_statinfo oe_left"
+              attrs="{'invisible':[('state','in',['draft','active'])]}"
+            	string="RESET TO DRAFT" 
+            	help="Chagne Team state to Reset to draft"/>
+            
+            <field name="state" widget="statusbar"/>
+            <field name="parent_state" invisible="1"/>
+          </header>
+          
+          <sheet>
+          	<group>
+              <div>
+                <div class="team_div">
+            		  <h1>
+            			 <i class="fas fa-user-friends team_icon"></i>
+            		  </h1>
+                </div>
+                <div class="team_title">
+            		  <h1>
+            			 <field name="name" nolabel="1"/>
+            		  </h1>
+                </div>
+              </div>
+          	</group>
+            <group>
+              <group>
+                <field name="team"/>
+                <field name="pro_manager" string="Leader" options='{"no_open": True, "no_create_edit": True}'/>
+                <field name="company_id" string="Company" options='{"no_open": True, "no_create_edit": True}'/>
+                <field name="desc"/>
+              </group>
+            </group>
+            <notebook>
+              <page name="teams_related_users" string="USERS">
+                <field name="user_ids"/>
+              </page>
+              <page name="teams_dashboard" string="DASHBOARD">
+              </page>
+              <page name="product_categories" string="CATEGORIES">
+                <field name="product_category_id"/>
+              </page> 
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="teams_list_view">
+      <field name="name">Teams</field>
+      <field name="model">crm.team</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="sequence" widget="handle"/>
+          <field name="name" string="Team"/>
+          <field name="company_id"/>
+          <field name="pro_manager" string="Leader"/>
+          <field name="desc"/>
+          <field name="state"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="teams_view_action" model="ir.actions.act_window">
+      <field name="name">Teams</field>
+      <field name="res_model">crm.team</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <!-- <field name="domain">[]</field>
+      <field name="context">{'default_customer': False,  "default_sales_team":1}</field> -->
+      <field name="view_ids" eval="[(5, 0, 0),
+  													(0, 0, {'view_mode': 'tree', 'view_id': ref('teams_list_view')}),
+  													(0, 0, {'view_mode': 'form', 'view_id': ref('teams_form_view_inherit')})]"/>
+    </record>
+  	<menuitem id="crm_team_menu"
+      name="Teams"
+      parent="backend_menuitem.company_menu"
+      action="teams_view_action"
+      sequence="5"/>
+  </data>
+</odoo>

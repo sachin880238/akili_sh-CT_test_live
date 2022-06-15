@@ -1,0 +1,14 @@
+<?xml version ="1.0" encoding="utf-8"?>
+
+<odoo>
+	<record model="ir.sequence" id="shipping_estimator_sequence">
+		<field name="name">Sequence For Shipping Estimator</field>
+		<field name="code">shipping.package.wizard</field>
+		<field name="implementation">standard</field>
+		<field name="active">TRUE</field>
+		<field name="prefix">PKG</field>
+		<field name="padding">3</field>
+		<field name="number_increment">1</field>
+		<field name="number_next_actual">1000</field>
+	</record>
+</odoo>

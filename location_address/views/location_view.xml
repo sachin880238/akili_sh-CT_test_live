@@ -1,0 +1,140 @@
+<odoo>
+  <data>
+    <record id="location_warehouse_stock_location_tree_inherit" model="ir.ui.view">
+        <field name="name">location_warehouse_inherit</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='usage']" position="replace">
+                <field name="barcode" string="ID"/>
+                <field name="usage" invisible='1'/>
+                <field name="display_code"/>
+                <field name="partner_id"/>
+                <field name="stage"/>
+                <field name="sequence" widget="handle"/>
+            </xpath>
+       </field>
+        
+    </record>
+    <record id="location_warehouse_address_form" model="ir.ui.view">
+        <field name="name">location_warehouse_inherit</field>
+        <field name="model">stock.location</field>
+        <field name="arch" type="xml">
+          <form>
+            <header>
+              <button class="btn btn-primary"
+                      name="active_location" 
+                      type="object"
+                      string="ACTIVE"
+                      attrs="{'invisible':[('stage','=', 'active')]}"/>
+              <button class="btn btn-secondary" 
+                      name="inactive_location" 
+                      type="object"
+                      string="INACTIVE"
+                      attrs="{'invisible':[('stage','in', ['inactive','draft'])]}"/>
+              <field name="stage" widget="statusbar" />
+            </header>
+            <sheet> 
+              <div class="oe_button_box" name="button_box">
+                <button class="oe_stat_button button_change"
+                        icon="fa-warehouse" 
+                        name="%(stock.location_open_quants)d" 
+                        type="action"
+                        context="{'location_id': active_id}">
+                  <field string="Stock" name="stock_count" widget="statinfo"/>
+                </button>
+
+                <button class="oe_stat_button button_change"
+                        icon="fa-list-ol" 
+                        name="stock.action_rules_form" 
+                        type="action"
+                        context="{'location_id': active_id}">
+                  <field string="Rules" name="rules_count" widget="statinfo"/>
+                </button>
+               </div>
+               <div class="row col-sm-12">
+                 <div>
+                   <i class="fas fa-map-marker-alt" style="font-size: 40px;margin-left: 31%;"/>
+                   <h1>
+                     <field name="full_name" nolabel='1' class="name_carts name_left2 location_name"/>
+                   </h1>
+                 </div>
+               </div>
+                 <group>
+                   <group string='Details'> 
+                    <field name="barcode" string="Location ID"/>
+                    <field name="usage" string='Location Type'/>
+                    <field name="location_id" string="Parent Name" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                    <field name="complete_name" string="Parent Name" invisible="1"/>
+                    <field name="display_code" string="Parent Code"/>
+                    <field name="name" string="Location Name"/>
+                    <field name="code" string="Location Code"/>
+                    <label for="partner_id" string="Address"/>
+                    <div>
+                      <field name="partner_id" class="oe_edit_only" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                      <field name="partner_addr1" string="Address" class="oe_read_only"/>
+                    </div>
+                   </group>
+                   <group string='Function'>
+                     <field name="inventory_function"/>
+                     <field name="is_ct_packing_location"/>
+                     <field name="is_ct_shipping_location"/>
+                     <field name="is_ct_receiving_location"/>
+                     <field name="is_ct_manufacturing_location"/>
+                     <field name="is_ct_assembly_location"/>
+                     <field name="is_ct_inspection_location"/>
+                     <field name="is_ct_staging_location"/>
+                   </group>
+                 </group>
+                 <group>
+                   <group string='Notes'> 
+                     <field name="comment" string="Location Comments"/> 
+                   </group>
+                   <group string='Accounting'>
+                     <field name="valuation_in_account_id" string="Incoming Stock"/>
+                     <field name="valuation_out_account_id" string="Outgoing Stock"/> 
+                   </group>
+                 </group>
+             </sheet>
+           </form>
+                 
+        </field> 
+    </record>
+    
+    
+    <record id="action_location_form" model="ir.actions.act_window">
+        <field name="name">Locations</field>
+        <field name="res_model">stock.location</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="location_warehouse_address_form"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+    	(0, 0, {'view_mode': 'tree', 'view_id': ref('location_warehouse_stock_location_tree_inherit')}),
+    	(0, 0, {'view_mode': 'form', 'view_id': ref('location_warehouse_address_form')})]"/>
+        <field name="search_view_id" ref="stock.view_location_search"/>
+        <field name="context">{'search_default_in_location':1}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Add a new location
+          </p><p>
+            Define your locations to reflect your warehouse structure and
+            organization. Odoo is able to manage physical locations
+            (warehouses, shelves, bin, etc), partner locations (customers,
+            vendors) and virtual locations which are the counterpart of
+            the stock operations like the manufacturing orders
+            consumptions, inventories, etc.
+          </p><p>
+            Every stock operation in Odoo moves the products from one
+            location to another one.  For instance, if you receive products
+            from a vendor, Odoo will move products from the Vendor
+            location to the Stock location. Each report can be performed on
+            physical, partner or virtual locations.
+          </p>
+        </field>
+    </record>
+    <menuitem action="action_location_form" id="stock.menu_action_location_form"
+        parent="stock.menu_warehouse_config" sequence="2" groups="stock.group_stock_multi_locations"/>
+    
+    
+      </data>
+</odoo>

@@ -1,0 +1,7 @@
+dnspython
+phonenumbers
+plivo
+forex_python
+skpy
+openpyxl
+odoo_import_export_client

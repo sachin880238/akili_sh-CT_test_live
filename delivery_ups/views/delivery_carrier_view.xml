@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_delivery_carrier_form_with_provider_ups" model="ir.ui.view">
+        <field name="name">delivery.carrier.form.provider.ups</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='destination']" position='before'>
+                <page string="UPS Configuration" attrs="{'invisible': [('delivery_type', '!=', 'ups')]}">
+                    <group>
+                        <group>
+                            <field name="ups_user" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                            <field name="ups_password" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                            <field name="ups_shipper_nbr" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                            <field name="ups_access_nbr" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                            <field name="ups_default_service_type" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                        </group>
+                        <group>
+                            <field name="ups_default_packaging_id" attrs="{'required': [('delivery_type', '=', 'ups')]}" domain="[('package_carrier_type', '=', 'ups')]"/>
+                            <field name="ups_package_wgt_unit" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                            <field name="ups_package_dimension_unit" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                            <field name="ups_label_file_type" attrs="{'required': [('delivery_type', '=', 'ups')]}"/>
+                        </group>
+                        <group string="Value Added Services" name="ups_vas">
+                            <field name="ups_bill_my_account" attrs="{'invisible': [('delivery_type', '!=', 'ups')]}"/>
+                            <field name="ups_saturday_delivery" string="Saturday Delivery" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_default_service_type', 'in', ['03','11','13','59','12','65','08'])]}"/>
+                            <field name="ups_cod" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_default_service_type', '=', '96')]}"/>
+                            <field name="ups_cod_funds_code" attrs="{'required': [('delivery_type', '=', 'ups')], 'invisible': [('ups_cod', '=', False)]}" widget="radio"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_withcarrier_out_form_inherit_delivery_ups" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.ups</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='carrier_id']" position="attributes">
+                <attribute name="domain">[('ups_cod', '=', False)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="shipping_estimator_form" model="ir.ui.view">
+        <field name="name">echo.estimator.form</field>
+        <field name="model">echo.estimator</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id" />
+                            <field name="destination_type"/>
+                            <field name="sale_id" invisible="0"/>
+                            <field name="destination"/> 
+                        </group>
+                        <group>
+                            <field name="special_handling" />
+                            <field name="notification"/> 
+                            <field name="insurence" />
+                            <field name="length_of_container"/>
+                            <field name="length_of_trailer" />
+                        </group>
+                    </group>
+                
+                <notebook>
+                    <page string="OPTIONS">
+                        <field name="echo_estimator_lines">
+                        <tree>
+                            <field name="select" />
+                            <field name="price"/>
+                            <field name="carrier_id"/> 
+                            <field name="days" />
+                            <field name="cost"/> 
+                            <field name="packangin_rate" />
+                            <field name="insurence"/> 
+                            <field name="multiplier" /> 
+                        </tree>
+                        </field> 
+                    </page>
+                    <page string="CONTAINERS">
+                        
+                        
+                    </page>
+                    <page string="CLASSIFICATIONS">
+                        
+                        
+                    </page>
+                </notebook>
+            </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="echo_estimate_wizard_action" model="ir.actions.act_window">
+        <field name="name">Echo Estimations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">echo.estimator</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>  
+
+</odoo>

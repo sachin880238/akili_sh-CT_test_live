@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="view_address_res_partner_tree" model="ir.ui.view">
+      <field name="name">res.partner.tree</field>
+      <field name="model">res.partner</field>
+      <field name="type">tree</field>
+      <field eval="8" name="priority"/>
+      <field name="arch" type="xml">
+        <tree create="false" edit="false" string="Addresses">
+          <field name="sequence" widget="handle"/>
+          <field name="name" string="Person"/>
+          <field name="is_supplier" invisible="1"/>
+          <field name="comp_name" string="Company"/>
+          <field name="parent_id" string="Account"/>
+          <field name="addr_type" />
+          <field name="type_extend" string="Type" attrs="{'invisible':[('is_supplier','=',True)]}" invisible="1"/>
+          <field name="vendor_addr_type" string="Type" attrs="{'invisible':[('is_supplier','=',False)]}" invisible="1"/>
+          <field name="city"/>
+          <field name="state_code"/>
+          <field name="zip" string="Zipcode"/>
+          <field name="country_id"/>
+          <field name="phone" string="Telephone"/>
+          <field name="get_email" string="Email" invisible="1" />
+          <field invisible="1" name="function"/>
+          <field invisible="1" name="user_id"/>
+          <field invisible="1" name="is_company"/>
+          <field invisible="1" name="active"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_address_vendor_tree" model="ir.ui.view">
+      <field name="name">res.partner.tree</field>
+      <field name="model">res.partner</field>
+      <field name="type">tree</field>
+      <field eval="8" name="priority"/>
+      <field name="arch" type="xml">
+        <tree create="false" edit="false" string="Addresses">
+          <field name="sequence" widget="handle"/>
+          <field name="name" string="Person"/>
+          <field name="is_supplier" invisible="1"/>
+          <field name="comp_name" string="Company"/>
+          <field name="parent_id" string="Vendor"/>
+          <field name="addr_type" />
+          <field name="type_extend" string="Type" attrs="{'invisible':[('is_supplier','=',True)]}" invisible="1"/>
+          <field name="vendor_addr_type" string="Type" attrs="{'invisible':[('is_supplier','=',False)]}" invisible="1"/>
+          <field name="city"/>
+          <field name="state_code"/>
+          <field name="zip" string="Zipcode"/>
+          <field name="country_id"/>
+          <field name="phone" string="Telephone"/>
+          <field name="get_email" string="Email" invisible="1" />
+          <field invisible="1" name="function"/>
+          <field invisible="1" name="user_id"/>
+          <field invisible="1" name="is_company"/>
+          <field invisible="1" name="active"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_address_res_partner_form" model="ir.ui.view">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="type">form</field>
+      <field eval="8" name="priority"/>
+      <field name="arch" type="xml">
+        <form create="false" edit="0" string="Contact">
+          <header>
+           <button name="active_partner_address" type="object" class="oe_button  oe_statinfo oe_left"
+            string="ACTIVATE" help="Activate partner address" attrs="{'invisible':[('addr_state','=','active')]}"/>
+            <button name="inactive_partner_address" type="object" class="oe_button  oe_statinfo oe_left"
+                    attrs="{'invisible':[('addr_state','=','inactive')]}"
+            string="DEACTIVATE" help="no longer valid"/>
+            <field name="addr_state" widget="statusbar" statusbar_visible="active,inactive"/>
+          </header>
+          <sheet>
+            <div style='float:left;' >
+              <div style='float:left;' >
+                <div style='float:left;' >
+                  <label for='type_extend' string='Type' attrs="{'invisible':[('is_supplier','=',True)]}" invisible="1"/>
+                  <label for="vendor_addr_type" invisible="1" string="Type" attrs="{'invisible':[('is_supplier','=',False)]}" />
+                </div>
+                <div style='float:left;' invisible="1">
+                  <field name="type_extend" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',True)]}"/>
+                  <field name="vendor_addr_type" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                </div>
+              </div>
+              <div style='float:left; margin-left:20px;' invisible="1" >
+                <label for='default_address' string='Default' />
+                <field name='default_address' />
+              </div>
+              <div style='float:left; margin-left:20px;' invisible="1">
+                <label for='use_acc_comm' string='Same as Account' />
+                <field name='use_acc_comm' />
+                <label for='type' string='Type' invisible='1' />
+                <field name="type" required="1" widget="radio" options="{'horizontal': true}"  invisible='1' />
+              </div>
+            </div>
+          <div class="row">
+
+             <div class="col-12 col-md-8">
+                  <field name="image"  widget="image" nolabel='1' class="oe_avatar oe_left name_space"
+                     options='{"preview_image": "image", "size": [70, 70]}'/>
+                
+                <h1 class="row align-items-start">
+                  <field name="address_title" nolabel="1" class="name_image"/>
+                </h1>
+              
+           
+            </div>
+        </div>
+          <group style="margin-top:8px;">
+              <group>
+                <field name="parent_id" string="Account" attrs="{'invisible':[('parent_id','=',False)]}" options='{"no_open": True}'/>
+                <field name="account_name" string="Account" attrs="{'invisible':[('account_name','=',False)]}"/>
+                <field name="addr_type" string="Address Type" attrs="{'invisible':[('parent_id','=',True)]}"/>
+                <field name="type_extend" invisible="1"/>
+                <field name="vendor_addr_type" invisible="1"/>
+                <field name="get_same_as_account" string="Same as Account"  readonly="1"/>
+                <field name="get_default_addr" string="Default" />
+                <field name="name" string="Person" attrs="{'invisible':[('parent_id','=',False)]}"/>
+                <field name="c_person" attrs="{'invisible':[('account_name','=',False)]}"/>
+                <field name="c_company" attrs="{'invisible':[('account_name','=',False)]}"/>
+                <field name="company_required" invisible="1"/>
+                <field name="comp_name" string="Company" attrs="{'invisible':[('parent_id','=',False)]}"/>
+                <label for="street" string="Address" class="oe_edit_only"/>
+                  <div class="o_address_format oe_edit_only" name="div_address">
+                    <field name="is_supplier" invisible="1"/>
+                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                    <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                    <field name="city" placeholder="City" class="o_address_city"/>
+                    <field name="country_code" invisible='1' />
+                    <field name="state_code" class="o_address_state oe_read_only" />
+                    <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}' />
+                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                  </div>
+                  <label for="complete_address" string="Address" class="oe_read_only"/>
+                  <field name="complete_address" class="oe_read_only" nolabel="1"/>
+                 <field name="desc" domain="[('type','=',type_extend)]" attrs="{'invisible':[('is_supplier','=',True)]}" context="{'default_type': type_extend}" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+                 <!-- <field name="category_id" widget="many2many_tags" placeholder="Tags..." options="{'no_create_edit': True, 'no_create': True}" string="Tags" context="{'show_type': is_supplier}" domain="['|',('type','=',type_extend),('type_vendor','=',vendor_addr_type),('for_vendor','=',is_supplier)]" /> -->
+              </group>
+              <group class="oe_edit_only">
+                  <field name="function" placeholder="e.g. Sales Director" invisible='1'/>
+                  <field name="user_ids" invisible="1"/>
+                  <field name="email" widget="email" />
+                <label style="font-weight: bold;" for='phone' string='Telephone' />
+                <div>
+                  <field name="phone" style="width: 68%;" widget="phone" />
+                  <field name="primary_tel_type" style="padding-left: 10px;width: 32%"/>
+                  </div>
+                <label style="font-weight: bold;" for='alternate_communication_1' string='Other' />
+                <div>
+                  <field name="alternate_communication_1" widget="phone" style="width: 68%;"/>
+                  <field name="alternate_commu_type_1" style="padding-left: 10px;width: 32%"/>
+                </div>
+                <label style="font-weight: bold;" for='alternate_communication_2' string='Other' />
+                <div>
+                  <field name="alternate_communication_2" style="width: 68%;"  widget="phone"/>
+                  <field name="alternate_commu_type_2" style="padding-left: 10px;width: 32%"/>
+                </div>
+                  <field name="website"/>
+                  <field name="lang"/>
+                  <field name="add_date_created" widget="date"  readonly="1"/>
+                  <field name="add_last_used_date" widget="date"  readonly="1"/>
+              </group>
+              <group class="oe_read_only">
+                <field name="get_email" attrs="{'required': [('user_ids','!=', [])]}"/>
+                <field name='get_telephone'  />
+                <field name='get_other1'   />
+                <field name='get_other2'   />
+                <field name='get_website' widget="url"/>
+                <field name='get_lang'  />
+                <field name="add_date_created" widget="date"/>
+                <field name="add_last_used_date" widget="date"/>
+                <field name="id" string="Partner ID"/>
+                <field name="ref" string="Account ID"/>
+                <field name="old_account_id"/>
+                <field name="old_address_id"/>
+              </group>
+            </group>
+            <field name="supplier" invisible="True"/>
+            <field name="customer" invisible="True"/>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="res_partner_search_view" model="ir.ui.view">
+      <field name="name">res.partner.search.view</field>
+      <field name="model">res.partner</field>
+      <field name="type">search</field>
+      <field eval="8" name="priority"/>
+      <field name="arch" type="xml">
+        <search string="Search Addresses">
+          <field name="name" string="Person"/>
+          <field name="comp_name" string="Company"/>
+          <field name="parent_id" string="Account"/>
+          <field name="addr_type" string="Type" />
+          <field name="city" string="City" />
+          <field name="state_id" string="State" />
+          <field name="zip" string="Zipcode" />
+          <field name="country_id" string="Country" />
+          <field name="phone" string="Telephone" />
+          <field name="email" string="Email" />
+          <field name="category_id" string="Tags" />
+          <filter name="filter_my_partners" help="My Contacts"
+                           domain="[('user_id','=',uid)]"/>
+           <separator/>
+           <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+           <separator/>
+           <field name="category_id" string="Tag" filter_domain="[('category_id','ilike', self)]"/>
+           <field name="user_id"/>
+           <field name="phone" filter_domain="['|',('phone','ilike',self),('mobile','=',self)]"/>
+           <group expand="0" name="group_by" string="Group By">
+               <filter name="salesperson" string="Salesperson" domain="[]" context="{'group_by' : 'user_id'}" />
+               <filter name="group_company" string="Company" context="{'group_by': 'parent_id'}"/>
+               <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
+           </group>
+        </search>
+      </field>
+    </record>
+
+    <record id="view_address_res_partner_search" model="ir.ui.view">
+      <field name="name">res.partner.address.search.view</field>
+      <field name="model">res.partner</field>
+      <field name="type">search</field>
+      <field eval="8" name="priority"/>
+      <field name="arch" type="xml">
+        <search string="Search Addresses">
+          <field name="name" string="Account"/>
+          <field name="city" string="City"/>
+          <field name="state_id" string="State"/>
+          <field name="zip" string="Zipcode"/>
+          <field name="country_id" string="Country"/>
+          <field name="phone" string="Telephone"/>
+          <field name="category_id" string="Tag"/>
+        </search>
+      </field>
+    </record>
+
+    <!-- Customers -->
+    <record id="act_open_address_res_partner_view" model="ir.actions.act_window">
+      <field name="name">Addresses</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="search_view_id" ref="res_partner_search_view"/>
+      <field name="domain">[('is_supplier','=',False),('supplier','=',False)]</field>
+      <field name="context">{'address_view':True}</field>
+    </record>
+    
+    <record id="act_open_address_res_partner_view_form" model="ir.actions.act_window.view">
+      <field name="name">Address</field>
+      <field name="act_window_id" ref="act_open_address_res_partner_view"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_address_res_partner_form"/>
+      <field eval="20" name="sequence"/>
+    </record>
+    
+    <record id="act_open_address_res_partner_view_tree" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="act_open_address_res_partner_view"/>
+      <field eval="10" name="sequence"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="view_address_res_partner_tree"/>
+    </record>
+
+    <!-- Vendors -->
+    <record id="act_open_address_vendor_view" model="ir.actions.act_window">
+      <field name="name">Addresses</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="res_partner_search_view"/>
+      <field name="domain">['|',('supplier','=',True),('is_supplier','=',True)]</field>
+      <field name="context">{'address_view':True}</field>
+    </record>
+    
+    <record id="act_open_address_vendor_view_form" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="act_open_address_vendor_view"/>
+      <field eval="20" name="sequence"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_address_res_partner_form"/>
+    </record>
+    
+    <record id="act_open_address_vendor_view_tree" model="ir.actions.act_window.view">
+      <field name="act_window_id" ref="act_open_address_vendor_view"/>
+      <field eval="10" name="sequence"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="view_address_vendor_tree"/>
+    </record>
+
+    <record id="custom_address_view_address_res_partner_form" model="ir.ui.view">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="type">form</field>
+      <field eval="8" name="priority"/>
+      <field name="arch" type="xml">
+
+     <form string="Contact">
+                <sheet>
+                  <div style='float:left;' >
+                    <div style='float:left;' >
+                      <div style='float:left;' >
+                        <label for='type_extend' string='Type' attrs="{'invisible':[('is_supplier','=',True)]}"/>
+                        <label for='vendor_addr_type' string='Type' attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                      </div>
+                      <div style='float:left;' >
+                        <field name="type_extend" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',True)]}" readonly="1"/>
+                        <field name="vendor_addr_type" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                      </div>
+                    </div>
+                    <div style='float:left; margin-left:20px;' >
+                      <label for='default_address' string='Default' />
+                      <field name='default_address'/>
+                    </div>
+                    <div style='float:left; margin-left:20px;'>
+                      <label for='use_acc_comm' string='Same as Account' />
+                      <field name='use_acc_comm' />
+                      <label for='type' string='Type' invisible='1' />
+                      <field name="type" required="1" widget="radio" options="{'horizontal': true}"  invisible='1' />
+                    </div>
+                  </div>
+                 
+                  <group>
+                    <group style='width: 50%;'>
+                      <field name="is_supplier" invisible="1" />
+                      <field name="company_required" invisible="1" />
+                      <field name="name" string="Contact" attrs="{'required':[('type_extend','=','contact')]}" />
+                      <field name="comp_name" string="Company" attrs="{'required':[('company_required','=',True)]}"/>
+                      <field name="icon_letters" string="Icon"/>
+                      <field name="parent_id"/>
+                    </group>
+              
+                    <group>
+                      <field name="image" widget="image"  class="oe_avatar" 
+                        options='{"preview_image": "image", "size": [70, 70]}' style="margin-right: 73%;"/>
+                    </group>
+                  </group>
+                 
+                  <group style="margin-top:0%;">
+                    <group name='address'>
+                      <label for="street" string="Address" class="oe_edit_only"/>
+                      <div>
+                        <div class="o_address_format oe_edit_only" name="div_address">
+                          <field name="street" placeholder="Street..." class="o_address_street" required='0'/>
+                          <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                          <field name="city" placeholder="City" class="o_address_city" required='0' />
+                          <field name="country_code" invisible='1'/>
+                          <field name="state_code" class="o_address_state oe_read_only" />
+                          <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}'
+                          context="{'country_id': country_id, 'zip': zip}"/>
+                          <field name="zip" placeholder="ZIP" class="o_address_zip" required='0'/>
+                          </div>
+                        </div>
+                        <label for="complete_address" string="Address" class="oe_read_only"/>
+                        <field name="complete_address" class="oe_read_only" nolabel="1"/>
+                        <label for="country_id" string="Country" class="oe_edit_only"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only"
+                          options='{"no_open": True, "no_create": True}' required='0' nolabel="1"/>
+                        <field name="category_id" widget="many2many_tags" placeholder="Tags..." options="{'no_create_edit': True, 'no_create': True}" string="Tags" context="{'show_type': is_supplier}" domain="['|',('type','=',type_extend),('type_vendor','=',vendor_addr_type),('for_vendor','=',is_supplier)]" />
+                        <field name="comment" string="Notes" placeholder="internal notes..."/>
+                    </group>
+
+                    <group class="oe_edit_only">
+                      <field name="function" placeholder="e.g. Sales Director" invisible='1'/>
+                      <field name="user_ids" invisible="1"/>
+                      <field style="width: 270px;" name="email" widget="email" attrs="{'required': ['|',('user_ids','!=', [])]}"/>
+                      <label for="div" string="Telephone"/>
+                      <div>
+                      <field style="width: 190px;" name="phone" widget="phone"/>
+                      <field style="padding-left: 10px;width: 80px;" name="primary_tel_type" context="{'default_for_phone':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/><br/>
+                      </div>
+                      <label for="div" string="Other"/>
+                      <div>
+                      <field style="width: 190px;" name="alternate_communication_1" widget="phone" />
+                      <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_1" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}" /><br/>
+                      </div>
+                      <label for="div" string="Other"/>
+                      <div>
+                      <field style="width: 190px;" name="alternate_communication_2"  widget="phone" />
+                      <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_2" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                      </div>
+                      <field style="width: 270px;" name="website" invisible="1"/>
+                      <field style="width: 270px;" name="lang"/>
+                      <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                      <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                    </group>
+
+                    <group class="oe_read_only">
+                      <field name="get_email" attrs="{'required': [('user_ids','!=', [])]}"/>
+                      <field name='get_telephone'  />
+                      <field name='get_other1'   />
+                      <field name='get_other2'   />
+                      <field name='get_website' widget="url"/>
+                      <field name='get_lang'  />
+                      <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                      <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                    </group>
+                  </group>
+                  <field name="supplier" invisible="True"/>
+                  <field name="customer" invisible="True"/>
+                </sheet>
+              </form>
+            </field>
+          </record>
+  </data>
+</odoo>

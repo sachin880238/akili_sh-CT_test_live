@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <!--  <t t-extend="UserMenu.Actions">
+       <t t-jquery="a[data-menu='settings']" t-operation="after">
+           <a role="menuitem" href="#" data-menu="manual" class="dropdown-item">User Manual</a>
+       </t>
+   </t> -->
+   <header t-name="Menu">
+    <nav class="o_main_navbar">
+        <ul class="o_menu_apps"/>
+        <a class="o_menu_brand" role="button"/>
+        <ul class="o_menu_sections" role="menu">
+          <!-- <li style="cursor: pointer;">
+            <a class="dashboard-data" data-menu="manual">Dashboard</a>
+          </li> -->
+        </ul>
+        <ul class="o_menu_systray" role="menu"/>
+    </nav>
+</header>
+<t t-name="DashBoard">
+    <div class="oe_dashboard_links" style="display:none;">
+        <button type="button" class="button oe_dashboard_link_change_layout btn btn-secondary" title="Change Layout..">
+            <img src="/board/static/src/img/layout_1-1-1.png" width="16" height="16" alt=""/>
+            <span> Change Layout </span>
+        </button>
+    </div>
+    <table t-att-data-layout="node.attrs.layout" t-attf-class="oe_dashboard oe_dashboard_layout_#{node.attrs.layout}" cellspacing="0" cellpadding="0" border="0">
+    <tr>
+        <td t-foreach="node.children" t-as="column" t-if="column.tag == 'column'"
+             t-att-id="'column_' + column_index" t-attf-class="row oe_dashboard_column index_#{column_index}">
+
+            <t t-foreach="column.children" t-as="action" t-if="action.tag == 'action'" t-call="DashBoard.action"/>
+        </td>
+    </tr>
+    </table>
+</t>
+<t t-name="DashBoard.action">
+    <div t-att-data-id="action.attrs.id" class="oe_action custom_dashboard" style="background:#ffffff;">
+
+         <span class="menu_name" style="display:none;"><t t-esc="action.attrs.menu"/></span>
+          <span class="colour_dashboard" style="display:none;"><t t-esc="action.attrs.colour"/></span>
+        <h2 t-attf-class="oe_header #{action.attrs.string ? '' : 'oe_header_empty'}" style="text-align: left;">
+          <t t-if="action.attrs.icon_type == 'class_icon'">
+            <span t-att-class="action.attrs.class_name" style="padding: 8px;font-size: 31px;color: black;"></span>
+          </t>
+          <t t-if="action.attrs.icon_type == 'image'">
+            <img t-att-src="'data:image/jpg;base64,'+action.attrs.image" style="height: 30px; width: 30px; margin-top: -12px;margin-right: 12px;"/>
+          </t>
+            <span class="oe_header_txt custom_oe_header_txt"> <t t-esc="action.attrs.string"/> 
+            <!-- <span class="count_records" style="text-align: center;color: black;font-size: 46px;padding-top: 5%;"/> --> 
+            <input type="hidden" class="action_id" t-att-value="action.attrs.name"/>
+            
+            <input type="hidden" class="view_mode" t-att-value="action.attrs.view_mode"/> 
+          <input type="hidden" class="context" t-att-value="action.attrs.context"/>
+          <input type="hidden" class="domain" t-att-value="action.attrs.domain"/> 
+        </span>
+        <div style="float: right;">
+          <span class="count_records" style="text-align: center;color: black;font-size: 34px;padding-top: 5%;"/> 
+            <input class = "oe_header_text" type="text" style="display:none;"/>
+            <t t-if="!action.attrs.string">&amp;nbsp;</t>
+            <span class='oe_icon oe_close'></span>
+        </div>
+        </h2>
+        <!-- <div>
+          <h2 class="count_records" style="text-align: center;color: black;font-size: 46px;padding-top: 5%;">
+            0
+          </h2> -->
+        <!-- </div> -->
+    </div>
+</t>
+</templates>

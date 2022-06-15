@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="conservation_custom_backend_web" name="account assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/conservation_custom_backend_web/static/src/scss/group_title.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/conservation_custom_backend_web/static/src/scss/primary_variables.scss"/>
+            <link rel="stylesheet" href="/conservation_custom_backend_web/static/src/css/backend_custom.css" />
+            <link rel="stylesheet" href="/conservation_custom_backend_web/static/src/css/system.css"/>
+            <link rel="stylesheet" type="text/scss" href="/conservation_custom_backend_web/static/src/scss/form_view_extra.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/design_menu/static/src/scss/form_view_extra.scss"/>
+            <t t-if="request.session.get('align', False) == True">
+              <link rel='stylesheet' href='/conservation_custom_backend_web/static/src/scss/form_align.scss'/>
+            </t>
+            <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet"/>
+
+            <!-- <script type="text/javascript" src="/conservation_custom_backend_web/static/src/js/widgets/sidebar.js"/>  -->
+        </xpath>
+
+         <xpath expr="//link[20]" position="replace">
+             <link rel="stylesheet" type="text/scss" href="/conservation_custom_backend_web/static/src/scss/list_column_border_rm.scss"/>
+         </xpath>   
+    </template>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="po_sort_order_lines" model="ir.ui.view">
+    <field name="name">Sort Orderline</field>
+    <field name="model">pol.sort.line</field>
+    <field name="arch" type="xml">
+      <form string="Sort Lines">
+        <field name="sort_lines" widget="radio" nolabel="1"/>
+        <footer>
+          <button name="sort_order_lines" type="object" string="SORT" class="btn-primary" />
+          <button string="CANCEL" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

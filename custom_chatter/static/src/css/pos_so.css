@@ -1,0 +1,274 @@
+
+.pos .rightpane {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 440px;
+    right: 0;
+    vertical-align: top;
+    margin-left: 422px;
+    -webkit-transform: translate3d(0,0,0);
+}
+
+.pos .leftpane {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    width: 862px;
+    top: 0px;
+    bottom: 0;
+    border-right: solid 1px #CECBCB;
+    border-right: solid 3px #787878;
+    background: #e2e2e2;
+}
+
+.pos .order {
+    background: white;
+    padding-bottom: 8px;
+    padding-top: 49px;
+    font-size: 16px;
+    text-align: left;
+    max-width: 500px;
+    -webkit-transform: translate3d(0,0,0);
+}
+
+.pos .order-selector {
+    /* margin-right: -1px; */
+    margin-left: 253px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex: 1;
+    flex: 3;
+    max-width: -moz-available;
+    max-width: -webkit-fill-available;
+}
+.pos a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.pos .pos-branding .username {
+    float: left;
+}
+.pos select{    
+    margin-top: 14px;
+    width: 20%;
+    border: 1px solid #cecbcb;
+    padding: 6px 21px;
+    padding-left: 7px;
+    margin: 9px;
+    /* background: url(/point_of_sale/static/src/css/../img/search.png) no-repeat 15px; */
+    background-color: white;
+    border-radius: 9px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-size: 13px;
+}
+
+.pos .searchbox input {
+    border-radius: 9px;
+    
+}
+.pos .pos-rightheader {
+    position: absolute;
+    left: 648px;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+}
+
+
+.pos .actionpad .button.set-customer.decentered {
+    padding-left: 7px;
+    padding-right: 67px;
+}
+
+
+/*
+.pos .order-container {
+    position: absolute;
+    top: 16%;
+    width: 100%;
+    height: 100%;
+    background: white;
+}*/
+/*.pos .pos-branding .username {
+    float: right;
+    color: #DDD;
+    font-size: 16px;
+    margin-right: -574px;
+    line-height: 48px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.pos .oe_status {
+    float: right;
+    color: rgba(255,255,255,0.4);
+    padding: 14px;
+    line-height: 20px;
+    font-size: 16px;
+    vertical-align: middle;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.pos a {
+    text-decoration: none;
+    color: #e8e8e8;
+    }*/
+
+/*.pos .rightpane-header {
+    padding: 0;
+    margin-left: -440px;
+    height: 48px;
+    border-bottom: 1px solid #c7c7c7;
+    background: #d3d3d3;
+    text-align: center;
+}*/
+
+/*.pos .actionpad .button.set-customer {
+    padding-left: 40px;
+    padding-right: 51px;
+    margin-top: -171px;
+}*/
+
+/*.control-buttons {
+    margin-top: 41px;
+}
+
+.pos .actionpad .button.set-customer {
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: -100px;
+    margin-left: -14px;
+}
+
+.window{
+	margin-top: 50px;
+}
+
+.pos .control-buttons {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    padding: 8px 16px 0px 11px;
+    margin-bottom: -6px;
+    margin-top: 5px;
+}*/
+
+.pos .pos-content {
+    width: 100%;
+    position: absolute;
+    top: 48px;
+    bottom: 8px;
+    margin-bottom: 48px;
+    bottom: 0;
+    background: #F0EEEE;
+}
+
+
+
+.pos .pos-footer {
+    position:absolute;
+    left:0;
+    bottom:0;
+    width: 100%;
+    height: 48px;
+    margin:0;
+    padding:0;
+    color: gray;
+    background: #393939;
+}
+
+.pos .searchbox {
+    position: absolute;
+    right: 2px;
+    top: 0px;
+}
+
+@media print {
+    * {
+        color: black !important;
+    }
+    body {
+        margin: 0;
+        color: white !important;
+        /* avoid black background if backgrounds are printed */
+        background: initial;
+    }
+    .oe_leftbar,
+    .oe_loading,
+    .pos .pos-topheader,
+    .pos .pos-footer, 
+    .pos .pos-leftpane, 
+    .pos .keyboard_frame,
+    .pos .receipt-screen header,
+    .pos .receipt-screen .top-content,
+    .pos .receipt-screen .centered-content .button {
+        display: none !important;
+    }
+    .pos,
+    .pos .pos-content,
+    .pos .rightpane,
+    .pos .screen, 
+    .pos .window, 
+    .pos .window .subwindow, 
+    .pos .subwindow .subwindow-container{
+        display: block;
+        position: static;
+        height: auto;
+    }
+    .pos{
+        background: white !important;
+    }
+    .pos .rightpane {
+        left: 0px !important;
+        background-color: white;
+    }
+    .pos .receipt-screen {
+        text-align: left;
+    }
+    .pos .receipt-screen .centered-content{
+        position: static;
+        border: none;
+    }
+    .pos .pos-receipt-container {
+        text-align: left;
+    }
+    .pos-actionbar {
+        display: none !important;
+    }
+    .debug-widget{
+        display: none !important;
+    }
+    .pos *{
+        text-shadow: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+    .pos .pos-sale-ticket{
+        margin: 0;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        border: none !important;
+        font-size: 13px !important;
+        width: 266px !important;
+    }
+    .o_debug_manager {
+        display: none !important;
+    }
+    .o_chat_window {
+        display: none !important;
+    }
+}
+
+.o_mail_thread .o_thread_message.o_mail_not_discussion, .o_mail_activity .o_thread_message.o_mail_not_discussion{
+    background-color: white !important;
+    border-bottom: 1px solid #ced4da;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<data noupdate="0">
+				<record id="base.user_admin" model="res.users">
+						<field name="permission_ids" eval="[(0, 0, {
+                'application_id': ref('base.module_category_website'),
+                'position_id': ref('website.group_website_designer'),
+            })]"/>
+				</record>
+		</data>
+</odoo>

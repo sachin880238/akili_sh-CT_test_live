@@ -1,0 +1,120 @@
+@media only screen and (width: 425px) {
+    .fa .fas fa-question{
+        font-size: 50px !important;
+        margin-left: -5% !important;
+        margin-top: 1% !important;
+        color: #808080 !important;
+    }
+
+    .oe_read_only .oe_title_name_help {
+        margin-left: 9% !important;
+        margin-top: -22% !important;
+        
+    }
+    }
+
+
+@media only screen and (width: 768px) {
+    .fa .fas fa-question{
+        font-size: 50px !important;
+        margin-left: -9% !important;
+        margin-top: 1% !important;
+        color: #808080 !important;
+    }
+
+    .oe_read_only .oe_title_name_help {
+        margin-left: 0% !important;
+        margin-top: -10% !important;
+        
+    }
+    }
+
+
+@media only screen and (width: 1024px) {
+    .fa .fas fa-question{
+        font-size: 50px !important
+        margin-left: -9% !important;
+        margin-top: 1% !important;
+        color: #808080 !important;
+    }
+
+    .oe_read_only .oe_title_name_help {
+        margin-left: -2% !important;
+        margin-top: -8% !important;
+        
+    }
+    }
+
+
+@media only screen and (width: 1440px) {
+    .fa .fas fa-question{
+        font-size: 50px !important;
+        margin-left: -9% !important;
+        margin-top: 1% !important;
+        color: #808080 !important;
+    }
+
+    .oe_read_only .oe_title_name_help {
+        margin-left: -4% !important;
+        margin-top: -5% !important;
+        
+    }
+    }
+
+@media only screen and (width: 2560px) {
+    .fa .fas fa-question{
+        font-size: 50px !important;
+        margin-left: -9% !important;
+        margin-top: 1% !important;
+        color: #808080 !important;
+    }
+
+    .oe_read_only .oe_title_name_help {
+        margin-left: -4% !important;
+        margin-top: -5% !important;
+        
+    }
+    }
+@media only screen and (width: 1024px){
+   .class_help{
+      margin-left: -88% !important;
+      margin-top: 1% !important;
+
+}
+}
+
+
+@media only screen and (width: 768px){
+   .class_help{
+
+    margin-left: -83% !important;
+    margin-top: 1% !important;
+
+}
+}
+@media only screen and (width: 1440px){
+   .class_help{
+
+    margin-left: -91% !important;
+    margin-top: 1% !important;
+
+}
+}
+
+@media only screen and (width: 425px){
+   .class_help{
+
+    margin-left: -66% !important;
+    margin-top: 1% !important;
+
+}
+}
+
+@media only screen and (width: 2560px){
+   .class_help{
+
+    margin-left: -92% !important;
+    margin-top: 1% !important;
+
+}
+}

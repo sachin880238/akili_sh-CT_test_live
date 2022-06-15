@@ -1,0 +1,11 @@
+///
+/// This file regroups the variables that style odoo components.
+/// They are available in every asset bundle.
+///
+// Colors
+$o-web-icon-arrow-color: #F5F4F0;
+.bs-popover-bottom .arrow::after, .bs-popover-auto[x-placement^="bottom"] .arrow::after {
+    top: 1px;
+    border-bottom-color: $o-web-icon-arrow-color !important;
+}
+	

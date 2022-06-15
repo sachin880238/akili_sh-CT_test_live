@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_sale_order_button" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">  
+            <xpath expr="//notebook" position="before" >
+              <field name='update_price' invisible='1' />
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="widget">one2many_checkbox</attribute>
+            </xpath>    
+            <xpath expr="//field[@name='order_line']" position="before">
+                <div class="bom_line_action_button" attrs="{'invisible':[('state','in',['draft'])]}">
+
+                    <button type="object"
+                        name="add_stockable_product" 
+                        string="Product"
+                        class="oe_button oe_highlight oe_edit_only sale_order_custom_button"  
+                        context="{'order_line_type':'line', 'default_is_line':True}" 
+                        default_focus="1"/>
+                    
+                    <button type="object"
+                        name="add_product_using_template" 
+                        string="Template"
+                        class="oe_button oe_highlight oe_edit_only sale_order_custom_button"  
+                        context="{'order_line_type':'line', 'default_is_line':True}" 
+                        default_focus="1"/>
+                    
+                    <button type="object"
+                        name="add_set_product" string="Set"
+                        class="oe_button oe_highlight oe_edit_only sale_order_custom_button"  
+                        context="{'order_line_type':'set'}"/>
+                    
+                    <button type="object"
+                        name="add_bundle_product" string="Bundle"
+                        class="oe_button oe_highlight oe_edit_only sale_order_custom_button"  
+                        context="{'order_line_type':'bundle'}" 
+                        attrs="{'invisible': [('update_price','=',True)]}" />
+                    
+                    <button type="object"
+                        name="remove_bundle_product" 
+                        string="Unbundle"
+                        class="oe_button oe_highlight oe_edit_only sale_order_custom_button"  
+                        context="{'order_line_type':'bundle'}" 
+                        attrs="{'invisible': [('update_price','=',False)]}" />
+                    
+                    <button type="object"
+                        name="add_section_product" 
+                        string="Section"
+                        class="btn-secondary oe_edit_only sale_order_custom_button"  
+                        context="{'order_line_type':'line', 'default_is_line':True}" 
+                        default_focus="1"/>
+                    
+                    <button type="object"
+                        name="add_note_product" string="Note"
+                        class="btn-secondary oe_edit_only sale_order_custom_button"  
+                        context="{'order_line_type':'line', 'default_is_line':True}" 
+                        default_focus="1"/>
+
+                    <button type="object"
+                        name="check_stock" 
+                        string="Stock"
+                        class="btn-secondary oe_edit_only sale_order_custom_button"/>
+                    
+                    <button type="object"
+                        name="set_route" 
+                        string="Route"
+                        class="btn-secondary oe_edit_only sale_order_custom_button"/>    
+                    
+                    <button type="object"
+                        name="set_via" 
+                        string="Via"
+                        class="btn-secondary oe_edit_only sale_order_custom_button" />
+                    
+                    <button type="object"
+                        name="set_date" 
+                        string="Date"
+                        class="btn-secondary oe_edit_only sale_order_custom_button" />
+                    
+                    <button type="object"
+                        name="set_discount" 
+                        string="Disc"
+                        class="btn-secondary oe_edit_only sale_order_custom_button" />
+                    
+                    <button type="object"
+                        name="sort_lines" 
+                        string="Sort"
+                        class="btn-secondary oe_edit_only sale_order_custom_button" />
+                    
+                    <button type="object"
+                        name="merge_lines" string="Merge"
+                        class="btn-secondary oe_edit_only sale_order_custom_button" />    
+                    
+                    <button type="object"
+                        name="split_line" 
+                        string="Split"
+                        class="btn-secondary oe_edit_only sale_order_custom_button"/>
+
+                    <button type="object"
+                        name="move_line_option" string="Move"
+                        class="btn-secondary oe_edit_only sale_order_custom_button"/>    
+                </div>
+            </xpath>
+           
+        </field>
+    </record>
+
+	<record id="view_cart_form" model="ir.ui.view" >
+		<field name="name">sale.order.form</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='amount_untaxed']" position='attributes'>
+				<attribute name="string">Products</attribute>
+			</xpath>
+			<xpath expr="//field[@name='amount_tax']" position='attributes'>
+				<attribute name="string">Services tax</attribute>
+			</xpath>
+	
+		</field>
+	</record>
+</odoo>

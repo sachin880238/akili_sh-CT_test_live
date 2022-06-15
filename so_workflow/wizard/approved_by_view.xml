@@ -1,0 +1,39 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="approved_by_wizard_view" model="ir.ui.view">
+    <field name="name">approved.by.form</field>
+    <field name="model">approved.by</field>
+    <field name="arch" type="xml">
+      <form string="Accept Price"> 
+        <group>     
+          <group>     
+            <field name="amount_total" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+            <field name="hold_lastval" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+	          <field name='new_approve' widget='monetary' options="{'currency_field': 'currency_id'}"/>
+            <field name="action"/>
+            <field name="contact_id"
+                   domain="[('parent_id', '=', customer_id), ('type', 'in', ['conatct','other'])]"
+                   options="{'no_create': True,'always_reload': True}"
+                   attrs="{'required': [('action', '=', 'customer')], 'invisible':[('action','=','user')]}"/>
+            <field name="user_id" options="{'no_create': True,'always_reload': True}" attrs="{'required': [('action', '=', 'user')], 'invisible':[('action','=','customer')]}"/>
+            <field name="reason" attrs="{'required': [('action', '=', 'user')], 'invisible':[('action','=','customer')]}"/>
+            <field name="reserve_stock"/>
+            <field name="currency_id" invisible='1'/>
+            <field name="customer_id" invisible='1'/>
+          </group>
+        </group>
+        <footer>
+          <button name="action_apply" string="ACCEPT" type="object" class="btn-primary"/>
+          <button string="CANCEL" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record id="action_approved_by_wizard" model="ir.actions.act_window">
+    <field name="name">Accept Price</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">approved.by</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record> 
+</odoo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_employee_hr_form_inherit" model="ir.ui.view">
+    <field name="name">hr.employee.inherit</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form" />
+    <field name="arch" type="xml">
+    
+   <xpath expr= "//div[@class='text-warning']" position="replace"/>
+   <xpath expr="//field[@name='category_ids']" position="replace">
+   </xpath>
+   <xpath expr="//div[@class='oe_title']" position="inside">
+      <h6>
+        <field name="category_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="e.g. Part Time" groups="hr.group_hr_user"/>
+      </h6>
+    </xpath>
+  </field>
+  </record>
+
+
+    <!-- Employee menus -->
+    <menuitem
+      id="menu_hr_employee"
+      name="Employees"
+      parent="hr.menu_hr_root"
+      sequence="3"/>
+
+    <menuitem
+      id="hr.menu_hr_department_tree"
+      action="hr.open_module_tree_department"
+      parent="menu_hr_employee"
+      groups="hr.group_hr_user"/>
+
+    <menuitem
+      id="hr.menu_open_view_employee_list_my"
+      action="hr.open_view_employee_list_my"
+      parent="menu_hr_employee"/>
+
+    <!-- Timesheet menus-->
+    <menuitem 
+      id="hr_timesheet.timesheet_menu_root"
+      name="Timesheets"
+      parent="hr.menu_hr_root"
+      groups="hr_timesheet.group_hr_timesheet_user"
+      web_icon="hr_timesheet,static/description/icon_timesheet.png"/>
+
+    <!-- Attendance menus -->
+    <menuitem 
+      id="hr_attendance.menu_hr_attendance_root" 
+      name="Attendances" 
+      parent="hr.menu_hr_root"
+      groups="hr_attendance.group_hr_attendance" 
+      web_icon="hr_attendance,static/description/icon.png"/>
+
+    <!-- Leave menus -->
+    <menuitem
+      id="hr_holidays.menu_hr_holidays_root"
+      name="Time Off"
+      parent="hr.menu_hr_root"
+      web_icon="hr_holidays,static/description/icon.png"
+      groups="hr_holidays.group_hr_holidays_user,hr_holidays.group_hr_holidays_manager"/>
+  </data>
+</odoo>

@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="header_content_color" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Header Colors</field>
+            <field name="name">Header Content Color</field>
+            <field name="def_enable">True</field>
+            <field name="editable">yes</field>
+            <field name="source">CT</field>
+            <!-- <field name=""></field> -->
+            </record>
+        
+        <record id="lead_icon_letter" model="system.config">
+            <field name="name">Lead Icon Letters Color</field>
+            <field name="def_enable">True</field>
+            <!-- <field name=""></field> -->
+        </record>
+        <record id="lead_icon_background" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Icons</field>
+            <field name="name">Lead Icon Background Color</field>
+            <field name="def_enable">True</field>
+            <field name="field_type">color</field>
+            <field name="source">Odoo</field>
+            <!-- <field name=""></field> -->
+        </record>
+        <record id="header_background" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Header Colors</field>
+            <field name="name">Header Background Color</field>
+            <field name="def_enable">True</field>
+            <field name="field_type">color</field>
+            <field name="editable">yes</field>
+            <field name="source">CT</field>
+            <!-- <field name=""></field> -->
+        </record>
+        <record id="header_rollover" model="system.config">
+            <field name="app_name">Website</field>
+            <field name="cat_name">Header Colors</field>
+            <field name="name">Header Rollover Color</field>
+            <field name="def_enable">True</field>
+            <field name="field_type">color</field>
+            <field name="editable">yes</field>
+            <field name="source">CT</field>
+            <!-- <field name=""></field> -->
+        </record>
+        <record id="active_object_color" model="system.config">
+            <field name="name">Active Object Color</field>
+            <field name="def_enable">True</field>
+            <!-- <field name=""></field> -->
+        </record>
+        <record id="sale_config_setting" model="system.config">
+            <field name="name">Sale Config Setting</field>
+            <!-- <field name="def_enable">True</field> -->
+            <!-- <field name=""></field> -->
+        </record>
+        <record id="website_header_config_setting" model="system.config">
+            <field name="name">Website Header Icon Email Config Setting</field>
+            <field name="main_heading_email">Email</field>
+            <!-- <field name="taxt_email">For questions about ordering or specifying
+                    products for current or future projects, please
+                    email:
+                    sales@conservationtechnology.com
+                    For questions or comments relating to an
+                    existing quotation, order, invoice, or customer
+                    service ticket, please find the document here
+                    and add a message at the bottom of the
+                    document:
+                    Your Account</field> -->
+            <!-- <field name="def_enable">True</field> -->
+            <!-- <field name=""></field> -->
+        </record>
+
+
+        <record id="website_header_config_setting_call" model="system.config">
+            <field name="name">Website Header Icon Call Config Setting</field>
+            <field name="main_heading_email">Call</field>
+            <!-- <field name="def_enable">True</field> -->
+            <!-- <field name=""></field> -->
+        </record>
+
+
+        <record id="website_header_config_background_color" model="system.config">
+            <field name="name">Website Header Color Config Setting</field>
+            <field name="web_header_bckgrnd_color">#F5F4F0 </field>
+            <field name="web_header_content_color">#863a3a</field>
+        </record>
+
+
+       </data>
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>  
+  <record id="base.view_currency_tree" model="ir.ui.view">
+    <field name="name">res.currency.tree</field>
+    <field name="model">res.currency</field>
+    <field name="arch" type="xml">
+      <tree string="Currencies"> <!-- can be added to decorate tree view decoration-muted="(not active)" -->
+        <field name="sequence" widget="handle"/>
+        <field name="name"/>
+        <field name="symbol"/>
+        <field name="position" string="Position"/>
+        <field name="currency_unit_label" string="Units"/>
+        <field name="rate_ids" invisible="1"/>
+        <field name="date" invisible="1"/>
+        <field name="state" string="Available"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        <field name="active" widget="boolean_toggle" invisible="1"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="base.view_currency_form" model="ir.ui.view">
+    <field name="name">res.currency.form</field>
+    <field name="model">res.currency</field>
+    <field name="arch" type="xml">
+      <form string="Currency">
+        <header>
+          <button name="deactivate_currency" type="object" string="DEACTIVATE" states="active"/>
+          <button name="activate_currency" type="object" string="ACTIVATE" states="draft,inactive"/>
+          <button name="reset_to_draft" type="object" string="RESET TO DRAFT" states="active,inactive"/>
+          <field name="state" widget="statusbar"/>
+          <field name="parent_state" invisible="1"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box" invisible="1">
+            <button class="oe_stat_button" string="Rates" type="action" name="%(base.act_view_currency_rates)d"
+                icon="fa-money" widget="statinfo" attrs="{'invisible': [('active', '=', False)]}"/>
+            <button name="toggle_active" type="object"
+                    class="oe_stat_button" icon="fa-archive">
+                <field name="active" widget="boolean_button"
+                    options='{"terminology": "active"}'/>
+            </button>
+          </div>
+
+          <div>
+            <i class="fa fa-fw o_button_icon fa-money" style="width:50%; float:left; font-size: xxx-large; margin-left: -23%;"></i>
+            <h1>
+              <field name="name" style='width: 530px; margin-top: 6px; margin-left: -20%; float:left;' default_focus="0" placeholder="Name" />
+            </h1>
+          </div>
+          <group>
+            <group string="Unit">
+              <field name="currency_unit_label" string="Abbreviation"/>
+              <field name="symbol"/>
+              <field name="position"/>
+              <field name="unit"/>
+              <field name="currency_subunit_label" string="Subunit"/>
+              <field name="rounding" string="Rounding"/>
+              <field name="decimal_places"/>
+              <field name="reference"/>
+            </group>
+            <group string="Exchange">
+              <field name="rate"/>
+              <field name="ref_unit"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,155 @@
+<odoo>
+	<template id="add_update_card" name="Add Update card">
+		<t t-call="website.layout">
+			<div class="add_update_card" id="wrap">
+				<div class="container oe_website_sale">
+					<form action="/Add_update/card" method="post">
+						<h1 class="mb32">Add Cards</h1>
+						<div class="col-md-12 extra_info-custom address-kanban-info">
+							<div class="col-md-12 col-sm-11 col-xs-12 t_para_size">
+								<b>Select a method of payment and approve your order.</b>If the shipping terms in
+						    your quotation are marked “estimated”, that means we are unable to determine the
+						    exact shipping cost until we pack your order. If the cost is higher than estimated, we
+						    will contact you to confirm you wish to proceed. For your protection, financial
+						    information you provide is encrypted in compliance with PCI DSS standards.</div>
+						</div>
+						<br/>
+						<br/>
+						<div class="clearfix"/>
+	                    <t t-if="warning">
+	                        <div class="container">
+	                            <p class="alert alert-danger">
+	                                <t t-foreach="warning" t-as="err">
+	                                    <t t-esc="warning.get(err)" />
+	                                </t>
+	                            </p>
+	                        </div>
+	                    </t>
+						<div class="row">
+							<div class="clearfix"/>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="debit_card_no">Credit or debit card No
+                            </label>
+								<input class="form-control" id="debit_card_no" maxlength="16" name="debit_card_no" pattern="[0-9]{16}" t-att-value='debit_card_no' required="True" type="text"/>
+							</div>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="card_holder_name">Card Holder Name</label>
+								<input class="form-control" id="card_holder_name" name="card_holder_name" t-att-value='card_holder_name' required="True" type="text"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="clearfix"/>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="month">Month</label>
+								<select class="form-control" id="month" name="month" required="True" t-att-value='month'>
+									<option class="select-placeholder" selected="selected" value="">Month</option>
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="year">Year</label>
+								<select class="form-control" id="year" name="year" required="True" t-att-value='year'>
+									<option class="select-placeholder" selected="selected" value="">Year</option>
+									<option value="2016">2016</option>
+									<option value="2017">2017</option>
+									<option value="2018">2018</option>
+									<option value="2019">2019</option>
+									<option value="2020">2020</option>
+									<option value="2021">2021</option>
+									<option value="2022">2022</option>
+									<option value="2023">2023</option>
+									<option value="2024">2024</option>
+									<option value="2025">2025</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="clearfix"/>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="cvv_code">CVV code
+                            </label>
+								<input class="form-control" id="cvv_code" name="cvv_code" required="True" type="password" t-att-value="cvv_code"/>
+							</div>
+							<div class="form-group col-sm-6"/>
+						</div>
+						<h2 class="mb32">Select Billing Address</h2>
+						<!-- <div class="v_option_diff all_billing mt16 address_add_btn">
+							<a>
+								<form action="/shop/address" class="" method="post">
+									<input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+									<input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+									<input name="mode" type="hidden" value="billing"/>
+									<input name="address_book" t-att-value="address_book" type="hidden"/>
+									<a class="a-submit ml8 add_a_billing_address_plus_icon">
+										<t>add a billing address</t>
+										<i class="fa fa-plus"/>
+									</a>
+								</form>
+							</a>
+						</div> -->
+						<div class="container">
+							<div class="row v_option_diff all_billing mt16">
+								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                    			<input type="hidden" name="submitted" value="1"/>
+                    			<input type="hidden" name="sale_order_id" t-att-value="order_sale.id"/>
+								<input id="billing_address_id" name="billing_address_id" required="True" type="hidden"/>
+								<t t-as="contact" t-foreach="billings">
+									<t t-if="order_sale.partner_id != contact">
+										<div class="col-md-6 one_kanban">
+											<t t-call="authorize_net_payment_flow.v_card_kanban_billing_address">
+												<t t-set="selected" t-value="bool(order_sale.partner_invoice_id.id == contact.id)"/>
+												<t t-set="readonly" t-value="bool(len(billings)==1)"/>
+												<t t-set="ttype" t-value="'billing'"/>
+											</t>
+										</div>
+									</t>
+								</t>
+							</div>
+						</div>
+						<div class="clearfix"/>
+						<div class="container btn-address-custom">
+							<a class="btn btn-default btn-primary mt32 mb32" t-att-href="'/quote/purchase/%s' %(order_sale.id)">
+								<span class="fa fa-long-arrow-left"/>Cancel</a>
+
+							 <button type="submit" value="add" class="btn btn-default btn-primary float-right mt32 mb32 a-submit-loading submit_add_change_card" id="add_card">Add</button>	
+							<!-- <button class="btn btn-default btn-primary float-right mt32 mb32 a-submit a-submit-loading submit_add_change_card" type="submit" value="approve">Add
+                        </button> -->
+						</div>
+					</form>
+				</div>
+			</div>
+		</t>
+	</template>
+	<template id="v_card_kanban_billing_address" name="Kanban billing address">
+		<!--  <form action="/shop/checkout" class="d-none" method="POST"><input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/><input name="partner_id" t-att-value="contact.id" type="hidden"/><input name="mode" t-att-value="ttype" type="hidden"/><t t-if="edit_billing"><input name="callback" type="hidden" value="/shop/checkout?use_billing"/></t><input type="submit"/></form>-->
+		<t t-if="ttype == 'billing'">
+			<div t-att-class="'panel panel-default %s' % (selected and 'card border_primary' or 'card js_change_billing')" t-att-data-contact-id="contact.id">
+				<div class="card-body" style="min-height: 130px;">
+					<!-- <a href="#" class="btn btn-link float-right p-0 js_edit_address no-decoration" role="button" title="Edit this address" aria-label="Edit this address" >Edit <i class="fa fa-edit"></i></a>-->
+					<t t-call="custom_web_checkout.address_body"/>
+					<div class="panel-footer" t-if="not readonly">
+						<span class="btn-bill" t-att-style="'' if selected else 'display:none;'">
+							<a class="btn btn-block btn-primary default_set_btn">
+								<i class="fa fa-check"/>Bill to this address</a>
+						</span>
+						<span class="btn-bill" t-att-style="'' if not selected else 'display:none;'">
+							<a class="btn btn-block btn-secondary">Select this address
+                                </a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</t>
+	</template>
+</odoo>

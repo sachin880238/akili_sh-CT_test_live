@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>   
+	  <menuitem id="import_utility_views_id"
+            name="Import Utility" 
+            parent="sale.menu_sale_config"
+            sequence="6"/>
+        <menuitem id="import_leads_data_id"
+            name="Import Leads"
+            action="crm_import_utility.import_crm_data_wizard_action"
+            sequence="2"
+            parent="import_utility_views_id"/>
+</odoo>

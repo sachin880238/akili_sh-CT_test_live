@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <menuitem name="Purchasing"
+      id="purchase.menu_purchase_root"
+      groups="purchase.group_purchase_manager,purchase.group_purchase_user"
+      web_icon="purchase,static/description/icon.png"
+      sequence="25"/>
+
+    <menuitem
+      name="Vendors"
+      id="vendors_menu"
+      parent="purchase.menu_purchase_root"
+      sequence="1"/>
+
+    <menuitem
+      name="Products"
+      id="products_menu"
+      parent="purchase.menu_purchase_root"
+      sequence="3"/>
+
+    <!-- Company Products menu-->
+    <menuitem 
+      name="Company Products" 
+      id="company_product_menu" 
+      parent="products_menu"/>
+
+    <menuitem
+      name="Products"
+      id="purchase.product_product_menu"
+      action="purchase.product_product_action"
+      parent="company_product_menu"
+      sequence="20"
+      groups="product.group_product_variant"/>
+
+    <menuitem
+      name="Product Templates"
+      id="purchase.menu_procurement_partner_contact_form"
+      action="purchase.product_normal_action_puchased"
+      parent="company_product_menu"
+      sequence="21"
+      active="0"/>
+
+    <!-- Vendor Products menu-->
+    <menuitem 
+      name="Vendor Products" 
+      id="vendor_product_menu" 
+      parent="products_menu"/>
+    
+    <menuitem 
+      name="Vendor Product Templates"
+      id="vendor_product_template_menu" 
+      parent="vendor_product_menu" 
+      action="vendor_product.product_template_action"
+      sequence="1"/>
+
+    <menuitem 
+      name="Vendor Products"
+      id="vendor_product_variant_menu"
+      action="vendor_product.product_normal_action_sell"
+      parent="vendor_product_menu"
+      sequence="2"/>
+
+    <menuitem 
+      name="Vendor Prices"
+      id="vendor_product_prices_menu"
+      action="vendor_product.vendor_product_pricelist_action"
+      parent="vendor_product_menu"
+      sequence="3"/>
+
+    <menuitem 
+      name="Equivalents"
+      id="vendor_product_equivalents_menu"
+      action="vendor_product.vendor_product_equivalents_action"
+      parent="vendor_product_menu"
+      sequence="4"/>
+
+    <menuitem 
+      id="vendor_product_sources_menu"
+      name="Sources"
+      action="vendor_product.product_sources_action"
+      parent="vendor_product_menu"
+      sequence="5"/>
+
+    <menuitem
+      name="Reports"
+      id="purchase.purchase_report"
+      parent="purchase.menu_purchase_root"
+      groups="purchase.group_purchase_manager"
+      action="purchase.action_purchase_order_report_all"
+      sequence="99"/>
+
+    <menuitem
+      name="Settings"
+      id="purchase.menu_purchase_config"
+      parent="purchase.menu_purchase_root"
+      groups="purchase.group_purchase_manager"
+      sequence="100"/>
+
+    <menuitem
+      name="Accounts"
+      id="purchase.menu_procurement_management_supplier_name"
+      parent="vendors_menu"
+      action="base.action_partner_supplier_form"
+      sequence="15"/>
+
+    <menuitem
+      name="Addresses"
+      id="vendor_addresses_menu"
+      parent="vendors_menu"
+      action="account_contacts.act_open_address_vendor_view"
+      sequence="16"/>
+
+    <!-- Vendor Products configuration menus -->
+    <menuitem
+        id="menu_vendor_products_in_config_purchase"
+        name="Vendor Products"
+        parent="purchase.menu_purchase_config"/>
+
+    <menuitem
+        name="Attributes"
+        id="menu_vendor_product_attribute"
+        parent="menu_vendor_products_in_config_purchase"
+        action="vendor_product.attribute_action"
+        sequence="1"/>
+
+    <menuitem
+        name="Attribute Values"
+        id="menu_vendor_product_attribute_values"
+        parent="menu_vendor_products_in_config_purchase"
+        action="vendor_product.variants_action"
+        sequence="2"/>
+
+    <!-- Transactions menus -->
+    <menuitem
+      name="Transactions"
+      id="purchase.menu_procurement_management"
+      parent="purchase.menu_purchase_root"
+      sequence="2"/>
+
+    <menuitem
+      name="Orders"
+      id="purchase.menu_purchase_rfq"
+      parent="purchase.menu_procurement_management"
+      action="purchase.purchase_rfq"
+      sequence="0"/>
+
+    <menuitem
+     name="Bills"
+     id="purchase.menu_procurement_management_pending_invoice"
+     parent="purchase.menu_procurement_management"
+     action="purchase.action_invoice_pending"
+     sequence="2"/>
+
+    <menuitem
+      name="Purchases"
+      id="menu_purchase_action"
+      parent="purchase.menu_procurement_management"
+      action="purchase_workflow.purchase_form_action_inherit"
+      sequence="1"/>
+
+    <menuitem
+      name="Payments"
+      id="menu_payment_action"
+      parent="purchase.menu_procurement_management"
+      action="purchase_workflow.purchase_form_action_inherit"
+      sequence="3"/>
+
+    <menuitem
+      name="Returns"
+      id="menu_returns_action"
+      parent="purchase.menu_procurement_management"
+      action="purchase.purchase_rfq"
+      sequence="5"/>
+
+    <menuitem
+      name="Credits"
+      id="menu_credit_action"
+      action="purchase.purchase_rfq"
+      parent="purchase.menu_procurement_management"
+      sequence="8"/>
+
+    <menuitem
+      action="purchase.purchase_form_action"
+      name="Refunds"
+      id="purchase.menu_purchase_form_action"
+      parent="purchase.menu_procurement_management"
+      sequence="9"/>
+
+    <menuitem
+      id="purchase.menu_purchase_form_action"
+      parent="purchase.menu_procurement_management"
+      action="purchase.purchase_form_action"
+      sequence="6"
+      active="0"/>
+
+    <menuitem
+      id="purchase_stock.menu_action_picking_tree_in_move"
+      action="stock.action_receipt_picking_move"
+      parent="purchase.menu_procurement_management"
+      sequence="11"
+      active="0"/>
+    <!-- End Purchase Menus -->
+  </data>
+</odoo>

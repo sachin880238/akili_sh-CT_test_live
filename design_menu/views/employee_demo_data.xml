@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="emp_config_1" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Hours</field>
+            <field name="name">Company Work Hours</field>
+            <field name="field_type">selection</field>
+            <field name="field_name"></field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="emp_config_2" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Other</field>
+            <field name="name">Show Organizational Chart</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">module_hr_org_chart</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="emp_config_3" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Time</field>
+            <field name="name">Encoding Unit</field>
+            <field name="field_type">selection</field>
+            <field name="default_value_char">minutes</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="emp_config_4" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Users</field>
+            <field name="name">Allow Users to Reset Passwords</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">auth_signup_reset_password</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="emp_config_5" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Users</field>
+            <field name="name">Digest Email</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">digest_emails</field>
+            <field name="default_value_boolean"></field>
+            <field name="current_value_boolean"></field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="emp_config_6" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Users</field>
+            <field name="name">Enable Motivational Feedback</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="emp_config_7" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Users</field>
+            <field name="name">Export Data</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="emp_config_8" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Users</field>
+            <field name="name">Import Data</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">module_base_import</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+        
+        <record id="emp_config_9" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Users</field>
+            <field name="name">Minimum Password Length</field>
+            <field name="field_type">integer</field>
+            <field name="field_name"></field>
+            <field name="default_value_integer">8</field>
+            <field name="current_value_integer">8</field>
+            <field name="is_editable"> </field>
+            <field name="source">Odoo</field>
+        </record>
+            
+        <record id="emp_config_10" model="system.config">
+            <field name="app_name">Employees</field>
+            <field name="cat_name">Users</field>
+            <field name="name">Set Custom Access Rights</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">user_default_rights</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+        </record>
+
+         <record id="task_config_11" model="system.config">
+            <field name="app_name">Tasks</field>
+            <field name="cat_name">Task Management</field>
+            <field name="name">Collaborative Pads</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">module_pad</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+        </record>
+
+         <record id="task_config_12" model="system.config">
+            <field name="app_name">Tasks</field>
+            <field name="cat_name">Task Management</field>
+            <field name="name">Sub Tasks</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+        </record>
+
+         <record id="task_config_13" model="system.config">
+            <field name="app_name">Tasks</field>
+            <field name="cat_name">Task Management</field>
+            <field name="name">Task Logs</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+        </record>
+
+         <record id="task_config_14" model="system.config">
+            <field name="app_name">Tasks</field>
+            <field name="cat_name">Task Management</field>
+            <field name="name">Use Rating on Project</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+        </record>
+
+    </data>
+</odoo>

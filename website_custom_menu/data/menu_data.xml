@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="website.main_menu" model="website.menu">
+          <field name="name">Default Main Menu</field>
+          <field name="url">/default-main-menu</field>
+          <field name="website_id" ref="website.default_website"/>
+        </record>
+    <record id="website.menu_contactus" model="website.menu">
+      <field name="name">Contact</field>
+      <field name="url">/contactus</field>
+      <field name="parent_id" ref="website.main_menu"/>
+      <field name="website_id" ref="website.default_website"/>
+      <field name="sequence" type="int">11</field>
+    </record>
+     <record id="menu_view_your_account" model="website.menu">
+      <field name="name">Account</field>
+      <field name="url">/my/home</field>
+      <field name="sequence" type="int">12</field>
+      <field name="parent_id" ref="website.main_menu"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+     <record id="menu_view_your_cart" model="website.menu">
+      <field name="name">Cart</field>
+      <field name="url">/shop/cart</field>
+      <field name="sequence" type="int">13</field>
+      <field name="parent_id" ref="website.main_menu"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    
+    
+    
+    <!-- START SHOP MENU -->
+    <record id="website_sale.menu_shop" model="website.menu">
+      <field name="name">Shop</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website.main_menu"/>
+      <field name="sequence" type="int">14</field>
+      <field name="is_for_catag">True</field>
+      
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <!-- <record id="menu_find_a_product" model="website.menu">
+      <field name="name">Find a product</field>
+      <field name="url">/find-a-product</field>
+      <field name="is_for_catag">True</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record> -->
+
+   
+    <record id="menu_all_products" model="website.menu">
+      <field name="name">All Products</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="menu_green_roofs" model="website.menu">
+      <field name="name">Green Roofs</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_rainwater_harvesting" model="website.menu">
+      <field name="name">Rainwater Harvesting</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_rainwater_harvesting_all" model="website.menu">
+      <field name="name">All Rainwater Products</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_rainwater_harvesting"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_storage" model="website.menu">
+      <field name="name">Storage Tanks</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_rainwater_harvesting"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_prefiltration" model="website.menu">
+      <field name="name">Prefilters</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_rainwater_harvesting"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_pumping" model="website.menu">
+      <field name="name">Pumps</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_rainwater_harvesting"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="menu_all_backup" model="website.menu">
+      <field name="name">All Pumps</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_pumping"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="menu_all_submersible_pump" model="website.menu">
+      <field name="name">Submersible Pumps</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_pumping"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="menu_all_surface_pump" model="website.menu">
+      <field name="name">Surface Pumps</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_pumping"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_backup" model="website.menu">
+      <field name="name">Backup Devices</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_rainwater_harvesting"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_controls" model="website.menu">
+      <field name="name">Control Systems</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_rainwater_harvesting"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+
+    <record id="menu_constructed_wetlands" model="website.menu">
+      <field name="name">Constructed Wetlands</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="menu_energy_efficient" model="website.menu">
+      <field name="name">Energy-Efficient Building</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="menu_roofing_and_waterproofing" model="website.menu">
+      <field name="name">Roofing and Waterproofing</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+    <record id="menu_do_id_yourself" model="website.menu">
+      <field name="name">Do-It-Yourself Systems</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_specials" model="website.menu">
+      <field name="name">Specials</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website_sale.menu_shop"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <!-- <record id="menu_commercial" model="website.menu">
+      <field name="name">Commercial</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_controls"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_constructed_wetlands" model="website.menu">
+      <field name="name">Constructed Wetlands</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_learn"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record>
+
+    <record id="menu_energy_efficient_building" model="website.menu">
+      <field name="name">Energy-Efficient Building</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_learn"/>
+      <field name="website_id" ref="website.default_website"/>
+    </record> -->
+
+    <!-- <record id="menu_roofing_and_waterproofing" model="website.menu">
+      <field name="name">Roofing and Waterproofing</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="menu_learn"/>
+      <field name="website_id" ref="website.default_website" />
+    </record> -->
+    <!-- END SHOP MENU -->
+
+    <!-- START MENU LEARN -->
+    <record id="menu_learn" model="website.menu">
+      <field name="name">Learn</field>
+      <field name="url">#</field>
+      <field name="parent_id" ref="website.main_menu"/>
+      <field name="website_id" ref="website.default_website" />
+    </record>
+    <!-- END MENU LEARN -->
+  </data>
+</odoo>

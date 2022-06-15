@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_user_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.user.view</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="100"/>
+    <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[@id='business_documents']" position="after">
+        <h2>User Logo</h2>
+        <div class="o_settings_container" name="logos">
+          <div class="o_setting_box" id="abcd">
+            <div class="o_setting_left_pane">
+              <field name="apply_user_logo"/>
+            </div>
+            <div class="o_setting_right_pane" name="base_gengo_right_pane">
+              <label string="Apply on Users" for="apply_user_logo"/>
+            </div>
+          </div>
+          <div class="content-group col-12 col-lg-12" attrs="{'invisible': [('apply_user_logo','=',False)]}">
+            <group>
+              <group style="width: 50%">
+                <field name="user_background_color" string="Icon Background Color" attrs="{'required': [('apply_user_logo','=',True)]}" widget="color"/>
+              </group>
+              <group style="width: 50%">
+                <field name="user_text_color" string="Icon Letter Color" attrs="{'required': [('apply_user_logo','=',True)]}" widget="color"/>
+              </group>
+            </group>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,80 @@
+/*.o_form_editable .cf_button_merge{
+	margin-left: 704px;
+}*/
+/*.o_form_editable .cf_button_array{
+	margin-top: -33px;
+}*/
+/*.order_line_scroll{
+	max-height: 200px;
+	overflow: auto;
+}*/
+/*.bom_line_action_button{
+	display: inline-block;
+	position: relative;
+	z-index: 2;
+	width : 100%;
+
+}*/
+
+.sale_order_custom_button{
+	margin-top: 1px;
+	width: 6.33%;
+	margin-right: 0.338%;
+}
+
+.o_form_readonly .o_list_record_selector{
+	display: none;
+}
+
+.text-bf {
+    background-color: #DDDDDD;
+}
+.table-hover .text-bf:hover {
+    background-color: #DDDDDD;
+}
+/*.table-striped .text-bf tr:nth-of-type(odd){
+	background-color: #DDDDDD;
+}*/
+/*split line
+
+style="margin-right:4px;margin-bottom:2px;margin-top: 2px;"*/
+
+.button_change,.button_change div{
+	padding-left: 4px!important;
+}
+
+.button_change_small{
+	padding: 0px!important;
+}
+
+.button_change_small div{
+	padding: 8px!important;
+}
+
+.button_change_small_dollar{
+	padding: 0px!important;
+}
+
+.button_change_small_dollar div{
+	position: relative!important;
+	right: 28px!important;
+}
+
+.minus-plus{
+	font-size: inherit!important;
+	position: relative!important;
+	right: 22px!important;
+	top: 2px!important;
+}
+
+@media(max-width: 500px){
+	.minus-plus{
+		right: 37px!important;
+	}
+}
+
+@media(max-width: 369px){
+	.minus-plus{
+		font-size: 9px!important;
+	}
+}

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" name="Assets" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+
+            <link rel="stylesheet" type="text/scss" href="/website_custom_menu/static/src/scss/primary_variables.scss"/>
+
+            <!-- Left Side Menu -->
+            <link href="/website_custom_menu/static/src/css/leftMenu.css" rel="stylesheet" type="text/css"/>
+            <script type="text/javascript" src="/website_custom_menu/static/src/lib/leftMenu.js"/>
+
+            <!-- CSS -->
+            <link href="/website_custom_menu/static/src/css/website_custom_menu.css" rel="stylesheet" type="text/css"/>
+            
+            <link href="/website_custom_menu/static/src/css/custom_menu.css" rel="stylesheet" type="text/css"/>
+            <!-- Left Side Menu -->
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/website_custom_menu.js"/>
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/header_pop_over.js"/>
+            <!-- <script type="text/javascript" src="/website_custom_menu/static/src/js/template.js"/> --> 
+                 
+        </xpath>
+    </template>
+    
+     <template id="assets_backend" name="Assets" inherit_id="web.assets_backend">
+
+        <!-- <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+ -->
+
+        <xpath expr="//script[@src='/web/static/src/js/chrome/systray_menu.js']" position="replace">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/systray_menu.js"/>
+
+        </xpath>
+
+
+ 		<xpath expr="//script[@src='/web/static/src/js/views/basic/basic_controller.js']" position="replace">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/basic_controller.js"/>
+
+        </xpath>
+
+        <xpath expr="//script[15]" position="replace">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/breadcrumb.js"/>
+
+        </xpath>
+<!-- 
+        <xpath expr="." position="inside">  
+           <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet"/>
+
+        </xpath> -->
+        
+        <xpath expr="//script[60]" position="replace"> 
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/inherite_filtermenu.js"/>
+        </xpath>
+        
+        <xpath expr="//script[54]" position="replace"> 
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/inherit_groupby_menu.js"/>
+        </xpath> 
+
+        <xpath expr="//script[58]" position="replace"> 
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/drop_down_menu.js"/>
+        </xpath>
+        <xpath expr="//script[63]" position="replace">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/drag_arrows.js"/>
+        </xpath> 
+
+        <xpath expr="//script[102]" position="replace">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/list_renderer.js"/>
+        </xpath>
+
+        <xpath expr="//script[104]" position="replace">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/list_controller_inherit.js"/>
+        </xpath>  
+        
+		<xpath expr="//script[@src='/web/static/src/js/views/kanban/kanban_column.js']" position="replace">
+			<script type="text/javascript" src="/website_custom_menu/static/src/js/kanban.js"></script>  
+		</xpath>
+
+        <xpath expr="//script[42]" position="replace">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/inherite_sidebar.js"/>
+        </xpath>
+        <xpath expr="." position="inside">  
+            <script type="text/javascript" src="/website_custom_menu/static/src/js/custom_viewlistview.js"/>
+            <!-- <script type="text/javascript" src="/website_custom_menu/static/src/js/listview_selector.js"/> -->
+        </xpath> 
+        
+    </template>
+
+    <!-- <template id="report_assets_common" inherit_id="web.report_assets_common">
+        <xpath expr="//link[5]" position="replace">
+            <link rel="stylesheet" type="text/css"
+                  href="/website_custom_menu/static/lib/fontawesome/css/font-awesome.css"/>
+        </xpath>
+    </template>
+
+    <template id="assets_common" inherit_id="web.assets_common">
+        <xpath expr="//link[5]" position="replace">
+            <link rel="stylesheet" type="text/css"
+                  href="/website_custom_menu/static/lib/fontawesome/css/font-awesome.css"/>
+        </xpath>
+    </template>  -->   
+
+</odoo>

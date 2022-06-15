@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_route_type,access_route_type,model_route_type,base.group_user,1,1,1,1
+access_route_rule_type,access_route_rule_type,model_route_rule_type,base.group_user,1,1,1,1

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- base structure of vendor.vendor.product.template, common with vendor.vendor.product.product -->
+    <record id="product_template_form_view" model="ir.ui.view">
+      <field name="name">vendor.product.template.common.form</field>
+      <field name="model">vendor.product.template</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <form string="Product">
+          <header>
+            <button name="generate_variants"
+                    string="GENERATE"
+                    states="draft"
+                    type="object"
+                    class="oe_highlight"/>
+            <button name="generate"
+                    string="GENERATE" 
+                    states="active"
+                    class="btn-secondary"
+                    type="object"/>
+            <button name="deactivate_template" 
+                    type="object"
+                    states="active"
+                    class="btn-primary"
+                    string="DEACTIVATE"/>
+            <button name="reset_to_draft" 
+                    type="object" 
+                    states="active,inactive"
+                    class="btn-secondary"
+                    string="RESET TO DRAFT"/>
+            <button name="active_template" 
+                    type="object" 
+                    states="inactive"
+                    class="btn-primary"
+                    string="ACTIVATE"/>
+            <field name="state" widget="statusbar"/>
+          </header>
+          <sheet>
+            <field name="active" invisible="1"/>
+            <field name='product_variant_count' invisible='1'/>
+            <field name='is_product_variant' invisible='1'/>
+            <field name='attribute_line_ids' invisible='1'/>
+            <field name="id" invisible="True"/>
+            <div class="oe_button_box" name="button_box">
+              <button 
+                name="%(project.action_view_task)d"
+                type="action"
+                class="oe_stat_button"
+                icon="fa-clock">
+                <field name="task_count" string="Tasks" widget="statinfo"/>
+              </button>
+               <button 
+                name="%(project.open_view_project_all)d"
+                type="action"
+                class="oe_stat_button"
+                icon="fa-project-diagram">
+                <field name="project_count" string="Projects" widget="statinfo"/>
+              </button>
+               <button 
+                name="product_documents"
+                type="object"
+                class="oe_stat_button"
+                icon="fa-file">
+                <field name="document_count" string="Documents" widget="statinfo"/>
+              </button>
+            </div>
+
+            <div>
+
+              <div>
+                <field name="image_medium" widget="image" style="width:6%;"/>
+              </div>
+
+              <div style="float:left; margin: -4.85% 0% 0% 7%;">
+                <h1>
+                  <field name="name"/>
+                </h1>
+              </div>
+
+            </div>
+            <notebook>
+              <page string="PURCHASING" name="product_information">
+                <group>
+                  <group string="General">
+                    <field name="vendor_id" options="{'no_create_edit': True, 'no_open':True}"/>
+                    <field name="uom_ids" widget="many2many_tags" string="Vendor Units"/>
+                    <field name="days_to_ship"/>
+                  </group>
+                </group>
+                <group>
+                  <group string="Notes">
+                    <field name="delivery_warning"/>
+                    <field name="invoice_warning"/>
+                    <field name="purchasing_comments"/>
+                  </group>
+                </group>
+              </page>
+              <page string="SHIPPING" name="shipping_information">
+                <group>
+                  <group string="Measurements">
+                    <field name="dim1"/>
+                    <field name="dim2"/>
+                    <field name="dim3"/>
+                    <field name="each_additional3"/>
+                    <field name="cross_section"/>
+                    <field name="volume"/>
+                  </group>
+                  <group string="Weight">
+                    <field name="first_unit"/>
+                    <field name="each_additional"/>
+                  </group>
+                </group>
+                <group>
+                  <group string="Freight">
+                    <field name="nmfc_code"/>
+                    <field name="nmfc_desc"/>
+                    <field name="nmfc_class"/>
+                    <field name="truckload_qty"/>
+                  </group>
+                  <group string="Ocean">
+                    <field name="hts_code"/>
+                    <field name="hts_desc"/>
+                    <field name="container_qty"/>
+                  </group>
+                </group>
+                <group>
+                  <group string="Notes">
+                    <field name="freight_bill_warn"/>
+                    <field name="shipping_comments"/>
+                  </group>
+                </group>
+              </page>
+              <page string="PRICING" name="vendor_price_info">
+                <field name="vendor_price_ids" context="{'default_vendor_id':vendor_id, 'default_product_tmpl_id': active_id}">
+                  <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="preferred"/>
+                    <field name="price_txt" string="Price"/>
+                    <field name="minimum_txt"/>
+                    <field name="multiple_txt"/>
+                    <field name="start_date" widget="date"/>
+                    <field name="end_date" widget="date"/>
+                    <field name="state"/>
+                  </tree>
+                  <form string="Vendor Product Pricelist">
+                    <sheet>
+                      <group>
+                        <group>
+                        <field name="base_price"/>
+                        <field name="currency"/>
+                        <field name="uom_id" domain="['|', ('id', 'in', uom_ids), ('id', 'in', tmpl_uom_ids)]" options="{'no_create_edit': True}"/>
+                        <label for="discount"/>
+                        <div name="discount">
+                          <field name="discount" class="oe_inline"/> %%
+                        </div>
+                        <field name="price_txt"/>
+                        <field name="minimum"/>
+                        <field name="multiple"/>
+                        <field name="start_date" widget="date"/>
+                        <field name="end_date" widget="date"/>
+                        <field name="preferred"/>
+                        <field name="temp_preferred" invisible="1"/>
+                        <field name="desc"/>
+                        <field name="price" invisible="1"/>
+                        <field name="uom_ids" invisible="1"/>
+                        <field name="tmpl_uom_ids" invisible="1"/>
+                        <field name="vendor_id" readonly="1" options="{'no_open': True}" force_save="1" invisible="1"/>
+                        <field name="product_id" readonly="1" options="{'no_open': True}" force_save="1" invisible="1"/>
+                        <field name="product_tmpl_id" readonly="1" options="{'no_open': True}" force_save="1" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                      </group>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="product_template_search_view" model="ir.ui.view">
+      <field name="name">vendor.product.template.search</field>
+      <field name="model">vendor.product.template</field>
+      <field name="arch" type="xml">
+        <search string="Product">
+          <field name="name" string="Product" filter_domain="[('name', 'ilike', self)]"/>
+          <field name="vendor_id" string="Vendor" filter_domain="[('vendor_id', 'ilike', self)]"/>
+          <field name="uom_ids" string="UOM" filter_domain="[('uom_ids', 'ilike', self)]"/>
+          <field string="Attributes" name="attribute_line_ids"/>
+          <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="product_template_action_all" model="ir.actions.act_window">
+      <field name="name">Vendor Product Templates</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">vendor.product.template</field>
+      <field name="view_mode">kanban,tree,form</field>
+      <field name="view_type">form</field>
+      <field name="context">{}</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create a new product
+        </p>
+      </field>
+    </record>
+
+    <record id="product_search_form_view" model="ir.ui.view">
+      <field name="name">vendor.product.product.search</field>
+      <field name="model">vendor.product.product</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <search string="Vendor Product">
+          <field name="complete_name" string="Vendor Product" filter_domain="[('complete_name', 'ilike', self)]"/>
+          <field name="vendor_id" string="Vendor" filter_domain="[('vendor_id', 'ilike', self)]"/>
+          <field name="uom_ids" string="UOM" filter_domain="[('uom_ids', 'ilike', self)]"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="product_normal_action" model="ir.actions.act_window">
+      <field name="name">Vendor Products</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">vendor.product.product</field>
+      <field name="view_mode">tree,form,kanban,activity</field>
+      <field name="view_type">form</field>
+      <field name="search_view_id" ref="product_search_form_view"/>
+      <field name="view_id" eval="False"/> <!-- Force empty -->
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create a new product variant
+        </p>
+      </field>
+    </record>
+
+    <record id="product_product_tree_view" model="ir.ui.view">
+      <field name="name">vendor.product.product.tree</field>
+      <field name="model">vendor.product.product</field>
+      <field eval="7" name="priority"/>
+      <field name="arch" type="xml">
+        <tree string="Product Variants">
+          <field name="sequence" widget="handle"/>
+          <field name="complete_name"/>
+          <field name="vendor_id"/>
+          <field name="uom_ids" widget="many2many_tags"/>
+          <field name="state"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="product_normal_form_view" model="ir.ui.view">
+      <field name="name">vendor.product.product.form</field>
+      <field name="model">vendor.product.product</field>
+      <field name="mode">primary</field>
+      <field eval="7" name="priority"/>
+      <field name="inherit_id" ref="vendor_product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <form position="attributes">
+          <attribute name="string">Product Variant</attribute>
+        </form>
+        <field name="name" position="replace">
+          <field name="complete_name"/>
+        </field>
+         <field name="state" position="after">
+          <field name="parent_state" invisible="1"/>
+        </field>
+        <field name="vendor_id" position="after">
+          <field name="stock_id"/>
+          <field name="product_tmpl_id" class="oe_inline" readonly="1" attrs="{'required': [('id', '!=', False)]}"/>
+        </field>
+        <xpath expr="//header/button[@name='generate_variants']" position="replace"/>
+        <xpath expr="//header/button[@name='generate']" position="replace"/>
+        <xpath expr="//header/button[@name='active_template']" position="attributes">
+          <attribute name="states">draft,inactive</attribute>
+        </xpath>
+        <field name="vendor_price_ids" position="attributes">
+          <attribute name="context">{'default_vendor_id':vendor_id, 'default_product_id': active_id, 'default_product_tmpl_id': product_tmpl_id}</attribute>
+          <attribute name="readonly">False</attribute>
+        </field>
+        <xpath expr="//page[@name='vendor_price_info']" position="after">
+          <page string="EQUIVALENTS" name="equivalent_product_info">
+            <field name="equivalents_ids" context="{'default_vendor_id':vendor_id, 'default_vendor_prod_id': active_id}">
+              <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="company_id"/>
+                <field name="product_qty"/>
+                <field name="uom_id"/>
+                <field name="product_id"/>
+                <field name="vendor_id"/>
+                <field name="vendor_prod_qty"/>
+                <field name="vendor_prod_uom"/>
+                <field name="name"/>
+              </tree>
+              <form string="Equivalents">
+                <sheet>
+                  <group>
+                    <group string="Company">
+                      <field name="company_id" options="{'no_create_edit': True, 'no_open': True}"/>
+                      <field name="product_id" options="{'no_create_edit': True, 'no_open': True}"/>
+                      <field name="product_qty"/>
+                      <field name="uom_id" readonly="1" options="{'no_open': True}"/>
+                    </group>
+                  </group>
+                  <group>
+                    <group string="Vendor">
+                      <field name="vendor_id" readonly="1" options="{'no_open': True}" force_save="1"/>
+                      <field name="vendor_prod_id" readonly="1" options="{'no_open': True}" force_save="1"/>
+                      <field name="vendor_prod_desc"/>
+                      <field name="vendor_prod_qty"/>
+                      <field name="vendor_prod_uom" domain="[('id', 'in', uom_ids)]" options="{'no_create_edit': True, 'no_open': True}"/>
+                      <field name="uom_ids" invisible="1"/>
+                    </group>
+                  </group>
+                </sheet>
+              </form>
+            </field>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="product_kanban_view" model="ir.ui.view">
+      <field name="name">Product Kanban</field>
+      <field name="model">vendor.product.product</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="id"/>
+          <field name="image_small"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click">
+                <div class="o_kanban_image">
+                  <img t-att-src="kanban_image('vendor.product.product', 'image_small', record.id.raw_value)" alt="Product"/>
+                </div>
+                <div class="oe_kanban_details">
+                  <strong class="o_kanban_record_title"><field name="name"/></strong>
+                  <div class="o_kanban_tags_section">
+                    <field name="attribute_value_ids" readonly="1"/>
+                  </div>
+                  <div name="tags"/>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record id="product_variant_action" model="ir.actions.act_window">
+      <field name="name">Vendor Products</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">vendor.product.product</field>
+      <field name="context">{'search_default_product_tmpl_id': [active_id], 'default_product_tmpl_id': active_id}</field>
+      <field name="search_view_id" ref="product_search_form_view"/>
+      <field name="view_ids"
+             eval="[(5, 0, 0),
+             (0, 0, {'view_mode': 'tree'}),
+             (0, 0, {'view_mode': 'form', 'view_id': ref('product_normal_form_view')}),
+             (0, 0, {'view_mode': 'kanban'})]"/>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create a new product variant
+        </p>
+      </field>
+    </record>
+
+    <record id="product_normal_action_sell" model="ir.actions.act_window">
+      <field name="name">Vendor Products</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">vendor.product.product</field>
+      <field name="view_mode">kanban,tree,form,activity</field>
+      <field name="view_type">form</field>
+      <field name="context">{'active_test': False, 'create': False}</field>
+      <field name="view_id" ref="product_product_tree_view"/>
+      <field name="search_view_id" ref="product_search_form_view"/>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create a new product variant
+        </p>
+      </field>
+    </record>
+  </data>
+</odoo>

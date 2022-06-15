@@ -1,0 +1,62 @@
+<odoo>
+    <template id="portal_signature" name="Portal Signature">
+        <t t-call="website.layout">
+        	<div id="wrap">
+            	<div class="container oe_website_sale">
+               		<!-- <form action="/portal/signature" method="post"> -->
+		            <div class="form-group col-md-12">
+			            <h1 class="mb32">Signature</h1>
+			            <div class="col-md-12 extra_info-custom address-kanban-info">
+			                <div class="col-md-12 col-sm-11 col-xs-12 t_para_size">
+			                    <b> Please confim your approval of this order by signing below.</b>When signing on a
+	touchscreen device or a laptop with a touchpad, draw your signature with a finger.
+	When signing on a desktop computer, draw your signature with the mouse.
+			                </div>
+			            </div>
+			        </div>    <br/><br/>
+	                <div class="form-group col-md-12">
+	                            <label class="control-label" for="customer_name">Enter Your Name</label>
+	                          
+	                            <input type="text" class="form-control" name="customer_name" id="customer_name"/>
+	                </div><br/>
+
+	                <div class="form-group col-md-12">
+                        <label class="control-label" for="customer_name">Draw your signature</label>
+                      
+                        <div id="signature">
+							<span><a class="clear_signature float-right">Erase</a></span>
+						</div><br/>
+
+						<!-- <input type='button' id='click_prev_sign' value='Click for Preview Signature' class="btn btn-default btn-primary" /> -->
+
+
+					<!-- 	<input type='text'  class="form-control hidden" name="image_data" id='output'/><br/>
+						Preview image -->
+					<!-- 	<img src='' id='sign_prev' style='display: none;' /> -->
+
+	                </div>
+
+            		<t t-if="warning">
+						<div class="control-label text-danger col-md-12"><t t-esc="warning"/></div>
+					</t>
+	                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+	                <input type="hidden" name="sale_order" id="order_id" t-att-value="sale_order.id" />
+
+	                <input type="hidden" name="token" id="token_signature" t-att-value="sale_order.access_token" />
+	                <input type="hidden" name="submitted" value="1"/>
+					
+                    <div class="col-md-12 btn-address-custom">
+                        <a t-att-href="'/quote/purchase/%s' %(sale_order.id)" class="btn btn-default btn-primary mb32">
+                            <span class="fa fa-long-arrow-left" /> Cancel
+                        </a>
+                        <button class="btn btn-default btn-primary pull-right mb32 a-submit signature-submit a-submit-disable a-submit-loading">
+                            Approve
+                        </button>
+                    </div>
+<!--                 </form>  		
+ -->            	</div>
+            </div>	    
+     	</t>   
+    </template>
+</odoo>
+

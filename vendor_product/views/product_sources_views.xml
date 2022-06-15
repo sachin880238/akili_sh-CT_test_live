@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="product_sources_tree_view" model="ir.ui.view">
+    <field name="name">product.sources.tree.view</field>
+    <field name="model">product.sources</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="default"/>
+        <field name="vendor_id"/>
+        <field name="vendor_product_id"/>
+        <field name="price"/>
+        <field name="delivered"/>
+        <field name="currency_id"/>
+        <field name="uom_id"/>
+        <field name="minimum"/>
+        <field name="multiple"/>
+        <field name="effective"/>
+        <field name="expiration"/>
+        <field name="days"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="product_sources_view_form" model="ir.ui.view">
+    <field name="name">product.sources.form.view</field>
+    <field name="model">product.sources</field>
+    <field name="arch" type="xml">
+      <form string="Sources">
+        <div style='float:left; margin-left:20px;' invisible="1">
+            <label for='default' string='Default' />
+            <field name='default'/>
+        </div>
+        <group>
+          <group string="Vendor Product" readonly="1">
+            <field name="vendor_id" readonly="1"/>
+            <field name="vendor_product_id" readonly="1"/>
+            <field name="vendor_desc" readonly="1"/>
+            <field name="vendor_qty" readonly="1"/>
+            <field name="uom_id" readonly="1"/>
+            <field name="price" readonly="1"/>
+            <field name="currency_id" readonly="1"/>
+            <field name="minimum" readonly="1"/>
+            <field name="multiple" readonly="1"/>
+            <field name="effective" readonly="1"/>
+            <field name="expiration" readonly="1"/>
+            <field name="days" string="Days to Ship" readonly="1"/>
+          </group>
+          <group string="Product">
+            <field name="company_id" readonly="1"/>
+            <field name="product_id" readonly="1"/>
+            <field name="desc" readonly="1"/>
+            <field name="qty" readonly="1"/>
+            <field name="product_unit" readonly="1"/>
+            <field name="lst_price" readonly="1"/>
+            <field name="product_currency" readonly="1"/>
+            <field name="product_minimum" readonly="1"/>
+            <field name="product_multiple" readonly="1"/>
+            <field name="product_effective" readonly="1"/>
+            <field name="product_expiration" readonly="1"/>
+            <field name="ship_days" string="Days to Ship" readonly="1"/>
+          </group>
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <record id="vendor_product_sources_search_view" model="ir.ui.view">
+    <field name="name">vendor.sources.search</field>
+    <field name="model">product.sources</field>
+    <field name="arch" type="xml">
+      <search string="Sources">
+        <field name="vendor_id" string="Vendor" filter_domain="[('vendor_id', 'ilike', self)]"/>
+        <field name="vendor_product_id" string="Vendor Product" filter_domain="[('vendor_product_id.complete_name', 'ilike', self)]"/>
+        <field name="price" string="Price" filter_domain="[('price', 'ilike', self)]"/>
+        <field name="delivered" string="Delivered" filter_domain="[('delivered', 'ilike', self)]"/>
+        <field name="currency_id" string="Curreny" filter_domain="[('currency_id', 'ilike', self)]"/>
+        <field name="uom_id" string="UOM" filter_domain="[('uom_id', 'ilike', self)]"/>
+        <field name="minimum" string="Minimum" filter_domain="[('minimum', 'ilike', self)]"/>
+        <field name="multiple" string="Multiple" filter_domain="[('multiple', 'ilike', self)]"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="product_sources_action" model="ir.actions.act_window">
+    <field name="name">Sources</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.sources</field>
+     <field name="context">{'create':False}</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_type">form</field>
+    <field name="search_view_id" ref="vendor_product_sources_search_view"/>
+  </record>
+</odoo>

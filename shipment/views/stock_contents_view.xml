@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="stock_content_tree_view" model="ir.ui.view">
+      <field name="name">stock.content.tree</field>
+      <field name="model">stock.content</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <tree create="1">
+          <field name="contents_qty" string="Quantity"/>
+          <field name="name" string="Contents"/>
+          <field name="container_id" invisible="1"/>
+          <field name="container_barcode" string="Container ID"/>
+          <field name="container_type" string="Container"/>
+          <field name="location_barcode" string="Location ID"/>
+          <field name="location_id" string="Location"/>
+          <field name="sequence" widget="handle"/>
+          <field name="is_product" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="stock_content_form_view" model="ir.ui.view">
+      <field name="name">stock.content.form</field>
+      <field name="model">stock.content</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <h1 attrs="{'invisible': [('is_product', '=', False)]}">
+              <field name="image" widget="image" readonly="1" nolabel="1"/>
+              <div style="margin: -8% 0% 0% 9.5%;">
+                <field name="product_stock_code" nolabel="1" readonly="1"/> <br/>
+                <field name="product_name" readonly="1" nolabel="1"/>
+                <field name="is_product" invisible="1"/>
+              </div>
+            </h1>
+            <h1 attrs="{'invisible': [('is_product', '=', True)]}">
+              <field name="cont_image" widget="image" readonly="1" nolabel="1"/>
+              <div style="margin: -8% 0% -1% 12%;">
+                <field name="container_code" nolabel="1" readonly="1"/>
+                <br/>
+                <field name="container_name" nolabel="1" readonly="1" options="{'no_open': True}"/>
+                <br/>
+                <field name="is_product" invisible="1"/>
+              </div>
+            </h1>
+            <group>
+              <group>
+                <field name="contents_qty" string="Quantity" attrs="{'invisible':[('is_product', '=', False)]}"/>
+                <field name="container_name"/>
+                <field name="document_name"/>
+                <field name="location_name"/>
+                <field name="partner_id" invisible="1"/>
+                <field name="picking_id" invisible="1"/>
+                <field name="container_barcode" invisible="1"/>
+                <field name="container_type" invisible="1"/>
+                <field name="location_id" invisible="1"/>
+                <field name="product_id" invisible="1"/>
+                <field name="is_product" invisible="1"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="MOVE">
+                <group>
+                  <group>
+                    <field name="transfer_now" string="Move Now" attrs="{'invisible':[('is_product', '=', False)]}"/>
+                    <field name="lot_id" string="Serial/Lot ID" attrs="{'invisible':[('is_product', '=', False)]}"/>
+                    <label for="new_container_barcode" string="Move to Container"/>
+                  <div>
+                    <field name="new_container_barcode" placeholder="scan or enter" class="move_container_barcode" nolabel="1"/>
+                    <field name="new_container_type" placeholder="select container type" class="move_container_type" nolabel="1" options='{"no_open": True,"no_create": True}'/>
+                  </div>
+                  <field name="picking_id" invisible="1"/>
+                  <field name="so_id" placeholder="select document" string="Link to Document"/>
+                  <field name="po_id" placeholder="select document" string="Link to Document"/>
+                  <label for="new_location_barcode" string="Move to Location"/>
+                  <div>
+                    <field name="new_location_barcode" placeholder="scan or enter" class="move_container_barcode" nolabel="1"/>
+                    <field name="new_location_id" placeholder="select location" class="move_container_type" nolabel="1" options='{"no_open": True,"no_create": True}'/>
+                  </div>
+                  </group>
+                  <!-- <group attrs="{'invisible': [('product_tracking', '!=', 'serial')]}">
+                    <field name="transfer_now"/>
+                    <field name="serial_no" domain="[('is_moved','=',False),('product_tracking', '=', 'serial'),('product_id','=',product_id)]"/>
+                    <field name="new_container_barcode"/>
+                    <field name="new_container_type" options='{"no_open": True, "no_create": True}'/>
+                    <field name="new_location_barcode"/>
+                    <field name="new_location_id" readonly="1"/>
+                    <field name="instructions"/>
+                    <field name="product_tracking" invisible="1"/>
+                  </group>
+                  <group attrs="{'invisible': [('product_tracking', '!=', 'lot')]}">
+                    <field name="transfer_now"/>
+                    <field name="lot_id" domain="[('is_moved','=',False),('product_tracking', '=', 'lot'),('product_id','=',product_id)]"/>
+                    <field name="new_container_barcode"/>
+                    <field name="new_container_type" options='{"no_open": True, "no_create": True}'/>
+                    <field name="new_location_barcode"/>
+                    <field name="new_location_id" readonly="1"/>
+                    <field name="instructions"/>
+                    <field name="product_tracking" invisible="1"/>
+                  </group>
+                  <group attrs="{'invisible': [('product_tracking', 'in', ('serial','lot'))]}">
+                    <field name="transfer_now" attrs="{'invisible': [('is_product', '=', False)]}"/>
+                    <field name="new_container_barcode"/>
+                    <field name="new_container_type" options='{"no_open": True, "no_create": True}'/>
+                    <field name="new_location_barcode"/>
+                    <field name="new_location_id" readonly="1"/>
+                    <field name="instructions" attrs="{'invisible': [('is_product', '=', False)]}"/>
+                    <field name="product_tracking" invisible="1"/>
+                    <field name="is_product" invisible="1"/>
+                  </group> -->
+                </group>
+                <script>
+                  $(document).ready(function(){
+                  $(".modal-footer").hide();
+                });
+                </script>
+                <hr/>
+                <div>
+                  <button name="transfer_product"
+                  string="MOVE"
+                  class="btn-primary oe_edit_only"
+                  type="object"/>
+                  <button name="generate_barcode" 
+                    string="BARCODE"
+                    class="btn-primary oe_edit_only"
+                    type="object"
+                    style="margin-left:0.5%"/>
+                  <button string="CLOSE"
+                    class="btn btn-secondary oe_edit_only" 
+                    data-toggle="modal"
+                    data-target="TARGET-2"
+                    data-dismiss="modal"
+                    style="margin-left:0.5%"/>
+                  <!-- <button string="CLOSE" 
+                    class="btn btn-primary oe_read_only" 
+                    data-toggle="modal" 
+                    data-target="TARGET-2" 
+                    data-dismiss="modal"
+                    style="margin-left:0.5%"/> -->
+                </div>
+              </page>
+            </notebook>
+          </sheet>
+          <!-- <style>
+          .modal-lg footer {
+          display: none !important;;
+          }
+        </style> -->
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_stock_content">
+      <field name="name">Contents</field>
+      <field name="res_model">stock.content</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{}</field>
+    </record>
+  </data>
+</odoo>

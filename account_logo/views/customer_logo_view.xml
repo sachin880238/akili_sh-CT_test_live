@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="100"/>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='business_documents']" position="after">
+                <h2>Customer Logo</h2>
+                <div class="o_settings_container" name="logo">
+                    <div class="o_setting_box" id="abcd">
+                        <div class="o_setting_left_pane">
+                            <field name="apply_customer_logo"/>
+                        </div>
+                        <div class="o_setting_right_pane" name="base_gengo_right_pane">
+                            <label string="Apply on Partners" for="apply_customer_logo"/>
+                        </div>
+                    </div>
+                    <div class="content-group col-12 col-lg-12" attrs="{'invisible': [('apply_customer_logo','=',False)]}">
+                        <group>
+                            <group style="width: 50%">
+                                <field name="background_colour" string="Icon Background Color" attrs="{'required': [('apply_customer_logo','=',True)]}" widget="color"/>
+                            </group>
+                            <group style="width: 50%">
+                                <field name="text_colour" string="Icon Letter Color" attrs="{'required': [('apply_customer_logo','=',True)]}" widget="color"/>
+                            </group>
+                        </group>
+                        <!-- <group>
+                            <group style="width: 50%">
+                                <field name="apply_existing_partner"/>
+                            </group>
+                        </group> -->    
+                    </div>
+
+                    <!-- <div class="o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="apply_existing_partner" invisible="1"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label string="Apply on Existing Partner" for="apply_existing_partner" invisible="1"/>
+                        </div>
+                    </div> -->
+
+
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+
+

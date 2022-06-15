@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="my_address_fields" name="My Addresses Fields">
+        <div class="row mt16">
+            <t t-if="error">
+                <div class="col-md-12 mt16">
+                    <p class="alert alert-danger">
+                        <t t-esc="error.get('error_message', [])"/>
+                    </p>
+                </div>
+            </t>
+            <form class="checkout_autoformat" method="post">
+                 <div class="col-xs-12 mt32 mb32">
+                    <p class="page_desc_div">
+                        <b>Edit your account information. </b>Any changes made here will be automatically updated on Contact, Billing, or Shipping addresses marked Same as Account.</p>
+                </div>
+                <div t-attf-class="form-group col-sm-8 div_ac_type" style="display: inline;">
+                    <div style="margin-left: 21px;">
+                        <label class="control-label col-xs-1" style="padding:initial;">Type</label>
+                        <span class="asterisks type">*</span>
+                        <div class="col-xs-11 company-type-custom-address" style="display: inline-block;margin-left: 1%;">
+                            <input disabled="disabled" id="individual" name="company_type" t-att="not partner_id.is_company and {'checked': 'checked'} or {}" type="radio" value="person">
+                                <span style="margin-right: 10px;">Individual</span>
+                            </input>
+                            <input disabled="disabled" id="company" name="company_type" t-att="partner_id.is_company and {'checked': 'checked'} or {}" type="radio" value="company">
+                                <span>Company</span>
+                            </input>
+                        </div>
+                    </div>
+                </div>
+                <div t-attf-class="col-sm-4" style="float: right;">
+                    <p class="asterisks text-right">* required items</p>
+                </div>
+                <div class="clearfix"/>
+                <div t-attf-class="form-group #{error and error.get('name') and 'has-error' or ''} col-xs-12" style="margin-left:19px">
+                    <style>
+                        .mt8{
+                            width: 98.6%;
+                        }
+                        .mb32{
+                            margin-bottom: 0px !important;
+                            margin-top: 0px !important;
+
+                        }
+                    </style>
+                    <t t-if="partner_id.is_company">
+                        <label class="control-label" for="name">
+                            <t>Company Name</t>
+                            <span class="asterisks">*</span>
+                        </label>
+                    </t>
+                    <t t-if="not partner_id.is_company">
+                        <label class="control-label" for="name">
+                            <t>Your Name</t>
+                            <span class="asterisks">*</span>
+                        </label>
+                    </t>
+                    <input class="form-control mt8" disabled="disabled" name="name" t-att-value="kw.get('name') or partner_id.name" type="text"/>
+                </div>
+                <div class="clearfix"/>
+                <div t-attf-class="form-group #{error and error.get('street') and 'has-error' or ''} col-xs-12 div_street #{is_contact and 'hidden v_contact' or ''}" style="margin-left:17px">
+                    <label class="control-label" for="street">
+                        <t>Address</t>
+                        <span class="asterisks">*</span>
+                    </label>
+                    <input class="form-control mt8" name="street" placeholder="Street1...." t-att-value="kw.get('street') or partner_id.street" type="text"/>
+                </div>
+                <div t-attf-class="form-group col-xs-12 div_street2" style="margin-left:17px">
+                    <input class="form-control mt8" name="street2" placeholder="Street2...." t-att-value="kw.get('street2') or partner_id.street2" type="text"/>
+                </div>
+                <div class="clearfix"/>
+                <div t-attf-class="form-group #{error and error.get('city') and 'has-error' or ''} col-sm-6 col-xs-12" style="width: 50%; float: left;">
+                    <label class="control-label" for="city">
+                        <t>City</t>
+                        <span class="asterisks">*</span>
+                    </label>
+                    <input class="form-control" name="city" t-att-value="kw.get('city') or partner_id.city" type="text"/>
+                </div>
+                <div t-attf-class="form-group #{error and error.get('state_id') and 'has-error' or ''} col-sm-6 col-xs-12" style="width: 50%; float: right;">
+                    <label class="control-label" for="state_id">
+                        <t>State / Province</t>
+                        <span class="asterisks">*</span>
+                    </label>
+                    <select class="form-control" name="state_id" id="state_id">
+                        <option class="select-placeholder" value="">State / Province...</option>
+                        <t t-as="state_id" t-foreach="state_ids or []" >
+                            <option t-att-selected="state_id.id == (kw.get('state_id') and int(kw.get('state_id')) or partner_id.state_id.id)" t-att-value="state_id.id">
+                                <t t-esc="state_id.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class="clearfix"/>
+                <div t-attf-class="form-group #{error and error.get('zip') and 'has-error' or ''} col-sm-6 col-xs-12 div_zip #{is_contact and 'hidden v_contact' or ''}" style="width: 50%; float: left;">
+                    <label class="control-label" for="zip">
+                        <t>Zip Code / Postal Code</t>
+                        <span class="asterisks">*</span>
+                    </label>
+                    <input class="form-control" name="zip" t-att-value="kw.get('zip') or partner_id.zip" type="text"/>
+                </div>
+                <div t-attf-class="form-group #{error and error.get('country_id') and 'has-error' or ''} col-sm-6 col-xs-12" style="width: 50%; float: right;">
+                    <label class="control-label" for="country_id">
+                        <t>Country</t>
+                        <span class="asterisks">*</span>
+                    </label>
+                    <select class="form-control" id="country_id" name="country_id" onchange="country_change(this)">
+                        <option t-att-selected="c.id == partner_id.country_id.id" t-att-value="c.id" t-if="c">
+                            <t t-esc="c.name"/>
+                        </option>
+                        <t t-as="country_id" t-foreach="country_ids">
+                            <option t-att-selected="country_id.id == (kw.get('country_id') and int(kw.get('country_id')) or partner_id.country_id.id)" t-att-value="country_id.id">
+                                <t t-esc="country_id.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class="clearfix"/>
+                <div id="div_email" t-attf-class="form-group #{error and error.get('email') and 'has-error' or ''} col-sm-6 col-xs-12" style="width: 50%; float: left;">
+                    <label class="control-label" for="email">
+                        <t>Email</t>
+                        <span class="asterisks">*</span>
+                    </label>
+                    <input class="form-control" disabled="disabled" name="email" t-att-value="kw.get('email') or partner_id.email" type="email"/>
+                </div>
+                <div t-attf-class="form-group #{error and (error.get('phone') or error.get('primary_tel_type')) and 'has-error' or ''} col-sm-6 col-xs-12" style="width: 50%; float: right;">
+                    <div class="communication-label">
+                        <label class="control-label" for="phone">
+                            <t>Telephone</t>
+                            <span class="asterisks">*</span>
+                        </label>
+                        <label class="control-label" for="phone">
+                            <t>Type</t>
+                            <span class="asterisks">*</span>
+                        </label>
+                    </div>
+                    <div class="inline-form-control">
+                        <input class="form-control inline" name="phone" t-att-value="kw.get('phone') or partner_id.phone" type="tel"/>
+                        <select class="form-control inline type-address-custom" name="primary_tel_type">
+                            <option class="select-placeholder" value=""/>
+                            <t t-as="type" t-foreach="communication_type_ids">
+                                <option t-att-selected="type.id == (kw.get('primary_tel_type') and int(kw.get('primary_tel_type')) or partner_id.primary_tel_type.id)" t-att-value="type.id" t-if="type.for_phone">
+                                    <t t-esc="type.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+                <div class="clearfix"/>
+                <div class="col-sm-6 col-xs-12" style="width: 50%; float: left;">
+                    <div class="communication-label">
+                        <label class="control-label" for="alternate_communication_1">Other Communication</label>
+                        <label class="control-label" for="phone">Type</label>
+                    </div>
+                    <div class="inline-form-control">
+                        <input class="form-control" name="alternate_communication_1" t-att-value="kw.get('alternate_communication_1') or partner_id.alternate_communication_1" type="tel"/>
+                        <select class="form-control type-address-custom" name="alternate_commu_type_1">
+                            <option class="select-placeholder" value=""/>
+                            <t t-as="type" t-foreach="communication_type_ids">
+                                <option t-att-selected="type.id == (kw.get('alternate_commu_type_1') and int(kw.get('alternate_commu_type_1')) or partner_id.alternate_commu_type_1.id)" t-att-value="type.id" t-if="type.for_other">
+                                    <t t-esc="type.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12" style="width: 50%; float: right;">
+                    <div class="communication-label">
+                        <label class="control-label" for="alternate_communication_2">Other Communication</label>
+                        <label class="control-label" for="phone">Type</label>
+                    </div>
+                    <div class="inline-form-control">
+                        <input class="form-control" name="alternate_communication_2" t-att-value="alternate_communication_2 or partner_id.alternate_communication_2" type="tel"/>
+                        <select class="form-control type-address-custom" name="alternate_commu_type_2">
+                            <option class="select-placeholder" value=""/>
+                            <t t-as="type" t-foreach="communication_type_ids">
+                                <option t-att-selected="type.id == (kw.get('alternate_commu_type_2') and int(kw.get('alternate_commu_type_2')) or partner_id.alternate_commu_type_2.id)" t-att-value="type.id" t-if="type.for_other">
+                                    <t t-esc="type.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+                <div class="clearfix"/>
+                <div>
+               <!--  <div t-if="partner_id.is_company and {'checked': 'checked'} or {}">
+                <div class="col-xs-12 mt32 mb32">
+                    <p class="page_desc_div">
+                        <b>Decide how you want to control access to your information. </b>The default is
+email a sign-in link which eliminates the need to remember a password. For
+additional security, check answer a question which will require a correct answer to a
+pre-defined challenge question. If you prefer to use a password, select require a
+password, and for additional security, check text a code which will be sent to a
+mobile telephone. A different email address, question, password, or mobile
+telephone can be set for each user.</p>
+                </div>
+                <div class="col-xs-12 acess-control-cutom-address">
+                    <div class="inline-form-control">
+                        <label class="control-label" for="password">Sign in with a code sent to this mobile telephone</label>
+                        <label class="control-label text-danger o_hidden" id="messaget_not_valid">Number is Not valid Plase Try again</label>
+                        <label class="control-label text-success o_hidden" id="messaget_valid">OTP is Send Sucessfully</label>
+                        <a class="float-right" id="phone_number_test" style="color: #19d5de;">test</a>
+                    </div>
+                    <div>
+                        <input class="form-control" id="telephone_number" name="telephone_number" t-att-value="telephone_number" type="text"/>
+                    </div>
+                </div>
+                <div class="col-xs-12 acess-control-cutom-address">
+                    <div class="inline-form-control">
+                        <label class="control-label" for="password">Sign in with this password</label>
+                        <a class="reset-password" style="color: #19d5de;">reset</a>
+                        <a class="mr64 show-password" style="color: #19d5de;">show</a>
+                    </div>
+                    <div>
+                        <input class="form-control" id="password" name="password" type="password"/>
+                    </div>
+                </div>
+            </div> -->
+                <div class="col-xs-12 acess-control-cutom-address">
+                    <div class="col-xs-12 mt32 mb32">
+                    <p class="page_desc_div">
+                        <b>Decide how you want to control access to your information. </b>The default is
+email a sign-in link which eliminates the need to remember a password. For
+additional security, check answer a question which will require a correct answer to a
+pre-defined challenge question. If you prefer to use a password, select require a
+password, and for additional security, check text a code which will be sent to a
+mobile telephone. A different email address, question, password, or mobile
+telephone can be set for each user.</p>
+                </div>
+                    <div class="col-md-6">
+                        <p>Access Control</p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                              <input type="radio" id="email_sign" name="login_with" value="email_sign" checked="checked"/>
+                              <label for="email_sign">email a sign-in link</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <script>
+                                      $("#is_security_question").is(':checked', function(){
+                                      $("#is_security_question").prop('checked', true);
+                                    });
+                                          
+                                  </script>
+                                <input type="checkbox" id="is_security_question" name="security_question" />
+                                <label for="security_question">answer a question</label>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                              <input type="radio" id="is_password_sign" name="login_with" value="password_sign" onclick="function_pwd_show()"/>
+                              <label for="password_sign">require a password</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <script>
+                                      $("#security_code").is(':checked', function(){
+                                      $("#security_code").prop('checked', true);
+                                    });                            
+                                  </script>
+                               <input type="checkbox" id="security_code" name="text_code" t-attr-value="user.is_mobile_auth"/>
+                                <label for="security_code">text a code</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                <!-- security Questions -->
+                <div id="security_questions_div" style="display: none">
+                    <div t-attf-class="form-group col-md-6 float-left" style=" margin-left: -14px; ">
+                        <label class="control-label" for="security_question">
+                            <t>Security Question</t>
+                        </label>
+                        <input autocapitalize="off" autofocus="autofocus" class="form-control" id="security_question" name="security_question" type="text"/>
+                    </div>
+                    <div t-attf-class="form-group col-md-6 float-right">
+                        <label class="control-label" for="security_answer">
+                            <t>Answer</t>
+                        </label>
+                        <input autocapitalize="off" autofocus="autofocus" class="form-control" id="security_answer" name="security_answer" type="text"/>
+                    </div>
+                </div>
+                <!-- Password Options  -->
+                <div class="col-xs-12 acess-control-cutom-address password_individual" style="display:none;">
+                    <div class="inline-form-control">
+                        <label class="control-label" for="password">Sign in with this password</label>
+                        <a class="reset-password" style="color: #19d5de;">reset</a>
+                        <a class="mr64 show-password" style="color: #19d5de;">show</a>
+                    </div>
+                    <div>
+                        <input class="form-control" id="password" name="password" type="password"/>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+                <div class="clearfix"/>
+                <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                <div class="col-xs-12 mt32 mb32">
+                    <button class="btn btn-primary">Cancel</button>
+                    <button class="btn btn-primary float-right">Save</button>
+                </div>
+            </form>
+        </div>
+    </template>
+    <template id="custom_portal_my_address" name="My Address">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container account_settings_my_portal mt32 mb32">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/my/home">Your Account</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <span>Account Settings</span>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="mt4">
+                        <span class="h1">Edit Account</span>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="mt16">
+                        <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                            <t t-if="content_id.page == 'account_settings'">
+                                <div class="page_desc_div" t-field="content_id.content"/>
+                            </t>
+                        </t>
+                    </div>
+                    <div class="clearfix"/>
+                    <t t-call="website_my_account.my_address_fields"/>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

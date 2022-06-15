@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="login_by_token_email_after_signup" model="mail.template">
+            <field name="name">Login By Email</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject">Login-Conservation Technology</field>
+            <field name="body_html"><![CDATA[
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+    <p>Dear ${object.name},</p>
+    <div style="text-align: center; margin-top: 16px;">
+        <a href="${object.get_login_url('redirect')}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Login Via This Link</a>
+    </div>
+    <p>Best regards,</p>
+</div>
+<div style="padding:0px;width:600px;margin:auto; margin-top: 10px; background: #fff repeat top /100%;color:#777777">
+    ${user.signature | safe}
+</div>]]></field>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+        <record id="general_signin_by_email_template" model="mail.template">
+            <field name="name">Login By Email</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject">Login-Conservation Technology</field>
+            <field name="body_html"><![CDATA[
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+    <p>Dear ${object.name},</p>
+    <div style="text-align: center; margin-top: 16px;">
+        <a href="${object.get_login_url('redirect')}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Login Via This Link</a>
+    </div>
+    <p>Best regards,</p>
+</div>
+<div style="padding:0px;width:600px;margin:auto; margin-top: 10px; background: #fff repeat top /100%;color:#777777">
+    ${user.signature | safe}
+</div>]]></field>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+
+        <record id="login_by_token_email_after_get_quote" model="mail.template">
+            <field name="name">Login By Email</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject">Login-Conservation Technology</field>
+            <field name="body_html"><![CDATA[
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+    <p>Dear ${object.name},</p>
+    <div style="text-align: center; margin-top: 16px;">
+        <a href="${object.get_login_url('get_quote')}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Login Via This Link(Get Quote)</a>
+    </div>
+    <p>Best regards,</p>
+</div>
+<div style="padding:0px;width:600px;margin:auto; margin-top: 10px; background: #fff repeat top /100%;color:#777777">
+    ${user.signature | safe}
+</div>]]></field>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+        <record id="signin_email_authenticate_mail_template" model="mail.template">
+            <field name="name">Login By Email</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject">Login-Conservation Technology</field>
+            <field name="body_html"><![CDATA[
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+    <p>Dear Account Page ${object.name},</p>
+    <div style="text-align: center; margin-top: 16px;">
+        <a href="${object.get_login_url('my_account')}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Login Via This Link(Get Quote)</a>
+    </div>
+    <p>Best regards,</p>
+</div>
+<div style="padding:0px;width:600px;margin:auto; margin-top: 10px; background: #fff repeat top /100%;color:#777777">
+    ${user.signature | safe}
+</div>]]></field>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+        <record id="auth_signup.reset_password_email" model="mail.template">
+                <field name="name">Auth Signup: Reset Password</field>
+                <field name="model_id" ref="base.model_res_users"/>
+                <field name="email_from"><![CDATA["${object.company_id.name|safe}" <${(object.company_id.email or user.email)|safe}>]]></field>
+                <field name="email_to">${object.email|safe}</field>
+                <field name="subject">Password reset</field>
+                <field name="body_html"><![CDATA[
+    <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+        <table cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;background:inherit;color:inherit">
+            <tbody><tr>
+                <td valign="center" width="200" style="padding:10px 10px 10px 5px;font-size: 12px">
+                    <img src="/logo.png" style="padding: 0px; margin: 0px; height: auto; width: 80px;" alt="${user.company_id.name}">
+                </td>
+            </tr></tbody>
+        </table>
+    </div>
+    <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+        <p>Dear ${object.name},</p>
+        <p>A password reset was requested for the Odoo account linked to this email.</p>
+        <p>You may login via this link without reset password:</p>
+        <div style="text-align: center; margin-top: 16px;">
+            <a href="${object.get_login_url('without_reset_password')}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Login Via This Link(Without Reset Password)</a>
+        </div>
+        <p>You may change your password by following this link which will remain valid during 24 hours:</p>
+        <div style="text-align: center; margin-top: 16px;">
+            <a href="${object.signup_url}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Change password</a>
+        </div>
+        <p>If you do not expect this, you can safely ignore this email.</p>
+        <p>Best regards,</p>
+    </div>
+    <div style="padding:0px;width:600px;margin:auto; margin-top: 10px; background: #fff repeat top /100%;color:#777777">
+        ${user.signature | safe}
+        <p style="font-size: 11px; margin-top: 10px;">
+            <strong>Sent by ${user.company_id.name} using <a href="www.odoo.com" style="text-decoration:none; color: #875A7B;">Odoo</a></strong>
+        </p>
+    </div>]]></field>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+        <record id="sale.email_template_edi_sale" model="mail.template">
+            <field name="name">Sales Order - Send by Email</field>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="subject">${object.company_id.name} ${object.state in ('draft', 'sent') and 'Quotation' or 'Order'} (Ref ${object.name or 'n/a' })</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_template" ref="sale.action_report_saleorder"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}${object.state == 'draft' and '_draft' or ''}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+        <p>Dear ${object.partner_id.name}
+        % set access_action = object.with_context(force_website=True).get_access_action()
+        % set doc_name = 'quotation' if object.state in ('draft', 'sent') else 'order confirmation'
+        % set is_online = access_action and access_action['type'] == 'ir.actions.act_url'
+        % set access_name = is_online and object.template_id and doc_name == 'quotation' and 'Accept and pay %s online' % doc_name or 'View %s' % doc_name
+        % set access_url = is_online and access_action['url'] or None
+
+        % if object.partner_id.parent_id:
+            (<i>${object.partner_id.parent_id.name}</i>)
+        % endif
+        ,</p>
+        <p>
+        Here is your ${doc_name} <strong>${object.name}</strong>
+        % if object.origin:
+        (with reference: ${object.origin} )
+        % endif
+        amounting in <strong>${object.amount_total} ${object.pricelist_id.currency_id.name}</strong>
+        from ${object.company_id.name}.
+        </p>
+
+            <br/><br/>
+        % if is_online:
+            <div style="text-align: center; margin-top: 16px;">
+                <a href="/demo-login-link-which-replace" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Login Via This Link(Without Reset Password)</a>
+            </div>
+
+            <div style="margin-top:32px;">
+                <center>
+                    <a href="${access_url}" style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">${access_name}</a>
+                    <br/><br/>
+                    <span style="color:#888888">(or view attached PDF)</span>
+                </center>
+            </div>
+            <br/>
+        % endif
+
+        <p>You can reply to this email if you have any questions.</p>
+        <p>Thank you,</p>
+
+        <p style="color:#eeeeee;">
+        % if object.user_id and object.user_id.signature:
+            ${object.user_id.signature | safe}
+        % endif
+        </p>
+        ]]></field>
+        </record>
+    </data>
+</odoo>

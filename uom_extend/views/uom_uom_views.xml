@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="uom.product_uom_tree_view" model="ir.ui.view">
+    <field name="name">uom.uom.tree</field>
+    <field name="model">uom.uom</field>
+    <field name="arch" type="xml">
+      <tree string="Units">
+        <field name="sequence" widget="handle"/>
+        <field name="category_id"/>
+        <field name="name" string="Unit"/>
+        <field name="unit_qty"/>
+        <field name="reference" string="Reference"/>
+        <field name="reference_qty"/>
+        <field name="rounding" string="Rounding"/>
+        <field name="state"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="uom.product_uom_form_view" model="ir.ui.view">
+    <field name="name">uom.uom.form</field>
+    <field name="model">uom.uom</field>
+    <field name="arch" type="xml">
+      <form string="Units">
+        <header>
+          <button name="set_to_draft" type="object" states="active,inactive" string="SET TO DRAFT" class="oe_highlight"/>
+          <button name="set_to_active" type="object" states="draft,inactive" string="ACTIVATE" class="oe_highlight"/>
+          <button name="set_to_inactive" type='object' states="draft,active" string='DEACTIVATE'/>
+          <field name="state" widget="statusbar"/>
+          <field name="parent_state" invisible="1"/>
+        </header>
+        <sheet>
+          <field name="image" widget="image" options="{&quot;size&quot;: [80, 80]}"/>
+          <div class="oe_title" style="display: inline-block;margin-left: 1.5% !important;">
+            <h1>
+              <field name="unit_name"/>
+            </h1>
+          </div>
+          <group name="main_group">
+            <group string="Unit" name="unit_group"> 
+              <field name="name" string="Unit"/>
+              <field name="uom_type" string="Uom Type"/>
+              <field name="unit_qty"/>
+              <field name="category_id"/>
+              <field name="rounding" string="Rounding"/>
+            </group>
+            <group string="Reference" name="reference_group">  
+              <field name="reference"/>  
+              <field name="reference_qty"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="uom.product_uom_form_action" model="ir.actions.act_window">
+    <field name="name">Units</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">uom.uom</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="uom.product_uom_tree_view"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Add a new unit of measure
+      </p>
+      <p>
+        You must define a conversion rate between several Units of
+        Measure within the same category.
+      </p>
+    </field>
+  </record>
+</odoo>

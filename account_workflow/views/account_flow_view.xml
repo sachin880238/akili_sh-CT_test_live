@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_opportunities_tree" model="ir.actions.act_window">
+      <field name="name">Opportunities</field>
+      <field name="res_model">crm.lead</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">kanban,tree,graph,pivot,form,calendar</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False)),('type','=','opportunity')]</field>
+      <field name="context">{'default_type': 'opportunity'}</field>
+      <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('lead_process.crm_opportunity_tree_view')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('lead_process.crm_opportunity_kanban_view')})]"/>
+    </record>
+    <record id="sale_action_quotations_customer" model="ir.actions.act_window">
+        <field name="name">Quotation</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'form', 'view_id': ref('so_workflow.sales_quotation_form')})]"/>
+    </record>
+    <record id="purchase_action_quotations_customer" model="ir.actions.act_window">
+        <field name="name">Purchase</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">form,tree,graph</field>
+        <field name="context">{}</field>
+    </record>
+    <record model="ir.actions.act_window" id="customer_opportunities_list">
+      <field name="name">Opportunities</field>
+      <field name="res_model">crm.lead</field>
+      <field name="view_id" ref="crm.crm_case_kanban_view_leads"/>
+      <field name="view_mode">kanban,tree,graph,pivot,form,calendar</field>
+      <field name="context">{'create':True}</field>
+      <field name="domain">[('partner_id','=',context.get('active_id', False))]</field>
+    </record>
+    <record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
+      <field name="name">Opportunities</field>
+      <field name="res_model">crm.lead</field>
+      <field name="view_mode">kanban,tree,graph,pivot,form,calendar,activity</field>
+      <field name="domain">[('type','=','opportunity')]</field>
+      <field name="context">{
+              'default_type': 'opportunity',
+              'search_default_assigned_to_me': 1,
+              'create' : False,}
+      </field>
+      <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+    
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <header> 
+                    <!-- <button name="deactivate_sale_order" type="object" string="Auto"/> -->
+                    
+                    <button string="QUOTE" name="has_required_fields" 
+                        type="object" class="oe_highlight" 
+                        context="{'search_default_partner_id': active_id,'show_custom_address': True,'default_partner_id': active_id,'is_customer':True}" 
+                        attrs="{'invisible': ['|',('quotation_count', '>', 0),'|',('supplier','!=',False),'|',('state','=','inactive'),('sale_order_count', '>', 0)]}"
+                        help="create a quotation"/>
+
+                    <button name="account_workflow.act_view_account_to_opportunity_wizard" type="action" string="ASSIGN"  help="assign to a salesperson"
+                        attrs="{'invisible': ['|',('opportunity_count', '>', 0),'|',('supplier','=',True),('state','=','inactive')]}"/>
+                    <button string="ORDER" name="has_required_fields" 
+                        type="object" class="oe_highlight"
+                        context="{'search_default_partner_id': active_id,'default_partner_id': active_id,'is_customer':False}" 
+                        attrs="{'invisible': ['|',('purchase_order_count', '>', 0),'|',('supplier','=',False),('vendor_state','=','inactive')]}"/>
+                    <button name="deactivate" type="object" string="DEACTIVATE" states="customer,prospect" help="not likely to order again"/>
+                    <button name="activate" type="object" string="ACTIVATE" states="inactive" help="restore as active account"/>
+                    <field name="state" widget="statusbar"  attrs="{'invisible': [('customer','=',False)]}"/>
+                    <field name="vendor_state" widget="statusbar"  attrs="{'invisible': [('supplier','=',False)]}"/>
+                    <field name="parent_state" widget="statusbar" invisible="1"/>
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='icon_letters']" position="after">
+                <field name="last_order_date" invisible="1"/>
+                <field name="category_id" widget="many2many_tags" options="{'color_field': 'color','no_create_edit': True, 'no_create': True}" placeholder="Tags..." context="{'show_type': supplier}" domain="['|',('type','=','account'),('type_vendor','=','account'),('for_vendor','=',supplier)]"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="view_partners_form_crm1" model="ir.ui.view">
+      <field name="name">view.res.partner.form.crm.inherited1</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field eval="1" name="priority"/>
+      <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+      <field name="arch" type="xml">
+        <data>
+          <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="attributes">
+            <attribute name="context"></attribute>
+          </xpath>
+        </data>
+      </field>
+    </record>
+
+    <record id="view_partners_form_crm1_inherit" model="ir.ui.view">
+      <field name="name">view.res.partner.form.crm.inherited1</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field eval="1" name="priority"/>
+      <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
+          <button class="oe_stat_button o_res_partner_tip_opp button_change" type="object"
+            name="get_opportunity_view"
+            icon="fa-search-dollar"
+            groups="sales_team.group_sale_salesman"
+            context="{'default_partner_id': active_id}"
+            attrs="{'invisible': [('supplier', '=', True)]}"
+            >
+            <field string="Opportunities" name="opportunity_count" widget="statinfo"/>
+          </button>
+        </xpath>
+        <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+  </odoo>

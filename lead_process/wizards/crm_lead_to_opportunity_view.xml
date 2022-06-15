@@ -1,0 +1,470 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.view" id="view_crm_lead2opportunity_partner">
+    <field name="name">crm.lead2opportunity.partner.form</field>
+    <field name="model">crm.lead2opportunity.partner</field>
+    <field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner" />
+    <field name="arch" type="xml">
+      <xpath expr="//form/footer/button[@name='action_apply']" position="replace">
+        <button name="action_apply" string="ASSIGN" type="object" class="btn-primary"/>
+      </xpath>
+      <xpath expr="//form/footer/button[@class='btn-secondary']" position="replace">
+        <button string="CANCEL" class="btn-secondary" special="cancel"/>
+      </xpath>
+      <xpath expr="//group[2]" position="replace"></xpath>
+      <xpath expr="//group[@name='name']" position="before">
+        <group>
+          <group>
+            <field name="contact_wizard" string="Contact" />
+            <field name="partner_wizard" string="Account" readonly="1"/>
+            <field name="opportunity_wizard" string="Opportunity" readonly="0" required="1"/>
+            <field  name="team_id" string='Sales Team'/>
+            <field  name="user_id" domain="[('sale_team_id.id','=',team_id)]"/> 
+          </group>
+        </group>
+         <!--  <field name="partner_id1" string="Account" readonly="1"/>
+          <field name="opportunity" string="Opportunity" readonly="1"/> -->
+         <!--  <label for="found_customer" string='Lead name and address:' />
+          <field name="found_customer" /><br/><br/> -->
+
+          <!-- <div style="float:left;">
+            <field name="assign_to" required="1" widget="radio" class="oe_inline"/>
+          </div> 
+          <div style="float:left; width:750px;margin-top:-12px; padding-left: 33px;">
+            <group>
+              <field colspan='4' name="user_id" domain="[('share', '=', False)]" 
+                     attrs="{'invisible':[('assign_to', '=', 'sale_team')],
+                             'required':[('assign_to', '=', 'salesperson')]}" nolabel='1'/> 
+            </group>
+          </div> 
+          <div style="float:left; width:750px;margin-top: -4px;padding-left: 33px;">
+            <group> 
+              <field colspan='4' name="team_id" widget="selection" 
+                     attrs="{'invisible': [('assign_to', '=', 'salesperson')],
+                             'required':[('assign_to', '=', 'sale_team')]}" nolabel='1' />
+            </group>
+          </div>  -->
+      </xpath>
+      <xpath expr="//group[@name='name']" position="attributes">
+          <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//group[@name='action']" position="attributes">
+          <attribute name="options">{'no_create': True,'always_reload': True}</attribute>
+          <attribute name="context">{'search_default_customer': 1,'show_custom_address': True}</attribute>
+      </xpath> 
+      <xpath expr="//group[@name='action']" position="attributes">
+          <attribute name="invisible">True</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="crm.action_crm_lead2opportunity_partner" model="ir.actions.act_window">
+    <field name="name">Assign Lead</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">crm.lead2opportunity.partner</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_crm_lead2opportunity_partner"/>
+    <field name="target">new</field>
+  </record>
+
+  <record id="view_crm_lead2customer_partner" model="ir.ui.view">
+    <field name="name">crm.lead2opportunity.partner.form</field>
+    <field name="model">crm.lead2opportunity.partner</field>
+    <field name="arch" type="xml">
+      <form string="Convert to Customer">
+        <div>
+          <label for="found_customer_wizard" string='Lead name and address: ' />
+          <field name="found_customer_wizard" /><br/><br/>
+        </div>
+        <div  style="float: left;">
+          <label for="action" string="Action"/>
+          <field name="action" widget="radio"/> 
+        </div>
+        <div  style="float: right;width: 650px;padding-right: 28px;margin-top: -17px;">
+          <group>
+            <field colspan='6' name="contact_id" domain="['&amp;',('parent_id', '!=', False) ,'&amp;', ('parent_id.customer', '!=', False),('type','in',['conatct','other'])]"
+              options="{'no_create': True,'always_reload': True}" nolabel='1' context="{'search_default_customer': 1,'show_custom_address': True}" attrs="{'required': [('action', '=', 'exist')], 'invisible':['|',('action','=','create'),('action','=','create_contact')]}">
+            </field>
+          </group>
+        </div> 
+        <div  style="float: right;width: 650px;padding-right: 28px;margin-top: -1px;">
+          <group>
+            <field colspan='6' name="partner_id" domain="[('parent_id', '=', False) ,('customer', '!=', False)]"
+              options="{'no_create': True,'always_reload': True}" nolabel='1'
+              context="{'search_default_customer': 1,'show_custom_address': True}"
+              attrs="{'required': [('action', '=', 'create_contact')],
+              'invisible':['|',('action','=','create'),('action','=','exist')]}" />
+          </group>
+        </div> 
+        <footer>
+          <button name="action_create_customer" string="ACCEPT" type="object" class="btn-primary" attrs="{'invisible':['|',('action','=','create'),('action', '=', 'create_contact')]}"/>
+          <button name="action_create_customer" string="CREATE" type="object" class="btn-primary" attrs="{'invisible':[('action','=','exist'),]}" />
+          <button string="CANCEL" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+  <!--<record id="crm.view_crm_lead2opportunity_partner" model="ir.ui.view">
+        <field name="name">crm.lead2opportunity.partner.form</field>
+        <field name="model">crm.lead2opportunity.partner</field>
+        <field name="arch" type="xml">
+          <form string="Convert to Opportunity">
+            <div>
+              <label for='found_customer' string='Lead name and address: ' />
+              <field name="found_customer" options="{'no_create': True,'always_reload': True}"
+              context="{'search_default_customer': 1,'show_custom_address': True}" /><br/><br/>
+            </div>
+            <group string="Assign this opportunity to">
+              <field name="user_id" domain="[('share', '=', False)]"/>
+              <field name="team_id" widget="selection"/>
+            </group>
+            <footer>
+              <button name="action_apply" string="Create Opportunity" type="object" class="btn-primary"/>
+              <button string="Cancel" class="btn-default" special="cancel"/>
+            </footer>
+          </form>
+        </field>
+      </record>-->
+
+<record id="action_crm_lead2customer_partner" model="ir.actions.act_window">
+  <field name="name">Accept Lead</field>
+  <field name="type">ir.actions.act_window</field>
+  <field name="res_model">crm.lead2opportunity.partner</field>
+  <field name="view_mode">form</field>
+  <field name="view_id" ref="view_crm_lead2customer_partner" />
+  <field name="target">new</field>
+</record>
+
+  <record id="view_crm_lead_merge_partner" model="ir.ui.view">
+    <field name="name">lead.merge.partner.form</field>
+    <field name="model">lead.merge.partner</field>
+    <field name="arch" type="xml">
+      <form string="Convert to Customer">
+        <div class="parent_content">
+          <P><i>Select the data to retain :</i></P>
+          <div class="merge_crm_label">
+            <h1> <label class="label_name" for="c_name_f" string=""/> </h1>
+          </div>
+          <div class="merge_crm_account"> 
+            <P> <label style='margin-top:20px; font-style: italic;' for="c_name_f" string="Contact"/> </P>
+          </div>
+          <div class="merge_crm_account"> 
+            <P> <label style='margin-top:20px; font-style: italic;' for="c_name_f" string="Lead"/> </P>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_name_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_name_f" nolabel="1"/>
+            <field name="c_name" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_name_f" nolabel="1"/>
+            <field name="l_name" nolabel="1" readonly="1"/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_company_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_company_f" nolabel="1"/>
+            <field name="c_company" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_company_f" nolabel="1"/>
+            <field name="l_company" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_street_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_street_f" nolabel="1"/>
+            <field name="c_street" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_street_f" nolabel="1"/>
+            <field name="l_street" nolabel="1" readonly="1"/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_street2_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_street2_f" nolabel="1"/>
+            <field name="c_street2" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_street2_f" nolabel="1"/>
+            <field name="l_street2" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_city_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_city_f" nolabel="1"/>
+            <field name="c_city" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_city_f" nolabel="1"/>
+            <field name="l_city" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_state_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_state_f" nolabel="1"/>
+            <field name="c_state" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_state_f" nolabel="1"/>
+            <field name="l_state" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_zip_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_zip_f" nolabel="1"/>
+            <field name="c_zip" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_zip_f" nolabel="1"/>
+            <field name="l_zip" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_country_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_country_f" nolabel="1"/>
+            <field name="c_country" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_country_f" nolabel="1"/>
+            <field name="l_country" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_email_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_email_f" nolabel="1"/>
+            <field name="c_email" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_email_fields">
+            <field name="l_email_f" nolabel="1"/>
+            <field name="l_email" nolabel="1" readonly="1"/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_tphone_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_tphone_f" nolabel="1"/>
+            <field name="c_tphone" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_tphone_f" nolabel="1"/>
+            <field name="l_tphone" nolabel="1" readonly="1"/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_primary_tel_type_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_primary_tel_type_f" nolabel="1"/>
+            <field name="c_primary_tel_type" nolabel="1" readonly="1" options='{"no_open": True}'/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_primary_tel_type_f" nolabel="1"/>
+            <field name="l_primary_tel_type" nolabel="1" readonly="1" options='{"no_open": True}'/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_alternate_communication_1_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_alternate_communication_1_f" nolabel="1"/>
+            <field name="c_alternate_communication_1" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_alternate_communication_1_f" nolabel="1"/>
+            <field name="l_alternate_communication_1" nolabel="1" readonly="1"/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_alternate_commu_type_1_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_alternate_commu_type_1_f" nolabel="1"/>
+            <field name="c_alternate_commu_type_1" nolabel="1" readonly="1" options='{"no_open": True}'/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_alternate_commu_type_1_f" nolabel="1"/>
+            <field name="l_alternate_commu_type_1" nolabel="1" readonly="1" options='{"no_open": True}'/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_alternate_communication_2_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_alternate_communication_2_f" nolabel="1"/>
+            <field name="c_alternate_communication_2" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_alternate_communication_2_f" nolabel="1"/>
+            <field name="l_alternate_communication_2" nolabel="1" readonly="1"/>
+          </div>
+        </div>
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_alternate_commu_type_2_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_alternate_commu_type_2_f" nolabel="1"/>
+            <field name="c_alternate_commu_type_2" nolabel="1" readonly="1" options='{"no_open": True}'/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_alternate_commu_type_2_f" nolabel="1"/>
+            <field name="l_alternate_commu_type_2" nolabel="1" readonly="1" options='{"no_open": True}'/>
+          </div>
+        </div>
+
+
+        <!-- <div>
+          <div class="merge_crm_label">
+            <label for="c_fax_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_fax_f" nolabel="1"/>
+            <field name="c_fax" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_fax_f" nolabel="1"/>
+            <field name="l_fax" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_other_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_other_f" nolabel="1"/>
+            <field name="c_other" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_other_f" nolabel="1"/>
+            <field name="l_other" nolabel="1" readonly="1"/>
+          </div>
+        </div>  -->
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_website_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_website_f" nolabel="1"/>
+            <field name="c_website" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_website_f" nolabel="1"/>
+            <field name="l_website" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_lang_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_lang_f" nolabel="1"/>
+            <field name="c_lang" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_lang_f" nolabel="1"/>
+            <field name="l_lang" nolabel="1" readonly="1"/>
+          </div>
+        </div> 
+        <div>
+          <div class="merge_crm_label">
+            <label for="c_desc_f"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="c_desc_f" nolabel="1"/>
+            <field name="c_desc" nolabel="1" readonly="1"/>
+          </div>
+          <div class="crm_acc_fields">
+            <field name="l_desc_f" nolabel="1"/>
+            <field name="l_desc" nolabel="1" readonly="1"/>
+          </div>
+        </div>  
+        <footer>
+            <button name="merge_link_customer" string="MERGE"
+                type="object" class="btn-primary" />
+            <button string="CANCEL" class="btn-secondary"
+                special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_crm_lead_merge_partner" model="ir.actions.act_window">
+    <field name="name">Merge Lead with Contact</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">lead.merge.partner</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_crm_lead_merge_partner" />
+    <field name="target">new</field>
+  </record>
+
+
+  <!-- <record id="crm_lead_lost_view_form_inherit" model="ir.ui.view">
+    <field name="name">crm.lead.lost.form</field>
+    <field name="model">crm.lead.lost</field>
+    <field name="inherit_id" ref="crm.crm_lead_lost_view_form"/>
+    <field name="arch" type="xml">
+      
+      <xpath expr="//form/group/field[@name='lost_reason_id']" position="before">
+        <field name="found_customer_lead1" string="Lead"/>
+      </xpath>
+      <xpath expr="//form/group/field[@name='lost_reason_id']" position="attributes">
+        <attribute name="string">Reason</attribute>
+         <attribute name="required">True</attribute>
+      </xpath>
+      <xpath expr="//button[@class='btn-primary']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//button[@class='btn-secondary']" position="before">
+        <button name="lost_reason_apply" string="REJECT" type="object" class="btn-primary"/>
+      </xpath>
+      <xpath expr="//button[@class='btn-secondary']" position="attributes">
+        <attribute name="string">CANCEL</attribute>
+      </xpath>
+    </field>
+  </record>
+-->
+  <!-- <record id="crm.crm_lead_lost_action" model="ir.actions.act_window">
+    <field name="name">Reject Lead</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">crm.lead.lost</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="crm.crm_lead_lost_view_form"/>
+    <field name="target">new</field>
+  </record> -->
+</odoo>

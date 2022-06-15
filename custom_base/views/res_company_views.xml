@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="base.view_company_form" model="ir.ui.view">
+      <field name="name">res.company.form</field>
+      <field name="model">res.company</field>
+      <field name="arch" type="xml">
+        <form string="Company" create="false">
+          <header>
+            <button name="activate_company" type="object" states="draft,inactive" string="ACTIVATE" class="oe_highlight"/>
+            <button name="deactivate_company" type="object" states="active" string="DEACTIVATE" class="oe_highlight"/>
+            <button name="reset_to_draft" type='object' states="active,inactive" string='RESET TO DRAFT'/>
+            <field name="state" widget="statusbar"/>
+            <field name="parent_state" invisible="1"/>
+          </header>
+          <sheet>
+           <div class="row oe_edit_only">
+            <div class="col-12 col-md-6">
+            <field name="logo" widget='image' class="oe_avatar oe_left name_space" options='{"preview_image": "logo"}'/>
+          
+              <h1>
+                <field name="name" default_focus="0" placeholder="Name" class="name_name" />
+              </h1>
+            </div>
+         
+        </div>
+        <div class="row oe_read_only">
+          <div class="col-12 col-md-6">
+            <field name="logo" widget='image' class="oe_avatar oe_left name_space" options='{"preview_image": "logo"}'/>
+            <div class="oe_title">
+              <h1>
+                <field name="name" default_focus="0" placeholder="Name" />
+              </h1>
+            </div>
+          </div>
+        </div>
+            <group>
+              <group>
+                <label for="street" string="Address" class="oe_edit_only"/>
+                <div class="o_address_format oe_edit_only" name="div_address">
+                  <field name="street" placeholder="Street..." class="o_address_street"/>
+                  <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                  <field name="street3" placeholder="Street 3..." class="o_address_street" />
+                  <field name="city" placeholder="City" class="o_address_city"/>
+                  <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}' />
+                  <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                </div>
+                <label for="country_id" string="Country" class="oe_edit_only"/>
+                <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only" options='{"no_open": True, "no_create": True}' nolabel="1"/>
+                <field name="country_code" invisible='1' />
+                <label for="complete_address" string="Address" class="oe_read_only"/>
+                <field name="complete_address" class="oe_read_only" nolabel="1"/>
+                <field name="desc" options='{"no_open": True, "no_create": True}' placeholder="internal notes..."/>
+                <field name="icon_letters"/>
+                <field name="same_as_country"/>
+              </group>
+              <group class="oe_edit_only">
+                <field name="email"/>
+                <label for="div" string="Telephone"/>
+                <div>
+                  <field name="phone" widget="phone" style="width:68%"/>
+                  <field name="primary_tel_type" context="{'default_for_phone':True}" style="width:32%"
+                         class="pl-3" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                </div>
+                <label for="div" string="Other"/>
+                <div>
+                  <field name="alternate_communication_1" widget="phone" style="width:68%"/>
+                  <field name="alternate_commu_type_1" domain="[('for_other','=',True)]" context="{'default_for_other':True}"
+                         class="pl-3" options="{'no_open': True,'no_create': True, 'no_create_edit': True}" style="width:32%"/>
+                </div>
+                <label for="div" string="Other"/>
+                <div>
+                  <field name="alternate_communication_2" widget="phone" style="width:68%"/>
+                  <field name="alternate_commu_type_2" context="{'default_for_other':True}" domain="[('for_other','=',True)]"
+                         class="pl-3" options="{'no_open': True,'no_create': True, 'no_create_edit': True}" style="width:32%"/>
+                </div>
+                <field name="website" widget="url"/>
+                <field name="lang"/>
+              </group>
+              <group class="oe_read_only">
+                <field name="get_email"/>
+                <field name='get_telephone'/>
+                <field name='get_other1'/>
+                <field name='get_other2'/>
+                <field name='get_website' widget="url"/>
+                <field name='get_lang'/>
+              </group>
+            </group>
+            <notebook colspan="4">
+              <page string="USERS">
+                <field name="user_ids" widget="one2many_list">
+                  <tree>
+                    <field name="name" string="Name"/>
+                    <field name="department_id"/>
+                    <field name="job_id"/>
+                    <field name="work_location"/>
+                    <field name="telephone_number" string="Telephone"/>
+                    <field name="login" string="Email"/>
+                    <field name="state" string="Stage"/>
+                  </tree>
+                </field>
+              </page>
+              <page string="ADDRESSES">
+                <field name="company_addresses_ids" widget="one2many_list" context="{'default_is_company_address':True,'default_company_address_id':active_id,'default_street': False, 'default_street2': False,'default_street3': False, 'default_city': False, 'default_state_id': False, 'default_zip': False, 'default_country_id': False, 'default_lang': lang}">
+                  <tree>
+                    <field name="default_address"/>
+                    <field name="type_extend"/>
+                    <field name="name" string="Contact"/>
+                    <field name="comp_name" string="Company"/>
+                    <field name="street_address"/>
+                    <field name="city" string="City"/>
+                    <field name="country_id" string="Country"/>
+                    <field name="desc" string="Description"/>
+                    <field name="sequence" widget="handle"/>
+                    <field name="company_id" invisible="1"/>
+                  </tree>
+                  <form>
+                    <sheet>
+                      <div style='float:left;' >
+                        <div style='float:left;' >
+                          <div style='float:left;' >
+                            <label for='type_extend' string='Type'/>
+                          </div>
+                          <div style='float:left; ' >
+                            <field name="type_extend" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline"/>
+                          </div>
+                        </div>
+                        <div style='float:left; margin-left:20px;' >
+                          <label for='default_address' string='Default' />
+                          <field name='default_address'/>
+                        </div>
+                        <div style='float:left; margin-left:20px;'>
+                          <label for='same_as_company' string='Same as Company'/>
+                          <field name='same_as_company'/>
+                          <field name='current_default' invisible="1"/>
+                          <field name='is_company_address' invisible="1"/>
+                        </div>
+                      </div>
+                 
+                      <group>
+                        <group style='width: 50%;'>
+                          <field name="name" string="Contact"/>
+                          <field name="comp_name" string="Company"/>
+                          <field name="company_id" invisible="1"/>
+                          <field name="company_address_id" invisible="1"/>
+                          <field name="icon_letters" string="Icon"/>
+                        </group>
+                  
+                        <group >
+                          <field name="image" widget="image"  class="oe_avatar" 
+                            options='{"preview_image": "image", "size": [70, 70]}' style="margin-right: 73%;" string="Image"/>
+                        </group>
+                      </group>
+                 
+                      <group style="margin-top:0%;">
+                        <group name='address'>
+                          <label for="street" string="Address" class="oe_edit_only"/>
+                          <div>
+                            <div class="o_address_format oe_edit_only" name="div_address">
+                              <field name="street" placeholder="Street..." class="o_address_street" required='0'/>
+                              <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                              <field name="street3" placeholder="Street 2..." class="o_address_street" />
+                              <field name="city" placeholder="City" class="o_address_city" required='0' />
+                              <field name="country_code" invisible='1'/>
+                              <field name="state_code" class="o_address_state oe_read_only" />
+                              <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}'
+                              context="{'country_id': country_id, 'zip': zip}"/>
+                              <field name="zip" placeholder="ZIP" class="o_address_zip" required='0'/>
+                              </div>
+                            </div>
+                            <label for="complete_address" string="Address" class="oe_read_only"/>
+                            <field name="complete_address" class="oe_read_only" nolabel="1"/>
+                            <label for="country_id" string="Country" class="oe_edit_only"/>
+                            <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only"
+                              options='{"no_open": True, "no_create": True}' required='0' nolabel="1"/>
+                            <field name="desc" string="Description" placeholder="internal notes..." options='{"no_open": True, "no_create": True}'/>
+                            <field name="category_id" string="Tag" widget="many2many_tags"/>
+                            <field name="comment" street2="Notes"/>
+                        </group>
+
+                        <group class="oe_edit_only">
+                          <field style="width: 270px;" name="email" widget="email"/>
+                          <label for="div" string="Telephone"/>
+                          <div>
+                          <field style="width: 190px;" name="phone" widget="phone"/>
+                          <field style="padding-left: 10px;width: 80px;" name="primary_tel_type" context="{'default_for_phone':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/><br/>
+                          </div>
+                          <label for="div" string="Other"/>
+                          <div>
+                          <field style="width: 190px;" name="alternate_communication_1" widget="phone" />
+                          <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_1" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}" /><br/>
+                          </div>
+                          <label for="div" string="Other"/>
+                          <div>
+                          <field style="width: 190px;" name="alternate_communication_2"  widget="phone" />
+                          <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_2" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                          </div>
+                          <field style="width: 270px;" name="website" invisible="1"/>
+                          <field style="width: 270px;" name="lang"/>
+                          <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                          <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                        </group>
+
+                        <group class="oe_read_only">
+                          <field name="get_email"/>
+                          <field name='get_telephone'  />
+                          <field name='get_other1'   />
+                          <field name='get_other2'   />
+                          <field name='get_website' widget="url"/>
+                          <field name='get_lang'  />
+                          <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                          <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                        </group>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+              <page string="OTHER">
+                <group>
+                  <group invisible="1">
+                    <field name="partner_id" readonly="1" required="0" groups="base.group_no_one"/>
+                    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                      <field name="street" placeholder="Street..." class="o_address_street"/>
+                      <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                      <field name="street3" placeholder="Street 3..." class="o_address_street"/>
+                      <field name="city" placeholder="City" class="o_address_city"/>
+                      <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                      <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                      <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True}'/>
+                    </div>
+                  </group>
+                  <group invisible="1">
+                    <field name="website" widget="url"/>
+                    <field name="phone" class="o_force_ltr"/>
+                    <field name="email"/>
+                    <field name="vat"/>
+                    <field name="company_registry"/>
+                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" id="company_currency" context="{'active_test': False}"/>
+                    <field name="parent_id"  groups="base.group_multi_company"/>
+                    <field name="sequence" invisible="1"/>
+                  </group>
+                  <group name="social_media"/>
+                  <group string="Extra Info">
+                    <field name="parent_id"  groups="base.group_multi_company"/>
+                    <field name="company_registry"/>
+                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" id="company_currency" context="{'active_test': False}"/>
+                    <field name="vat"/>
+                  </group>
+                </group>
+              </page>
+              <page id='sales_teams' string="TEAMS">
+                <field name="team_ids">
+                  <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="pro_manager"/>
+                    <field name="desc"/>
+                    <field name="state"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record id="base.view_company_tree" model="ir.ui.view">
+      <field name="name">res.company.tree</field>
+      <field name="model">res.company</field>
+      <field name="field_parent">child_ids</field>
+      <field name="arch" type="xml">
+        <tree string="Companies">
+          <field name="sequence" widget="handle"/>
+          <field name="name" string="Company"/>
+          <field name="street_address"/>
+          <field name="city"/>
+          <field name="state_code"/>
+          <field name="zip" string="Zipcode"/>
+          <field name="country_id"/>
+          <field name="phone" string="Telephone"/>
+          <field name="state" string="Stage"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+  </data>
+</odoo>

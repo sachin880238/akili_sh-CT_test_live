@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_pre_shipment" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[2]" position="after">
+                <page attrs="{'invisible': [('state', 'in', ['draft'])]}" name="pre_shippment" string="SHIPMENTS">
+                    <div class="shipment_action_button">
+                        <button 
+                            class="oe_highlight oe_lelt oe_edit_only" 
+                            name="generate_new_shipments" 
+                            string="CREATE" 
+                            style="margin-right:4px" 
+                            type="object"/>
+
+                         <button 
+                            name="echo_estimated_wizard" 
+                            string="Estimate" 
+                            type="object" 
+                            class="oe_highlight oe_lelt oe_edit_only" 
+                            style="margin-right:4px" />
+
+                         <button 
+                            name="merge_shipment_lines" 
+                            string="MERGE" 
+                            type="object" 
+                            class="oe_highlight oe_lelt oe_edit_only" 
+                            style="margin-right:4px" />
+
+                         <button 
+                            name="get_total_shipment" 
+                            string="Total" 
+                            type="object" 
+                            class="oe_highlight oe_lelt oe_edit_only" 
+                            style="margin-right:4px" 
+                            invisible="1"/>
+
+                         <button 
+                            name="pay_shipment" 
+                            string="Pay" 
+                            type="object" 
+                            class="oe_highlight oe_lelt oe_edit_only" 
+                            style="margin-right:4px"
+                            invisible="1" />
+
+                         <button 
+                            name="release_shipment" 
+                            string="Release" 
+                            type="object" 
+                            class="oe_highlight oe_lelt oe_edit_only" 
+                            style="margin-right:4px"
+                            invisible="1" />
+                    </div>
+                    <field name="pre_shipment_lines" nolabel="1" widget="one2many_checkbox"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

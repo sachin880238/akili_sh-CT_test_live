@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="set_via_views" model="ir.ui.view">
+        <field name="name">Set Via</field>
+        <field name="model">set.via</field>
+        <field name="arch" type="xml">
+            <form string="Set Via">
+                <group>
+                    <group>
+                        <field name="set_via" widget="radio" nolabel="1"/>
+                    </group>
+
+                    <group>
+                        <field name="carrier_id" attrs="{'invisible':[('set_via','not in',['via'])]}" nolabel="1" style="margin-left:-75%; margin-top:5.5%; width:43%;"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="set_via_selected_orderlines" type="object" string="SET" class="btn-primary" />
+                    <button string="CANCEL" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_set_via" model="ir.actions.act_window">
+        <field name="name">Set Via</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">set.via</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

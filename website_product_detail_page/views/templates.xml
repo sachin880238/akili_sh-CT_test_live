@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <template id="product_price">
+        <t t-if="len(product.product_variant_ids) == 1">
+            <div class="product_price mt16" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                    <span class="oe_price" style="white-space: nowrap;" t-esc="product.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                </h4>
+            </div>
+        </t>
+        <t t-if="product.website_selection == 'selection' and len(product.product_variant_ids) &gt;1">
+            <div class="product_price mt16" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                    <t t-as="value_id" t-foreach="product.product_variant_ids">
+                        <span t-attf-class="oe_price variant_price #{'hidden' if (len(product.product_variant_ids) &gt;1  and (str(value_id.id)!= selected_product_id))else ''}" t-att-id="'variant_price_%s'%(value_id.id)" style="white-space: nowrap;" t-esc="value_id.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    </t>
+                </h4>
+            </div>
+        </t>
+        <t t-if="product.website_selection == 'attribute' and len(product.product_variant_ids) &gt;1">
+            <div class="product_price mt16" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                    <span class="text-danger oe_default_price" style="text-decoration: line-through; white-space: nowrap;" t-att-style="'text-decoration: line-through; white-space: nowrap; ' + '' if (compute_currency(product.lst_price) - product.website_price) &gt; 0.01 and website.get_current_pricelist().discount_policy == 'without_discount' else 'display: none;'" t-esc="compute_currency(product.website_public_price)" t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
+                    <span class="oe_price" style="white-space: nowrap;" t-esc="product.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    <span itemprop="price" style="display:none;" t-esc="product.website_price"/>
+                    <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+                </h4>
+                <h4 class="css_non_editable_mode_hidden decimal_precision" t-att-data-precision="str(product.currency_id.decimal_places)">
+                    <span t-field="product.lst_price" t-options="{&quot;widget&quot;: &quot;monetary&quot;,&quot;display_currency&quot;: product.currency_id,}"/>
+                </h4> -->
+                <!-- <h4 class="hidden oe_not_available bg-warning">Product not available</h4> -->
+            <!-- </div> -->
+        <!-- </t> -->
+    <!-- </template> -->
+    <!-- <template id="product_document" name="Product Document">
+        <a class="btn btn-primary btn-sm" data-target="product_more_info_modal" data-toggle="modal" id="product_more_info">Documents</a>
+        <t t-as="value_id" t-foreach="product.product_variant_ids">
+            <div class="modal fade modal_product_more_info" role="dialog" t-att-id="'product_more_info_modal_'+str(value_id.id)">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">
+                                <t t-esc="value_id.display_name"/>
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <t t-set="doc_published" t-value="value_id.have_published_document()"/>
+                            <table class="table" t-if="doc_published">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product Attachment</th>
+                                        <th scope="col">Product Decription</th>
+                                        <th scope="col"/>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-as="pro_doc_id" t-foreach="value_id.product_documents_ids">
+                                        <t t-if="pro_doc_id.is_publish">
+                                            <td>
+                                                <t t-esc="pro_doc_id.product_document.datas_fname"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="pro_doc_id.product_description"/>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-success" t-att-href="'/download-report/%s' % pro_doc_id.product_document.id">Download</a>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div t-if="not doc_published">
+                                <h1>Document is not available</h1>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template> -->
+    <!-- <template id="product_detail_page" inherit_id="website_sale.product" name="Product Detail Page"> -->
+        <!-- <xpath expr="//ol[@class='carousel-indicators']" position='replace'>
+            <ol class="carousel-indicators" t-if="len(image_ids) or variant_img">
+                <li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="active">
+                    <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
+                </li>
+                <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if variant_img else 'active'">
+                    <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                </li>
+                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                    <t t-if="pimg_index==1">
+                    <li data-target="#o-carousel-product" data-slide-to="pimg_index" class="active">
+                        <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                    </li>
+                </t>
+                <t t-else="">
+                    <li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+                        <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                    </li>
+                </t>
+                </t>
+            </ol>
+        </xpath> -->
+        <!-- <xpath expr="//div" position="after">
+            <div class="col-sm-6">
+                <span groups="!website_sale.group_website_multi_image" itemprop="image" t-field="product.image" t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"/>
+                <t groups="website_sale.group_website_multi_image">
+                    <t t-set="variant_img" t-value="product.product_variant_ids[0].image_variant"/>
+                    <t t-set="image_ids" t-value="product.product_image_ids"/>
+                    <div class="carousel slide" data-interval="0" data-ride="carousel" id="o-carousel-product">
+                        <div class="carousel-outer">
+                            <div class="carousel-inner">
+                                <div class="item active" itemprop="image" t-field="product.product_variant_ids[0].image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img js_variant_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot;}"/>
+                                <div class="item" itemprop="image" t-field="product.image" t-if="variant_img" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot;}"/>
+                                <t t-as="pimg" t-foreach="image_ids" t-if="len(image_ids)">
+                                    <div class="item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
+                                </t>
+                            </div>
+                            <t t-if="len(image_ids) or variant_img">
+                                <a class="carousel-control left" data-slide="prev" href="#o-carousel-product" role="button">
+                                    <span aria-hidden="true" class="fa fa-chevron-left"/>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control right" data-slide="next" href="#o-carousel-product" role="button">
+                                    <span aria-hidden="true" class="fa fa-chevron-right"/>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </t>
+                        </div>
+                        <ol class="carousel-indicators" t-if="len(image_ids) or variant_img">
+                            <li class="active" data-slide-to="0" data-target="#o-carousel-product">
+                                <img class="img img-responsive js_variant_img_small" t-att-alt="product.name" t-attf-src="/website/image/product.product/{{product.product_variant_ids[0].id}}/image/90x90"/>
+                            </li>
+                            <li class="" data-slide-to="1" data-target="#o-carousel-product" t-if="variant_img">
+                                <img class="img img-responsive" t-att-alt="product.name" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90"/>
+                            </li>
+                            <t t-as="pimg" t-foreach="image_ids" t-if="len(image_ids)">
+                                <li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+                                    <img class="img img-responsive" t-att-alt="pimg.name" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90"/>
+                                </li>
+                            </t>
+                        </ol>
+                    </div>
+                </t>
+            </div>
+        </xpath> -->
+        <!-- <xpath expr="//ol[@class='breadcrumb']" position="replace">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/find-a-product">Find a Product</a>
+                </li>
+                <li t-if="category"  class="breadcrumb-item">
+                    <a t-att-href="keep('/shop/category/%s' % slug(category), category=0)" t-field="category.name"/>
+                </li>
+                <li class="breadcrumb-item active">
+                    <span t-field="product.website_name">
+                        <t t-esc="product.name"/>
+                    </span>
+                </li>
+            </ol>
+        </xpath>
+        <xpath expr="//t[@t-call='website_sale.search']" position="replace">
+        </xpath>
+        <xpath expr="//t[@t-call='website_sale.pricelist_list']" position="replace">
+        </xpath>
+        <xpath expr="//h1[@itemprop='name']" position="replace">
+            <h1 itemprop="name" t-field="product.website_name">
+                <t t-esc="product.name"/>
+            </h1>
+        </xpath>
+        <xpath expr="//form[@action='/shop/cart/update']" position="replace">
+            <form action="/shop/cart/update" class="js_add_cart_variants mt8" method="POST" t-att-data-attribute_value_ids="product.product_variant_ids.ids">
+                <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                <div class="js_product" t-if="product.product_variant_ids">
+                    <t t-placeholder="select">
+                        <input class="product_id" name="product_id" t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else (selected_product_id or '0')" type="hidden"/>
+                        <t t-call="sale.variants">
+                            <t t-set="ul_class" t-value="'nav-stacked'"/>
+                        </t>
+                    </t>
+                    <p class="css_not_available_msg bg-danger" style="padding: 15px;" t-if="len(product.product_variant_ids) &gt; 1">Product not available</p>
+                    <div t-attf-class="product-action-main mt16 #{'hidden' if (len(product.product_variant_ids) &gt;1  and not selected_product_id)else ''}">
+                        <div class="col-xs-3 product-action-div text-muted" id="product_price">
+                            <t t-call="website_product_detail_page.product_price"/>
+                        </div>
+                        <div t-attf-class="col-xs-3 product-action-div add_to_cart">
+                            <a class="btn btn-primary btn-sm js_check_product custom_add_to_cart" href="#" id="add_to_cart">Add to Cart</a>
+                        </div>
+                        <div class="col-xs-3 product-action-div">
+                            <t t-call="website_product_detail_page.product_document"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"/>
+            </form>
+        </xpath> -->
+        <!-- REMOVE UNNESSESORY FIELDS AND DESCRIPTION -->
+        <!-- <xpath expr="//p[@t-field='product.description_sale']" position="replace"/>
+        <xpath expr="//hr[@t-if='product.description_sale']" position="replace"/>
+        <xpath expr="//hr" position="replace"/>
+        <xpath expr="//div[@id='product_details']/p[@class='text-muted']" position="replace"/> -->
+   <!--  </template> -->
+    <!-- <template customize_show="True" id="website_quantity_spinner" inherit_id="website_sale.product" name="Select Quantity">
+        <xpath expr="//div[@id='product_price']" position="before">
+            <div class="col-xs-3 product-action-div">
+                <div class="css_quantity input-group oe_website_spinner" contenteditable="false">
+                    <a class="mb8 input-group-addon js_add_cart_json" t-attf-href="#">
+                        <i class="fa fa-minus"/>
+                    </a>
+                    <input class="form-control quantity" data-min="1" name="add_qty" type="text" value="1"/>
+                    <a class="mb8 input-group-addon float_left js_add_cart_json" t-attf-href="#">
+                        <i class="fa fa-plus"/>
+                    </a>
+                </div>
+            </div>
+        </xpath>
+    </template> -->
+    <!-- Look & Fill On varinat On Website -->
+    <!-- <template id="single_varinat">
+        <div class="variant_description_div_css mb8" t-as="variant_id" t-foreach="product.product_variant_ids">
+            <strong class="text-muted-dark">
+                <p t-esc="variant_id.with_context().display_name"/>
+            </strong>
+            <p class="mt4 text-muted" t-field="variant_id.description_sale"/>
+        </div>
+    </template> -->
+    <!-- <template id="multiple_varinat_selection">
+        <div class="mb8">
+            <div class="form-group">
+                <input name="is_vaiant" type="hidden" value="1"/>
+                <input id="variant_id" name="variant_id" t-att-value="selected_product_id" type="hidden"/>
+                <label class="control-label" for="email">options</label>
+                <div>
+                    <select class="custom_js_variant_change form-control" t-att-name="'attribute-%s' % (product.id)">
+                        <option class="select-placeholder" value="select_null">Select</option>
+                        <t t-as="value_id" t-foreach="product.product_variant_ids">
+                            <option t-att-price="value_id.lst_price" t-att-selected="value_id.id == (selected_product_id and int(selected_product_id))" t-att-value="value_id.id">
+                                <span t-esc="value_id.attr_vals and value_id.attr_vals[2:]"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"/>
+        <div t-as="value_id" t-foreach="product.product_variant_ids">
+                <div t-att-id="'variant_description_div_%s'%(value_id.id)" t-attf-class="variant_description_div #{'hidden' if (str(value_id.id) != selected_product_id) else ''}">
+                <div class="form-group">
+                    <label class="control-label" for="email">details</label>
+                    <div class="variant_description_div_css">
+                        <strong class="text-muted-dark">
+                            <p t-esc="value_id.with_context().display_name"/>
+                        </strong>
+                        <p class="mt4 text-muted" t-field="value_id.description_sale"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="sale.variants"> -->
+        <!-- <t t-set="attribute_exclusions" t-value="get_attribute_exclusions(product, reference_product)"/> -->
+        <!-- <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/> -->
+        <!-- <t t-if="len(product.product_variant_ids) == 1">
+            <t t-call="website_product_detail_page.single_varinat"/>
+        </t>
+        <t t-if="product.website_selection == 'selection' and len(product.product_variant_ids) &gt;1">
+            <t t-call="website_product_detail_page.multiple_varinat_selection"/>
+        </t>
+        <t t-if="product.website_selection == 'attribute' and len(product.product_variant_ids) &gt;1">
+            <ul t-att-data-attribute_value_ids="attribute_value_ids" t-attf-class="list-unstyled js_add_cart_variants #{ul_class}">
+                <t t-as="variant_id" t-foreach="product.attribute_line_ids.sorted(key=lambda x: x.attribute_id.sequence)">
+                    <div class="mb8">
+                        <li t-if="len(variant_id.value_ids) &gt;1">
+                            <label class="control-label">
+                                <t t-esc="variant_id.attribute_id.name"/>
+                            </label>
+                            <div>
+                                <t t-if="variant_id.attribute_id.type in ['select', 'hidden']">
+                                    <select t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)" t-attf-class="form-control #{'js_variant_change' if variant_id.attribute_id.create_variant else ''}">
+                                        <option class="select-placeholder" value="select_null">Select</option>
+                                        <t t-as="value_id" t-foreach="variant_id.value_ids">
+                                            <option t-att-value="value_id.id" t-att-selected="selected_product and value_id.id in selected_product.attribute_value_ids.ids">
+                                                <span t-field="value_id.name"/> -->
+                                                <!-- <option t-att-price="value_id.lst_price" t-att-selected="value_id.id == (selected_product_id and int(selected_product_id))" t-att-value="value_id.id">
+                                                    <span t-esc="value_id.attr_vals and value_id.attr_vals[2:]"/>
+                                                </option> -->
+                                                <!-- <span t-if="value_id.price_extra"><t t-esc="value_id.price_extra &gt;0 and '+' or ''"/><span style="white-space: nowrap;" t-field="value_id.price_extra" t-options="{                                        &quot;widget&quot;: &quot;monetary&quot;,                                         &quot;from_currency&quot;: product.currency_id,                                        &quot;display_currency&quot;: website.currency_id                                    }"/></span>-->
+                                <!--             </option>
+                                        </t>
+                                    </select>
+                                </t>
+                                <t t-if="variant_id.attribute_id.type == 'radio'">
+                                    <ul class="list-unstyled">
+                                        <t t-set="inc" t-value="0"/>
+                                        <t t-as="value_id" t-foreach="variant_id.value_ids">
+                                            <li class="form-group js_attribute_value" style="margin: 0;">
+                                                <label class="control-label" style="margin: 0 20px;">
+                                                    <input style="vertical-align: top; margin-right: 10px;" t-att-checked="'checked' if not inc else None" t-att-class="'js_variant_change' if variant_id.attribute_id.create_variant else None" t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)" t-att-value="value_id.id" type="radio"/>
+                                                    <span t-field="value_id.name"/> -->
+                                                    <!--field not found-->
+                                                    <!--<span class="badge" t-if="value_id.price_extra">-->
+                                                        <!--<t t-esc="value_id.price_extra &gt;0 and '+' or ''"/>-->
+                                                        <!--<span style="white-space: nowrap;" t-field="value_id.price_extra" t-options="{&quot;widget&quot;: &quot;monetary&quot;,&quot;from_currency&quot;: product.currency_id,&quot;display_currency&quot;: website.currency_id                                            }"/>-->
+                                                    <!--</span>-->
+                                            <!--     </label>
+                                            </li>
+                                            <t t-set="inc" t-value="inc+1"/>
+                                        </t>
+                                    </ul>
+                                </t>
+                                <t t-if="variant_id.attribute_id.type == 'color'">
+                                    <ul class="list-inline">
+                                        <t t-set="inc" t-value="0"/>
+                                        <li t-as="value_id" t-foreach="variant_id.value_ids">
+                                            <label t-attf-class="css_attribute_color #{'active' if not inc else ''}" t-attf-style="background-color:#{value_id.html_color or value_id.name}">
+                                                <input t-att-checked="'checked' if not inc else None" t-att-class="'js_variant_change' if variant_id.attribute_id.create_variant else None" t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)" t-att-title="value_id.name" t-att-value="value_id.id" type="radio"/>
+                                            </label>
+                                            <t t-set="inc" t-value="inc+1"/>
+                                        </li>
+                                    </ul>
+                                </t>
+                            </div>
+                        </li>
+                    </div>
+                </t>
+            </ul>
+            <div class="clearfix"/>
+            <div t-as="value_id" t-foreach="product.product_variant_ids">
+                <div t-att-id="'variant_description_div_%s'%(value_id.id)" t-attf-class="variant_description_div #{'hidden' if (str(value_id.id) != selected_product_id) else ''}">
+                    <div class="form-group">
+                        <label class="control-label" for="email">details</label>
+                        <div class="variant_description_div_css">
+                            <strong class="text-muted-dark">
+                                <p t-esc="value_id.with_context().display_name"/>
+                            </strong>
+                            <p class="mt4 text-muted" t-field="value_id.description_sale"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template> -->
+</odoo>

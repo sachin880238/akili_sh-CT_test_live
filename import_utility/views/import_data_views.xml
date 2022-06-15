@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="import_account_data_id"
+            name="Import Accounts"
+            action="import_data_wizard_action"
+            sequence="1"
+            parent="crm_import_utility.import_utility_views_id"/>
+</odoo>
+

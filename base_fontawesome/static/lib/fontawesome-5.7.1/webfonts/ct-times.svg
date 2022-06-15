@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
+<defs>
+<font id="ct-times" horiz-adv-x="1000" >
+<font-face font-family="ct-times" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="times" unicode="&#xe800;" d="M379 350l200 200 41 42c7 6 7 16 0 22l-44 44c-6 6-16 6-22 0l-241-242-242 242c-6 6-16 6-22 0l-44-44c-7-6-7-16 0-22l241-242-241-242c-7-6-7-16 0-22l44-44c6-6 16-6 22 0l242 242 200-201 41-41c6-6 16-6 22 0l44 44c7 6 7 16 0 22l-241 242z" horiz-adv-x="625" />
+</font>
+</defs>
+</svg>

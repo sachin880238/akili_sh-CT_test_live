@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+	<record model='ir.ui.view' id="tree_view_dynamic_list">
+		<field name='name'>Dynamic List</field>
+		<field name='model'>ak.backend.listview</field>
+		<field name='arch' type='xml'>
+			<tree string="dynamic_list_tree_view">
+				<field name="name"/>
+				<field name="user_id"/>
+				<field name="object_id"/>
+				<field name="field_ids"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model='ir.ui.view' id="form_view_dynamic_list">
+		<field name='name'>Dynamic List</field>
+		<field name='model'>ak.backend.listview</field>
+		<field name='arch' type="xml">
+			<form string="dynamic_list_form_view">
+				<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="user_id"/>
+						</group>
+						<group>
+							<field name="object_id"/>
+							<field name="action_id"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Dynamic List">
+							<field name="field_ids" context="{'default_listview_id': active_id}"/>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	
+
+	<record model='ir.ui.view' id="tree_view_dynamic_field">
+		<field name='name'>Dynamic Field</field>
+		<field name='model'>ak.dynamic.field</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name="field_id"/>
+				<field name="invisible_status"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model='ir.ui.view' id="form_view_dynamic_field">
+		<field name='name'>Dynamic List</field>
+		<field name='model'>ak.dynamic.field</field>
+		<field name='arch' type='xml'>
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="listview_id" invisible="1"/>
+							<field name="object_id" invisible="1"/>
+							<field name="backend_listview_id" invisible="1"/>
+							<field name="field_id" domain="[('model_id', '=', object_id)]"/>
+						</group>
+						<group>
+							<field name="invisible_status"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model='ir.actions.act_window' id='action_view_dynamic_list'>
+		<field name='name'>Dynamic List</field>
+		<field name='res_model'>ak.backend.listview</field>
+
+		<field name='help' type='html'>
+			<p class="oe_view_nocontent_create">Create New Dynamic List</p>
+		</field>
+	</record>
+
+	<record model='ir.actions.act_window' id='action_view_dynamic_fields'>
+		<field name='name'>Dynamic Fields</field>
+		<field name='res_model'>ak.dynamic.field</field>
+
+		<field name='help' type='html'>
+			<p class="oe_view_nocontent_create">Create New Dynamic Fields</p>
+		</field>
+	</record>
+
+	<!-- <menuitem id='dynamic_field_view_menuitem_id' name="Dynamic List" parent="backend_menuitem.system_fields_menu" action="action_view_dynamic_list" /> -->
+</odoo>

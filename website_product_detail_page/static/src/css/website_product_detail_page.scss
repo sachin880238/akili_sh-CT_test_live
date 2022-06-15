@@ -1,0 +1,245 @@
+.product-action-div {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin: 3px;
+}
+.add-to-cart-fade{
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.carousel-control-prev .carousel-control-next{
+    color: currentColor;
+}
+
+.product-action-div#product_price{
+    margin-left: 36px;
+}
+
+.css_quantity{
+    max-width: 147px;
+}
+
+
+
+.variant_description_div_css{
+    border: 1px solid #ccc;
+    padding: 14px;
+    border-radius: 4px;
+}
+
+
+
+
+.product-action-div .product_price{
+    text-align: center;
+    /*margin-top: 0px !important;*/
+    border: 1px solid #ccc;
+    /*margin: 8px;*/
+    border-radius: 4px;
+    /*max-width: 107px;*/
+    /*padding-top: 8px;*/
+    width: 92px;
+    float: right;
+}
+
+.product-action-div.add_to_cart{
+    margin-left: 33px;
+}
+
+
+
+.product-action-div .product_price{
+    height: 34px;
+    border: 1px solid #ced4da;
+    width: 100%;
+}
+.product-action-div .product_price .oe_price_h4{
+    font-size: 14px;
+    margin-top: 8px;
+}
+.product-action-div .btn-sm{
+    font-size: 16px;
+    padding: 4px 10px;
+}
+.product-action-div #wizard_open_docs{
+    float: right;
+}
+
+
+@media screen
+and (min-width: 768px)
+and (max-width: 991px){
+    .product-action-div .btn-sm{
+        font-size: 12px;
+    }
+    .product-action-div h4.oe_price_h4{
+        font-size: 12px;
+        margin-top: 9px;
+    }
+    .product-action-div .product_price{
+        height: 30px;
+    }
+    
+    .product-action-div input.quantity{
+        width: 42px;
+        text-align: center;
+        margin-bottom: 8px;
+        height: 30px;
+    }
+}
+@media (max-width: 500px){
+    .product-action-div .btn-sm{
+        font-size: 12px;
+    }
+    .product-action-div h4.oe_price_h4{
+        font-size: 12px;
+        margin-top: 9px;
+    }
+    .product-action-div .product_price{
+        height: 30px;
+    }
+   
+    .product-action-div input.quantity{
+        height: 30px;
+    }
+}
+@media (max-width: 375px){
+   
+    .product-action-div .product_price .oe_price_h4{
+        font-size: 12px;
+        margin-top: 8px;
+    }
+    .product-action-div .btn-sm{
+        padding: 5px 3px;
+    }
+}
+
+.modal_product_more_info{
+    text-align: left;
+}
+
+
+/*START CSS FOR MULTI VARIANT*/
+.css_not_available.js_product > *:nth-child(4) > *,
+.css_not_available.js_product .product_price
+{
+    display: block;
+}
+.css_not_available.js_product .css_quantity{
+    display: inline-table;
+}
+a.btn.disabled{
+    pointer-events: auto;
+}
+/*END CSS FOR MULTI VARIANT*/
+
+
+/* script for snippet innerr */
+
+.input-group .input-group-addon{
+    padding: 8px 8px;
+    background: #fbfbfb;
+    color: #777777;
+}
+.input-group .input-group-addon:hover{
+    background: aliceblue;
+    color: #337ab7;
+}
+.input-group .form-control:not(:first-child):not(:last-child) {
+    border-color: #ccc;
+}
+
+.s_inner_snippet .row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.s_inner_snippet .col-md-12{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+.product_inner_snippets{
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+}
+
+.carousel-item.active, .carousel-item-next, .carousel-item-prev {
+    display: grid;
+    transition: transform 0.6s ease;
+}
+
+#o-carousel-product .carousel-indicators li img {
+    display: grid;
+    opacity: 0.5;
+    margin: 0px;
+}
+
+#o-carousel-product .carousel-indicators li {
+    background-color: transparent !important;
+    /* border-radius: 0; */
+    display: inline-block;
+    margin: 5px !important;
+    width: 63px!important;
+    height: 70% !important;
+    border: 1px solid gray !important;
+    border-radius: 4px;
+    box-shadow: none !important;
+}
+
+#o-carousel-product .carousel-indicators {
+    background-color: transparent;
+    
+    overflow-y: hidden;
+    position: static;
+    text-align: left;
+    white-space: nowrap;
+    width: 100%;
+    height: 100px !important;
+    text-align: center;
+    list-style-position: inside;
+
+}
+
+
+
+.carousel-caption {
+    color: dimgray;
+}
+
+
+.table th, .table td {
+    max-width: 304px;
+    padding: 0.75rem;
+    vertical-align: top;
+} 
+.text-block {
+  
+  position: absolute;
+  text-align: center;
+  bottom: 53%;
+  right: 39%;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}   
+.opacoty-for-out-for-stock{
+    opacity: 0.2;
+    pointer-events: none;
+}
+.fade_text_block{
+    display:none
+
+}
+
+
+
+
+.equal_quantity{
+    pointer-events: none;
+    opacity: 0.5;
+}

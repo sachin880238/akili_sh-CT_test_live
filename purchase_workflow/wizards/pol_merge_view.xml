@@ -1,0 +1,20 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo> 
+  <record id="po_merge_line_view" model="ir.ui.view">
+    <field name="name">po.merge.line.form</field>
+    <field name="model">pol.merge</field>
+    <field name="arch" type="xml">
+      <form string="Merge Lines">
+        <group>
+        <field name="route_id" string="Route" domain="[('id','in',context.get('selected_line_route_ids'))]" options="{'no_create': True}"/>
+        <field name="carrier_id" string="Via" domain="[('id','in',context.get('selected_line_carrier_ids'))]" options="{'no_create': True}"/>
+        <field name="latest_date" string="Date" widget="date" readonly="1" context="{'latest_date': latest_date}"/>
+      </group>
+        <footer>
+          <button name="po_merge_lines" string="MERGE" type="object" class="btn-primary"/>
+          <button string="CANCEL" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record> 
+</odoo>

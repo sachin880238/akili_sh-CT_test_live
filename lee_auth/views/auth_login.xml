@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="lee_auth_login" name="Auth Login">
+        <t t-call="website.layout">
+            <div class="check-email-exist-page">
+                <div class="container">
+                    <div class="mt32">
+                        <div class="offset-md-2 col-md-8">
+                            <span class="h1">
+                                <strong>Security Code</strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="clearfix"/>
+                    <t t-if="is_open == 'email'">
+                        <div class="mt16">
+                            <div class="offset-md-2 col-md-8">
+                                <div class="page_desc_div">
+                                    <p>Enter the one-time security code we just sent by email. If you don’t receive our email or if you wait too long to enter the code, just select email a new code.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="is_open == 'mobile'">
+                        <div class="mt16">
+                            <div class="offset-md-2 col-md-8">
+                                <div class="page_desc_div">
+                                    <p>Enter the one-time security code we just sent to your mobile telephone. If you don’treceive our text message, or if you wait too long to enter the code, just select text a new code.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <div class="clearfix"/>
+                    <div class="mt16">
+                        <div class="offset-md-2 col-md-8">
+                            <form action="/lee-auth-login" method="post">
+                                <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                                <input class="hidden" id="user" name="user" t-att-value="user.id" type="text"/>
+                                <input class="hidden" id="is_open" name="is_open" t-att-value="is_open" type="text"/>
+                                <input class="hidden" id="is_send" name="is_send" t-att-value="is_send" type="text"/>
+                                <t t-if="is_open == 'email'">
+                                    <div class="offset-md-3 col-md-6">
+                                        <label class="control-label">Security Code</label>
+                                        <a class="float-right" id="send_email_another_code">
+                                            <i>email a new code</i>
+                                        </a>
+                                        <input autocapitalize="off" autofocus="autofocus" class="form-control" id="security_code_email" name="security_code_email" required="required" type="password"/>
+                                    </div>
+                                </t>
+                                <t t-if="is_open == 'mobile'">
+                                    <div class="offset-md-3 col-md-6">
+                                        <label class="control-label">Security Code</label>
+                                        <a class="float-right" id="send_sms_another_code">text a new code</a>
+                                        <input autocapitalize="off" autofocus="autofocus" class="form-control" id="security_code_mobile" name="security_code_mobile" required="required" type="password"/>
+                                    </div>
+                                </t>
+                                <t t-if="warning">
+                                    <div class="offset-md-3 col-md-6">
+                                        <label class="control-label text-danger" id="messaget">
+                                            <t t-esc="msg"/>
+                                        </label>
+                                    </div>
+                                </t>
+                                <div class="clearfix"/>
+                                <div class="mt32 mb32">
+                                    <a class="btn btn-default btn-primary" href="/shop/cart" style="font-weight:600;">
+                                        <span class="fa fa-long-arrow-left"/>Back</a>
+                                    <button class="btn btn-default btn-primary float-right" type="submit" style="font-weight:600;">
+                                        <span>Next</span>
+                                        <span class="fa fa-long-arrow-right"/>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

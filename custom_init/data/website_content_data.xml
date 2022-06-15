@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="conservation_technology_content" model="website.content">
+            <field name="name">Conservation Technology Content</field>
+        </record>
+        <!-- <record id="find_a_product_content_page" model="content.page">
+            <field name="website_content_id" ref="conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="name">Find A Product</field>
+            <field name="page">find_a_product</field>
+            <field name="content">Narrow the selection by product category, or search by product name, stock number, or key words. Select a product to see product details or to add to your cart. For advice about comparing products and selecting the best ones for your project, see the “Learn” section in the website menu.</field> -->
+        <!-- </record>
+        <record id="your_account_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+<!--             <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Your Account</field>
+            <field name="page">your_account</field>
+            <field name="content">&lt;p&gt;Use the links below to access your account settings, addresses, and documents. Red icons next to each link count open documents; black icons count closed documents.&lt;/p&gt;</field>
+        </record>
+        <record id="your_cart_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Your Cart</field>
+            <field name="page">your_cart</field>
+            <field name="content">&lt;b&gt;Read this first! &lt;/b&gt;We want be be certain you get the right products for your project. After you select the Get Quote button at the bottom of this page and supply some additional information, we will review everything, apply any discounts, add shipping, and email you a quotation. You can convert the quotation to an order, request modifications, or just save it for the future. No payment is required until you order.</field>
+        </record> -->
+        <!-- <record id="email_address_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Email Address</field>
+            <field name="page">checkout_email_address</field>
+            <field name="content">Enter your email address below (required for both new and returning customers).</field> -->
+        <!-- </record> -->
+        <!-- <record id="security_code_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Security Code</field>
+            <field name="page">checkout_security_code</field>
+            <field name="content">Enter the one-time security code we just sent to your mobile telephone. If you did not receive our text message, or if it has been more than 15 minutes since you received the code, select text to send a new code.</field>
+        </record> -->
+        <!-- <record id="password_code_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Password</field>
+            <field name="page">checkout_password</field>
+            <field name="content">Enter your password. To keep others from seeing your password, select “hide”. If you forgot your password, select email and check your email for a log in link. If you want to create a new password, open your Account Settings after you log in.</field> -->
+        <!-- </record> -->
+        <!-- <record id="new_account_1_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">New Account</field>
+            <field name="page">new_ccount</field>
+            <field name="content">&lt;b&gt;Enter your address and contact information. &lt;/b&gt;We will use this to reference all of your documents and communication, but you can specify a different billing address, shipping address, or contact person for each transaction. If you are purchasing for a company, please set Type to “company”.</field>
+        </record>
+        <record id="address_account_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Address Account</field>
+            <field name="page">address_account</field>
+            <field name="content">&lt;i&gt;Your Account address references all of your documents and communication, so this shoud be your most permanent address. All quotations, order confirmations, and invoices will be sent to this email. &lt;/i&gt;</field>
+        </record>
+        <record id="address_account_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Address Account</field>
+            <field name="page">address_account</field>
+            <field name="content">&lt;i&gt;Your Account address references all of your documents and communication, so this shoud be your most permanent address. All quotations, order confirmations, and invoices will be sent to this email. &lt;/i&gt;</field>
+        </record>
+        <record id="address_contacts_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Address Contacts</field>
+            <field name="page">address_contacts</field>
+            <field name="content">&lt;i&gt;Select or add a Contact person for the current current transaction. If the Contact email address is different from the Account email address, all email for the current transaction will be sent to both addresses. &lt;/i&gt;</field>
+        </record>
+        <record id="address_billing_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Address Billing</field>
+            <field name="page">address_billing</field>
+            <field name="content">&lt;i&gt;Select or add a Billing address for the current transaction. If you are paying by credit cart, this should match the billing address of the credit card. If the Billing email address is different from the Account email address, all billing-related email for the current transaction will be sent to both addresses. &lt;/i&gt;</field>
+        </record>
+        <record id="address_shipping_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Address Shipping</field>
+            <field name="page">address_shipping</field>
+            <field name="content">&lt;i&gt;Select or add a Shipping address for the current transaction. If the Shipping email address is different from the Account email address, all shipping-related email for the current transaction will be sent to both addresses. &lt;/i&gt;</field>
+        </record>
+        <record id="details_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Details Page</field>
+            <field name="page">details</field>
+            <field name="content">&lt;b&gt;Provide additional details about your project.&lt;/b&gt; Select a priority so we know how quickly to respond. Supply additional information if you would like our staff to answer your questions, review drawings, or provide advice.</field>
+        </record>
+        <record id="account_settings_content_page" model="content.page"> -->
+            <!-- <field name="website_content_id" ref="custom_init.conservation_technology_content"/> -->
+            <!-- <field name="website_content_id" ref="conservation_technology_content"/>
+            <field name="name">Account Settings</field>
+            <field name="page">account_settings</field>
+            <field name="content">This is the primary information we use to identify your account. Please use the Address Book to separately manage contacts, billing addresses, and shipping addresses that may change from order to order.</field>
+        </record> -->
+    </data>
+</odoo>

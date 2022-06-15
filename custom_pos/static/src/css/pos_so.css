@@ -1,0 +1,435 @@
+
+.pos .rightpane {
+    position: absolute;
+    top: 95px;
+    bottom: 0;
+    left: 40.4%;
+    right: 0;
+    vertical-align: top;
+    margin-left: 23%;
+    -webkit-transform: translate3d(0,0,0);
+}
+
+.pos .leftpane {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    width: 63%;
+    top: 95px;
+    bottom: 0;
+    border-right: solid 1px #CECBCB;
+    border-right: solid 3px #787878;
+    background: #e2e2e2;
+}
+
+/*.pos .order {
+    background: white;
+    padding-bottom: 8px;
+    padding-top: 49px;
+    font-size: 16px;
+    text-align: left;
+    max-width: 500px;
+    -webkit-transform: translate3d(0,0,0);
+}*/
+
+.pos .order-selector {
+    /* margin-right: -1px; */
+    margin-left: 404px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex: 1;
+    flex: 3;
+    max-width: -moz-available;
+    max-width: -webkit-fill-available;
+}
+
+.pos .numpad{
+    display: inline-block;
+    float: right;
+    text-align: center;
+    width: 216px;
+    margin: 0px;
+    margin-right: 59px;
+    margin-top: 0%;
+    margin-left: 0px;
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid;
+    border-color: #bfbfbf;
+    border-top-right-radius: 4px;
+}
+.pos a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.pos .pos-branding .username {
+    float: left;
+    font-style: normal;
+}
+.pos select{    
+    margin-top: 14px;
+    width: 20%;
+    border: 1px solid #cecbcb;
+    padding: 6px 21px;
+    padding-left: 7px;
+    margin: 9px;
+    /* background: url(/point_of_sale/static/src/css/../img/search.png) no-repeat 15px; */
+    background-color: white;
+    border-radius: 9px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-size: 13px;
+}
+
+.pos .searchbox input {
+    border-radius: 9px;
+    
+}
+
+
+.pos .actionpad .button.set-customer.decentered {
+    padding-left: 38px;
+    padding-right: 67px;
+}
+.pos .numpad button {
+    float: left;
+    height: 54px;
+    width: 72px;
+    font-weight: bold;
+    vertical-align: middle;
+    color: #ffffff;
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #bfbfbf;
+    transition: all 150ms linear;
+}
+
+.pos button, .pos a.button {
+    display: inline-block;
+    cursor: pointer;
+    padding: 4px 10px;
+    font-size: 11px;
+    border: 1px solid #cacaca;
+    background: #036a9a !important;
+    border-radius: 3px;
+}
+
+
+
+/*.pos .order-container {
+    position: absolute;
+    top: 16%;
+    max-width: 100%;
+    height: 100%;
+    background: white;
+}*/
+/*.pos .pos-branding .username {
+    float: right;
+    color: #DDD;
+    font-size: 16px;
+    margin-right: -574px;
+    line-height: 48px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.pos .oe_status {
+    float: right;
+    color: rgba(255,255,255,0.4);
+    padding: 14px;
+    line-height: 20px;
+    font-size: 16px;
+    vertical-align: middle;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.pos a {
+    text-decoration: none;
+    color: #e8e8e8;
+    }*/
+
+/*.pos .rightpane-header {
+    padding: 0;
+    margin-left: -440px;
+    height: 48px;
+    border-bottom: 1px solid #c7c7c7;
+    background: #d3d3d3;
+    text-align: center;
+}*/
+
+/*.pos .actionpad .button.set-customer {
+    padding-left: 40px;
+    padding-right: 51px;
+    margin-top: -171px;
+}*/
+
+/*.control-buttons {
+    margin-top: 41px;
+}
+
+.pos .actionpad .button.set-customer {
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: -100px;
+    margin-left: -14px;
+}
+
+.window{
+	margin-top: 50px;
+}*/
+
+.pos .control-buttons {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    padding: 8px 16px 0px 11px;
+    margin-bottom: -6px;
+    margin-top: 5px;
+    margin-right: 29%;
+}
+
+.pos .pos-content {
+    width: 100%;
+    position: absolute;
+    top: 48px;
+    bottom: 8px;
+    margin-bottom: 48px;
+    bottom: 0;
+    background: #F0EEEE;
+}
+
+
+
+.pos .pos-footer {
+    position:absolute;
+    left:0;
+    bottom:0;
+    width: 100%;
+    height: 48px;
+    margin:0;
+    padding:0;
+    color: gray;
+    background: #393939;
+}
+
+.pos .searchbox {
+    position: absolute;
+    right: 2px;
+    top: 0px;
+}
+
+@media print {
+    * {
+        color: black !important;
+    }
+    body {
+        margin: 0;
+        color: white !important;
+        /* avoid black background if backgrounds are printed */
+        background: initial;
+    }
+    .oe_leftbar,
+    .oe_loading,
+    .pos .pos-topheader,
+    .pos .pos-footer, 
+    .pos .pos-leftpane, 
+    .pos .keyboard_frame,
+    .pos .receipt-screen header,
+    .pos .receipt-screen .top-content,
+    .pos .receipt-screen .centered-content .button {
+        display: none !important;
+    }
+    .pos,
+    .pos .pos-content,
+    .pos .rightpane,
+    .pos .screen, 
+    .pos .window, 
+    .pos .window .subwindow, 
+    .pos .subwindow .subwindow-container{
+        display: block;
+        position: static;
+        height: auto;
+    }
+    .pos{
+        background: white !important;
+    }
+    .pos .rightpane {
+        left: 0px !important;
+        background-color: white;
+    }
+    .pos .receipt-screen {
+        text-align: left;
+    }
+    .pos .receipt-screen .centered-content{
+        position: static;
+        border: none;
+    }
+    .pos .pos-receipt-container {
+        text-align: left;
+    }
+    .pos-actionbar {
+        display: none !important;
+    }
+    .debug-widget{
+        display: none !important;
+    }
+    .pos *{
+        text-shadow: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+    .pos .pos-sale-ticket{
+        margin: 0;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        border: none !important;
+        font-size: 13px !important;
+        width: 266px !important;
+    }
+    .o_debug_manager {
+        display: none !important;
+    }
+    .o_chat_window {
+        display: none !important;
+    }
+}
+
+.form-group {
+    display: inline-block;
+}
+
+.pos .product {
+    width: 398px;
+}
+
+.pos .product .product-name {
+    margin-left: 32%;
+    margin-bottom: 21%;
+}
+
+.pos .category-list.simple {
+    display: -webkit-box;
+    background: #e2e2e2;
+}
+
+.pos .category-simple-button{
+    border-right: 1px solid #c5c5c5;
+}
+
+
+
+
+.pos .pos-topheader{
+    background: #F5F4F0;
+}
+
+.pos .pos-branding{
+    border-right: 1px solid #f5f4f0;
+}
+
+.pos .breadcrumb-button.breadcrumb-home{
+    width: 100px;
+    font-size: 14px;
+}
+.pos .breadcrumb-button {
+    display: inline-block;
+    vertical-align: top;
+    color: #1e77c5;
+    cursor: pointer;
+}
+.pos .rightpane-header{
+    background: #ffffff;
+}
+
+.pos .category-simple-button {
+    background: #ffffff;
+}
+
+.pos .category-list.simple {
+    display: -webkit-box;
+    background: #ffffff;
+}
+
+    
+.pos .order {
+    background: white;
+    padding-bottom: 8px;
+    padding-top: 17px;
+    font-size: 16px;
+    text-align: left;
+    max-width: 100%;
+    -webkit-transform: translate3d(0,0,0);
+}
+
+.pos .actionpad .button {
+    position: relative;
+    display: block;
+    height: 54px;
+    width: 100%;
+    font-weight: bold;
+    vertical-align: middle;
+    color: #ffffff;
+    font-size: 14px;
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #bfbfbf;
+    transition: all 150ms linear;
+}
+
+.pos .order-button.selected {
+    font-weight: 900;
+    background: #EEEEEE;
+    color: #863a3a;
+    height: 45px;
+    font-size: 13px;
+    box-shadow: none;
+    flex-shrink: 0;
+}
+
+.pos .order-button {
+    color: #863a3a;
+    display: inline-block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 46px;
+    padding: 4px 8px;
+    margin: 3px;
+    margin-bottom: 0px;
+    margin-right: 2px;
+    padding-top: 0px;
+    background: #F5F4F0 !important;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    vertical-align: top;
+    line-height: 42px;
+    text-align: center;
+    box-shadow: 0px -5px 10px -6px rgb(82,82,82) inset;
+    cursor: pointer;
+    min-width: 45px;
+}
+
+.pos .order-button.square {
+    margin-left: 1px;
+    background: #5c5c5c;
+    color: #863a3a;
+}
+
+.pos .order-button.selected .order-sequence {
+    color: #964445;
+    background: #f5f4f0;
+    display: inline-block;
+    line-height: 24px;
+    min-width: 24px;
+    border-radius: 12px;
+    margin-right: -6px;
+    margin-left: -5px;
+}

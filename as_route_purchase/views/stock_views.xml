@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="stock_location_route_view_form_inherit_purchase_stock" model="ir.ui.view">
+    <field name="name">stock.location.route.form.purchase.stock</field>
+    <field name="inherit_id" ref="stock.stock_location_route_form_view"/>
+    <field name="model">stock.location.route</field>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='warehouse_ids']" position="after">
+        <br/><field name="purchase_selectable" string="Purchase Order Lines"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>

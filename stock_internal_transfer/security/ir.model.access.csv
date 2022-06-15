@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_transfer_order,access_transfer_order,model_transfer_order,base.group_user,1,1,1,1
+access_transfer_order_lines,access_transfer_order_lines,model_transfer_order_lines,base.group_user,1,1,1,1

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="vendor_pricelist_form_view" model="ir.ui.view">
+      <field name="name">vendor.pricelist.form</field>
+      <field name="model">vendor.price</field>
+      <field name="arch" type="xml">
+        <form string="Vendor Product Pricelist">
+          <header>
+            <button name="active_vendor_price" 
+                    type="object" 
+                    attrs="{'invisible': [('state', 'in', ['active','inactive'])]}"
+                    class="btn-primary"
+                    string="ACTIVATE"/>
+            <button name="deactivate_vendor_price" 
+                    type="object" 
+                    attrs="{'invisible': [('state', 'in', ['inactive','draft'])]}"
+                    class="btn-primary"
+                    string="DEACTIVATE"/>
+            <button name="reset_to_draft" 
+                    type="object" 
+                    attrs="{'invisible': [('state', '=','draft')]}"
+                    string="RESET TO DRAFT"/>
+            <field name="state" widget="statusbar"/>
+            <field name="parent_state" invisible="1"/>
+          </header>
+          <sheet>
+            <field name="active" invisible="1"/>
+            <group>
+              <group string="Vendor">
+                <field name="vendor_id" options="{'no_create_edit': True,'no_open':True}"/>
+                <field name="product_id" domain="[('product_tmpl_id', '=', product_tmpl_id)]" options="{'no_create_edit': True,'no_open':True}"/>
+                <field name="currency"/>
+              </group>
+            </group>
+            <group>
+              <group string="Pricing">
+                <field name="base_price"/>
+                <field name="uom_id" domain="['|', ('id', 'in', uom_ids), ('id', 'in', tmpl_uom_ids)]" options="{'no_create_edit': True,'no_open':True}"/>
+                <field name="discount"/>
+                <field name="price_txt"/>
+                <field name="minimum"/>
+                <field name="multiple"/>
+                <field name="start_date" widget="date"/>
+                <field name="end_date" widget="date"/>
+                <field name="product_tmpl_id" domain="[('vendor_id', '=', vendor_id)]" options="{'no_create_edit': True}" invisible="1"/>
+                <field name="uom_ids" invisible="1"/>
+                <field name="tmpl_uom_ids" invisible="1"/>
+              </group>
+            </group>
+            <group>
+              <group string="Notes">
+                <field name="desc" string="Price Comments"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="vendor_pricelist_search_view" model="ir.ui.view">
+      <field name="name">vendor.product.pricelist.search</field>
+      <field name="model">vendor.price</field>
+      <field name="arch" type="xml">
+        <search string="Product">
+          <field name="vendor_id" filter_domain="[('vendor_id', 'ilike', self)]"/>
+          <field name="product_id" filter_domain="[('product_id', 'ilike', self)]"/>
+          <separator/>
+          <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+          <filter string="Active" name="active" domain="[('active','=',True)]"/>
+          <separator/>
+        </search>
+      </field>
+    </record>
+
+    <record id="vendor_pricelist_tree_view" model="ir.ui.view">
+      <field name="name">vendor.product.priceslist.tree.view</field>
+      <field name="model">vendor.price</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="sequence" widget="handle"/>
+          <field name="vendor_id"/>
+          <field name="product_id"/>
+          <field name="price_txt" string="Price"/>
+          <field name="minimum_txt"/>
+          <field name="multiple_txt"/>
+          <field name="start_date" widget="date"/>
+          <field name="end_date" widget="date"/>
+          <field name="state" string="Stage"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="vendor_product_pricelist_action" model="ir.actions.act_window">
+      <field name="name">Vendor Prices</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">vendor.price</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_type">form</field>
+      <field name="context">{'active_test':False,'create':False}</field>
+     <field name="domain">[('product_id','!=',False)]</field>
+      <field name="view_id" ref="vendor_pricelist_tree_view"/>
+      <field name="search_view_id" ref="vendor_pricelist_search_view"/>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Create a new Vendor Price
+        </p>
+      </field>
+    </record>
+  </data>
+</odoo>

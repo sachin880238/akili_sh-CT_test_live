@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="website_sale.product_quantity" model="ir.ui.view">
+            <field name="active" eval="False"/>
+            <field name="customize_show" eval="False"/>
+        </record>
+
+        <record id="website_sale.product_attributes" model="ir.ui.view">
+            <field name="active" eval="False"/>
+            <field name="customize_show" eval="False"/>
+        </record>
+    </data>
+</odoo>

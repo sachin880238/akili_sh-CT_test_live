@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home" name="My Portal Home Menu">
+        <style>
+
+            @media only screen and (max-width:767px) {
+               .page-title-btn{
+                    margin-left: -33% !important;
+               }
+            }
+
+            @media only screen and (max-width:504px) {
+                .page-title-btn{
+                    margin-left: -50% !important;
+               }
+            }
+
+            @media only screen and (max-width:462px) {
+                .page-title-btn{
+                    margin-left: -67% !important;
+               }
+            }
+
+            @media only screen and (max-width:438px) {
+                .page-title-btn{
+                    margin-left: -86% !important;
+               }
+            }
+        </style>    
+        <div>
+            <h3 class="page-header">
+                <a href="/my/address">Account Settings
+                </a>
+                <small>edit the address, communication, and security settings for your account
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/address-book">Address Book
+                </a>
+                <small>edit or add billing, shipping, and contact addresses
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/tickets">Customer Service Tickets
+                </a>
+                <t t-if="customer_service_ticket_count &gt;0">
+                    <a href="/my/tickets?state=not_solved">
+                        <span class="badge badge-danger">
+                            <t t-esc="customer_service_ticket_count"/>
+                        </span>
+                    </a>
+                </t>
+                <t t-if="customer_service_ticket_solved_count &gt;0">
+                    <a href="/my/tickets?state=solved">
+                        <span class="badge badge-common">
+                            <t t-esc="customer_service_ticket_solved_count"/>
+                        </span>
+                    </a>
+                </t>
+                <small>view the status of your customer service tickets; read and respond to ticket messages; create a new ticket
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/carts">Saved Carts
+                </a>
+                <t t-if="saved_cart_count &gt;0">
+                    <a href="/my/carts?expire=no">
+                        <span class="badge badge-danger">
+                            <t t-esc="saved_cart_count"/>
+                        </span>
+                    </a>
+                </t>
+                <a href="/my/carts?expire=yes">
+                    <t t-if="saved_cart_expire_count &gt;0">
+                        <span class="badge badge-common">
+                            <t t-esc="saved_cart_expire_count"/>
+                        </span>
+                    </t>
+                </a>
+                <small>view your previously saved shopping carts; re-activate a cart to request a quotation
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/sent_carts">RFQ (Requests for Quotation)
+                </a>
+                <t t-if="rfq_cart_count &gt;0">
+                    <a href="/my/sent_carts?expire=no">
+                        <span class="badge badge-danger">
+                            <t t-esc="rfq_cart_count"/>
+                        </span>
+                    </a>
+                </t>
+                <t t-if="rfq_cart_expire_count &gt;0">
+                    <a href="/my/sent_carts?expire=yes">
+                        <span class="badge badge-common">
+                            <t t-esc="rfq_cart_expire_count"/>
+                        </span>
+                    </a>
+                </t>
+                <small>view the carts you have sent us; add comments or questions.
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/quotes">Quotations
+                </a>
+                <t t-if="quotation_count &gt;0">
+                    <a href="/my/quotes?expire=no">
+                        <span class="badge badge-danger">
+                            <t t-esc="quotation_count"/>
+                        </span>
+                    </a>
+                </t>
+                <t t-if="quotation_expire_count &gt;0">
+                    <a href="/my/quotes?expire=yes">
+                        <span class="badge badge-common">
+                            <t t-esc="quotation_expire_count"/>
+                        </span>
+                    </a>
+                </t>
+                <small>view your open quotations; read and respond to quotation messages; convert a quotation to an order
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/orders">Orders
+                </a>
+                <t t-if="order_sale_count &gt;0">
+                    <a href="/my/orders?state=sale">
+                        <span class="badge badge-danger">
+                            <t t-esc="order_sale_count"/>
+                        </span>
+                    </a>
+                </t>
+                <t t-if="order_done_count &gt;0">
+                    <a href="/my/orders?state=done">
+                        <span class="badge badge-common">
+                            <t t-esc="order_done_count"/>
+                        </span>
+                    </a>
+                </t>
+                <small>view the status of all of your orders; read and respond to order messages; track a shipment; duplicate an order; arrange a return
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/invoices">Invoices
+                </a>
+                <t t-if="invoice_not_paid_count &gt;0">
+                    <a href="/my/invoices?state=not_paid">
+                        <span class="badge badge-danger">
+                            <t t-esc="invoice_not_paid_count"/>
+                        </span>
+                    </a>
+                </t>
+                <t t-if="invoice_paid_count &gt;0">
+                    <a href="/my/invoices?state=paid">
+                        <span class="badge badge-common">
+                            <t t-esc="invoice_paid_count"/>
+                        </span>
+                    </a>
+                </t>
+                <small>view all of your invoices; arrange payment for open invoices; ; read and respond to invoice messages
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="/my/statement">Statement
+                </a>
+                <small>view your current account balance showing all of your invoices and payments
+                </small>
+            </h3>
+            <h3 class="page-header">
+                <a href="#">Credit Cards
+                </a>
+                <small>edit or add credit cards
+                </small>
+            </h3>
+        </div>
+    </template>
+
+    <!-- <template id="portal_my_home_extends" name="My Account Page" inherit_id="portal.portal_my_home">
+
+    </template> -->
+
+    <template id="custom_portal_layout" name="Portal Layout : Custom" inherit_id="portal.portal_layout" priority="999">
+        <xpath expr="//div[hasclass('justify-content-between')]/div[1]" position="replace">
+            <div t-attf-class="col-12">
+                <t t-raw="0"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='o_my_sidebar']" position="attributes">
+            <attribute name="class">col-12 col-md col-lg-4 col-xl-3 o_my_sidebar o_hidden</attribute>
+        </xpath>
+    </template>
+
+
+    <template id="custom_portal_my_home" name="Portal My Home : Custom" inherit_id="portal.portal_my_home" priority="900">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="attributes">
+            <attribute name="class">o_portal_docs list-group o_hidden</attribute>
+            <!-- <t t-if="invoice_count" t-call="portal.portal_docs_entry">
+                <t t-set="title">Invoices</t>
+                <t t-set="url" t-value="'/my/invoices'"/>
+                <t t-set="count" t-value="invoice_count"/>
+            </t> -->
+        </xpath>
+        <xpath expr="//h3" position="replace">
+            <div class="row mt32">
+                <div class="col-10 col-md-10" style="display:inline;">
+                    <span class="h1 page-title">Your Account</span>
+                </div>
+                <div class="col-2 col-md-2 text-right" style="float:right;margin-top:3px;">
+                    <a class="btn btn-primary page-title-btn" href="/web/session/logout?redirect=/"><b>Log Out</b>
+                    </a>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="after">
+            <div class="o_portal_docs list-group">
+                <div class="clearfix"/>
+                <!-- <div class="mt32">
+                    <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                        <t t-if="content_id.page == 'account_settings'">
+                            <div class="page_desc_div" t-field="content_id.content"/>
+                        </t>
+                    </t>
+                </div> -->
+                 <div style="margin-top: 92px; margin-left:-9px">
+                        <h4 class="mb32" style="background: #f9f9f9; padding: 10px; font-size: 20px; border: 1px solid #eeeeee;margin-left: 9px;margin-right:-3px;margin-top: -82px">Use the links below to access your account settings, addresses, and documents. Red icons next to each link count open documents; black icons count closed documents.</h4>
+                    </div>
+                <div>
+                    <t t-call="website_my_account.portal_my_home"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- <template id="custom_portal_my_home" name="My Portal">
+        <t t-call="website.layout">
+            <div class="container custom_portal_home mb32">
+                <div class="mt32">
+                    <div class="col-xs-10">
+                        <span class="h1 page-title">Your Account</span>
+                    </div>
+                    <div class="col-xs-2 text-right">
+                        <a class="btn btn-primary page-title-btn" href="/web/session/logout?redirect=/">Log Out
+                        </a>
+                    </div>
+                </div>
+                <div class="clearfix"/>
+                <div class="mt32">
+                    <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                        <t t-if="content_id.page == 'account_settings'">
+                            <div class="page_desc_div" t-field="content_id.content"/>
+                        </t>
+                    </t>
+                </div>
+                <div class="mt32">
+                    <t t-call="website_my_account.portal_my_home"/>
+                </div>
+            </div>
+        </t>
+    </template> -->
+</odoo>

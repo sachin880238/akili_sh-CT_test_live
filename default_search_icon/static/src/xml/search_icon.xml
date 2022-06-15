@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+  <input t-name="SearchView.InputView" type="text" class="o_searchview_input" style="font-family: fontello, Arial; font-style: normal;font-color: #1e76c5;font-size:98%;" accesskey="Q" role="searchbox" aria-haspopup="true">
+  </input>
+  <!-- <input t-name="SearchView.InputView" type="text" class="o_searchview_input" placeholder="&#xF002;" style="font-family: fontello, Arial; font-style: normal;font-color: #1e76c5;font-size:98%;" accesskey="Q" role="searchbox" aria-haspopup="true">
+  </input> -->
+</templates>

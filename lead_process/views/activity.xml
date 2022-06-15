@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<odoo>
+  <record id="activity_view_tree" model="ir.ui.view">
+    <field name="name">mail.activity.view.tree</field>
+    <field name="model">mail.activity</field>
+    <field name="inherit_id" ref="mail.mail_activity_view_tree"/>
+    <field name="arch" type="xml">
+      <tree string="Next Activities"
+          decoration-danger="date_deadline &lt; current_date"
+          decoration-success="date_deadline == current_date"
+          default_order="date_deadline" create="false">
+        
+      </tree>
+    </field>
+  </record>
+
+  <record id="mail_activity_view_form_popup" model="ir.ui.view">
+    <field name="name">mail.activity.view.form.popup</field>
+    <field name="model">mail.activity</field>
+    <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+    <field name="arch" type="xml">
+        <form string="Log an Activity" create="false">
+           
+        </form>
+    </field>
+  </record>
+
+  <record id="action_activity" model="ir.actions.act_window">
+    <field name="name">Activity</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">mail.activity</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a new customer in your address book
+      </p><p>
+        Odoo helps you easily track all activities related to a customer.
+      </p>
+    </field>
+  </record> 
+
+  <menuitem action="action_activity" id="activity_action" name="Activity" parent="backend_menuitem.menu_customer" active="0"/>
+</odoo>

@@ -1,0 +1,1240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template name="Numbers" id="snippet_numbers">
+    <section class="s_numbers o_cc o_cc2 pt24 pb24">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 text-center pt24 pb24">
+                    <span class="s_number display-4">12</span>
+                    <h6>Useful options</h6>
+                </div>
+                <div class="col-lg-3 text-center pt24 pb24">
+                    <span class="s_number display-4">45</span>
+                    <h6>Beautiful snippets</h6>
+                </div>
+                <div class="col-lg-3 text-center pt24 pb24">
+                    <span class="s_number display-4">8</span>
+                    <h6>Amazing pages</h6>
+                </div>
+                <div class="col-lg-3 text-center pt24 pb24">
+                    <span class="s_number display-4">37</span>
+                    <h6>Outstanding images</h6>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+
+<template id="s_images_wall" name="Images Wall">
+    <section class="s_image_gallery o_spc-small o_masonry pt24 pb24"
+             data-vcss="001"
+             data-columns="3" style="height: 500px; overflow: hidden;">
+        <div class="container">
+            <div class="alert alert-info css_non_editable_mode_hidden text-center" role="status"><span class="o_add_images" style="cursor: pointer;"><i class="fa fa-plus-circle"/> Add Images</span></div>
+        </div>
+    </section>
+</template>
+
+<template name="Media List" id="s_media_list">
+    <section class="s_media_list bg-200 pt32 pb32" data-vcss="001">
+        <div class="container">
+            <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                <div class="col-lg-12 s_media_list_item pt16 pb16" data-name="Media item">
+                    <div class="row s_col_no_resize s_col_no_bgcolor no-gutters align-items-center o_cc o_cc1">
+                        <div class="col-lg-4 align-self-stretch s_media_list_img_wrapper">
+                            <img src="/web/image/website.s_media_list_default_image_1" class="s_media_list_img h-100 w-100" alt=""/>
+                        </div>
+                        <div class="col-lg-8 s_media_list_body">
+                            <h3>Media heading</h3>
+                            <p>Use this snippet to build various types of components that feature a left- or right-aligned image alongside textual content. Duplicate the element to create a list that fits your needs.</p>
+                            <a href="#" class="btn btn-primary mb-2">Discover</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 s_media_list_item pt16 pb16" data-name="Media item">
+                    <div class="row s_col_no_resize s_col_no_bgcolor no-gutters align-items-center o_cc o_cc1">
+                        <div class="col-lg-4 align-self-stretch s_media_list_img_wrapper">
+                            <img src="/web/image/website.s_media_list_default_image_2" class="s_media_list_img h-100 w-100" alt=""/>
+                        </div>
+                        <div class="col-lg-8 s_media_list_body">
+                            <h3>Event heading</h3>
+                            <p>Speakers from all over the world will join our experts to give inspiring talks on various topics. Stay on top of the latest business management trends &amp; technologies</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 s_media_list_item pt16 pb16" data-name="Media item">
+                    <div class="row s_col_no_resize s_col_no_bgcolor no-gutters align-items-center o_cc o_cc1">
+                        <div class="col-lg-4 align-self-stretch s_media_list_img_wrapper">
+                            <img src="/web/image/website.s_media_list_default_image_3" class="s_media_list_img h-100 w-100" alt=""/>
+                        </div>
+                        <div class="col-lg-8 s_media_list_body">
+                            <h3>Post heading</h3>
+                            <p>Use this component for creating a list of featured elements to which you want to bring attention.</p>
+                            <a href="#">Continue reading <i class="fa fa-long-arrow-right align-middle ml-1"/></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template name="Showcase" id="s_showcase">
+    <section class="s_showcase pt48 pb48" data-vcss="002">
+        <div class="container">
+            <div class="row no-gutters s_col_no_resize s_col_no_bgcolor s_nb_column_fixed">
+                <div class="col-lg text-lg-right">
+                    <div class="row">
+                        <div class="col-lg-12 pt24 pb24" data-name="Block">
+                            <div class="s_showcase_title d-flex flex-lg-row-reverse mb-2">
+                                <i class="s_showcase_icon fa fa-2x fa-desktop text-secondary mr-3 mr-lg-0 ml-lg-3"/>
+                                <h3>First feature</h3>
+                            </div>
+                            <p>A short description of this great feature.</p>
+                        </div>
+                        <div class="col-lg-12 pt24 pb24" data-name="Block">
+                            <div class="s_showcase_title d-flex flex-lg-row-reverse mb-2">
+                                <i class="s_showcase_icon fa fa-2x fa-paint-brush text-secondary mr-3 mr-lg-0 ml-lg-3"/>
+                                <h3>Second feature</h3>
+                            </div>
+                            <p>A short description of this great feature.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="w-50 h-100 border-right"/>
+                </div>
+                <div class="col-lg">
+                    <div class="row">
+                        <div class="col-lg-12 pt24 pb24" data-name="Block">
+                            <div class="s_showcase_title d-flex mb-2">
+                                <i class="s_showcase_icon fa fa-2x fa-heart text-secondary mr-3"/>
+                                <h3>Another feature</h3>
+                            </div>
+                            <p>A short description of this great feature.</p>
+                        </div>
+                        <div class="col-lg-12 pt24 pb24" data-name="Block">
+                            <div class="s_showcase_title d-flex mb-2">
+                                <i class="s_showcase_icon fa fa-2x fa-gift text-secondary mr-3"/>
+                                <h3>Last Feature</h3>
+                            </div>
+                            <p>A short description of this great feature.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container text-lg-center">
+            <p><br/></p>
+            <a href="#" class="btn btn-primary mb-2">Discover all the features</a>
+        </div>
+    </section>
+</template>
+
+<template name="Big Boxes" id="s_color_blocks_2">
+    <section class="s_color_blocks_2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 o_cc o_cc3 text-center">
+                    <i class="fa fa-shield fa-5x m-3"/>
+                    <h2>A color block</h2>
+                    <p>Color blocks are a simple and effective way to <b>present and highlight your content</b>. Choose an image or a color for the background. You can even resize and duplicate the blocks to create your own layout. Add images or icons to customize the blocks.</p>
+                    <a href="#" class="btn btn-primary mb-2">More Details</a>
+                </div>
+                <div class="col-lg-6 o_cc o_cc5 text-center">
+                    <i class="fa fa-cube fa-5x m-3"/>
+                    <h2>Another color block</h2>
+                    <p>Color blocks are a simple and effective way to <b>present and highlight your content</b>. Choose an image or a color for the background. You can even resize and duplicate the blocks to create your own layout. Add images or icons to customize the blocks.</p>
+                    <a href="#" class="btn btn-primary mb-2">More Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template id="assets_snippet_s_color_blocks_2_css_000_custom" inherit_id="website.assets_frontend">
+    <xpath expr="." position="inside">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_color_blocks_2/000.scss"/>
+    </xpath>
+</template>
+
+
+<template id="s_masonry_block" name="Masonry">
+    <section class="s_masonry_block" data-vcss="001">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 oe_img_bg text-center pb224 pt224" data-name="Block"
+                     style="background-image: url(/web/image/website.s_masonry_block_default_image_1);">
+                    <p><br/></p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row h-100">
+                        <div class="col-lg-6 pt24 pb8 text-center o_cc o_cc3" data-name="Block">
+                            <h3>A great title</h3>
+                            <p>And a great subtitle</p>
+                        </div>
+                        <div class="col-lg-6 pt24 pb8 text-center bg-200" data-name="Block">
+                            <h3>A great title</h3>
+                            <p>And a great subtitle</p>
+                        </div>
+                        <div class="col-lg-6 pt24 pb8 text-center bg-200" data-name="Block">
+                            <h3>A great title</h3>
+                            <p>And a great subtitle</p>
+                        </div>
+                        <div class="col-lg-6 pt24 pb8 text-center o_cc o_cc4" data-name="Block">
+                            <h3>A great title</h3>
+                            <p>And a great subtitle</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<!-- Assets -->
+<template id="_assets_snippet_s_masonry_block_css_000_variables_custom" inherit_id="website._assets_primary_variables" active="False">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_masonry_block/000_variables.scss"/>
+    </xpath>
+</template>
+<template id="assets_snippet_s_masonry_block_css_000_custom" inherit_id="website.assets_frontend" active="False">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_masonry_block/000.scss"/>
+    </xpath>
+</template>
+
+<template id="assets_snippet_s_masonry_block_css_001_custom" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_masonry_block/001.scss"/>
+    </xpath>
+</template>
+
+
+<!-- ****************start****************** -->
+
+<template id="s_table_of_content" name="Table of Content">
+    <section class="s_table_of_content pt24 pb24 o_cc o_cc1">
+        <div class="container">
+            <div class="row s_nb_column_fixed">
+                <div class="col-lg-3 s_table_of_content_navbar_wrap s_table_of_content_navbar_sticky
+                        s_table_of_content_vertical_navbar d-print-none d-none d-lg-block o_not_editable o_cc o_cc1"
+                        data-name="Navbar">
+                    <div class="s_table_of_content_navbar list-group"/>
+                </div>
+                <div class="col-lg-9 s_table_of_content_main oe_structure oe_empty" data-name="Content">
+                    <section class="pb16">
+                        <h1 data-anchor="true">Intuitive system</h1>
+                        <h4>What you see is what you get</h4>
+                        <p>
+                            Insert text styles like headers, bold, italic, lists, and fonts with
+                            a simple WYSIWYG editor. Flexible and easy to use.
+                        </p>
+                        <h4>Customization tool</h4>
+                        <p>
+                            Click and change content directly from the front-end: no complex back
+                            end to deal with.
+                        </p>
+                        <h4>Building blocks system</h4>
+                        <p>
+                            Create your page from scratch by dragging and dropping pre-made,
+                            fully customizable building blocks.
+                        </p>
+                    </section>
+                    <section class="pb16">
+                        <h1 data-anchor="true">Design features</h1>
+                        <h4>Bootstrap-based templates</h4>
+                        <p>
+                            Easily design your own Odoo templates thanks to clean HTML
+                            structure and bootstrap CSS.
+                        </p>
+                        <h4>Professional themes</h4>
+                        <p>
+                            Change theme in a few clicks, and browse through Odoo's catalog of
+                            ready-to-use themes available in our app store.
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template id="s_table_of_content_options" inherit_id="website.snippet_options">
+    <xpath expr="." position="inside">
+        <div data-js="TableOfContent" data-selector=".s_table_of_content"/>
+        <div data-js="TableOfContentNavbar" data-selector=".s_table_of_content_navbar_wrap">
+            <we-button-group string="Position">
+                <we-button title="Left" data-navbar-position="left"><i class="fa fa-fw fa-long-arrow-left"/></we-button>
+                <we-button title="Top" data-navbar-position="top"><i class="fa fa-fw fa-long-arrow-up"/></we-button>
+                <we-button title="Right" data-navbar-position="right"><i class="fa fa-fw fa-long-arrow-right"/></we-button>
+            </we-button-group>
+            <we-checkbox string="Sticky" data-select-class="s_table_of_content_navbar_sticky" data-no-preview="true"/>
+        </div>
+        <div data-js="TableOfContentMainColumns" data-selector=".s_table_of_content_navbar_wrap, .s_table_of_content_main"/>
+    </xpath>
+</template>
+
+<template id="assets_snippet_s_table_of_content_css_000" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_table_of_content/000.scss"/>
+    </xpath>
+</template>
+
+<template id="assets_snippet_s_table_of_content_js_000" inherit_id="website.assets_frontend">
+    <xpath expr="//script[last()]" position="after">
+        <script type="text/javascript" src="/website_snippets/static/src/snippets/s_table_of_content/000.js"/>
+    </xpath>
+</template>
+
+<!-- ***********end************ -->
+
+<!-- ***********start************ -->
+<template id="s_product_catalog" name="Pricelist">
+    <section class="s_product_catalog oe_img_bg oe_custom_bg pt48 pb32"
+             style="background-image: url('/website_snippets/static/src/img/s_product_catalog.jpg');"
+             data-vcss="001">
+        <div class="container">
+            <h2>Menu</h2>
+            <p>Add a menu description.</p>
+            <div class="row">
+                <div class="col-lg-6 pt16 pb16">
+                    <h3>Starter</h3>
+                    <ul class="list-unstyled my-3">
+                        <t t-call="website_snippets.s_product_catalog_dish">
+                            <t t-set="name">Cheese Onion Rings</t>
+                            <t t-set="price">$9.00</t>
+                        </t>
+                        <t t-call="website_snippets.s_product_catalog_dish">
+                            <t t-set="name">Chefs Fresh Soup of the Day</t>
+                            <t t-set="price">$7.50</t>
+                        </t>
+                        <t t-call="website_snippets.s_product_catalog_dish">
+                            <t t-set="name">Beef Carpaccio</t>
+                            <t t-set="price">$10.50</t>
+                        </t>
+                    </ul>
+                </div>
+                <div class="col-lg-6 pt16 pb16">
+                    <h3>Main Course</h3>
+                    <ul class="list-unstyled my-3">
+                        <t t-call="website_snippets.s_product_catalog_dish">
+                            <t t-set="name">Filet Mignon 8oz</t>
+                            <t t-set="price">$15.50</t>
+                        </t>
+                        <t t-call="website_snippets.s_product_catalog_dish">
+                            <t t-set="name">Farm Friendly Chicken Supreme</t>
+                            <t t-set="price">$15.50</t>
+                        </t>
+                        <t t-call="website_snippets.s_product_catalog_dish">
+                            <t t-set="name">Tuna and Salmon Burger</t>
+                            <t t-set="price">$12.00</t>
+                        </t>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template id="s_product_catalog_dish">
+    <li class="s_product_catalog_dish" data-name="Product">
+        <p class="s_product_catalog_dish_title d-flex align-items-baseline pb-2">
+            <span t-esc="name" class="s_product_catalog_dish_name"/>
+            <span t-esc="price" class="s_product_catalog_dish_price ml-auto pl-2"/>
+        </p>
+        <p class="s_product_catalog_dish_description border-top text-muted pt-1"><i>Add a description here</i></p>
+    </li>
+</template>
+
+<template id="s_product_catalog_options_inherit" inherit_id="website.snippet_options">
+    <xpath expr="." position="inside">
+        <div data-js="ProductCatalog" data-selector=".s_product_catalog">
+            <we-checkbox string="Descriptions" data-toggle-description="true"
+                         data-no-preview="true"/>
+            <t t-call="website_snippets.snippet_options_border_line_widgets">
+                <t t-set="label">⌙ Separator</t>
+                <t t-set="direction" t-value="'top'"/>
+                <t t-set="apply_to" t-value="'.s_product_catalog_dish_description'"/>
+                <!-- Note: no need of extra dependency thanks to the apply-to -->
+            </t>
+        </div>
+        <div data-selector=".s_product_catalog_dish"/>
+    </xpath>
+    <!-- <xpath expr="//div[@data-js='SnippetMove']" position="attributes">
+        <attribute name="data-selector" add=".s_product_catalog_dish" separator=","/>
+        <attribute name="data-drop-near" add=".s_product_catalog_dish" separator=","/>
+    </xpath> -->
+</template>
+
+<template id="snippet_options_border_line_widgets">
+    <we-row t-att-string="label">
+        <we-input data-name="border_width_opt"
+                  t-att-data-apply-to="apply_to"
+                  data-select-style="0"
+                  t-attf-data-css-property="border-#{direction and ('%s-' % direction) or ''}width"
+                  data-unit="px"
+                  t-att-data-extra-class="with_bs_class and 'border'"
+                  t-att-data-variable="width_variable"/>
+        <we-select t-attf-data-css-property="border-#{direction and ('%s-' % direction) or ''}style"
+                   data-dependencies="border_width_opt"
+                   t-att-data-apply-to="apply_to"
+                   t-att-data-variable="style_variable">
+            <we-button title="Solid" data-select-style="solid"><div class="o_we_fake_img_item o_we_border_preview" style="border-style: solid;"/></we-button>
+            <we-button title="Dashed" data-select-style="dashed"><div class="o_we_fake_img_item o_we_border_preview" style="border-style: dashed;"/></we-button>
+            <we-button title="Dotted" data-select-style="dotted"><div class="o_we_fake_img_item o_we_border_preview" style="border-style: dotted;"/></we-button>
+            <we-button title="Double" data-select-style="double"><div class="o_we_fake_img_item o_we_border_preview" style="border-style: double; border-left: none; border-right: none;"/></we-button>
+        </we-select>
+        <we-colorpicker data-dependencies="border_width_opt"
+                        t-att-data-apply-to="apply_to"
+                        data-select-style="true"
+                        t-attf-data-css-property="border-#{direction and ('%s-' % direction) or ''}color"
+                        data-color-prefix="border-"
+                        t-att-data-color="color_variable"/>
+    </we-row>
+</template>
+
+<template id="assets_snippet_s_product_catalog_css_001_custom" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_product_catalog/001.scss"/>
+    </xpath>
+</template>
+
+<!-- ***********end************ -->
+
+<!-- ***********start************ -->
+<template name="Items" id="s_product_list">
+    <section class="s_product_list" >
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-6">
+                    <a href="http://www.odoo.com">
+                        <img src="/website_snippets/static/src/img/s_product_list_1.jpg" alt="" class="img img-fluid"/>
+                    </a>
+                    <div class="s_product_list_item_link">
+                        <a href="http://www.odoo.com" class="btn btn-primary">View item</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <a href="http://www.odoo.com">
+                        <img src="/website_snippets/static/src/img/s_product_list_1.jpg" alt="" class="img img-fluid"/>
+                    </a>
+                    <div class="s_product_list_item_link">
+                        <a href="http://www.odoo.com" class="btn btn-primary">View item</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <a href="http://www.odoo.com">
+                        <img src="/website_snippets/static/src/img/s_product_list_1.jpg" alt="" class="img img-fluid"/>
+                    </a>
+                    <div class="s_product_list_item_link">
+                        <a href="http://www.odoo.com" class="btn btn-primary">View item</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <a href="http://www.odoo.com">
+                        <img src="/website_snippets/static/src/img/s_product_list_1.jpg" alt="" class="img img-fluid"/>
+                    </a>
+                    <div class="s_product_list_item_link">
+                        <a href="http://www.odoo.com" class="btn btn-primary">View item</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <a href="http://www.odoo.com">
+                        <img src="/website_snippets/static/src/img/s_product_list_1.jpg" alt="" class="img img-fluid"/>
+                    </a>
+                    <div class="s_product_list_item_link">
+                        <a href="http://www.odoo.com" class="btn btn-primary">View item</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <a href="http://www.odoo.com">
+                        <img src="/website_snippets/static/src/img/s_product_list_1.jpg" alt="" class="img img-fluid"/>
+                    </a>
+                    <div class="s_product_list_item_link">
+                        <a href="http://www.odoo.com" class="btn btn-primary">View item</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template id="_assets_snippet_s_product_list_css_000_variables_custom" inherit_id="website._assets_primary_variables">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_product_list/000_variables.scss"/>
+    </xpath>
+</template>
+<template id="assets_snippet_s_product_list_css_000_custom" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_product_list/000.scss"/>
+    </xpath>
+</template>
+
+<!-- ***********end************ -->
+
+<!-- ***********start************ -->
+<template name="Timeline" id="s_timeline">
+    <section class="s_timeline pt24 pb48">
+        <div class="container s_timeline_line">
+            <div class="s_timeline_row d-block d-md-flex flex-row" data-name="Row">
+                <div class="s_timeline_date"><span class="bg-white"><b>2019</b></span></div>
+                <div class="s_timeline_content d-flex">
+                    <div class="s_timeline_card s_card card bg-white w-100" data-name="Card" data-snippet="s_card">
+                        <div class="card-body">
+                            <h5 class="card-title">Your title</h5>
+                            <p class="card-text">A timeline is a graphical representation on which important events are marked.</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-1x fa-child bg-secondary rounded-circle s_timeline_icon"/>
+                </div>
+                <div class="s_timeline_content"/>
+            </div>
+            <div class="s_timeline_row d-block d-md-flex flex-row" data-name="Row">
+                <div class="s_timeline_date"><span class="bg-white"><b>2018</b></span></div>
+                <div class="s_timeline_content d-flex">
+                    <div class="s_timeline_card s_card card bg-white w-100" data-name="Card" data-snippet="s_card">
+                        <div class="card-body">
+                            <p class="card-text">You can edit, duplicate...</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-1x fa-graduation-cap bg-secondary rounded-circle s_timeline_icon"/>
+                </div>
+                <div class="s_timeline_content d-flex">
+                    <i class="fa fa-1x fa-asterisk bg-secondary rounded-circle s_timeline_icon"/>
+                    <div class="s_timeline_card s_card card bg-white w-100" data-name="Card" data-snippet="s_card">
+                        <div class="card-body">
+                            <p class="card-text">...and switch the timeline contents to fit your needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="s_timeline_row d-block d-md-flex flex-row-reverse" data-name="Row">
+                <div class="s_timeline_date"><span class="bg-white"><b>2015</b></span></div>
+                <div class="s_timeline_content d-flex">
+                    <div class="s_timeline_card s_card card bg-white w-100" data-name="Card" data-snippet="s_card">
+                        <div class="card-body">
+                            <p class="card-text">Use this timeline as a part of your resume, to show your visitors what you've done in the past.</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-1x fa-bolt bg-secondary rounded-circle s_timeline_icon"/>
+                </div>
+                <div class="s_timeline_content"/>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template id="s_timeline_options_custom" inherit_id="website.snippet_options">
+    <xpath expr="." position="inside">
+        <div data-selector=".s_timeline_row" data-drop-near=".s_timeline_row"/>
+        <div data-js="Timeline" data-selector=".s_timeline_card">
+            <we-button data-timeline-card="" data-no-preview="true"><i class="fa fa-fw fa-angle-left"/><i class="fa fa-fw fa-angle-right"/></we-button>
+        </div>
+    </xpath>
+    <!-- <xpath expr="//div[@data-js='SnippetMove'][contains(@data-selector,'section')]" position="attributes">
+        <attribute name="data-selector" add=".s_timeline_row" separator=","/>
+    </xpath> -->
+</template>
+
+<template id="assets_snippet_s_timeline_css_000_custom" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_timeline/000.scss"/>
+    </xpath>
+</template>
+
+<!-- ***********end************ -->
+
+<!-- ***********start************ -->
+<template name="Steps" id="s_process_steps">
+    <section class="s_process_steps pt24 pb24">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-3 s_process_step pt24 pb24">
+                    <div class="s_process_step_icon">
+                        <span>
+                            <i class="fa fa-shopping-basket fa-2x mx-auto rounded-circle bg-primary"/>
+                        </span>
+                    </div>
+                    <div class="s_process_step_content text-center">
+                        <h2>Add to cart</h2>
+                        <p>Let your customers follow <br/>and understand your process.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 s_process_step pt24 pb24">
+                    <div class="s_process_step_icon">
+                        <span>
+                            <i class="fa fa-unlock-alt fa-2x mx-auto rounded-circle bg-o-color-5"/>
+                        </span>
+                    </div>
+                    <div class="s_process_step_content text-center">
+                        <h2>Sign in</h2>
+                        <p>Click on the icon to adapt it <br/>to your purpose.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 s_process_step pt24 pb24">
+                    <div class="s_process_step_icon">
+                        <span>
+                            <i class="fa fa-paypal fa-2x mx-auto rounded-circle bg-secondary"/>
+                        </span>
+                    </div>
+                    <div class="s_process_step_content text-center">
+                        <h2>Pay</h2>
+                        <p>Duplicate blocks <br/>to add more steps.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 s_process_step pt24 pb24">
+                    <div class="s_process_step_icon">
+                        <span>
+                            <i class="fa fa-plane fa-2x mx-auto rounded-circle bg-o-color-3"/>
+                        </span>
+                    </div>
+                    <div class="s_process_step_content text-center">
+                        <h2>Get Delivered</h2>
+                        <p>Select and delete blocks <br/>to remove some steps.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template id="assets_snippet_s_process_steps_css_000_custom" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_process_steps/000.scss"/>
+    </xpath>
+</template>
+<!-- ***********end************ -->
+
+<!-- ***********start************ -->
+<template name="Text Highlight" id="s_text_highlight">
+    <section class="s_text_highlight bg-secondary my-3 text-center w-100">
+        <div class="container">
+            <h3>Text Highlight</h3>
+            <p>Put the focus on what you have to say!</p>
+        </div>
+    </section>
+</template>
+
+<template id="assets_snippet_s_text_highlight_css_000_custom" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_text_highlight/000.scss"/>
+    </xpath>
+</template>
+
+<!-- ***********start************ -->
+
+<template id="snippet_options_background_color_widget">
+    <we-colorpicker title="Color"
+                    data-name="bg_color_opt"
+                    data-select-style=""
+                    data-css-property="background-color"
+                    data-color-prefix="bg-"
+                    t-att-data-with-combinations="with_color_combinations and 'true' or None"
+                    t-att-data-css-compatible="css_compatible and 'true' or None"/>
+</template>
+
+<template name="Badge" id="s_badge">
+    <section class="s_badge badge badge-secondary o_animable" data-name="Badge">
+        <i class="fa fa-1x fa-fw fa-folder o_not-animable"/>Category
+    </section>
+</template>
+
+<!-- <template id="s_badge_options" inherit_id="website.snippet_options">
+    <xpath expr="//div[@data-js='Box']" position="before">
+        <div data-selector=".s_badge">
+            <we-colorpicker string="Color" data-name="badge_colorpicker_opt"
+                data-select-style="true"
+                data-css-property="background-color"
+                data-color-prefix="badge-"/>
+        </div>
+    </xpath>
+</template>
+ -->
+<template id="_assets_snippet_s_badge_css_000_variables" inherit_id="website._assets_primary_variables">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_badge/000_variables.scss"/>
+    </xpath>
+</template>
+<template id="assets_snippet_s_badge_css_000" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_badge/000.scss"/>
+    </xpath>
+</template>
+
+
+
+
+<template name="Progress Bar" id="s_progress_bar">
+    <section class="s_progress_bar" data-display="inline">
+            <h4>We are almost done!</h4>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%; min-width: 3%">
+                    <span class="s_progress_bar_text">80% Development</span>
+                </div>
+            </div>
+    </section>
+</template>
+
+<template id="s_progress_bar_options" inherit_id="website.snippet_options">
+    <xpath expr="." position="inside">
+        <div data-js="progress" data-selector=".s_progress_bar" >
+            <we-input string="Value" data-progress-bar-value="" data-unit="%"/>
+            <we-select string="Display">
+                <we-button data-display="inline">Inline</we-button>
+                <we-button data-display="below">Below Each Other</we-button>
+            </we-select>
+            <we-colorpicker string="Colors" data-apply-to=".progress-bar"
+                data-select-style="true"
+                data-css-property="background-color"
+                data-color-prefix="bg-"/>
+            <we-checkbox string="Striped" data-select-class="progress-bar-striped" data-apply-to=".progress-bar"/>
+            <we-checkbox string="Animated" data-select-class="progress-bar-animated" data-apply-to=".progress-bar"/>
+        </div>
+    </xpath>
+    <!-- <xpath expr="//div[@id='so_content_addition']" position="attributes">
+        <attribute name="data-selector" add=".s_progress_bar" separator=","/>
+        <attribute name="data-drop-near" add=".s_progress_bar" separator=","/>
+    </xpath> -->
+</template>
+
+
+
+
+
+<template name="Blockquote" id="s_blockquote">
+    <blockquote class="s_blockquote s_blockquote_classic w-100 mx-auto o_animable blockquote">
+        <i class="s_blockquote_icon fa fa-1x fa-quote-left bg-o-color-2 rounded"/>
+        <div class="s_blockquote_content bg-100">
+            <p>Write a quote here from one of your customers. Quotes are a great way to build confidence in your products or services.</p>
+            <footer class="blockquote-footer">
+                <img src="/web/image/website.s_blockquote_default_image" class="s_blockquote_avatar img rounded-circle mr-2" alt=""/>
+                <span class="s_blockquote_author"><b>John DOE</b> • CEO of MyCompany</span>
+            </footer>
+        </div>
+    </blockquote>
+</template>
+
+
+
+<template id="snippet_options_shadow_widgets">
+    <we-button-group string="Shadow" data-shadow-class="shadow" t-att-data-variable="shadow_variable">
+        <we-button data-set-shadow="">None</we-button>
+        <we-button data-set-shadow="outset"
+                   data-img="/website/static/src/img/snippets_options/shadow_out.svg"
+                   data-name="shadow_active_opt"
+                   title="Outset"/>
+        <we-button data-set-shadow="inset"
+                   data-img="/website/static/src/img/snippets_options/shadow_in.svg"
+                   data-name="shadow_inset_opt"
+                   title="Inset"/>
+    </we-button-group>
+    <we-multi data-css-property="box-shadow" data-dependencies="shadow_active_opt, shadow_inset_opt" t-att-data-variable="shadow_variable">
+        <we-colorpicker string="⌙ Color" data-select-style="" data-css-compatible=""/>
+        <we-row string="⌙ Offset (X, Y)">
+            <we-input data-select-style="" data-unit="px"/>
+            <we-input data-select-style="" data-unit="px"/>
+        </we-row>
+        <we-input string="⌙ Blur" data-select-style="" data-unit="px"/>
+        <we-input string="⌙ Spread" data-select-style="" data-unit="px"/>
+        <!-- Inset parameter always hidden (as controlled above) but needed -->
+        <!-- for the we-multi widget to work properly. -->
+        <we-checkbox data-name="fake_inset_shadow_opt" data-select-style="inset"/>
+    </we-multi>
+</template>
+
+
+
+<template id="snippet_options_background_options">
+    <div t-att-data-js="with_colors and with_color_combinations and 'ColoredLevelBackground' or 'BackgroundToggler'"
+         t-att-data-selector="selector"
+         t-att-data-exclude="exclude"
+         t-att-data-target="target">
+        <we-row t-if="with_colors or with_images" string="Background" class="o_we_full_row">
+            <t t-if="with_colors" t-call="web_editor.snippet_options_background_color_widget"/>
+            <t t-if="with_images">
+                <we-button title="Image" class="ml-auto"
+                           data-name="bg_image_toggle_opt"
+                           t-att-data-dependencies="images_dependencies"
+                           data-toggle-bg-image="true"
+                           data-no-preview="true">
+                    <i class="fa fa-fw fa-camera"/>
+                </we-button>
+                <we-button title="Filter"
+                           data-name="bg_filter_toggle_opt"
+                           data-dependencies="bg_image_toggle_opt"
+                           data-toggle-bg-filter="true"
+                           data-no-preview="true">
+                    <i class="fa fa-fw fa-paint-brush"/>
+                </we-button>
+                <we-button title="Shape"
+                           data-toggle-bg-shape="true"
+                           t-att-data-dependencies="images_dependencies"
+                           data-no-preview="true"
+                           data-img="/web_editor/static/src/img/snippets_options/bg_shape.svg"/>
+            </t>
+        </we-row>
+    </div>
+    <t t-if="with_images">
+        <div data-js="BackgroundImage"
+             t-att-data-selector="selector"
+             t-att-data-exclude="exclude"
+             t-att-data-target="target">
+            <we-row string="⌙ Image">
+                <we-imagepicker title="Edit image"
+                                data-background=""
+                                data-name="bg_image_opt"
+                                data-dependencies="bg_image_opt"/>
+            </we-row>
+            <we-colorpicker string="  ⌙ Dynamic color" data-dynamic-color="true" data-name="dynamic_color_opt"/>
+        </div>
+
+        <div data-js="BackgroundPosition"
+             t-att-data-selector="selector"
+             t-att-data-exclude="exclude"
+             t-att-data-target="target">
+            <we-row string=" ⌙ Position"><!-- &emsp; -->
+                <we-select data-no-preview="true">
+                    <we-button data-background-type="cover">Cover</we-button>
+                    <we-button data-background-type="repeat-pattern" data-name="background_repeat_opt">Repeat pattern</we-button>
+                </we-select>
+                <we-button title="Background Position" data-background-position-overlay="true" data-no-preview="true">
+                    <i class="fa fa-fw fa-crosshairs"/>
+                </we-button>
+            </we-row>
+            <we-multi data-css-property="background-size" data-dependencies="background_repeat_opt">
+                <!-- &emsp; -->
+                <we-input string="  ⌙ Width" data-select-style="auto" placeholder="auto" data-unit="px"/>
+                <we-input string="  ⌙ Height" data-select-style="auto" placeholder="auto" data-unit="px"/>
+            </we-multi>
+        </div>
+
+        <div data-js="BackgroundOptimize"
+             t-att-data-selector="selector"
+             t-att-data-exclude="exclude"
+             t-att-data-target="target">
+            <t t-call="web_editor.snippet_options_image_optimization_widgets">
+                <t t-set="indent" t-value="True"/>
+            </t>
+        </div>
+
+        <!-- Color filter -->
+        <div data-option-name="colorFilter"
+             t-att-data-selector="selector"
+             t-att-data-exclude="exclude"
+             t-att-data-target="target">
+            <we-colorpicker string="⌙ Color filter"
+                            data-select-style="true"
+                            data-css-property="background-color"
+                            data-color-prefix="bg-"
+                            data-apply-to=".o_we_bg_filter"/>
+        </div>
+
+        <div data-js="BackgroundShape" string="Shape"
+             t-att-data-selector="selector"
+             t-att-data-exclude="exclude"
+             t-att-data-target="target">
+            <we-select-pager class="o_we_shape_menu" string="⌙ Shape" data-dependencies="!shape_none_opt" data-name="bg_shape_opt">
+                <!-- Invisible None button to be used for select's placeholder text -->
+                <we-button data-shape="" data-name="shape_none_opt"/>
+                <we-select-page string="Origins">
+                    <we-button data-shape="web_editor/Origins/01" data-select-label="Origins 01"/>
+                    <we-button data-shape="web_editor/Origins/02" data-select-label="Origins 02"/>
+                    <we-button data-shape="web_editor/Origins/03" data-select-label="Origins 03"/>
+                    <we-button data-shape="web_editor/Origins/04" data-select-label="Origins 04"/>
+                    <we-button data-shape="web_editor/Origins/05" data-select-label="Origins 05"/>
+                    <we-button data-shape="web_editor/Origins/06" data-select-label="Origins 06"/>
+                    <we-button data-shape="web_editor/Origins/07" data-select-label="Origins 07"/>
+                    <we-button data-shape="web_editor/Origins/08" data-select-label="Origins 08"/>
+                    <we-button data-shape="web_editor/Origins/09" data-select-label="Origins 09"/>
+                    <we-button data-shape="web_editor/Origins/10" data-select-label="Origins 10"/>
+                    <we-button data-shape="web_editor/Origins/11" data-select-label="Origins 11"/>
+                    <we-button data-shape="web_editor/Origins/12" data-select-label="Origins 12"/>
+                    <we-button data-shape="web_editor/Origins/13" data-select-label="Origins 13"/>
+                    <we-button data-shape="web_editor/Origins/14" data-select-label="Origins 14"/>
+                    <we-button data-shape="web_editor/Origins/15" data-select-label="Origins 15"/>
+                </we-select-page>
+                <we-select-page string="Blocks &amp; Rainy">
+                    <we-button data-shape="web_editor/Blocks/03" data-select-label="Blocks 03"/>
+                    <we-button data-shape="web_editor/Blocks/04" data-select-label="Blocks 04"/>
+                    <we-button data-shape="web_editor/Rainy/01" data-select-label="Rainy 01"/>
+                    <we-button data-shape="web_editor/Rainy/02" data-select-label="Rainy 02"/>
+                    <we-button data-shape="web_editor/Rainy/06" data-select-label="Rainy 06"/>
+                    <we-button data-shape="web_editor/Rainy/07" data-select-label="Rainy 07"/>
+                    <we-button data-shape="web_editor/Blocks/02" data-select-label="Blocks 02"/>
+                    <we-button data-shape="web_editor/Blocks/01" data-select-label="Blocks 01"/>
+                    <we-button data-shape="web_editor/Rainy/03" data-select-label="Rainy 03"/>
+                    <we-button data-shape="web_editor/Rainy/04" data-select-label="Rainy 04"/>
+                    <we-button data-shape="web_editor/Rainy/05_001" data-select-label="Rainy 05"/>
+                    <we-button data-shape="web_editor/Rainy/08" data-select-label="Rainy 08"/>
+                    <we-button data-shape="web_editor/Rainy/09" data-select-label="Rainy 09"/>
+                </we-select-page>
+                <we-select-page string="Wavy">
+                    <we-button data-shape="web_editor/Wavy/01" data-select-label="Wavy 01"/>
+                    <we-button data-shape="web_editor/Wavy/02" data-select-label="Wavy 02"/>
+                    <we-button data-shape="web_editor/Wavy/03" data-select-label="Wavy 03"/>
+                    <we-button data-shape="web_editor/Wavy/04" data-select-label="Wavy 04"/>
+                    <we-button data-shape="web_editor/Wavy/05" data-select-label="Wavy 05"/>
+                    <we-button data-shape="web_editor/Wavy/06_001" data-select-label="Wavy 06"/>
+                    <we-button data-shape="web_editor/Wavy/07" data-select-label="Wavy 07"/>
+                    <we-button data-shape="web_editor/Wavy/08" data-select-label="Wavy 08"/>
+                    <we-button data-shape="web_editor/Wavy/09" data-select-label="Wavy 09"/>
+                    <we-button data-shape="web_editor/Wavy/10" data-select-label="Wavy 10"/>
+                    <we-button data-shape="web_editor/Wavy/11" data-select-label="Wavy 11"/>
+                    <we-button data-shape="web_editor/Wavy/12" data-select-label="Wavy 12"/>
+                    <we-button data-shape="web_editor/Wavy/13" data-select-label="Wavy 13"/>
+                    <we-button data-shape="web_editor/Wavy/14" data-select-label="Wavy 14"/>
+                    <we-button data-shape="web_editor/Wavy/15" data-select-label="Wavy 15"/>
+                    <we-button data-shape="web_editor/Wavy/16" data-select-label="Wavy 16"/>
+                    <we-button data-shape="web_editor/Wavy/17" data-select-label="Wavy 17"/>
+                    <we-button data-shape="web_editor/Wavy/18" data-select-label="Wavy 18"/>
+                    <we-button data-shape="web_editor/Wavy/19" data-select-label="Wavy 19"/>
+                    <we-button data-shape="web_editor/Wavy/20" data-select-label="Wavy 20"/>
+                    <we-button data-shape="web_editor/Wavy/21" data-select-label="Wavy 21"/>
+                    <we-button data-shape="web_editor/Wavy/22" data-select-label="Wavy 22"/>
+                    <we-button data-shape="web_editor/Wavy/23" data-select-label="Wavy 23"/>
+                </we-select-page>
+                <we-select-page string="Blobs">
+                    <we-button data-shape="web_editor/Blobs/01" data-select-label="Blobs 01"/>
+                    <we-button data-shape="web_editor/Blobs/02" data-select-label="Blobs 02"/>
+                    <we-button data-shape="web_editor/Blobs/03" data-select-label="Blobs 03"/>
+                    <we-button data-shape="web_editor/Blobs/04" data-select-label="Blobs 04"/>
+                    <we-button data-shape="web_editor/Blobs/05" data-select-label="Blobs 05"/>
+                    <we-button data-shape="web_editor/Blobs/06" data-select-label="Blobs 06"/>
+                    <we-button data-shape="web_editor/Blobs/07" data-select-label="Blobs 07"/>
+                    <we-button data-shape="web_editor/Blobs/08" data-select-label="Blobs 08"/>
+                    <we-button data-shape="web_editor/Blobs/09" data-select-label="Blobs 09"/>
+                    <we-button data-shape="web_editor/Blobs/10" data-select-label="Blobs 10"/>
+                    <we-button data-shape="web_editor/Blobs/11" data-select-label="Blobs 11"/>
+                    <we-button data-shape="web_editor/Blobs/12" data-select-label="Blobs 12"/>
+                </we-select-page>
+                <we-select-page string="Bold">
+                    <we-button data-shape="web_editor/Bold/01" data-select-label="Bold 01"/>
+                    <we-button data-shape="web_editor/Bold/02" data-select-label="Bold 02"/>
+                    <we-button data-shape="web_editor/Bold/03" data-select-label="Bold 03"/>
+                    <we-button data-shape="web_editor/Bold/04" data-select-label="Bold 04"/>
+                    <we-button data-shape="web_editor/Bold/05_001" data-select-label="Bold 05"/>
+                    <we-button data-shape="web_editor/Bold/06_001" data-select-label="Bold 06"/>
+                    <we-button data-shape="web_editor/Bold/07" data-select-label="Bold 07"/>
+                    <we-button data-shape="web_editor/Bold/08" data-select-label="Bold 08"/>
+                    <we-button data-shape="web_editor/Bold/09" data-select-label="Bold 09"/>
+                    <we-button data-shape="web_editor/Bold/10_001" data-select-label="Bold 10"/>
+                    <we-button data-shape="web_editor/Bold/11_001" data-select-label="Bold 11"/>
+                    <we-button data-shape="web_editor/Bold/12" data-select-label="Bold 12"/>
+                </we-select-page>
+                <we-select-page string="Airy &amp; Zigs">
+                    <we-button data-shape="web_editor/Airy/01" data-select-label="Airy 01"/>
+                    <we-button data-shape="web_editor/Airy/02" data-select-label="Airy 02"/>
+                    <we-button data-shape="web_editor/Airy/03" data-select-label="Airy 03"/>
+                    <we-button data-shape="web_editor/Airy/04" data-select-label="Airy 04"/>
+                    <we-button data-shape="web_editor/Airy/05" data-select-label="Airy 05"/>
+                    <we-button data-shape="web_editor/Airy/06" data-select-label="Airy 06"/>
+                    <we-button data-shape="web_editor/Airy/07" data-select-label="Airy 07"/>
+                    <we-button data-shape="web_editor/Airy/08" data-select-label="Airy 08"/>
+                    <we-button data-shape="web_editor/Airy/09" data-select-label="Airy 09"/>
+                    <we-button data-shape="web_editor/Airy/10" data-select-label="Airy 10"/>
+                    <we-button data-shape="web_editor/Airy/11" data-select-label="Airy 11"/>
+                    <we-button data-shape="web_editor/Airy/12" data-select-label="Airy 12"/>
+                    <we-button data-shape="web_editor/Airy/13" data-select-label="Airy 13"/>
+                    <we-button data-shape="web_editor/Airy/14" data-select-label="Airy 14"/>
+                    <we-button data-shape="web_editor/Zigs/01" data-select-label="Zigs 01"/>
+                    <we-button data-shape="web_editor/Zigs/02" data-select-label="Zigs 02"/>
+                    <we-button data-shape="web_editor/Zigs/03" data-select-label="Zigs 03"/>
+                    <we-button data-shape="web_editor/Zigs/04" data-select-label="Zigs 04"/>
+                    <we-button data-shape="web_editor/Zigs/05" data-select-label="Zigs 05"/>
+                </we-select-page>
+            </we-select-pager>
+            <we-row string=" ⌙ Flip"><!-- &emsp; -->
+                <we-button data-flip-x="true" data-no-preview="true" data-dependencies="!shape_none_opt"><i class="fa fa-fw fa-arrows-h"/></we-button>
+                <we-button data-flip-y="true" data-no-preview="true" data-dependencies="!shape_none_opt"><i class="fa fa-fw fa-arrows-v"/></we-button>
+            </we-row>
+            <we-row string=" ⌙ Colors" data-name="colors">
+                <we-colorpicker data-select-style="" data-css-property="background-color" data-color-prefix="bg-" data-apply-to="> .o_we_shape"/>
+            </we-row>
+        </div>
+    </t>
+</template>
+
+
+
+
+<template id="s_blockquote_options" inherit_id="website.snippet_options">
+    <xpath expr="." position="inside">
+        <!-- Layout -->
+        <div data-js="Blockquote" data-selector=".s_blockquote">
+            <we-select string="Display">
+                <we-button data-select-class="s_blockquote_classic" data-display="classic">Classic</we-button>
+                <we-button data-select-class="s_blockquote_cover" data-display="cover" data-name="blockquote_cover_opt">Cover</we-button>
+                <we-button data-select-class="s_blockquote_minimalist" data-display="minimalist" data-name="blockquote_minimalist_opt">Minimalist</we-button>
+            </we-select>
+        </div>
+
+        <!-- Color and images -->
+        <!-- <t t-call="web_editor.snippet_options_background_options">
+            <t t-set="selector" t-value="'.s_blockquote'"/>
+            <t t-set="target" t-value="'.s_blockquote_content'"/>
+            <t t-set="with_colors" t-value="True"/>
+            <t t-set="with_images" t-value="True"/>
+            <t t-set="images_dependencies" t-value="'blockquote_cover_opt'"/>
+        </t> -->
+
+        <!-- Shadow -->
+        <div data-js="Box" data-selector=".s_blockquote" data-target=".s_blockquote_content">
+            <t t-call="website_snippets.snippet_options_shadow_widgets"/>
+        </div>
+
+        <!-- Border Color -->
+        <div data-selector="blockquote">
+            <we-colorpicker string="Border Color"
+                data-select-style="true"
+                data-css-property="border-color"
+                data-color-prefix="border-"
+                data-dependencies="blockquote_minimalist_opt"/>
+        </div>
+    </xpath>
+</template>
+
+<template id="assets_snippet_s_blockquote_css_000" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_blockquote/000.scss"/>
+    </xpath>
+</template>
+
+
+
+<template id="s_speaker_bio" name="Speaker Bio">
+    <section class="s_speaker_bio" itemscope="itemscope" itemtype="http://schema.org/Person" itemprop="performer">
+        <span class="badge badge-secondary text-uppercase o_wevent_badge">Speaker</span>
+        <img src="/website_snippets/static/src/img/speaker.png" width="70" class="img-fluid rounded-circle float-left mr-3" alt=""/>
+        <div class="overflow-hidden">
+            <h4 class="mt-3 mb-1" itemprop="name">John DOE</h4>
+            <h6 class="mb-4">Company</h6>
+            <p>At just 13 years old, John DOE was already starting to develop his first business applications for customers. After mastering civil engineering, he founded TinyERP. This was the first phase of OpenERP which would later became Odoo, the most installed open-source business software worldwide.</p>
+        </div>
+    </section>
+</template>
+
+
+
+<!-- *************New*************** -->
+<template id="s_latest_posts" name="Blog Posts">
+    <section class="s_latest_posts pt16 pb16" data-vcss="001">
+        <div class="container">
+            <div class="row s_col_no_bgcolor s_nb_column_fixed js_get_posts s_latest_posts_big_picture s_latest_posts_effect_marley"
+                data-loading="true"
+                data-template="website_snippets.s_latest_posts_big_picture_template"
+                data-filter-by-blog-id="0"
+                data-order="published_date desc"/>
+        </div>
+    </section>
+</template>
+
+<template id="s_latest_posts_list_template">
+    <div t-foreach="posts" t-as="p" class="d-flex col-12 mt-3 s_latest_posts_post">
+        <a class="s_latest_posts_post_cover flex-grow-0 flex-shrink-0 align-self-baseline position-relative" t-att-href="'/blog/%s' % (p.id)" t-att-title="'Read' + p.name">
+            <t t-call="website_snippets.record_cover">
+                <t t-set="_record" t-value="p"/>
+                <t t-set="additionnal_classes" t-value="'w-100 h-100 bg-200 position-absolute'"/>
+
+                <div class="s_latest_posts_loader d-flex align-items-center justify-content-center bg-200">
+                    <div class="d-none rounded-circle bg-black-25 w-25 h-25"/>
+                </div>
+            </t>
+        </a>
+        <div class="pl-2">
+            <a class="" t-att-title="'Read' + p.name" t-attf-href="/blog/#{p.blog_id.id}/post/#{p.id}">
+                <div class="s_latest_posts_post_title mb-1" t-field="p.name"/>
+            </a>
+            <div class="s_latest_posts_post_subtitle mb-1 d-none d-sm-block" t-field="p.subtitle"/>
+        </div>
+    </div>
+</template>
+
+<template id="s_latest_posts_big_picture_template">
+    <figure t-foreach="posts" t-as="p" class="col-md-6 col-lg-4 my-3 s_latest_posts_post">
+        <a class="s_latest_posts_post_cover position-relative d-flex flex-column shadow-sm overflow-hidden rounded text-decoration-none" t-attf-href="/blog/#{p.blog_id.id}/post/#{p.id}">
+            <t t-call="website_snippets.record_cover">
+                <t t-set="_record" t-value="p"/>
+                <t t-set="use_filters" t-value="True"/>
+                <t t-set="additionnal_classes" t-value="'h-100 w-100 bg-600 position-absolute'"/>
+            </t>
+
+            <figcaption class="text-center w-100 h-100 px-3 d-flex flex-column flex-grow-1">
+                <div class="s_latest_posts_post_title text-white" t-field="p.name"/>
+                <div class="s_latest_posts_post_subtitle text-white" t-field="p.subtitle"/>
+            </figcaption>
+
+            <div class="s_latest_posts_loader d-flex align-items-center justify-content-center bg-200">
+                <div class="d-none rounded-circle bg-black-25 w-25 h-25"/>
+            </div>
+        </a>
+    </figure>
+</template>
+
+<template id="s_latest_posts_horizontal_template">
+    <figure t-foreach="posts" t-as="p" class="post s_latest_posts_post col-md-6 col-lg-4">
+        <figcaption>
+            <h4 class="mb0"><a t-attf-href="/blog/#{p.blog_id.id}/post/#{p.id}"><t t-esc="p.name"/></a></h4>
+            <h5 class="mt0 mb4" t-field="p.post_date" t-options='{"format": "dd/MM"}' />
+        </figcaption>
+        <a t-attf-href="/blog/#{p.blog_id.id}/post/#{p.id}">
+            <t t-call="website_snippets.record_cover">
+                <t t-set="_record" t-value="p"/>
+                <t t-set="additionnal_classes" t-value="'loading_container thumb'"/>
+            </t>
+        </a>
+    </figure>
+</template>
+
+<template id="s_latest_posts_card_template">
+    <div t-foreach="posts" t-as="p" class="col-md-6 col-lg-4 s_latest_posts_post pb32">
+        <div class="card">
+            <a class="s_latest_posts_post_cover" t-attf-href="/blog/#{p.blog_id.id}/post/#{p.id}">
+                <t t-call="website_snippets.record_cover">
+                    <t t-set="_record" t-value="p"/>
+                    <t t-set="additionnal_classes" t-value="'loading_container thumb'"/>
+                </t>
+            </a>
+            <div class="card-body">
+                <a t-attf-href="/blog/#{p.blog_id.id}/post/#{p.id}"><h4 class="mb-0"><t t-esc="p.name"/></h4></a>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <span class="text-muted mb-0" t-field="p.post_date" t-options='{"format": "MMM d, yyyy"}' />
+                <span class="text-muted mb-0">In <a class="font-weight-bold" t-esc="p.blog_id.name" t-attf-href="/blog/#{p.blog_id.id}/post/#{p.id}" /></span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="s_latest_posts_options" inherit_id="website.snippet_options">
+    <xpath expr="//div[@data-js='Box']" position="before">
+        <div data-js="js_get_posts_selectBlog" data-selector=".s_latest_posts" data-target=".js_get_posts" data-no-check="true">
+            <we-select string="Choose a blog" data-no-preview="true" name="blog_selection" data-attribute-name="filterByBlogId">
+                <we-button data-select-data-attribute="0">All blogs</we-button>
+                <!-- the blog list will be generated in js -->
+            </we-select>
+            <we-select string="Posts" data-no-preview="true" data-attribute-name="order" class="o_we_inline">
+                <we-button data-select-data-attribute="published_date desc">Latest</we-button>
+                <we-button data-select-data-attribute="visits desc">Most viewed</we-button>
+            </we-select>
+            <we-select string="Layout" data-attribute-name="template">
+                <we-button data-select-data-attribute="website_snippets.s_latest_posts_list_template" data-select-class="s_latest_posts_list">List</we-button>
+                <we-button data-select-data-attribute="website_snippets.s_latest_posts_big_picture_template"
+                    data-select-class="s_latest_posts_big_picture"
+                    data-name="big_picture_opt">Big Pictures</we-button>
+                <we-button data-select-data-attribute="website_snippets.s_latest_posts_horizontal_template"
+                    data-select-class="s_latest_posts_horizontal">Horizontal</we-button>
+                <we-button data-select-data-attribute="website_snippets.s_latest_posts_card_template"
+                    data-select-class="s_latest_posts_card">Cards</we-button>
+            </we-select>
+            <we-select string="Hover effect" data-no-widget-refresh="true" data-dependencies="big_picture_opt" class="o_we_inline">
+                <we-button data-select-class="">None</we-button>
+                <we-button data-select-class="s_latest_posts_effect_marley">Marley</we-button>
+                <we-button data-select-class="s_latest_posts_effect_dexter">Dexter</we-button>
+                <we-button data-select-class="s_latest_posts_effect_chico">Silly-Chico</we-button>
+            </we-select>
+        </div>
+    </xpath>
+    <xpath expr="//div[@data-js='layout_column']" position="attributes">
+        <attribute name="data-exclude" add=".s_latest_posts, .s_latest_posts_big_picture" separator=","/>
+    </xpath>
+</template>
+
+<template id="assets_snippet_s_latest_posts_css_000" inherit_id="website.assets_frontend" active="False">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_latest_posts/000.scss"/>
+    </xpath>
+</template>
+<template id="assets_snippet_s_latest_posts_css_001" inherit_id="website.assets_frontend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/snippets/s_latest_posts/001.scss"/>
+    </xpath>
+</template>
+
+<template id="assets_snippet_s_latest_posts_js_000" inherit_id="website.assets_frontend">
+    <xpath expr="//script[last()]" position="after">
+        <script type="text/javascript" src="/website_snippets/static/src/snippets/s_latest_posts/000.js"/>
+    </xpath>
+</template>
+
+
+<template id="record_cover">
+    <t t-set="_cp" t-value="_cp or json.loads(_record.cover_properties)"/>
+    <t t-set="default_cover_name">Cover</t>
+    <t t-esc="_record"/>
+    <div t-att-data-name="display_opt_name or default_cover_name"
+         t-att-style="_cp.get('background_color_style')"
+         t-att-data-use_size="use_size"
+         t-att-data-use_filters="use_filters"
+         t-att-data-use_text_align="use_text_align"
+         t-att-data-res-model="request.env.user.has_group('website.group_website_publisher') and _record._name"
+         t-att-data-res-id="request.env.user.has_group('website.group_website_publisher') and _record.id"
+         t-attf-class="o_record_cover_container d-flex flex-column h-100 o_colored_level o_cc #{_cp.get('background_color_class')} #{use_size and _cp.get('resize_class')} #{use_text_align and _cp.get('text_align_class')} #{additionnal_classes}">
+        <div t-attf-class="o_record_cover_component o_record_cover_image #{snippet_autofocus and 'o_we_snippet_autofocus'}" t-attf-style="background-image: #{_cp.get('background-image')};"/>
+        <div t-if="use_filters" t-attf-class="o_record_cover_component o_record_cover_filter oe_black" t-attf-style="opacity: #{_cp.get('opacity', 0.0)};"/>
+        <t t-raw="0"/>
+    </div>
+</template>
+<!-- *************End*************** -->
+
+
+<!-- *************Start*************** -->
+<template id="s_products_searchbar_input" name="Products Search">
+    <section class="s_wsale_products_searchbar1 bg-200 pt48 pb48" data-vxml="001">
+        <div class="container">
+            <div class="row">
+                <t t-call="website_snippets.website_sale_products_search_box">
+                    <t t-set="_classes" t-value="'s_wsale_products_searchbar_input'"/>
+                    <t t-set="_snippet" t-value="'s_products_searchbar_input'"/>
+                </t>
+            </div>
+        </div>
+    </section>            
+</template>
+<template id="s_products_searchbar" name="Products Search">
+    <section class="s_wsale_products_searchbar bg-200 pt48 pb48" data-vxml="001">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <h2>Search for a product</h2>
+                    <p>We have amazing products in our shop, check them now !</p>
+                    <t t-snippet-call="website_snippets.s_products_searchbar_input"/>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template id="website_sale_products_search_box" inherit_id="website.website_search_box" primary="True">
+        <xpath expr="//input[@name='search']" position="attributes">
+            <attribute name="data-limit">5</attribute>
+            <attribute name="data-display-description">true</attribute>
+            <attribute name="data-display-price">true</attribute>
+            <attribute name="data-display-image">true</attribute>
+        </xpath>
+        <xpath expr="//div[@class='input-group']" position="attributes">
+            <attribute name="t-attf-class" remove="#{_classes}" separator=" "/>
+        </xpath>
+        <xpath expr="//div[@class='input-group']" position="replace">
+            <form t-attf-class="o_wsale_products_searchbar_form o_wait_lazy_js #{_classes}" t-att-action="action if action else '/shop'" method="get" t-att-data-snippet="_snippet">
+                <t>$0</t>
+                <!-- <input name="order" type="hidden" class="o_wsale_search_order_by" value=""/> -->
+                <t t-raw="0"/>
+            </form>
+        </xpath>
+    </template>
+
+     <!-- <template id="search" name="Search Box">
+        <form t-att-action="keep('/shop'+ ('/category/'+slug(category)) if category else None, search=0)" method="get" t-att-class="_classes">
+            <t t-if="attrib_values">
+                <t t-foreach="attrib_values" t-as="a">
+                    <input type="hidden" name="attrib" t-att-value="'%s-%s' % (a[0], a[1])" />
+                </t>
+            </t>
+            <t t-call="website.website_search_box" />
+        </form>
+    </template> -->
+
+</odoo>

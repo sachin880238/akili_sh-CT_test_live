@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="v_checkout_inherited" inherit_id="website_sale.checkout" name="Checkout - Save Address Options">
+        <xpath expr="//div[@id='wrap']" position="replace">
+
+        <style>
+
+            .col-md-12 {
+                flex: 0 0 100% !important;
+                max-width: 70% !important;
+                margin-left: 15%;
+            }
+
+            .address_desc {
+                width: 99%;
+                margin-left: 5px;
+            }
+
+            .breadcrumb{
+                display:none;
+            }
+
+            .mt16 {
+                margin-top: 25px !important;
+            }
+
+            h4.mt16 {
+                margin-left: -7%;
+            }
+
+            .col-md-6 {
+                margin-left: -1%;
+            }
+    
+            h1.mb32{
+                text-align: center;
+                margin-top:1%;
+            }
+
+            @media only screen and (max-width:991px){
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 1.8125rem !important;
+                }
+
+                h1.mb32{
+                    margin-top:5%;
+                }
+            }
+
+    
+            @media only screen and (max-width:767px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 80% !important;
+                    margin-left: 10%;
+                }
+
+                .progress-wizard {
+                    margin-top: -56px;
+                    padding: 0 15px;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-dot {
+                    position: absolute !important;
+                    top: auto !important;
+                    left: 50% !important;
+                    bottom: auto !important;
+                    right: auto !important;
+                    margin: -0.720rem 0 0 -0.3125rem !important;
+                }
+
+                .progress-wizard-step.complete {
+                    display:block !important;
+                }
+                .progress-wizard-step.disabled{
+                    display:block !important;
+                }
+                #wizard-step10 .d-none {
+                    display: block !important;
+                }
+                #wizard-step20 .d-none {
+                    display: block !important;
+                }
+                #wizard-step30 .d-none {
+                    display: block !important;
+                }
+                #wizard-step40 .d-none {
+                    display: block !important;
+                }
+                #wizard-step50 .d-none {
+                    display: block !important;
+                }
+
+                #wizard-step20 .progress-wizard-steplabel{
+                    margin-left: 2px !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 12px !important;
+                    margin: 17px 0px 4px 16px !important;
+                }
+
+
+                .progress-wizard .progress-wizard-step{
+                    margin-top: 2.5rem !important;
+                }
+
+                
+            }
+
+            @media only screen and (max-width:575px) {
+
+                .col-md-121 {
+                    width: 94% !important;
+                    margin-left: 16px !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    margin-top: 16px !important;
+                }
+
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 3.5rem !important;
+                }
+
+            }
+
+            @media only screen and (max-width:490px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 85% !important;
+                    margin-left: 8%;
+                }
+
+                .progress-wizard {
+                    margin-top: -43px;
+                    padding: 0 15px;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 24px !important;
+                }
+
+            }
+
+            @media only screen and (max-width:440px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 90% !important;
+                    margin-left: 5%;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 18px !important;
+                }
+            }
+
+            @media only screen and (max-width:390px) {
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 110% !important;
+                    margin-left: -1%;
+                }
+
+                .progress-wizard {
+                    margin-top: -35px;
+                    padding: 0 15px;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 22px !important;
+                }
+
+            }
+
+
+        </style> 
+                
+            <div class="oe_cart" id="wrap">
+                <div class="container oe_website_sale address_page">
+                    <div class="container" id="ct_web_checkout_label">
+                        <div class="col-md-12">
+                            <div>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="/my/home">Your Account</a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <span>Address Book</span>
+                                    </li>
+                                </ol>
+                            </div>
+                            <t t-if="not address_book">
+                            <t t-call="website_sale.wizard_checkout">
+                                <t t-set="step" t-value="20"/>
+                                  <t t-value="website_sale_order" t-set="order"/>
+                            </t>
+                            </t>
+                            <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)"/>
+                            <h1 class="mb32" style="text-align: center;">Address</h1>
+                        </div>
+                    </div>
+                    <div class="container" id="address_guide">
+                        <div>
+                            <p class="page_desc_div address_desc">
+                                <b>Review the information below. </b> Use edit to make any corrections. Use delete to remove any addresses that are no longer valid. Select the default contact, billing address, and shipping address for new shopping carts – you can always edit the addresses or add new addresses before submitting the cart.
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container" id="account_address">
+                        <div class="col-md-2">
+                            <h4 class="mt16"><strong>Customer</strong></h4>
+                        </div>
+                        <div>
+                            <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                                <t t-if="content_id.page == 'address_account'">
+                                    <div class="page_desc_div" t-field="content_id.content"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div class="col-md-6 one_kanban">
+                            <t t-call="custom_web_checkout.v_checkout_kanban_address">
+                                <t t-set="contact" t-value="order.partner_id"/>
+                                <t t-set="selected" t-value="1"/>
+                                <t t-set="readonly" t-value="1"/>
+                                <t t-set="ttype" t-value="'account'"/>
+                                <t t-set="cannot_delete" t-value="1"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="col-md-2">
+                            <h4 class="mt16"><strong>Contacts</strong></h4>
+                        </div>
+                        <div>
+                            <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                                <t t-if="content_id.page == 'address_contacts'">
+                                    <div class="page_desc_div" t-field="content_id.content"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div t-attf-class="v_option_diff all_contact col-md-10 address_add_btn mt16 #{is_same_partner_contact and not order.partner_id.is_company and 'hidden' or ''}">
+                            <a>
+                                <form action="/shop/address" class="" method="post" style=" margin-left: 118px; margin-top: -55px;">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                                    <input name="mode" type="hidden" value="contact"/>
+                                    <input name="address_book" t-att-value="address_book" type="hidden"/>
+                                    <a class="a-submit ml8 add_contacct_plus_icon">
+                                        <t>add a contact </t>
+                                        <i class="fa fa-plus"/>
+                                    </a>
+                                </form>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="container" style="margin-top: -44px;margin-left: 15px;border-radius: 0.25rem; width:100%;">
+                        <div t-attf-class="row v_option_diff all_contact mt16 #{is_same_partner_contact and not order.partner_id.is_company and 'hidden' or ''}">
+                            <t t-as="contact" t-foreach="contacts">
+                                <t t-if="order.partner_id != contact">
+                                    <div class="clearfix" t-if="contact_index % 2 == 0"></div>
+                                    <div class="col-md-6 one_kanban">
+                                        <t t-call="custom_web_checkout.v_checkout_kanban_address">
+                                            <t t-set="selected" t-value="bool(order.partner_contact_id == contact)"/>
+                                            <t t-set="readonly" t-value="bool(len(contacts)==1)"/>
+                                            <t t-set="ttype" t-value="'contact'"/>
+                                        </t>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="col-md-2">
+                            <h4 class="mt16"><strong>Billing</strong></h4>
+                        </div>
+                        <div>
+                            <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                                <t t-if="content_id.page == 'address_billing'">
+                                    <div class="page_desc_div" t-field="content_id.content"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div class="v_option_diff all_billing mt16 col-md-10 address_add_btn">
+                            <a>
+                                <form action="/shop/address" class="" method="post" style=" margin-left: 90px; margin-top: -56px;">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                                    <input name="mode" type="hidden" value="billing"/>
+                                    <input name="address_book" t-att-value="address_book" type="hidden"/>
+                                    <a class="a-submit ml8 add_a_billing_address_plus_icon">
+                                        <t>add a billing address</t>
+                                        <i class="fa fa-plus"/>
+                                    </a>
+                                </form>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="container" style="margin-top: -44px;margin-left: 15px;border-radius: 0.25rem; width:100%;">
+                        <div class="row v_option_diff all_billing mt16">
+                            <t t-as="contact" t-foreach="billings">
+                                <t t-if="order.partner_id != contact">
+                                    <div class="col-md-6 one_kanban">
+                                        <t t-call="custom_web_checkout.v_checkout_kanban_address">
+                                            <t t-set="selected" t-value="bool(order.partner_invoice_id.id == contact.id)"/>
+                                            <t t-set="readonly" t-value="bool(len(billings)==1)"/>
+                                            <t t-set="ttype" t-value="'billing'"/>
+                                        </t>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="col-md-2">
+                            <h4 class="mt16"><strong>Shipping</strong></h4>
+                        </div>
+                        <div>
+                            <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                                <t t-if="content_id.page == 'address_shipping'">
+                                    <div class="page_desc_div" t-field="content_id.content"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div class="mt16 col-md-10 address_add_btn">
+                            <a>
+                                <form action="/shop/address" class="" method="post" style=" margin-left: 118px; margin-top: -55px;">
+                                    <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                                    <input name="mode" type="hidden" value="shipping"/>
+                                    <input name="address_book" t-att-value="address_book" type="hidden"/>
+                                    <a class="a-submit ml8 add_shipping_addres_plus_icon">
+                                        <t>add a shipping address </t>
+                                        <i class="fa fa-plus"/>
+                                    </a>
+                                </form>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="container" style="margin-top: -44px;margin-left: 15px;border-radius: 0.25rem; width:100%;">
+                        <div class="row all_shipping v_option_diff mt16">
+                            <t t-as="ship" t-foreach="shippings">
+                                <t t-if="order.partner_id != ship">
+                                    <div class="col-sm-12 col-md-6 one_kanban">
+                                        <t t-call="custom_web_checkout.v_checkout_kanban_address">
+                                            <t t-set="contact" t-value="ship"/>
+                                            <t t-set="selected" t-value="bool(order.partner_shipping_id==ship)"/>
+                                            <t t-set="readonly" t-value="bool(len(shippings)==1)"/>
+                                            <t t-set="ttype" t-value="'shipping'"/>
+                                        </t>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                    <style>
+                        .btn-next{
+                            font-weight:600;
+                            margin-right: 8px;
+                        }
+
+                        .btn-back{
+                            font-weight:600;
+                            margin-left: 3px;
+                        }
+                        @media only screen and (max-width: 500px)  {
+                            .btn-next{
+                                font-weight:600;
+                                margin-right: 18px;
+                            }
+                        } 
+                    </style>    
+                    <div class="container" id="control_address_btn">
+                        <div class="mt16">
+                            <a class="btn btn-default btn-primary mb32 btn-back" href="/shop/cart">Back</a>
+                            <a class="btn btn-default btn-primary btn-next float-right mb32 " href="/extra/custom_info">
+                                <t>Next</t>
+                                <!-- <span class="fa fa-long-arrow-right"/> -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template id="address_body" name="Kanban address">
+        <div>
+            <t t-esc="contact.name"/>
+        </div>
+        <!-- <div>
+            <t t-esc="contact.company_id.name"/>
+        </div> -->
+        <div>
+            <t t-esc="contact.street"/>
+        </div>
+        <div>
+            <t t-esc="contact.street2"/>
+        </div>
+        <div>
+            <t t-esc="contact.city"/>
+            <t t-if="contact.city and contact.state_id " t-esc="','"/>
+            <t t-esc="contact.state_id.name"/>
+            <t t-if="(contact.state_id and contact.zip) or (contact.city and contact.zip)" t-esc="','"/>
+            <t t-esc="contact.zip"/>
+        </div>
+        <div>
+            <t t-esc="contact.country_id.name"/>
+        </div>
+        <div class="mt4"/>
+        <div>
+            <t t-esc="contact.phone"/>
+        </div>
+        <div>
+            <t t-esc="contact.email"/>
+        </div>
+    </template>
+    <template id="v_checkout_kanban_address" name="Kanban address">
+        <style>
+            .fa-check{
+                display:none;
+            }
+            .btn.btn-block.btn-secondary{
+                border-radius: unset !important;
+                border: none;
+                border-top: 1px solid;
+            }
+            .default_set_btn{
+                border-radius: 0rem;
+                border: none;
+            }
+        </style>    
+        <form action="/shop/checkout" class="d-none" method="POST">
+            <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+            <input name="partner_id" t-att-value="contact.id" type="hidden"/>
+            <input name="mode" t-att-value="ttype" type="hidden"/>
+            <t t-if="edit_billing">
+                <input name="callback" type="hidden" value="/shop/checkout?use_billing"/>
+            </t>
+            <input type="submit"/>
+        </form>
+
+        <t t-if="ttype == 'account'">
+            <div class="card border_primary" style=" margin-bottom: 10px; ">
+                <div class="card_edit" style="min-height: 130px;padding: 15px;">
+                    <a href="#" class="btn btn-link float-right p-0 js_edit_address no-decoration" role="button" title="Edit this address" aria-label="Edit this address">edit <i class="fa fa-edit"></i></a>
+                    <t t-call="custom_web_checkout.address_body"/>
+                    <a class="btn btn-link float-right js_delete_address no-decoration" t-att-data-contact-id="contact.id" t-if="not cannot_delete" title="Delete this address">
+                        <t>delete</t>
+                        <span class="fa fa-trash-o"/>
+                    </a>
+                    <div class="card-footer" t-if="not readonly">
+                        <span class="btn-contact" t-att-style="'' if selected else 'display:none;'">
+                            <a class="btn btn-block btn-primary default_set_btn">
+                                <i class="fa fa-check"/>contact for questions</a>
+                        </span>
+                        <span class="btn-contact" t-att-style="'' if not selected else 'display:none;'">
+                            <a class="btn btn-block btn-secondary"  ><p style="color: #1e77c5">Select this contact</p>
+                                </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <t t-if="ttype == 'contact'">
+
+            <div t-att-class="'panel panel-default %s' % (selected and 'card border_primary' or 'card js_change_contact')" style=" margin-bottom: 10px; ">
+                <div class="card_edit" style="min-height: 130px;padding: 15px;">
+                    <a href="#" class="btn btn-link float-right p-0 js_edit_address no-decoration" role="button" title="Edit this address" aria-label="Edit this address">edit <i class="fa fa-edit"></i></a>
+                    <t t-call="custom_web_checkout.address_body"/>
+                    <a class="btn btn-link float-right js_delete_address no-decoration" t-att-data-contact-id="contact.id" t-if="not cannot_delete" title="Delete this address" >
+                        <t>delete</t>
+                        <span class="fa fa-trash-o"/>
+                    </a>
+                </div>
+                <div class="card_edit" style="padding-top: 0px;">
+                    <div class="panel-footer">
+                        <span class="btn-contact" t-att-style="'' if selected else 'display:none;'">
+                            <a class="btn btn-block btn-primary default_set_btn">
+                                <i class="fa fa-check"/>contact for questions or problems</a>
+                        </span>
+                        <span class="btn-contact" t-att-style="'' if not selected else 'display:none;'">
+                            <a class="btn btn-block btn-secondary" ><p style="color: #1e77c5">Select this contact</p>
+                                </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <t t-if="ttype == 'billing'">
+            <div t-att-class="'panel panel-default %s' % (selected and 'card border_primary' or 'card js_change_billing')" style=" margin-bottom: 10px; ">
+                <div class="card_edit" style="min-height: 130px;padding: 15px;">
+                    <a href="#" class="btn btn-link float-right p-0 js_edit_address no-decoration" role="button" title="Edit this address" aria-label="Edit this address" >edit <i class="fa fa-edit"></i></a>
+                    <t t-call="custom_web_checkout.address_body"/>
+                    <a class="btn btn-link float-right js_delete_address no-decoration" t-att-data-contact-id="contact.id" t-if="not cannot_delete" title="Delete this address" style="float: right;">
+                        <t>delete</t>
+                        <span class="fa fa-trash-o"/>
+                    </a>
+                </div>
+                <div class="card_edit" style="padding-top: 0px;">
+                    <div class="panel-footer">
+                        <span class="btn-bill" t-att-style="'' if selected else 'display:none;'">
+                            <a class="btn btn-block btn-primary default_set_btn">
+                                <i class="fa fa-check"/>Bill to this address</a>
+                        </span>
+                        <span class="btn-bill" t-att-style="'' if not selected else 'display:none;'">
+                            <a class="btn btn-block btn-secondary" ><p style="color: #1e77c5">Select this address</p>
+                                </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <t t-if="ttype == 'shipping'">
+
+            <div t-att-class="'panel panel-default %s' % (selected and 'card border_primary' or 'card js_change_shipping')" style=" margin-bottom: 10px; ">
+                <div class="card_edit" style="min-height: 130px;padding: 15px;">
+                    <a href="#" class="btn btn-link float-right p-0 js_edit_address no-decoration" role="button" title="Edit this address" aria-label="Edit this address" >edit <i class="fa fa-edit"></i></a>
+                    <t t-call="custom_web_checkout.address_body"/>
+                    <a class="btn btn-link float-right js_delete_address no-decoration" t-att-data-contact-id="ship.id" t-if="not cannot_delete" title="Delete this address" style="float: right;">
+                        <t>delete</t>
+                        <span class="fa fa-trash-o"/>
+                    </a>
+                </div>
+                <div class="card_edit" style="padding-top: 0px;">
+                    <div class="panel-footer">
+                        <span class="btn-ship" t-att-style="'' if selected else 'display:none;'">
+                            <a class="btn btn-block btn-primary default_set_btn">
+                                <i class="fa fa-check"/>Ship to this address</a>
+                        </span>
+                        <span class="btn-ship" t-att-style="'' if not selected else 'display:none;'">
+                            <a class="btn btn-block btn-secondary" ><p style="color: #1e77c5">Select this address</p>
+                                </a>
+                        </span>
+                    </div>
+                </div>    
+            </div>
+        </t>
+    </template>
+</odoo>

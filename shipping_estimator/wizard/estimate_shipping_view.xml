@@ -1,0 +1,40 @@
+<?xml version ="1.0" encoding="utf-8"?>
+
+<odoo> 
+  <record id="estimate_shipping_wizard_view" model="ir.ui.view">
+    <field name="name">estimate.form</field>
+    <field name="model">shipping.estimate.wizard</field>
+    <field name="arch" type="xml">
+    <form string="Estimate Shipping"> 
+      <notebook>
+        <page name='estimate_line' string='Estimation Line'>
+          <field name='estimate_line'> 
+            <tree editable="bottom">
+              <field name='carrier' />
+              <field name='cost' />
+            </tree> 
+          </field>
+          <group>
+            <field name='pack'/>
+            <field name='markup'/>
+            <field name='calculate'/>
+            <field name='estimate'/>
+          </group>
+          <button name="calculate_shipment" string="Calculate Estimate" type="object" class="btn-primary"/>
+        </page>
+      </notebook>
+      <footer>
+        <button name="update_lines" string="Add" type="object" class="btn-primary"/>
+        <button string="Cancel" class="btn-secondary" special="cancel"/>
+      </footer>
+    </form>
+    </field>
+  </record>
+  <record id="action_estimate_shipping_wizard" model="ir.actions.act_window">
+    <field name="name">Estimate Shipping</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">shipping.estimate.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record> 
+</odoo>

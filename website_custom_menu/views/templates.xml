@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cart_popover_custom_menu" inherit_id="website_sale.cart_popover" name="Cart Popover">
+        <xpath expr="//t/div/a[@class='btn btn-primary']" position="replace">
+            <div class="cart_pop_over" t-if="website.user_id == user_id" style="height:24px;">
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/shop/cart" style="width:96%;border-radius: 3px;font-weight: 900;">View Cart</a>
+                </div>
+            </div>
+            <div class="cart_pop_over" t-if="website.user_id != user_id" style="height:24px;">
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/shop/cart" style="width:96%;border-radius: 3px;font-weight: 900;">View Cart</a>
+                </div>
+            </div>
+            <br/>
+        </xpath>
+        <xpath expr="//div[@t-if='not website_sale_order or not website_sale_order.website_order_line']" position="replace">
+            <div t-if="not website_sale_order or not website_sale_order.website_order_line">    <div class="alert alert-info">
+                    Your cart is empty!
+                </div> 
+
+                <div style="text-align: center;margin-bottom: 2%;">
+                    <a class="btn btn-primary" href="/find-a-product" style="border-radius: 0.25rem;">
+                        <span style="font-weight: 600;">Add a Product</span>
+                    </a>
+                </div>
+            </div>
+        </xpath>    
+    </template>
+    <template id="email_popover" name="Email Popover">
+        <div class="email_popover_content" style="padding: 0px 23px 0px 13px;">
+            <p>
+                <t>For questions about ordering or specifying<br/> our products for current or future projects,<br/>please email:</t>
+            </p>
+            <p class="text-center">
+                <a href="mailto:sales@conservationtechnology.com" style="color: #1e77c5">
+                    <i>sales@conservationtechnology.com</i>
+                </a>
+            </p>
+            <p>
+                <t>For questions or comments relating to an<br/>existing quotation, order, invoice, or customer service ticket, please find the document here:</t>
+            </p>
+            <p class="text-center">
+                <a href="mailto:support@conservationtechnology.com" style="color: #1e77c5">
+                    <i>Your Account</i>
+                </a>
+            </p>
+            <p>
+            
+            </p>    
+        </div>
+    </template>
+    <template id="call_popover" name="Call Popover">
+        <div style="padding: 0px 92px 0px 8px;">
+            <p style="margin-bottom: 6px;">US: 410-366-1146</p>
+            <p>International: (+1) 410-366-1146</p>
+        </div>
+    </template>
+    <template id="login_popover" name="Login Popover">
+        <t t-if="website.user_id != user_id">
+            <div class="login_pop_over_text" style="padding: 5px;">
+                <p class="text-center">
+                    <t>You are signed in as</t>
+                    <t t-esc="user_id.name"/>
+                    <br/>
+                    <t>Conservation Technology</t>
+                </p>
+            </div>
+            <div class="cart_pop_over" style="padding: 5px;">
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/my/home">View Account</a>
+                    <a class="btn btn-primary" role="menuitem" t-attf-href="/web/session/logout?redirect=/">Sign Out</a>
+                </div>
+            </div>
+            <br/>
+        </t>
+        <t t-if="website.user_id == user_id">
+            <form action="/web/login" method="post">
+                <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                <div class="text-center" style="padding:5px">
+                    <input name="login" placeholder="email address" type="text"/>
+                </div>
+                <div class="text-center" style="padding:5px">
+                    <input name="password" placeholder="password" type="text"/>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit">Sign in</button>
+                </div>
+                <br/>
+            </form>
+        </t>
+    </template>
+    <template id="website.submenu" name="Submenu">
+
+        <t t-set="bckgrnd_data" t-value="request.env['system.config'].sudo().search([('name','=','Website Header Color Config Setting')])"/>
+        <!-- xccxcxcxcxcxxcxcxcxcxcxxxcxcccccc -->
+
+
+        <t t-set="has_visible_submenu" t-value="submenu.child_id.filtered(lambda menu: menu.is_visible)"/>
+        <li t-att-class="'active not-child' if submenu.url and request.httprequest.path == submenu.url.replace('/page/website.', '/page/') else 'not_child'" t-if="not submenu.child_id and submenu.is_active">
+            <a t-att-href="(website.menu_id.child_id[0] == submenu) and '/' or submenu.url" t-att-target="'_blank' if submenu.new_window else None" t-ignore="true" >
+                <span t-field="submenu.name" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+            </a>
+        </li>
+        <!-- FOURTH LEVEL MENU -->
+        <li class="treeview" t-if="submenu.is_active and submenu.child_id and submenu.parent_id.parent_id.parent_id.parent_id and (not submenu.parent_id.parent_id.parent_id.parent_id.parent_id)">
+            <a href="#">
+                <span t-field="submenu.name" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+            </a>
+            <ul t-att-class="'treeview-menu fifth-level' if (submenu.child_id and submenu.parent_id.parent_id) else 'fifth-level'" t-if="submenu.is_active">
+                <t t-as="submenu" t-foreach="submenu.child_id">
+                    <t t-call="website.submenu" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+                </t>
+            </ul>
+        </li>
+        <!-- THIRD LEVEL MENU -->
+        <li class="treeview" t-if="submenu.is_active and submenu.child_id and submenu.parent_id.parent_id.parent_id and (not submenu.parent_id.parent_id.parent_id.parent_id)">
+            <a href="#">
+                <span t-field="submenu.name" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+            </a>
+            <ul t-att-class="'treeview-menu  fourth-level' if (submenu.child_id and submenu.parent_id.parent_id) else ' fourth-level'" t-if="submenu.is_active">
+                <t t-as="submenu" t-foreach="submenu.child_id">
+                    <t t-call="website.submenu"/>
+                </t>
+            </ul>
+        </li>
+        <!-- SECOND LEVEL MENU -->
+        <li class="treeview" t-if="submenu.is_active and submenu.child_id and submenu.parent_id.parent_id and (not submenu.parent_id.parent_id.parent_id)">
+            <a href="#">
+                <span t-field="submenu.name" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+            </a>
+            <ul t-att-class="'treeview-menu third-level' if (submenu.child_id and submenu.parent_id.parent_id) else 'third-level'" t-if="submenu.is_active">
+                <t t-as="submenu" t-foreach="submenu.child_id">
+                    <t t-call="website.submenu" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+                </t>
+            </ul>
+        </li>
+        <!-- FIRST LEVEL MENU -->
+
+        <li class="treeview " t-if="submenu.is_active and submenu.child_id and submenu.parent_id and (not submenu.parent_id.parent_id)">
+            <a class="first-level-a" href="#" t-attf-style="color:#{bckgrnd_data.web_header_content_color};">
+                <span t-field="submenu.name" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+            </a>
+            <t t-set="temp" t-value="0"/>
+             <t t-as="submenu_custom" t-foreach="submenu.child_id">
+                    <t t-if="request.httprequest.path == submenu_custom.url">
+                        <t t-set="temp" t-value="temp+1"/>
+                    </t>
+                </t>
+            <ul t-att-class="'treeview-menu second-level' if (submenu.child_id and submenu.parent_id) else 'second-level'" t-if="submenu.is_active" t-att-style="'display:block;' if temp > 0 else 'display:none;'">
+                <t t-as="submenu" t-foreach="submenu.child_id">
+                    <t t-call="website.submenu" t-attf-style="color:#{bckgrnd_data.web_header_content_color};"/>
+                </t>
+            </ul>
+        </li>
+    </template>
+    <template id="layout" inherit_id="website.layout">
+        <!-- ADD 'sidebar-collapse' class inside a body tag  -->
+        <xpath expr="//t[@t-set='body_classname']" position="replace">
+            <t t-set="body_classname" t-value="'o_connected_user sidebar-collapse' if env['ir.ui.view'].user_has_groups('base.group_user') else 'sidebar-collapse'"/>
+        </xpath>
+        <xpath expr="//main" position="replace">
+            <main>
+                <div class="content-wrapper">
+                    <t t-raw="0"/>
+                </div>
+            </main>
+        </xpath>
+        <xpath expr="//div[@id='wrapwrap']/header" position="after">
+            <header class="main-header">
+                <style>
+                    
+                    .modal-content {
+                      background-color: #fefefe;
+                      margin: auto;
+                      padding: 20px;
+                      border: 1px solid #888;
+                      width: 36%;
+                    }
+                    .box {
+                      width: 150px;
+                      height: 75px;
+                      background-color: black;
+                      color: #fff;
+                      padding: 20px;
+                      position: relative;
+                      margin: 40px;
+                      float: left;
+                    }
+
+                    .box.arrow-top {
+                      margin-top: 40px;
+                    }
+
+                    
+
+                    .modal-phone{
+                      display:none;
+                    }
+
+                    .modal-email{
+                      display:none;
+                    }
+
+                    .modal-cart{
+                      display:none;
+                    }
+
+                    #menu_open_btn{
+                        font-size:28px;
+                        margin-top: 12px;
+                        margin-left: 10px;
+                        margin-right: 8px;
+                        color: #630d0b; 
+                        display: block;
+                        cursor: pointer;
+                    }
+
+                   
+                </style>
+                <!-- <nav class="navbar navbar-static-top">-->
+                <nav class="">
+                    <div class="menu inline1 left_menu_toggle">
+                       <!--  <button class="fa fa-bars" data-toggle="push-menu" id="menu_open_btn" style="display: block; background-color: rgb(222, 222, 208);"/>
+                        <button class="navbar-toggle navbar_toggle_button" data-toggle="push-menu" id="menu_close_btn" type="button" style="display: block; background-color: rgb(222, 222, 208);"/> -->
+
+                      <i class="fa fa-bars" data-toggle="push-menu" id="menu_open_btn" ></i>
+
+                      <i class="icon-times" id="menu_close_btn" data-toggle="push-menu"></i>
+                    </div>
+                    <div class="header_inline">
+                        <h1 class="conservation_tech">Conservation Technology</h1>
+                        <!-- <img alt="Conservation Technology" src="/website_custom_menu/static/src/img/logo.png" width="400"/> -->
+
+                    </div>
+                    <div id="phone-model" class="modal-phone">
+                    <!-- Modal content -->
+                    <div class="popover login-popover my_custom_login_popover bs-popover-bottom call" role="tooltip" style="margin-top: 55px; margin-left:960px;
+"><div class="arrow call"></div><h3 class="popover-title">Call US <a href="#" onclick="close_phone_popup()" class="close" data-dismiss="alert">×</a></h3>
+                    <div class="popover-content-phone" style="padding: 0px 92px 0px 8px;">
+                            <p style="margin-bottom: 6px;">US: 410-366-1146</p>
+                            <p>International: (+1) 410-366-1146</p>
+                        </div>
+                </div>
+                   
+                  </div>
+                     <div id="cart-model" class="modal-cart">
+                  
+                    <div class="popover login-popover my_custom_login_popover bs-popover-bottom" role="tooltip" style="top: 50px !important; margin-left:908px;"><div class="arrow cart" style="left: 114px;top: 30px;"></div><h3 class="cart-popover-title2 popover-title">Cart Summary <a href="#" onclick="close_cart_popup()" class="close" data-dismiss="alert">×</a></h3><div class="popover-content-phone"></div>
+                     <div class="cart_pop_over" t-if="website.user_id == user_id" style="height:24px;">
+                      <div class="text-center">
+                          <a class="btn btn-primary" href="/shop/cart" style="width:96%;border-radius: 3px;font-weight: 900;">View Cart</a>
+                      </div>
+                  </div>
+                  <div class="cart_pop_over" t-if="website.user_id != user_id" style="height:24px;">
+                      <div class="text-center">
+                          <a class="btn btn-primary" href="/shop/cart" style="width:96%;border-radius: 3px;font-weight: 900;">View Cart</a>
+                      </div>
+                  </div>
+                  <br/>
+                      </div>
+                  
+                  </div>
+                  
+                   
+
+                    <nav class="navbar navbar-expand-sm float-right navbar-custom-menu social-icon">
+                        <ul class="nav navbar-nav" id="top_menu">
+                            <li class="nav-item" id="call_pop_over">
+                                <a class="nav-link fas fa-phone fa-rotate-90" style="color:#660000;margin-top: 170%;font-size: 1.2em;margin-left: -314%;" href="#"/> 
+                            </li>
+                            <li class="nav-item" id="email_pop_over" style="padding-left: 5px; padding-right: 5px;">
+                                <a class="nav-link fa fa-envelope" style="color:#660000;margin-top:5%;font-size: 1.5em;margin-left: -108%;" href="#"/>
+                            </li>
+                            <li class="nav-item" id="find_product_pop_over">
+                                <a class="nav-link fa fa-search fa-rotate-90" style="color:#660000;margin-top: 103%; font-size: 1.2em;margin-left: -183%;" href="/find-a-product"/>
+                            </li>
+                            <li class="nav-item" id="login_pop_over" t-if="website.user_id == user_id">
+                                <a class="nav-link fas fa-user" href="/web/login" style="color:#660000;margin-top:8%; font-size: 1.3em;margin-left: -45%;"/>
+                            </li>
+                            <li class="nav-item" id="login_pop_over" t-if="website.user_id != user_id">
+                                <a class="nav-link fas fa-user" href="/my/home" style="color:#660000;margin-top:8%; font-size: 1.3em;margin-left: -45%;"/>
+                            </li>
+                            <li class="nav-item" id="my_cart_pop_over">
+                                <a class="nav-link fas fa-shopping-cart"  style="margin-top: 8%; font-size: 1.3em; margin-left: 3%;"/>
+                            </li>
+                        </ul>
+                        <!-- Links -->
+                        <!-- <ul class="nav navbar-nav" id="top_menu"><li id="call_pop_over" class="nav-item"><a class="nav-link headersocial call" href="#"></a></li><li class="nav-item"><a class="nav-link headersocial mail" href="mailto:bvasoya@gmail.com"></a></li><li class="nav-item"><a class="nav-link headersocial find" href="/find-a-product"></a></li><li id="login_pop_over" class="nav-item"><a class="nav-link headersocial login" href="#"></a></li><li id="my_cart_pop_over" class="nav-item"><a class="nav-link headersocial cart" href="/shop/cart"></a></li></ul>-->
+                    </nav>
+                    <!--<div class="navbar-custom-menu social-icon">-->
+                    <!--<ul class="nav navbar-nav" id="top_menu">-->
+                    <!--<li id="call_pop_over">-->
+                    <!--<a class="headersocial call"></a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a class="headersocial mail" href="mailto:bvasoya@gmail.com"></a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<a class="headersocial find" href="/find-a-product"></a>-->
+                    <!--</li>-->
+                    <!--<li id="login_pop_over">-->
+                    <!--<a class="headersocial login"></a>-->
+                    <!--</li>-->
+                    <!--<li id="my_cart_pop_over">-->
+                    <!--<a class="headersocial cart" href="/shop/cart"></a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                </nav>
+                  <div id="email-model" class="modal-email">
+                  
+                    <div class="popover login-popover my_custom_login_popover bs-popover-bottom email" role="tooltip" style="margin-top: 55px;margin-left: 995px;
+"><div class="arrow email"></div><h3 class="mail-popover-title popover-title">Emai<a href="#" onclick="close_email_popup()" class="close" data-dismiss="alert">×</a></h3>
+                     <div class="email_popover_content" style="padding: 0px 23px 0px 13px;">
+            <p>
+                <t>For questions about ordering or specifying<br/> our products for current or future projects,<br/>please email:</t>
+            </p>
+            <p class="text-center">
+                <a href="mailto:sales@conservationtechnology.com" style="color: #1e77c5">
+                    <i>sales@conservationtechnology.com</i>
+                </a>
+            </p>
+            <p>
+                <t>For questions or comments relating to an<br/>existing quotation, order, invoice, or customer service ticket, please find the document here:</t>
+            </p>
+            <p class="text-center">
+                <a href="mailto:support@conservationtechnology.com" style="color: #1e77c5">
+                    <i>Your Account</i>
+                </a>
+            </p>
+            <p>
+            
+            </p>    
+        </div>
+                    
+                </div>
+                    
+                  </div>
+            </header>
+            <aside class="main-sidebar">
+                <section class="sidebar">
+                    <ul class="sidebar-menu header-menu first-level" data-widget="tree">
+                        <!-- <t t-foreach="website.menu_id.child_id" t-as="submenu"><t t-call="website.submenu"/></t>-->
+                        <t t-as="submenu" t-foreach="request.env['website.menu'].search([('name','=','Default Main Menu')], limit=1).child_id">
+                            <t t-call="website.submenu"/>
+                        </t>
+                    </ul>
+                </section>
+            </aside>
+        </xpath>
+        <!-- Hide header  -->
+        <xpath expr="//div[@id='wrapwrap']/header[1]" position="replace">
+            <attribute add="#{'hidden'}" name="t-attf-class" separator=" "/>
+        </xpath>
+        <xpath expr="//footer" position="replace">
+            <footer>
+                <div class="main-footer">
+                    <div class="row">
+                        <div>
+                            <p class="copy-right">Ⓒ Conservation Technology</p>
+                        </div>
+                        <div class="top-div">
+                            <p id="back-to-top">
+                                <span class="fa fa-caret-up"/>
+                            </p>
+                            <p class="top_text">
+                                <strong>top</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </xpath>
+    </template>
+    <template id="cart_modal">
+        <t t-set="web_cart_data" t-value="request.env['system.config'].sudo().search([('name','=','Website Header Color Config Setting')])"/>
+
+
+      <div class="popover login-popover my_custom_login_popover bs-popover-bottom email_pop_up" role="tooltip" style="top: 56px !important;margin-left: 992px;"><div class="arrow cart" style="left: 239px;top: -9px;"></div><h3 class="popover-title" t-attf-style="color:#{web_cart_data.web_header_content_color};background-color:#{web_cart_data.web_header_bckgrnd_color};">Cart Summary <a href="#" onclick="close_cart_popup()" class="close" data-dismiss="alert" t-attf-style="color:#{web_cart_data.web_header_content_color};">×</a></h3><div class="popover-content-phone"></div>
+                     <div class="cart_pop_over">
+                         <!-- <t t-foreach="sale_id.order_line" t-as="line">
+
+
+                        </t> -->
+                     <t t-if="sale_id.order_line">
+                      <div class="text-center">
+                        <t t-foreach="sale_id.order_line" t-as="line">
+                        <div class="row mb8 cart_line" style="
+                            margin-left: 4px;
+                            margin-right: 4px;
+                            border-bottom: 1px solid #cccccc;
+                            padding-bottom:3.5%;">
+                            <div class="col-3">
+                                <span t-field="line.product_id.image_small"  t-options="{'widget': 'image', 'class': 'rounded'}"/>
+                            </div>
+                            <div class="col-9" style="text-align: left;">
+                                <div style="width:100%;">
+                                    <t t-call="website_sale.cart_line_product_link">
+                                        <span class="h6" t-esc="line.name_short" />
+                                    </t>
+                                    <span><p t-field="line.product_id.description_sale"/></span>
+                                </div>
+                                <span>Qty: <t t-esc="int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty" /></span>
+                                <span style="margin-left: 6%;">Price: <t t-esc="line.price_subtotal" /></span>
+                            </div>
+                    <!-- <div class="col-4" style="margin-top:auto;
+">
+                        <div>
+                            
+                        </div>
+                        
+                    </div> -->
+                </div>
+            </t>
+            <a class="btn btn-primary" href="/shop/cart" style="width:96%;border-radius: 3px;font-weight: 900; margin-bottom:-3.5%;">View Cart</a>
+                      </div>
+        </t>
+        <t t-else="">
+            <div >    <div class="alert alert-info">
+                    Your cart is empty!
+                </div> 
+
+                <div style="text-align: center;margin-bottom: 2%;">
+                    <a class="btn btn-primary" href="/find-a-product" style="border-radius: 0.25rem;">
+                        <span style="font-weight: 600;">Add a Product</span>
+                    </a>
+                </div>
+            </div>
+        </t>
+                         
+                 
+                  <!-- <div class="cart_pop_over" t-if="website.user_id != user_id" style="height:24px;">
+                      <div class="text-center">
+                          <a class="btn btn-primary" href="/shop/cart" style="width:96%;border-radius: 3px;font-weight: 900;">View Cart</a>
+                      </div>
+                  </div> -->
+                  <br/>
+                      </div>
+                    </div>
+
+    </template>
+    <!-- <template id="portal_frontend_layout" inherit_id="portal.frontend_layout"><xpath expr="//div[@id='wrapwrap']/header" position="after"><div class="navbar navbar-default navbar-static-top" style="display:none"><div class="container"><div class="navbar-header"><button class="navbar-toggle" data-target=".navbar-top-collapse" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"/><span class="icon-bar"/><span class="icon-bar"/></button><a class="navbar-brand" href="/" t-field="website.name" t-if="website">My Website</a></div><div class="collapse navbar-top-collapse navbar-collapse" id="top_menu_collapse"><ul class="nav navbar-nav ml-auto text-right" id="top_menu"><t t-as="submenu" t-foreach="website.menu_id.child_id"/><li class="nav-item divider" t-ignore="true" t-if="not user_id._is_public()"/><li class="nav-item dropdown" t-ignore="true" t-if="not user_id._is_public()"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><b><span t-esc="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/></b></a><div class="dropdown-menu js_usermenu" role="menu"><a id="o_logout" class="dropdown-item" t-attf-href="/web/session/logout?redirect=/" role="menuitem">Logout</a></div></li></ul></div></div></div></xpath></template>-->
+    <!-- portal.frontend_layout -->
+    <!-- <xpath expr="//div[@id='wrapwrap']/header/div[1]" position="replace"><div class="navbar navbar-default navbar-static-top" style="display:none"><div class="container"><div class="navbar-header"><button class="navbar-toggle" data-target=".navbar-top-collapse" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"/><span class="icon-bar"/><span class="icon-bar"/></button><a class="navbar-brand" href="/" t-field="website.name" t-if="website">My Website</a></div><div class="navbar-collapse navbar-top-collapse"><ul class="nav navbar-nav navbar-right" id="top_menu"><t t-as="submenu" t-foreach="website.menu_id.child_id"/><li class="divider" t-if="website.user_id != user_id" t-ignore="true"/><li class="dropdown" t-if="website.user_id != user_id" t-ignore="true"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b><span t-esc="(len(user_id.name)&gt;25) and (user_id.name[:23]+'...') or user_id.name"/><span class="caret"/></b></a>[]
+                                <ul class="dropdown-menu js_usermenu" role="menu"><li id="o_logout"><a role="menuitem" t-attf-href="/web/session/logout?redirect=/">Logout</a><\]\/li></ul></li></ul></div></div></div><header class="main-header"><nav class="navbar navbar-static-top"><div class="menu inline1 left_menu_toggle"><button class="navbar-toggle navbar_toggle_button" data-toggle="push-menu" id="menu_open_btn" type="button"/><button class="navbar-toggle navbar_toggle_button" data-toggle="push-menu" id="menu_close_btn" type="button"/></div><div class="header_inline"><img alt="Conservation Technology" src="/website_custom_menu/static/src/img/logo.png" width="400"/></div><div class="navbar-custom-menu social-icon"><ul class="nav navbar-nav" id="top_menu"><li id="call_pop_over"><a class="headersocial call"/></li><li id="email_pop_over"><a class="headersocial mail"/></li><li id="find_product_pop_over"><a class="headersocial find" href="/find-a-product"/></li><li id="login_pop_over" t-if="website.user_id == user_id"><a class="headersocial login" href="/web/login"/></li><li id="login_pop_over" t-if="website.user_id != user_id"><a class="headersocial logout" href="/my/home"/></li><li id="my_cart_pop_over"><a class="headersocial cart"/></li></ul></div></nav></header><aside class="main-sidebar"><section class="sidebar"><ul class="sidebar-menu header-menu first-level" data-widget="tree"><t t-as="submenu" t-foreach="website.menu_id.child_id"><t t-call="website.submenu"/></t></ul></section></aside></xpath>-->
+    <!-- <xpath expr="//footer" position="replace"><footer><div id="footer" style="display:none"/><div class="main-footer"><div class="row"><div class="col-xs-11"><p class="copy-right">Ⓒ Conservation Technology</p></div><div class="col-xs-1 top-div"><p id="back-to-top"><span class="fa fa-caret-up"/></p><p class="top_text"><strong>top</strong></p></div></div></div></footer></xpath></template>-->
+    <!-- <template id="layout" inherit_id="website.layout"><xpath expr="//t[@t-set='html_data']" position="after"><t t-set="body_classname" t-value="'o_connected_user sidebar-collapse' if env['ir.ui.view'].user_has_groups('base.group_user') else 'sidebar-collapse'"/></xpath><xpath expr="//main" position="replace"><main><div class="content-wrapper"><t t-raw="0"/></div></main></xpath></template>-->
+    <!-- <template id="layout" inherit_id="website.layout"><xpath expr="//nav[@class='navbar navbar-expand-md navbar-light bg-light']" position="after"><div class="navbar navbar-default navbar-static-top" style="display:none"><div class="container"><div class="navbar-header"><button class="navbar-toggle" data-target=".navbar-top-collapse" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"/><span class="icon-bar"/><span class="icon-bar"/></button><a class="navbar-brand" href="/" t-field="website.name" t-if="website">My Website</a></div><div class="navbar-collapse navbar-top-collapse"><ul class="nav navbar-nav navbar-right" id="top_menu"><t t-as="submenu" t-foreach="website.menu_id.child_id"/><li class="divider" t-if="website.user_id != user_id" t-ignore="true"/><li class="dropdown" t-if="website.user_id != user_id" t-ignore="true"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b><span t-esc="(len(user_id.name)&gt;25) and (user_id.name[:23]+'...') or user_id.name"/><span class="caret"/></b></a><ul class="dropdown-menu js_usermenu" role="menu"><li id="o_logout"><a role="menuitem" t-attf-href="/web/session/logout?redirect=/">Logout</a></li></ul></li></ul></div></div></div><header class="main-header"><nav class="navbar navbar-static-top"><div class="menu inline1 left_menu_toggle"><button class="navbar-toggle navbar_toggle_button" data-toggle="push-menu" id="menu_open_btn" type="button"/><button class="navbar-toggle navbar_toggle_button" data-toggle="push-menu" id="menu_close_btn" type="button"/></div><div class="header_inline"><img alt="Conservation Technology" src="/website_custom_menu/static/src/img/logo.png" width="400"/></div><div class="navbar-custom-menu social-icon"><ul class="nav navbar-nav" id="top_menu"><li id="call_pop_over"><a class="headersocial call"/></li><li id="email_pop_over"><a class="headersocial mail"/></li><li id="find_product_pop_over"><a class="headersocial find" href="/find-a-product"/></li><li id="login_pop_over" t-if="website.user_id == user_id"><a class="headersocial login" href="/web/login"/></li><li id="login_pop_over" t-if="website.user_id != user_id"><a class="headersocial logout" href="/my/home"/></li><li id="my_cart_pop_over"><a class="headersocial cart"/></li></ul></div></nav></header><aside class="main-sidebar"><section class="sidebar"><ul class="sidebar-menu header-menu first-level" data-widget="tree"><t t-as="submenu" t-foreach="website.menu_id.child_id"><t t-call="website.submenu"/></t></ul></section></aside></xpath><xpath expr="//footer" position="replace"><footer><div id="footer" style="display:none"/><div class="main-footer"><div class="row"><div class="col-xs-11"><p class="copy-right">Ⓒ Conservation Technology</p></div><div class="col-xs-1 top-div"><p id="back-to-top"><span class="fa fa-caret-up"/></p><p class="top_text"><strong>top</strong></p></div></div></div></footer></xpath></template>-->
+    <template id="user_navbar1" inherit_id="website.user_navbar">
+        <xpath expr="//i[@class='fa fa-th-large']" position="replace">
+            <i class="fa fa-bars" style="font-size:14px; margin-top: 14px;"></i> WEBSITE
+        </xpath>
+    </template>
+</odoo>

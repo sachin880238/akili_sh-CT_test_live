@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="comm_config_1" model="system.config">
+            <field name="app_name">Communication</field>
+            <field name="cat_name">Email</field>
+            <field name="name">Use External Email Server</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">external_email_server_default</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="comm_config_2" model="system.config">
+            <field name="app_name">Communication</field>
+            <field name="cat_name">Status</field>
+            <field name="name">Communication Urgent Interval</field>
+            <field name="field_type">integer</field>
+            <field name="field_name"></field>
+            <field name="default_value_integer">0</field>
+            <field name="current_value_integer">0</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="comm_config_3" model="system.config">
+            <field name="app_name">Communication</field>
+            <field name="cat_name">Status</field>
+            <field name="name">Communication Warning Interval</field>
+            <field name="field_type">integer</field>
+            <field name="field_name"></field>
+            <field name="default_value_integer">0</field>
+            <field name="current_value_integer">0</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+    </data>
+</odoo>

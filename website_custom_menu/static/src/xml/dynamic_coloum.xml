@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates t-name="selectcolumns">
+    <t t-name="ColumnSelectionDropDowncustom">
+        <!-- <li>
+            <a>
+                <button id="apply" class="btn btn-primary o_add_group o_select_group oe_dropdown_btn"
+                        type="button"
+                        style="display: block;">
+                    Apply
+                </button>
+            </a>
+        </li> -->
+        <style>
+            .colum_heading{
+              font-weight: bold;
+              padding-left: 5%;
+              font-size: initial;
+            }
+        </style>
+       <!--  <div class="colum_heading" t-if="count == 2">
+            Entry Mode
+        </div> -->
+      <!--  <li class="edible_tree" t-if="count == 2">
+                <a>
+                    <div class="o_checkbox_editable" style="vertical-align:middle;">
+                       
+                        <input type="checkbox" 
+                               t-att-checked="status_editable ? undefined : 'checked'"/>
+                               open direct
+                               
+                        <span/>
+                    </div>
+                    
+                </a>
+            </li>
+            <li class="open_window" t-if="count == 2">
+                <a>
+                    <div class="o_checkbox_not_editable" style="vertical-align:middle;">
+                        
+                        <input type="checkbox" 
+                               t-att-checked="not_status_editable ? undefined : 'checked'"/>
+                               open window
+                        <span/>
+                    </div>
+                    
+                </a>
+            </li> -->
+        <!-- <div class="colum_heading">
+            Columns
+        </div> -->
+        <li class="divider" style="display: list-item;"/>
+        <t t-foreach="columns" t-as="column">
+            <li class="item_column">
+                <a>
+                   
+                    <div class="o_checkbox" style="vertical-align:middle;">
+                        <input type="checkbox" t-att-data-name="column.field_name"
+                               t-att-checked="column.invisible ? undefined : 'checked'"/>
+                               <t t-esc="column.label"/>
+                        <span/>
+                    </div>
+                    
+                </a>
+            </li>
+        </t>
+    </t>
+</templates>

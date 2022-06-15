@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_web_one2many_selectable_web_one2many_selectable,web_one2many_selectable.web_one2many_selectable,model_web_one2many_selectable_web_one2many_selectable,,1,0,0,0

@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
+<defs>
+<font id="ct-reorder" horiz-adv-x="1000" >
+<font-face font-family="ct-reorder" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="sync-alt" unicode="&#xe902;" d="M724 590c-61 57-140 88-224 88-152 0-282-104-318-248-3-10-12-17-23-17h-112c-15 0-26 13-23 27 42 225 239 394 476 394 130 0 248-51 335-134l69 70c30 30 80 9 80-33v-262c0-26-21-47-46-47h-262c-42 0-63 51-33 80l81 82z m-661-318h261c42 0 63-51 34-80l-82-82c61-57 140-88 224-88 152 0 282 104 318 248 3 10 12 18 23 18h112c15 0 26-14 23-28-42-225-239-394-476-394-130 0-248 51-335 134l-69-70c-30-30-80-9-80 33v262c0 26 21 47 47 47z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

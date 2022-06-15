@@ -1,0 +1,51 @@
+.o_dashboard .oe_dashboard_layout_2-1 .oe_dashboard_column.index_0 {
+    width: 100% !important;
+    display: flex;
+
+}
+.custom_dashboard{
+	width: 47% !important;
+	height: 60px !important;
+	margin-left: 2% !important;
+
+}
+.custom_oe_header_txt{
+    font-size: 30px !important;
+    color: black;
+}
+.o_dashboard .oe_dashboard .oe_action {
+    
+    border: 1px solid;
+    border-color: black;
+    margin: 0 8px 20px 0;
+    
+}
+
+/*@media (min-width: 1350px){
+    .custom_dashboard{
+        width: 22% !important;
+    }
+}
+@media (max-width: 624px){
+    .custom_dashboard{
+        width: 46% !important;
+    }
+}
+@media (max-width: 450px){
+    .custom_dashboard{
+        width: 98% !important;
+    }
+}*/
+
+/*body {
+	margin: 0 auto;
+	max-width: 40em;
+	width: 88%;
+}
+#colors {
+	height: 12em;
+	width: 100%;
+}*/
+/*.dashboard_bg_color {
+  --main-bg-color: brown;
+}*/

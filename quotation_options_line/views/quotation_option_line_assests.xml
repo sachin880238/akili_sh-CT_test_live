@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="quotation_option_line_backends" name="quotation_option_line_backends" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/quotation_options_line/static/src/css/quotation_options_line.css"/>
+        </xpath>
+    </template>
+</odoo>

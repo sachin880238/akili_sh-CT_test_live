@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="website_menu_tree" model="ir.ui.view">
+      <field name="name">Website.Menu.tree</field>
+      <field name="model">website.menu</field>
+      <field name="arch" type="xml">
+        <tree string="Website Menu" editable="bottom">
+          <field name="sequence" widget="handle" />
+          <field name="website_id"/>
+          <field name="name"/>
+          <field name="url"/>
+          <field name="parent_id"/>
+          <field name="is_active"/>
+          <field name="underline"/>
+          <field name="image" invisible="1"/>
+          <field name="comment" invisible="1"/>
+          <field name="arrange_sequece" invisible="1"/>
+          <field name="is_for_catag" invisible="1"/>
+          <field name="is_for_child_catag" invisible="1"/>
+          <field name="website_product_catag_id" string="category Id" invisible="1"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_website_menu" model="ir.actions.act_window">
+      <field name="name">Website Menu</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">website.menu</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="website_menu_tree"/>
+    </record>
+ <menuitem id="menu_website_menu" name="Website Menu" parent="website_sale.menu_catalog" sequence="4" action="action_website_menu"/>
+
+<!-- ..............DRAG & DROP IN LIST VIEW OF SALE QUOT TEMP.......... -->
+
+
+    <record id="inherit_sale_order_template_view_tree" model="ir.ui.view">
+      <field name="name">sale.order.template.tree</field>
+      <field name="model">sale.order.template</field>
+      <field name="type">tree</field>
+      <field name="inherit_id" ref="sale_management.sale_order_template_view_tree" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="before">
+          <field name="sequence" widget="handle" />
+        </xpath>
+      </field>
+    </record>
+
+<!-- .................DRAG & DROP IN WEBSITE ORDER UNPAID ORDER........... -->
+     <record id="inherit_view_quotation_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree" />
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='name']" position="before">
+            <field name="sequence" widget="handle" />
+          </xpath>
+        </field>
+      </record>
+
+<!-- ............DRAG & DROP IN WEBSITE CONFI PAGES............. -->
+
+    <record id="inherit_website_pages_tree_view" model="ir.ui.view">
+      <field name="name">website.page.list</field>
+      <field name="model">website.page</field>
+      <field name="inherit_id" ref="website.website_pages_tree_view" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="before">
+          <field name="sequence" widget="handle" />
+        </xpath>
+      </field>
+    </record>
+
+<!-- ..................DRAG & DROP IN WEBSITE CONFI REDIRECT.................. -->
+
+    <record id="inherit_website_redirect_tree_view" model="ir.ui.view">
+      <field name="name">website.redirect.list</field>
+      <field name="model">website.redirect</field>
+      <field name="inherit_id" ref="website.website_redirect_tree_view" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='type']" position="before">
+          <field name="sequence" widget="handle" />
+        </xpath>
+      </field>
+    </record>
+
+
+<!-- ..................DRAG & DROP IN WEBSITE CONFI SAVED PAYMENT DATA.................. -->
+
+   <record model='ir.ui.view' id='inherit_payment_token_tree_view'>
+      <field name='name'>payment.token.tree</field>
+      <field name='model'>payment.token</field>
+      <field name="inherit_id" ref="payment.payment_token_tree_view" />
+      <field name='arch' type='xml'>
+        <xpath expr="//field[@name='name']" position="before">
+          <field name="sequence" widget="handle" />
+        </xpath>
+      </field>
+    </record>
+
+
+<!-- ...........DRAG & DROP IN PURCHASE REQUEST OF QUOTATION............... -->
+
+   
+  <record id="inherit_invoice_supplier_tree" model="ir.ui.view">
+    <field name="name">account.invoice.supplier.tree</field>
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_supplier_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='invoice_icon']" position="before">
+          <field name="sequence" widget="handle"/>
+      </xpath>
+      <xpath expr="//field[@name='state']" position="after" >
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN PURCHASE CONF PRODUCT CATEGORY............... -->
+
+  <record id="inherit_product_category_list_view" model="ir.ui.view">
+    <field name="name">product.category.list</field>
+    <field name="model">product.category</field>
+    <field name="inherit_id" ref="product.product_category_list_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='display_name']" position="before">
+        <field name="sequence" widget="handle"/>
+      </xpath>
+      </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN WAREHOUSE OPERATIONS TRANSFER............... -->
+
+  <record id="inherit_vpicktree" model="ir.ui.view">
+    <field name="name">stock.picking.tree</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.vpicktree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+      <field name="state" position="after">
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="stock_picking_batch.vpicktree_inherit_stock_picking_batch" model="ir.ui.view">
+    <field name="name">stock.picking.tree</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.vpicktree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='backorder_id']" position="after">
+        <field name="batch_id"/>
+      </xpath>
+    </field>
+    </record>
+
+<!-- ...........DRAG & DROP IN WAREHOUSE OPERATIONS INVENTORY ADJUSTMENT............... -->
+
+
+   <record id="inherit_view_inventory_tree" model="ir.ui.view">
+      <field name="name">stock.inventory.tree</field>
+      <field name="model">stock.inventory</field>
+      <field name="inherit_id" ref="stock.view_inventory_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+      <xpath expr="//field[@name='state']" position="after" >
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+      </field>
+    </record>
+
+    <record id="view_inventory_form_inherit" model="ir.ui.view">
+      <field name="name">stock.inventory.form</field>
+      <field name="model">stock.inventory</field>
+      <field name="inherit_id" ref="stock.view_inventory_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='state']" position="after" >
+        <field name="parent_state" invisible="1"/>
+      </xpath>
+      </field>
+    </record>
+
+<!-- ...........DRAG & DROP IN WAREHOUSE OPERATIONS scrap............... -->
+
+
+  <record id="inherit_stock_scrap_tree_view" model="ir.ui.view">
+    <field name="name">stock.scrap.tree</field>
+    <field name="model">stock.scrap</field>
+    <field name="inherit_id" ref="stock.stock_scrap_tree_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+      <xpath expr="//field[@name='state']" position="after" >
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="stock_scrap_form_view_inherit" model="ir.ui.view">
+    <field name="name">stock.scrap.form</field>
+    <field name="model">stock.scrap</field>
+    <field name="inherit_id" ref="stock.stock_scrap_form_view" />
+    <field name="arch" type="xml">
+      <field name="state" position="after">
+        <field name="parent_state" invisible="1"/>
+      </field>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN WAREHOUSE OPERATIONS scrap............... -->
+
+  <record id="inherit_view_warehouse_orderpoint_tree" model="ir.ui.view">
+    <field name="name">stock.warehouse.orderpoint.tree</field>
+    <field name="model">stock.warehouse.orderpoint</field>
+    <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="inherit_view_stock_product_tree2" model="ir.ui.view">
+    <field name="name">product.stock.tree.2"</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="stock_account.view_stock_product_tree2" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='display_name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN WAREHOUSE CONF BARCODE NOMENCLATURE............... -->
+
+   <record model="ir.ui.view" id="inherit_view_barcode_nomenclature_tree">
+      <field name="name">Barcode Nomenclatures</field>
+      <field name="model">barcode.nomenclature</field>
+      <field name="inherit_id" ref="barcodes.view_barcode_nomenclature_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN MANUFACTURING ORDER ............... -->
+
+  <record id="inherit_mrp_production_tree_view" model="ir.ui.view">
+      <field name="name">mrp.production.tree</field>
+      <field name="model">mrp.production</field>
+      <field name="inherit_id" ref="mrp.mrp_production_tree_view" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+      <field name="state" position="after">
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="mrp_production_form_view" model="ir.ui.view">
+    <field name="name">mrp.production.form</field>
+    <field name="model">mrp.production</field>
+    <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+    <field name="arch" type="xml">
+      <field name="state" position="after">
+        <field name="parent_state" invisible="1"/>
+      </field>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN MANUFACTURING UNBUILD ORDER ............... -->
+
+  <record id="iniherit_mrp_unbuild_tree_view" model="ir.ui.view">
+    <field name="name">mrp.unbuild.tree</field>
+    <field name="model">mrp.unbuild</field>
+    <field name="inherit_id" ref="mrp.mrp_unbuild_tree_view"/>
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+      <xpath expr="//field[@name='state']" position="replace"/>
+      <xpath expr="//field[@name='location_id']" position="after">
+        <field name="state"/>
+       <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="mrp_unbuild_form_view" model="ir.ui.view">
+    <field name="name">mrp.unbuild.form</field>
+    <field name="model">mrp.unbuild</field>
+    <field name="inherit_id" ref="mrp.mrp_unbuild_tree_view" />
+    <field name="arch" type="xml">
+      <field name="state" position="after">
+        <field name="parent_state" invisible="1"/>
+      </field>
+    </field>
+  </record>
+
+
+<!-- ...........DRAG & DROP IN MANUFACTURING  WORKING TIMES ............... -->
+
+  <record id="inherit_view_resource_calendar_tree" model="ir.ui.view">
+    <field name="name">resource.calendar.tree</field>
+    <field name="model">resource.calendar</field>
+    <field name="inherit_id" ref="resource.view_resource_calendar_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+
+<!-- ...........DRAG & DROP IN ACCOUNTING PRODUCT............... -->
+
+  <record id="inherit_product_product_view_tree" model="ir.ui.view">
+    <field name="name">product.product.tree</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="account.product_product_view_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='default_code']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN ACCOUNTING CONFI INCOTERMS............... -->
+
+  <record id="inherit_view_incoterms_tree" model="ir.ui.view">
+    <field name="name">account.incoterms.tree</field>
+    <field name="model">account.incoterms</field>
+    <field name="inherit_id" ref="account.view_incoterms_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='code']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN SYSTEMS AUTH PROVIDERS............... -->
+
+  <record id="inherit_view_oauth_provider_tree" model="ir.ui.view">
+    <field name="name">auth.oauth.provider.tree</field>
+    <field name="model">auth.oauth.provider</field>
+    <field name="inherit_id" ref="auth_oauth.view_oauth_provider_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN SYSTEMS LANGUAGE............... -->
+
+  <record id="inherit_res_lang_tree" model="ir.ui.view">
+    <field name="name">res.lang.tree</field>
+    <field name="model">res.lang</field>
+    <field name="inherit_id" ref="base.res_lang_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN SYSTEMS TRANSLATED TERM............... -->
+
+  <record id="inherit_view_translation_tree" model="ir.ui.view">
+    <field name="name">ir.translation.tree</field>
+    <field name="model">ir.translation</field>
+    <field name="inherit_id" ref="base.view_translation_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='source']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN SALE PRODUCT TEAM............... -->
+
+<record id="inherit_crm_team_view_tree" model="ir.ui.view">
+  <field name="name">crm.team.tree</field>
+  <field name="model">crm.team</field>
+  <field name="inherit_id" ref="sales_team.crm_team_view_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+
+<!-- ...........DRAG & DROP IN WEBSITE CONF WEBSITE............... -->
+
+  <record id="inherit_view_website_tree" model="ir.ui.view">
+    <field name="name">website.tree</field>
+    <field name="model">website</field>
+    <field name="inherit_id" ref="website.view_website_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN WEBSITE CONF PAYMENT TRANSACTION............... -->
+
+  <record id="inherit_transaction_list" model="ir.ui.view">
+    <field name="name">payment.transaction.list</field>
+    <field name="model">payment.transaction</field>
+    <field name="inherit_id" ref="payment.transaction_list" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='reference']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN POS............... -->
+
+  <record id="inherit_view_pos_config_tree" model="ir.ui.view">
+    <field name="name">pos.config.tree.view</field>
+    <field name="model">pos.config</field>
+    <field name="inherit_id" ref="point_of_sale.view_pos_config_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN LINK CAMPAIGN............... -->
+
+  <record model="ir.ui.view" id="inherit_utm_campaign_tree">
+    <field name="name">utm.campaign.tree</field>
+    <field name="model">utm.campaign</field>
+    <field name="inherit_id" ref="utm.utm_campaign_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN LINK MEDIUM ............... -->
+
+  <record id="inherit_utm_medium_view_tree" model="ir.ui.view">
+    <field name="name">utm.medium.tree</field>
+    <field name="model">utm.medium</field>
+    <field name="inherit_id" ref="utm.utm_medium_view_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN LINK SOURCE ............... -->
+
+   <record id="inherit_utm_source_view_tree" model="ir.ui.view">
+      <field name="name">utm.source.tree</field>
+      <field name="model">utm.source</field>
+      <field name="inherit_id" ref="utm.utm_source_view_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+    </field>
+  </record>
+
+<!-- ...........DRAG & DROP IN ACCOUNT VENDOR PAYMENT ............... -->
+
+   <record id="inherit_view_account_supplier_payment_tree" model="ir.ui.view">
+    <field name="name">account.supplier.payment.tree</field>
+    <field name="model">account.payment</field>
+    <field name="inherit_id" ref="account.view_account_supplier_payment_tree" />
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='payment_date']" position="before" >
+        <field name="sequence" widget="handle" />
+      </xpath>
+      <xpath expr="//field[@name='state']" position="after" >
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+    </field>
+  </record>
+
+<!--......... DRAG & DROP IN LIST VIEW OF SALE RECORD PAYMENTS................ -->
+
+  <record id="inherit_view_account_payment_tree" model="ir.ui.view">
+    <field name="name">account.payment.tree</field>
+    <field name="model">account.payment</field>
+    <field name="inherit_id" ref="account.view_account_payment_tree" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='payment_date']" position="before">
+        <field name="sequence" widget="handle" />
+      </xpath>
+      <xpath expr="//field[@name='state']" position="after">
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="inherit_view_account_payment_form" model="ir.ui.view">
+    <field name="name">account.payment.form</field>
+    <field name="model">account.payment</field>
+    <field name="inherit_id" ref="account.view_account_payment_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='state']" position="after">
+        <field name="parent_state" invisible="1"/>
+      </xpath>
+    </field>
+    </record>
+</odoo>

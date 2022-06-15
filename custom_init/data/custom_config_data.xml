@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+    <record id="my_config_settings" model="res.config.settings">        
+      <field name="group_product_variant" eval="True"/>
+      <field name="group_uom" eval="True"/>
+      <field name="group_discount_per_so_line" eval="True"/>
+      <field name="group_proforma_sales" eval="True"/>
+      <field name="multi_sales_price" eval="True"/>
+    </record>
+
+    <function model="res.config.settings" name="execute">
+      <value model="res.config.settings" search="[('id', '=', ref('my_config_settings'))]"/>
+    </function>
+  </data>
+</odoo>

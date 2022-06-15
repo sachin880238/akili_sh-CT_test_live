@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Container Type tree view -->
+  <record id="view_container_type_tree" model="ir.ui.view">
+    <field name="name">container.type.tree</field>
+    <field name="model">stock.container.type</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" string="Name"/>
+        <field name="icon" />
+        <field name="dim1"/>
+        <field name="dim2"/>
+        <field name="dim3"/>
+        <field name="weight"/>
+        <field name="surcharge"/>
+        <field name="comment"/>
+        <field name="state"/>
+         <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        <field name="sequence" widget="handle"/>
+      </tree>
+    </field>
+  </record>
+  
+  <!-- Container Type form view -->
+  <record id="view_container_type_form" model="ir.ui.view">
+    <field name="name">container.type.form</field>
+    <field name="model">stock.container.type</field>
+    <field name="arch" type="xml">
+      <form string="Container Type">
+        <header>
+          <field name="state" widget="statusbar"/>
+          <field name="parent_state" invisible="1"/>
+        </header>
+        <sheet>
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="icon"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Dimension &amp; Weight">
+              <group>
+                <group>
+              <field name="dim1"/>
+              <field name="dim2"/>
+              <field name="dim3"/>
+            </group>
+            <group>
+              <field name="weight"/>
+            </group>
+            </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Container Type action -->
+  <record id="container_type_action" model="ir.actions.act_window">
+    <field name="name">Container Types</field>
+    <field name="res_model">stock.container.type</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{}</field>
+  </record>  
+</odoo>     

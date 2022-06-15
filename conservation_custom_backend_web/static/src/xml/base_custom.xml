@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+<t t-name="HelpWizard">
+        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <style>
+            .tox .tox-tbtn svg {
+    fill: #ff0000!important;
+}
+        .mce-menubtn button{
+        color:#1e77c5;
+        background: white;
+        }
+        .mce-btn button{
+        color:#1e77c5;
+        background: white;
+        }
+        .mce-ico{
+        color:#1e77c5;
+        }
+        .mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset{
+        background: white;
+        }
+        <!-- .mce-btn button -->
+
+        </style>
+  
+
+
+<h1 >
+    <input class="heading_input o_field_char o_field_widget o_input"  placeholder="" type="text"  style="padding: 7px 4px;width: 51%;"/>
+<span class="main_heading" name="name" style="font-size:25px; font-weight:bold; font-family: sans-serif;margin-bottom:-10px;" >Address Form</span></h1>
+<div><p>zzx</p></div>
+<div class="textareafield">
+  
+    <textarea class="mytextarea" id="mytextarea"><div>Hello, World!</div></textarea>
+</div>
+<div class="record_id d-none">
+</div>
+  
+    
+</t>
+<!-- CHANGE STRING FROM LIST VIEW DISCARD DIALOG -->
+
+
+
+<t t-extend="ListView.buttons">
+    <t t-jquery=".o_list_button_discard" t-operation="replace">
+       <button accesskey="j" class="btn btn-secondary o_list_button_discard" type="button">
+            CANCEL
+        </button>
+    </t>
+</t>
+
+<!-- CHANGE STRING FROM FORM VIEW DISCARD DIALOG -->
+<t t-extend="FormView.buttons">
+    <t t-jquery=".o_form_button_cancel" t-operation="replace">
+        <button type="button" class="btn btn-secondary o_form_button_cancel" accesskey="j">
+            CANCEL
+        </button>
+    </t>
+</t>
+
+<!-- CHANGE STRING FROM LIST VIEW CREATE DIALOG -->
+
+
+<t t-extend="ListView.buttons">
+    <t t-jquery=".o_list_button_add" t-operation="replace">
+       <button accesskey="j" class="btn btn-primary o_list_button_add" type="button">
+            CREATE
+        </button>
+    </t>
+</t>
+
+<t t-extend="FormView.buttons" attrs="{'invisible': 1}">
+    <t t-jquery=".o_form_button_create" t-operation="replace">
+         <button t-if="widget.is_action_enabled('create')" type="button"
+                class="btn btn-primary o_form_button_create" accesskey="c">
+            NEW
+        </button>
+        
+    </t>
+</t>
+
+<t t-extend="FormView.buttons">
+    <t t-jquery=".o_form_button_save" t-operation="replace">
+        <button type="button" class="btn btn-primary o_form_button_save" accesskey="q">
+            SAVE
+        </button>
+    </t>
+</t>
+
+<t t-extend="ImportView.import_button">
+    <t t-jquery=".o_button_import" t-operation="replace">
+       <!--  <button type="button" class="btn btn-secondary o_button_import" accesskey="i">
+            IMPORT
+        </button> -->
+    </t>
+</t>
+
+<t t-extend="FormView.buttons">
+    <t t-jquery=".o_form_button_edit" t-operation="replace">
+        <button t-if="widget.is_action_enabled('edit')" type="button" class="btn btn-primary o_form_button_edit" accesskey="e">
+            MODIFY
+        </button>
+    </t>
+</t>
+
+
+<t t-extend="KanbanView.RecordQuickCreate.buttons">
+    <t t-jquery=".o_kanban_cancel" t-operation="replace">
+        
+        <button class="btn btn-secondary o_kanban_cancel ml8">CANCEL
+        </button>
+    </t>
+</t>
+
+
+
+
+
+
+
+<t t-name="KanbanView.buttons">
+    <div>
+        <button type="button" t-attf-class="btn #{btnClass} o-kanban-button-new" accesskey="c">
+            <t t-esc="create_text || _t('CREATE')"/>
+        </button>
+    </div>
+</t>
+
+
+
+
+<!-- FLOAT FIELDS LABEL ON RIGHT -->
+<t t-extend="ListView">
+    <t t-jquery="thead" t-operation="replace">
+        <thead>
+            <tr t-if="options.header">
+                <t t-foreach="columns" t-as="column">
+                    <th t-if="column.meta">
+                        <t t-esc="column.string"/>
+                    </th>
+                </t>
+                <th t-if="options.selectable" class="o_list_record_selector" width="1">
+                    <div class="o_checkbox">
+                        <input type="checkbox"/><span/>
+                    </div>
+                </th>
+                <t t-foreach="columns" t-as="column">
+                    <th t-if="(column.type == 'monetary') or (column.type == 'float') and (!column.meta and column.invisible !== '1')" t-att-data-id="column.id" t-attf-class="#{((options.sortable and column.sortable and column.tag !== 'button') ? 'o_column_sortable' : '')}" t-att-width="column.width()">
+                        <t t-if="column.tag !== 'button'"><t t-raw="column.heading()"/></t>
+                    </th>
+                    <th t-if="((column.type != 'monetary') and (column.type != 'float')) and (!column.meta and column.invisible !== '1')" t-att-data-id="column.id" t-attf-class="#{((options.sortable and column.sortable and column.tag !== 'button') ? 'o_column_sortable' : '')}" t-att-width="column.width()">
+                        <t t-if="column.tag !== 'button'"><t t-raw="column.heading()"/></t>
+                    </th>
+                </t>
+                <th t-if="options.deletable" class="o_list_record_delete"/>
+            </tr>
+        </thead>
+    </t>
+</t>
+
+<!-- CHNAGE MENU ICON IN ENTERPRISE -->
+<!-- <t t-extend="Menu">
+    <t t-jquery="a.o_menu_toggle" t-operation="replace">
+        <a href="#" class="fa fa-bars o_menu_toggle"/>
+    </t>
+</t> -->
+
+<t t-extend="FieldMany2One">
+    <t t-jquery="div" t-operation="replace">
+        <div t-if="widget.mode === 'edit'" class="o_field_widget o_field_many2one" aria-atomic="true">
+            <div class="o_input_dropdown">    
+                <input type="text" class="o_input"
+                    t-att-barcode_events="widget.nodeOptions.barcode_events"
+                    t-att-tabindex="widget.attrs.tabindex"
+                    t-att-autofocus="widget.attrs.autofocus"
+                    t-att-placeholder="widget.attrs.placeholder"
+                    t-att-id="widget.idForLabel"/>
+                <t t-if="widget.field.type === 'many2one'">    
+                    <a role="button" class="o_dropdown_button" draggable="false"/>
+                </t>
+                <t t-if="widget.field.type === 'many2many'">    
+                    <a role="button" class="o_dropdown_button" draggable="false" id="arrow-right"/>
+                </t>    
+            </div>
+            <button type="button" t-if="!widget.noOpen" class="fa fa-external-link btn btn-secondary o_external_button" tabindex="-1" draggable="false" aria-label="External link" title="External link"/>
+        </div>
+    </t>
+</t>
+
+<t t-extend="CalendarView.sidebar.filter">
+    <t t-jquery=".fa-times" t-operation="replace">
+        <span class="o_remove fa fa-times" id="size-cross-icon" title="Remove this favorite from the list" role="img" aria-label="Remove this favorite from the list"/>
+    </t>
+</t>
+
+<t t-name="FieldDomain.content">
+    <div t-if="hasModel" class="o_field_domain_panel">
+        <button t-if="isValid" class="btn btn-sm btn-secondary o_domain_show_selection_button" type="button"/>
+        <span t-else="" class="text-warning" role="alert"><i class="fa fa-exclamation-triangle" role="img" aria-label="Warning" title="Warning"/> Invalid domain</span>
+        <button t-if="inDialogEdit" class="btn btn-sm btn-primary o_field_domain_dialog_button">Edit Domain</button>
+    </div>
+    <div t-else="">Select a model to add a filter.</div>
+</t>
+
+<t t-name="X2Many.buttons">
+  <div>
+    <button type="button" t-attf-class="btn #{btnClass} o_field_x2many_list_row_add" accesskey="c">
+      <t t-esc="('CREATE')"/>
+    </button>
+    <button type="button" t-attf-class="btn #{btnClass} o_field_x2many_list_search" accesskey="f">
+      <t t-esc="('SEARCH')"/>
+    </button>
+    <button type="button" t-attf-class="btn #{btnClass} o_field_x2many_list_search" accesskey="s">
+      <t t-esc="('SORT')"/>
+    </button>
+  </div>
+</t>
+
+</templates>

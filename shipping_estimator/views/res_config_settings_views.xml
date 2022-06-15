@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form" model="ir.ui.view">
+    <field name="name">res.config.settings.shipping.estimator</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//h2[5]" position="before">
+        <h2 class="mt32">Shipping Estimator Constants</h2>
+        <div class="row mt16 o_settings_container" id="shipping_constants">
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="minimum_clearance"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="minimum_clearance"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="maximum_clearance"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="maximum_clearance"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="long_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="long_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="flowable_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="flowable_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="flexible_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="flexible_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="rigid_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="rigid_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="boxed_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="boxed_packing_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="shipping_cost_multiplier"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="shipping_cost_multiplier"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="minimum_shipping_charge"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="minimum_shipping_charge"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="insurance_multiplier"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="insurance_multiplier"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <label for="dim_weight_factor"/>
+          </div>
+          <div class="col-xs-12 col-md-3 o_setting_box">
+            <field name="dim_weight_factor"/>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

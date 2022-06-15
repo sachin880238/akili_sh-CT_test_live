@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Search view    -->
+
+    <record id="product.product_search_form_view" model="ir.ui.view">
+      <field name="name">product.product.search</field>
+      <field name="model">product.product</field>
+      <field name="mode">primary</field>
+      <field name="inherit_id" ref="product.product_template_search_view"/>
+      <field name="arch" type="xml">
+      <field name="name" position="replace">
+      <field name="name" string="Product" filter_domain="['|', '|', ('default_code', 'ilike', self), ('name', 'ilike', self), ('barcode', 'ilike', self)]"/>
+      </field>
+      <field name="attribute_line_ids" position="replace">
+        <field name="attribute_value_ids" groups="product.group_product_variant"/>
+        <field name="product_tmpl_id" string="Product Template"/>
+        <field name="website_name" string="Website Product Title"/>
+        <field name="unpublish_product" invisible="1"/>
+      </field>
+      </field>
+    </record>
+    <record id="stock.view_template_property_form" model="ir.ui.view">
+      <field name="name">product.template.stock.property.form.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='group_lots_and_weight']" position="before">
+          <group string="Operations" name="operations">
+            <field name="route_ids" widget="many2many_checkboxes" attrs="{'invisible': [('type', 'in', ['service', 'digital'])]}"/>
+            <field name="route_from_categ_ids" widget="many2many_tags" readonly="1" attrs="{'invisible': [('route_from_categ_ids', '=', [])]}"/>
+            <label for="sale_delay" attrs="{'invisible': [('sale_ok', '=', False)]}"/>
+            <div attrs="{'invisible': [('sale_ok', '=', False)]}">
+                <field name="sale_delay" class="oe_inline" style="vertical-align:baseline"/> days
+            </div>
+          </group>
+          <group string="Traceability" name="traceability" groups="stock.group_production_lot">
+            <field name="tracking" widget="radio" attrs="{'invisible': [('type', 'in', ['service', 'digital'])]}"/>
+          </group>
+           <group string="Counterpart Locations" name="stock_property" groups="base.group_no_one">
+            <field name="property_stock_production" domain="[('usage', '=', 'production')]"/>
+            <field name="property_stock_inventory" domain="[('usage', '=', 'inventory')]"/>
+          </group>
+        </xpath>
+          <page name="inventory" position="inside">
+            <group string="Description for Delivery Orders">
+                <field name="description_pickingout" nolabel="1" placeholder="This note will show up on delivery orders."/>
+            </group>
+            <group string="Description for Receipts">
+                <field name="description_pickingin" nolabel="1" placeholder="This note will show up on receipt orders (e.g. where to store the product in the warehouse)."/>
+            </group>
+            <group string="Description for Internal Transfers" invisible="1" groups="stock.group_stock_multi_locations">
+              <field name="description_picking" placeholder="This note will show up on internal transfer orders (e.g. where to pick the product in the warehouse)." nolabel="1"/>
+            </group>
+          </page>
+        <page name="inventory" position="attributes">
+          <attribute name="groups">stock.group_stock_user,product.group_stock_packaging</attribute>
+        </page>
+      </field>
+    </record>
+    <record id="sale_stock.product_template_view_form_inherit_sale" model="ir.ui.view">
+      <field name="name">product.template.inherit.form</field>
+      <field name="inherit_id" ref="sale.product_template_form_view_sale_order_button"/>
+      <field name="model">product.template</field>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="sale.product_template_form_view_sale_order_button" model="ir.ui.view">
+      <field name="name">product.template.sale.order.button</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field eval="[(4, ref('sales_team.group_sale_salesman'))]" name="groups_id"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="delivery_hs_code.product_template_hs_code" model="ir.ui.view">
+      <field name="name">product.template.form.hs_code</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="product_expiry.view_product_form_expiry" model="ir.ui.view">
+      <field name="name">product.template.inherit.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock.view_template_property_form"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="view_template_property_form" model="ir.ui.view">
+      <field name="name">product.template.stock.property.form.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock.view_template_property_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page[@name='inventory']/group[3]" position="replace"/>
+        <xpath expr="//page[@name='inventory']/group[2]" position="replace"/>
+        <xpath expr="//group[@name='traceability']" position="replace"/>
+        <xpath expr="//group[@name='stock_property']" position="replace"/>
+        <xpath expr="//group[@name='operations']" position="replace"/>
+        <xpath expr="//page[@name='inventory']/group[2]" position="replace"/>
+      </field>
+    </record>
+    <record id="point_of_sale.product_template_form_view" model="ir.ui.view">
+      <field name="name">product.template.form.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock.view_template_property_form"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="sale.product_template_form_view" model="ir.ui.view">
+      <field name="name">product.template.product.website.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="sale_management.product_template_sale_form_view" model="ir.ui.view">
+      <field name="name">product.template.sales</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record> 
+    <record id="sale_purchase.product_template_form_view_inherit" model="ir.ui.view">
+      <field name="name">product.template.form.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="purchase.view_product_supplier_inherit" model="ir.ui.view">
+      <field name="name">product.template.supplier.form.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    <record id="mrp.view_mrp_product_template_form_inherited" model="ir.ui.view">
+      <field name="name">product.form.mrp.inherited</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock.view_template_property_form"/>
+      <field name="arch" type="xml">
+        <data/>
+      </field>
+    </record>
+    
+
+    <record id="product_template_form_view" model="ir.ui.view">
+      <field name="name">product.template.common.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="priority">5</field>
+      <field name="arch" type="xml">
+        <xpath expr='//form[1]' position='attributes'>
+          <attribute name="create">false</attribute>
+        </xpath>
+        <xpath expr="//page[@name='general_information']" position="attributes">
+           <attribute name="string">SALES</attribute>
+        </xpath>
+        <xpath expr="//form/sheet/div[2]/div" position="replace"/>
+        <xpath expr="//page[@name='general_information']/group[2]" position="replace"/>
+        <xpath expr="//page[@name='general_information']/group[1]" position="replace">
+          <group>
+            <group name="general" string="General">
+              <label for="default_code" string="Stock ID"/>
+              <field invisible="1" name="default_code" nolabel="1" string="Stock Number"/>
+              <field name="attribute_value_ids" readonly="1" widget="many2many_tags"/>
+              <label for="master_product" string="Template"/>
+              <field name="master_product" invisible="0" nolabel="1" />
+              <label for="currency_id" invisible="1"/>
+              <field invisible="1" name="currency_id" nolabel="1"/>
+              <field name="lst_price" options="{'currency_field': 'currency_id'}" string="List Price" widget="monetary" />
+              <field  name="sales_uom_ids" options="{'no_create': False}" widget="many2many_tags"/>
+              <field invisible="1" name="type" string="Product Type"/>
+              <field invisible="1" name="list_price" options="{'currency_field': 'currency_id'}" widget="monetary"/>
+              <field groups="base.group_multi_company" name="company_id" options="{'no_create': True}"/>
+            </group>
+
+            <group name="gen_info" style="margin-top: 3%;">
+              <field name="categ_id" string="Product Category" options='{"no_open": True, "no_create": True}'/>
+              <field name="product_team_id" string="Product Team"/>
+              <label attrs="{'invisible': [('sale_ok', '=', False)]}" for="sale_delay" string="Shipping Delay"/>
+              <div attrs="{'invisible': [('sale_ok', '=', False)]}">
+                <field class="oe_inline" name="sale_delay" style="vertical-align:baseline"/> days</div>
+              <label attrs="{'invisible':[('type','=','service')]}" for="produce_delay" string="Manufacturing Delay"/>
+              <div attrs="{'invisible':[('type','=','service')]}">
+                <field class="oe_inline" name="produce_delay"/>days
+              </div>
+              <label for="version" string="Version"/>
+              <field name="version" nolabel="1"/>
+              <label for="warranty" string="Warranty"/>
+              <div>
+                <field class="oe_inline" name="warranty"/> months</div>
+            </group>
+          </group>
+          <group>
+            <group name="website" id="website_details" string="Website">
+              <field groups="website.group_multi_website" name="website_id" invisible="1"/>
+              <field name="public_categ_ids" string="Website Categories" widget="many2many_tags" />
+              <field name="website_selection"/>
+              <field name="alternative_product_ids" widget="many2many_tags" domain="[('id', '!=', active_id)]" string="Alternative Template"/>
+              <field name="accessory_product_ids" widget="many2many_tags"/>
+              <field domain="[('id', '!=', active_id)]" name="optional_product_ids" options="{'color_field': 'color'}" widget="many2many_tags" invisible="1"/>
+              <field name="inventory_availability" string="Availability" widget="selection" attrs="{'invisible': [('type', 'in', ['service', 'consu'])]}"/>
+            </group>
+            <group string="Point of Sale">
+              <field name="available_in_pos" string="Show in POS"/>
+              <field attrs="{'invisible': [('available_in_pos', '=', False)]}" name="pos_categ_id" string="POS Category"/>
+              <field attrs="{'invisible': [('available_in_pos', '=', False)]}" name="to_weight" string="Weigh with Scale"/>
+            </group>
+          </group>
+          <group>
+            <group name="note" string="Notes">
+              <field name="description_quote" string="Quotation Description" style=" margin-left: -2px;"/>
+              <field name="description_sale" string="Website Description"/>
+              <field invisible="1" name="sale_warn" string="Sales Warning"/>
+              <field name="sale_line_warn_msg"/>
+              <field name="description" string="Sales Comments"/>
+            </group>
+            <group name="email_template_and_project" invisible="1"/>
+          </group>
+          <group groups="product.group_product_pricelist" name="pricelists">
+                <div groups="product.group_product_pricelist" name="pricelist_item">
+                    <label for="item_ids" string="Pricing" style="font-style: italic;font-size: 1.5rem;color: #4c4c4c;font-weight: 100;"/>
+                    <field context="{'default_base':'list_price', 'default_applied_on' :'1_product'}" name="item_ids" nolabel="1">
+                        <tree editable="bottom" string="Pricelist Items">
+                            <field name="pricelist_id" required="1" string="Pricelist"/>
+                            <field name="fixed_price" required="1" string="Price"/>
+                            <field name="min_quantity"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field invisible="1" name="applied_on"/>
+                        </tree>
+                    </field>
+                </div>
+            </group>
+        </xpath>
+        <xpath expr="//page[@name='inventory']/group[2]" position="replace"/>
+        <xpath expr="//page[@name='inventory']/group[1]" position="replace">
+          <group name="inventory">
+            <group name="count" string="Count">
+              <label for="qty_available" string="Current Inventory"/>
+              <field readonly="1" name="qty_available" nolabel="1"/>
+              <label for="inventory_reserved" string="Reserved"/>
+              <field readonly="1" name="inventory_reserved" nolabel="1"/>
+              <label for="virtual_available" string="Current Available"/>
+              <field readonly="1" name="virtual_available" nolabel="1"/>
+              <label for="inventory_incoming" string="Incoming"/>
+              <field readonly="1" name="inventory_incoming" nolabel="1"/>
+              <label for="incomming_reserved" invisible="1"/>
+              <field readonly="1" name="incomming_reserved" nolabel="1" invisible="1"/>
+              <label for="inventory_future"/>
+              <field readonly="1" name="inventory_future" nolabel="1"/>
+              <label for="sales_per_day" string="Sales per Day"/>
+              <field readonly="1" name="sales_per_day" nolabel="1"/>
+              <label for="days_inventory" string="Days of Inventory"/>
+              <field readonly="1" name="days_inventory" nolabel="1"/>
+            </group>
+            <group name="characteristics" string="Characteristics">
+              <field name="uom_id" string="Stock Unit"/>
+              <field invisible="1" name="type" string="Product Type"/>
+              <field name="product_type" string="Product Type"/>
+              <field name="tracking"/>
+              <label for="use_time" invisible="1"/>
+              <div invisible="1">
+                <field class="oe_inline" name="use_time"/>
+                <span> days</span>
+              </div>
+              <label attrs="{'invisible': [('tracking', '=','none')]}" for="life_time" string="Expiration" style="     margin-left: 28px; "/>
+              <div attrs="{'invisible': [('tracking', '=','none')]}">
+                <field class="oe_inline" name="life_time" style="width: 13% !important;"/>
+                <span> days</span>
+              </div>
+              <label for="removal_time" invisible="1"/>
+              <div invisible="1">
+                <field class="oe_inline" name="removal_time"/>
+                <span> days</span>
+              </div>
+              <label attrs="{'invisible': [('tracking', '=','none')]}" for="alert_time" string="Warning" style="     margin-left: 28px; "/>
+              <div attrs="{'invisible': [('tracking', '=','none')]}">
+                <field class="oe_inline" name="alert_time" style="width: 13% !important;"/>
+                <span> days</span>
+              </div>
+              <field name="sale_ok"/>
+              <field name="purchase_ok"/>
+              <field name="can_be_expensed"/>
+              <field name="recurring_invoice" string="Subscription"/>
+            </group>
+            <group name="group_lots_and_weight1" string="Warehouse">
+              <field name="barcode"  string="Barcode"/>
+              <field name="hs_code" string="HS Code"  readonly="1"/>
+              <field name="property_stock_inventory" string="Primary Location" readonly="1"/>
+            </group>
+            <group name="routes" string="Routes" attrs="{'invisible':[('type', 'in', ['service', 'digital'])]}">
+              <field name="route_ids" widget="many2many_checkboxes" nolabel="1" style="margin: -35px 0 !important;"/>
+            </group>
+            <group name="routes" string="Routes" attrs="{'invisible':[('route_from_categ_ids', '=', [])]}">
+              <field name="route_from_categ_ids" readonly="1" widget="many2many_tags"/>
+            </group>
+            <group name="note" string="Notes" >
+              <field name="description_inventory" string="Inventory Description" />
+              <field name="inventory_comment" string="Inventory Comments" />
+            </group>
+          </group>
+          <group attrs="{'invisible':['|', ('type', 'not in', ['product', 'consu']), ('product_variant_count', '&gt;', 1)]}" colspan="4" groups="product.group_stock_packaging" name="packaging" string="Packaging">
+            <field context="{'tree_view_ref':'product.product_packaging_tree_view2',                              'form_view_ref':'product.product_packaging_form_view2'}" name="packaging_ids" nolabel="1"/>
+          </group>
+          </xpath>
+        <xpath expr="//page[@name='sales']/group[1]" position="replace">
+          <group>
+            <group name="packing" string="Packing">
+              <label for="packing_category" string="Packing Category" invisible="1"/>
+              <field string="Packing Category" name="packing_category" required="1"/>
+              <label for="dedicated_container_id" string="Dedicated Container" invisible="1"/>
+              <field string="Dedicated Container" name="dedicated_container_id" attrs="{'invisible': [('packing_category', '!=', 'alone')], 'required': [('packing_category', '=', 'alone')]}"/>
+              <label for="container_quantity" string="Quantity in Container" invisible="1"/>
+              <field string="Quantity in Container" name="container_quantity" attrs="{'invisible': [('packing_category', '!=', 'alone')], 'required': [('packing_category', '=', 'alone')]}"/>
+              <label for="product_surcharge" string="Surcharge per Item" invisible="1"/>
+              <field string="Surcharge per Item" name="product_surcharge"/>
+              <label for="line_surcharge" string="Surcharge per Line" invisible="1"/>
+              <field string="Surcharge per Line" name="line_surcharge"/>
+            </group>
+            <group name="dimensions" string="Measurements">
+              <label for="dim1" string="Dimension 1" invisible="1"/>
+              <field string="Dimension 1" name="dim1" attrs="{'required':['|',('packing_category','=','alone'),('packing_category','=','flowable')]}"/>
+              <label for="dim2" string="Dimension 2" invisible="1"/>
+              <field string="Dimension 2" name="dim2" attrs="{'required':['|',('packing_category','=','alone'),('packing_category','=','flowable')]}"/>
+              <label for="dim3" string="Dimension 3" invisible="1"/>
+              <field string="Dimension 3" name="dim3" attrs="{'required':['|',('packing_category','=','alone'),('packing_category','=','flowable')]}"/>
+              <field name="dim_uom_id" attrs="{'invisible': [('product_type', '!=', 'container')], 'required': [('product_type', '=', 'container')]}"/>
+              <label for="dim3_increment" string="Dimension 3 Increment" style="width: 110%;" invisible="1"/>
+              <field string="Each Additional 3" name="dim3_increment" />
+              <label for="cross_section" string="Cross Section" invisible="1"/>
+              <field string="Cross Section" name="cross_section"/>
+              <label for="volume" string="Volume" invisible="1"/>
+              <field string="Volume" name="volume"/>
+              <field name="weight" string="Weight" attrs="{'required': [('product_type', '=', 'container')]}"/>
+            </group>
+          </group>
+          <group>
+            <group name="group_lots_and_weight" string="Weight">
+              <field name="weight_time"/>
+              <field name="weight_time_increment"/>
+            </group>
+            <group name="time" string="Time">
+              <field name="time" />
+              <field name="time_increment"/>
+            </group>
+            <group name="freight" string="Freight">
+              <field name="nmfc_code" options="{'no_create': True, 'no_create_edit':True}"/>
+              <field name="nmfc_desc"/>
+              <field name="nmfc_class"/>
+            </group>
+            <group name="ocean" string="Ocean">
+              <field name="hts_code" options="{'no_create': True, 'no_create_edit':True}"/>
+              <field name="hts_desc" readonly="1"/>
+              <field name="container_qty"/>
+            </group>
+            <group name="ship_msg" string="Notes">
+              <field name="description_picking" string="Packlist Description" />
+              <field invisible="1" name="picking_warn" />
+              <field name="picking_warn_msg" string="Picking Warning" />
+              <field invisible="1" name="package_warn" />
+              <field name="packing_warn_msg" string="Packing Warning" />
+            </group>
+          </group>
+        </xpath>
+        <xpath expr="//page[@name='purchase']/group[1]" position="replace">
+          <group>
+            <group name="pricing" string="Pricing">
+              <label for="standard_price" groups="base.group_user"  string="Delivered Cost"/>
+              <div groups="base.group_user" name="standard_price_uom">
+                <field class="oe_inline" name="standard_price" options="{'currency_field': 'currency_id'}" widget="monetary"/>
+              </div>
+              <field name="markup" string="Markup" />
+              <field name="product_compute_quantity" readonly="1" string="Suggested List"/>
+              <field name="product_surcharge_purchase" readonly="1" string="Current List"/>
+              <field name="purchase_line_surcharge" readonly="1" string="Current/Suggested"/>
+            </group>
+            <group string="Notes">
+              <field name="description_purchase" string="PO Description"/>
+              <field invisible="1" name="purchase_line_warn" string="Purchase Warning"/>
+              <field name="purchase_line_warn_msg" string="Purchasing Warning"/>
+              <field name="purchase_receving_warn_msg"/>
+              <!-- <field name="purchase_inspect_warn_msg"/>
+              <field name="purchase_restock_warn_msg"/> -->
+              <field name="purchase_comment" string="Purchasing Comments"/>
+            </group>
+          </group>
+          <group attrs="{'invisible': [('product_variant_count','&lt;=',1)]}" name="variant_vendors" string="Vendors" invisible="1">
+            <field context="{'default_product_tmpl_id': context.get('product_tmpl_id', active_id)}" name="variant_seller_ids" nolabel="1">
+            </field>
+          </group>
+          <group name="other" string="Other" invisible="1">
+            <field name="purchase_requisition" string="Procurement"/>
+            <field groups="uom.group_uom" invisible="True" name="uom_po_id" options="{'no_create': True}" string="Purchase UOM"/>
+          </group>
+          <field name="source_ids" attrs="{'invisible': [('is_product_variant', '=', False)]}">
+            <tree create="false" editable="bottom">
+              <field name="default"/>
+              <field name="vendor_id" readonly="1"/>
+              <field name="name" readonly="1"/>
+              <field name="lst_price" readonly="1"/>
+              <field name="delivered" readonly="1"/>
+              <field name="currency_id" readonly="1"/>
+              <field name="product_unit" readonly="1"/>
+              <field name="product_minimum" readonly="1"/>
+              <field name="product_multiple" readonly="1"/>
+              <field name="effective" readonly="1"/>
+              <field name="expiration" readonly="1"/>
+              <field name="days" readonly="1"/>
+              <field name="sequence" widget="handle"/>
+            </tree>
+            <form string="Sources">
+              <div style='float:left; margin-left:10px;' invisible="1">
+                      <label for='default' string='Default' />
+                      <field name='default'/>
+                    </div>
+              <group>
+                <group string="Vendor" readonly="0">
+                  <field name="default"/>
+                  <field name="temp_default" invisible="1"/>
+                  <field name="vendor_id" readonly="0"/>
+                  <field name="vendor_product_id" readonly="0"/>
+                  <field name="vendor_desc" readonly="0"/>
+                  <field name="vendor_qty" readonly="0"/>
+                  <field name="uom_id" readonly="0"/>
+                  <field name="price" readonly="0"/>
+                  <field name="currency_id" readonly="0"/>
+                  <field name="minimum" readonly="0"/>
+                  <field name="multiple" readonly="0"/>
+                  <field name="effective" readonly="0"/>
+                  <field name="expiration" readonly="0"/>
+                  <field name="days" string="Days to Ship" readonly="0"/>
+                </group>
+                <group string="Company">
+                  <field name="company_id" readonly="0"/>
+                  <field name="product_id" string="Company Product" readonly="0"/>
+                  <field name="desc" readonly="0"/>
+                  <field name="qty" readonly="0"/>
+                  <field name="product_unit" readonly="0"/>
+                  <field name="lst_price" readonly="0"/>
+                  <field name="product_currency" readonly="0"/>
+                  <field name="product_minimum" readonly="0"/>
+                  <field name="product_multiple" readonly="0"/>
+                  <field name="product_effective" readonly="0"/>
+                  <field name="product_expiration" readonly="0"/>
+                  <field name="ship_days" string="Days to Ship" readonly="0"/>
+                </group>
+              </group>
+            </form>
+          </field>
+        </xpath>
+        <xpath expr="//page[@name='invoicing']/group" position="replace">
+          <group>
+            <group name="sales_accounts" string="Sales">
+              <field name="defered_revenue" string="Deferred Revenue"/>
+              <field name="accounting_type" string="Type"/>
+              <field name="property_account_income_id"/>
+            </group>
+            <group name="taxes" string="Taxes">
+              <label for="taxes_id" string="Customer Taxes"/>
+              <field name="taxes_id" nolabel="1" widget="many2many_tags"/>
+              <label for="supplier_taxes_id" string="Vendor Taxes"/>
+              <field name="supplier_taxes_id" nolabel="1" widget="many2many_tags"/>
+            </group>
+            <group name="purchasing_accounts" string="Purchasing">
+              <field name="asset_category_id" string="Asset Type"/>
+              <field name="property_account_expense_id"/>
+              <field name="property_account_creditor_price_difference" string="Price Difference"/>
+            </group>
+            <group name="invoicing" string="Other">
+              <field name="invoice_policy" widget="selection"/>
+              <field invisible="True" name="service_type" widget="radio"/>
+              <field invisible="1" name="hide_expense_policy"/>
+              <field attrs="{'invisible': [('hide_expense_policy', '=', True)]}" name="expense_policy" widget="radio" invisible="1"/>
+            </group>
+          </group>
+          <!--  <group name="accounting"></group>-->
+          <group>
+            <group name="notes">
+            <label for='accounting_warn_msg' string="Notes" style='font-style: italic;font-size: 1.5rem;color: #4c4c4c;font-weight:100;'/>
+              <field name='accounting_warn_msg' invisible="1"/>
+              <field name="accounting_warn_msg" style="width:237%;"/>
+              <field name="accounting_comment" style="width:237%;"/>
+            </group>
+          </group>
+        </xpath>
+      </field>
+    </record>
+    <record id="product.product_normal_form_view" model="ir.ui.view">
+      <field name="name">product.product.form</field>
+      <field name="model">product.product</field>
+      <field name="mode">primary</field>
+      <field eval="8" name="priority"/>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='description_sale']" position="after">
+            <field name="pro_description_sale" string="Product Website Description" widget="html"/>
+        </xpath>
+
+
+        <xpath expr="//field[@name='name']" position="replace">
+          <field class="oe_read_only" name="full_name" placeholder="Product Full Name"/>
+          <field class="oe_edit_only" name="name" placeholder="Product Name"/>
+        </xpath> 
+        <xpath expr="//field[@name='product_description']" position="replace">
+        </xpath>
+
+        <xpath expr="//label[@for='default_code']" position="replace"/>
+        <xpath expr="//field[@name='default_code']" position="replace">
+          <field name="default_code" string="Stock ID" attrs="{'required': [('product_type', '=', 'container')]}"/>
+          <!-- <label for="attribute_value_ids" string="Attribute Values"/> -->
+          <!-- <field groups="product.group_product_variant" name="attribute_value_ids" string="Attribute Values" widget="many2many_tags" readonly="1"/> -->
+        </xpath>
+        <xpath expr="//label[@for='master_product']" position="replace"/>
+        <xpath expr="//field[@name='master_product']" position="replace">
+          <field name="master_product" string="Template" readonly="1" options="{'no_open': True}"/> 
+        </xpath>
+        <xpath expr="//label[@for='currency_id']" position="replace"/>
+        <xpath expr="//field[@name='currency_id']" position="replace">
+          <field invisible="1" name="currency_id" string="Currency"/>
+        </xpath>
+        <xpath expr="//label[@for='version']" position="replace"/>
+        <xpath expr="//field[@name='version']" position="replace">
+          <field name="version"/>
+        </xpath>
+        <xpath expr="//field[@name='uom_id']" position="replace">
+          <field name="uom_id" string="Stock Unit" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='sales_uom_ids']" position="replace">
+          <field name="sales_uom_ids" readonly="1" widget="many2many_tags"/>
+        </xpath> 
+        <xpath expr="//field[@name='categ_id']" position="replace">
+          <field name="categ_id" string="Product Category" readonly="1"/>
+        </xpath>
+         <xpath expr="//field[@name='website_selection']" position="replace">
+          <field name="website_selection" string="Website Selection" readonly="1" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='public_categ_ids']" position="replace">
+          <field name="public_categ_ids" string="Website Categories"/>
+        </xpath>
+        <xpath expr="//field[@name='product_type']" position="replace">
+          <field name="product_type" string="Product Type" readonly="1"/>
+        </xpath>
+        <!-- Change in Inventory Tab -->
+        <!-- <xpath expr="//label[@for='inventory_reserved']" position="replace"/>
+        <xpath expr="//label[@for='inventory_available']" position="replace"/>
+        <xpath expr="//label[@for='inventory_incoming']" position="replace"/>
+        <xpath expr="//label[@for='inventory_future']" position="replace"/>
+        <xpath expr="//label[@for='sales_per_day']" position="replace"/>
+        <xpath expr="//label[@for='days_inventory']" position="replace"/>
+        <xpath expr="//label[@for='time']" position="replace"/>
+        <xpath expr="//label[@for='time_increment']" position="replace"/>
+        <xpath expr="//field[@name='inventory_reserved']" position="replace">
+          <field name="inventory_reserved" readonly="1" string="Reserved"/>
+        </xpath>
+        <xpath expr="//field[@name='inventory_available']" position="replace">
+          <field name="inventory_available" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='inventory_incoming']" position="replace">
+          <field name="inventory_incoming" string="Incoming" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='inventory_future']" position="replace">
+          <field name="inventory_future" string="Future Available" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='sales_per_day']" position="replace">
+          <field name="sales_per_day" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='days_inventory']" position="replace">
+          <field name="days_inventory" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='barcode']" position="attributes">
+          <attribute name="readonly">0</attribute>
+        </xpath> -->
+        <!-- Change in Shipping Tab -->
+        <xpath expr="//label[@for='packing_category']" position="replace"/>
+        <xpath expr="//label[@for='dedicated_container_id']" position="replace"/>
+        <xpath expr="//label[@for='container_quantity']" position="replace"/>
+        <xpath expr="//label[@for='product_surcharge']" position="replace"/>
+        <xpath expr="//label[@for='line_surcharge']" position="replace"/>
+        <!-- <xpath expr="//label[@for='weight']" position="replace"/> -->
+        <!-- <xpath expr="//label[@for='weight_increment']" position="replace"/> -->
+        <xpath expr="//label[@for='dim1']" position="replace"/>
+        <xpath expr="//label[@for='dim2']" position="replace"/>
+        <xpath expr="//label[@for='dim3']" position="replace"/>
+        <xpath expr="//label[@for='dim3_increment']" position="replace"/>
+        <xpath expr="//label[@for='cross_section']" position="replace"/>
+        <xpath expr="//label[@for='volume']" position="replace"/>
+        <xpath expr="//field[@name='packing_category']" position="replace">
+          <field name="packing_category" string="Packing Category"/>
+        </xpath>
+        <xpath expr="//field[@name='dedicated_container_id']" position="replace">
+          <field name="dedicated_container_id" string="Dedicated Container" 
+                attrs="{'invisible': [('packing_category', '!=', 'alone')], 'required': [('packing_category', '=', 'alone')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='container_quantity']" position="replace">
+          <field name="container_quantity" string="Quantity in Container"
+            attrs="{'invisible': [('packing_category', '!=', 'alone')], 'required': [('packing_category', '=', 'alone')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='product_surcharge']" position="replace">
+          <field name="product_surcharge" string="Surcharge per Item"/>
+        </xpath>
+        <xpath expr="//field[@name='line_surcharge']" position="replace">
+          <field name="line_surcharge" string="Surcharge per Line"/>
+        </xpath>
+        <xpath expr="//field[@name='dim1']" position="replace">
+          <field name="dim1" string="Dimension 1" attrs="{'required': [('product_type', '=', 'container')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='dim2']" position="replace">
+          <field name="dim2" string="Dimension 2" attrs="{'required': [('product_type', '=', 'container')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='dim3']" position="replace">
+          <field name="dim3" string="Dimension 3" attrs="{'required': [('product_type', '=', 'container')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='dim3_increment']" position="replace">
+          <field name="dim3_increment" string="Each additional 3"/>
+        </xpath>
+        <xpath expr="//field[@name='cross_section']" position="replace">
+          <field name="cross_section" string="Cross Section" attrs="{'required': [('product_type', '=', 'container')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='volume']" position="replace">
+          <field name="volume" string="Volume" attrs="{'required': [('product_type', '=', 'container')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='time_increment']" position="replace">
+          <field name="time_increment" string="Each Additional"/>
+        </xpath>
+        <xpath expr="//field[@name='time']" position="replace">
+          <field name="time"/>
+        </xpath>
+        <xpath expr="//label[@for='taxes_id']" position="replace"/>
+        <xpath expr="//label[@for='supplier_taxes_id']" position="replace"/>
+        <xpath expr="//field[@name='taxes_id']" position="replace">
+          <field name="taxes_id" widget="many2many_tags"/>
+        </xpath>
+        <xpath expr="//field[@name='supplier_taxes_id']" position="replace">
+          <field name="supplier_taxes_id" widget="many2many_tags"/>
+        </xpath>
+        <xpath expr="//group[@name='freight']" position="replace">
+          <group name="freight" string="Freight">
+            <field name="nmfc_code" options="{'no_create': True, 'no_create_edit':True}"/>
+            <field name="nmfc_desc" readonly="1"/>
+            <field name="nmfc_class" readonly="1"/>
+            <field name="truckload_qty"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="product.product_normal_action_sell" model="ir.actions.act_window">
+      <field name="name">Products</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">product.product</field>
+      <field name="view_mode">kanban,tree,form,activity</field>
+      <field name="view_type">form</field>
+      <field name="context">{"search_default_filter_to_sell":0}</field>
+      <field name="view_id" ref="product.product_product_tree_view"/> 
+      <field name="search_view_id" ref="product.product_search_form_view"/>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+             Create a new product variant
+        </p><p>
+             You must define a product for everything you sell, whether it's a physical product,
+             a consumable or a service you offer to customers.
+             The product form contains information to simplify the sale process:
+             price, notes in the quotation, accounting data, procurement methods, etc.
+        </p>
+      </field>
+    </record>
+    <record id="product_product_tree_view" model="ir.ui.view">
+      <field name="name">product.product.tree.inherit</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_product_tree_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//tree" position="attributes">
+          <attribute name="create">false</attribute>
+        </xpath>
+        <xpath expr="//field[@name='uom_id']" position="replace">
+          <field name="uom_id" invisible="1" /> 
+        </xpath>
+        <xpath expr="//field[@name='attribute_value_ids']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='default_code']" position="before">
+          <field name="sequence" widget="handle" /> 
+        </xpath>
+        <xpath expr="//field[@name='default_code']" position="replace">
+          <field name="default_code" string="Stock" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='name']" position="replace">
+          <field name="full_name" string="Product"/>
+        </xpath>
+        <!-- <xpath expr="//field[@name='lst_price']" position="replace">
+          <field name="lst_price" string="List"/>
+        </xpath> -->
+        <xpath expr="//field[@name='qty_available']" position="replace">
+          <field name="qty_available" string="Current"/>
+        </xpath>
+        <xpath expr="//field[@name='virtual_available']" position="replace">
+          <field name="virtual_available" string="Future"/>
+        </xpath>
+        <xpath expr="//field[@name='standard_price']" position="replace">
+          <field name="standard_price" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='barcode']" position="replace">
+          <field name="barcode" invisible="1" />
+        </xpath>
+        <xpath expr="//field[@name='barcode']" position="after">
+          <field name="categ_id" string="Category"/>
+        </xpath>
+        <xpath expr="//field[@name='categ_id']" position="after">
+          <field name="type" string="Type"/>
+          <field name="status_color" widget="color" options="{'readonly_mode': 'color'}"/>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- .....Product variant link button...... -->
+    <record id="template_variant_tree_view" model="ir.ui.view">
+      <field name="name">template.variant.tree</field>
+      <field name="model">product.product</field>
+      <field name="arch" type="xml">
+        <tree create="0">
+          <field name="full_name"/>
+          <field name="status"/>
+          <field name="status_color" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+    <record id="template_variant_tree_view_action" model="ir.actions.act_window">
+      <field name="name">Variants</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">product.product</field>
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="product_extension.template_variant_tree_view"/>
+      <field name="domain">[('product_tmpl_id','=',context.get('active_id', False))]</field>
+      <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+              No any product right
+          </p>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_form_view_procurement_button">
+      <field name="name">product.product.procurement</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//button[@name='%(stock.action_stock_rules_report)d']" position="replace">
+          <button type="action"
+                            name="%(stock.action_stock_rules_report)d"
+                            attrs="{'invisible':[('type', '!=', 'product')]}"
+                            class="oe_stat_button"
+                            context="{'default_product_tmpl_id': id}"
+                            groups="stock.group_stock_multi_locations">
+          <i class="icon-route" style="font-size:24px;"/>
+          <span class="o_stat_text o_stat_info">Routes</span>                   
+          </button>
+        </xpath>
+
+
+
+        <xpath expr="//header/button[@name='action_update_quantity_on_hand']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//header/button[@name='%(stock.action_product_replenish)d']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//form/header/button[@name='%(product.product_attribute_value_action)d']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//header[1]" position="inside">
+          <button name="approve_product" string="APPROVE"  attrs="{'invisible': ['|', ('status', 'in', ['private','public','inactive']) ]}" type="object" class="oe_highlight" />
+          <button name="publish_action" string="PUBLISH"    attrs="{'invisible': ['|', ('status', 'in', ['draft','public','inactive']) ]}" type="object" class="oe_highlight"/>
+          <button name="unpublish_action" string="UNPUBLISH" attrs="{'invisible': ['|', ('status', 'in', ['draft','private','inactive']) ]}" type="object" />
+          <button name="deactivate_action" string="DEACTIVATE" attrs="{'invisible': ['|', ('status', 'in', ['draft','inactive']) ]}" type="object" />
+          <button name="activate_action" string="ACTIVATE" attrs="{'invisible': ['|', ('status', 'in', ['draft','private','public']) ]}" type="object" />
+          <field name="status" widget="statusbar" statusbar_visible="draft,private,public,inactive" />
+        </xpath>
+
+
+        <!-- <xpath expr="//button[@name='%(stock.product_open_orderpoint)d']" position="replace">
+          <button type="action"
+            name="%(stock.product_open_orderpoint)d"
+            attrs="{'invisible':['|',('type', '!=', 'product'),('nbr_reordering_rules', '==', 1)]}"
+            class="oe_stat_button" icon="fa-redo-alt">
+            <field name="nbr_reordering_rules" widget="statinfo"/>
+          </button>
+        </xpath> -->
+
+        <!-- on hand quantity link button in product variant -->
+        <xpath expr="//button[@name='action_open_quants']" position="attributes">
+          <attribute name="invisible">0</attribute>
+        </xpath>
+
+        <!-- forcasted link button in product variant -->
+        <xpath expr="//button[@name='%(stock.action_stock_level_forecast_report_product)d']" position="attributes">
+          <attribute name="invisible">0</attribute>
+        </xpath>
+
+        <!-- Product Move link Button in product variant Invisible-->
+        <xpath expr="//button[@name='action_view_stock_move_lines']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- Product Move Link button in product variant appear-->
+        <xpath expr="//button[@name='action_view_stock_move_lines']" position="before">
+          <button type="object"
+                  name= "stock.action_view_stock_move_lines"
+                  attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}"
+                  class="oe_stat_button"
+                  groups="stock.group_stock_user">
+          <i class="icon-people-carry" style="font-size:24px;"/>
+          <span class="o_stat_text o_stat_info" style="display:inline-grid;padding-left: 5px;">Product Moves</span>                   
+          </button>
+        </xpath>
+
+        <xpath expr="//field[@name='nbr_reordering_rules']" position="attributes">
+          <attribute name="string">Reordering</attribute>
+        </xpath>
+
+        <button name="toggle_active" position="before">
+
+          <button type="action"
+              name="product_extension.product_supplier_type_action"
+              class="oe_stat_button"
+              icon="fa-user">
+              <field name="vendor_count" string="Vendors" widget="statinfo" />
+          </button>
+
+          <button type="object"
+              name="get_product_tasks"
+              class="oe_stat_button"
+              icon="fa-clock">
+              <field name="task_count" string="Tasks" widget="statinfo"/>
+          </button>
+
+          <button type="object"
+              name="action_project_count_temp"
+              class="oe_stat_button"
+              icon="fa-project-diagram">
+              <field name="project_count" string="Projects" widget="statinfo"/>
+          </button>
+
+          <button type="object"
+              name="action_inventory_count_temp"
+              class="oe_stat_button">
+              <i class="icon-warehouse-alt" style="font-size:22px;"/>
+              <field name="inventory_count" string="Inventory" widget="statinfo" style="display:inline-grid;padding-left: 5px;" />
+          </button>
+
+           <button type="object"
+              name="action_transfer_count_temp"
+              class="oe_stat_button">
+              <i class="icon-long-arrow-alt-right" style="font-size:27px;"/>
+              <field name="transfer_count" string="Transfer" widget="statinfo" />
+          </button>
+
+          <button type="object"
+              name="get_document_view"
+              class="oe_stat_button"
+              icon="fa-file">
+              <field name="document_count" string="Documents" widget="statinfo"/>
+          </button>
+
+          <button type="object"
+              name="action_website_temp"
+              class="oe_stat_button"
+              icon="fa-globe">
+              <field name="website" string="Websites" widget="statinfo" />
+          </button>
+
+
+        </button>  
+
+
+      </field>
+    </record>
+
+    <!-- Manufactured link Button in product variant -->
+    <record id="product_product_form_view_bom_button_inherite" model="ir.ui.view">
+      <field name="name">product.product.procurement.inherite</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="mrp.product_product_form_view_bom_button"/>
+      <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//button[@name='action_view_mos']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='bom_count']" position="attributes">
+          <attribute name="string">BOM</attribute>
+        </xpath>
+
+
+      </field>
+    </record>
+
+    <!-- Purchased link Button in product variant -->
+    <record id="product_normal_form_view_inherit_purchase" model="ir.ui.view">
+      <field name="name">product.product.purchase.order</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="purchase.product_normal_form_view_inherit_purchase"/>
+      <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//button[@name='action_view_po']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+      </field>
+    </record> 
+
+    <!-- Sold link Button in product variant -->
+    <record model="ir.ui.view" id="product_form_view_sale_order_button">
+      <field name="name">product.product.sale.order</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="sale.product_form_view_sale_order_button"/>
+      <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//button[@name='action_view_sales']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+      </field>
+    </record>   
+
+
+    <record id="product_template_form_view_inherit_website_sale_stock_inherite" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.website.sale.stock</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale_stock.product_template_form_view_inherit_website_sale_stock" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='inventory_availability']" position="attributes">
+                <attribute name="invisible">1</attribute>
+                
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_supplier_type_action" model="ir.actions.act_window">
+      <field name="name">Vendor Pricelists</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">product.supplierinfo</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="context">{'default_product_id': active_id}</field>
+      <field name="domain">[('product_id','=',context.get('product_id', active_id))]</field>
+    </record>
+  </data>
+</odoo>

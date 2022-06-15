@@ -1,0 +1,410 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="account_config_1" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Analytics</field>
+            <field name="name">Analytic Accounting</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_2" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Analytics</field>
+            <field name="name">Analytic Tags</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_3" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Analytics</field>
+            <field name="name">Budget Management</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_4" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Analytics</field>
+            <field name="name">Margin Analysis</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">module_product_margin</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_5" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Communication</field>
+            <field name="name">Email</field>
+            <field name="field_name">invoice_is_email</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_6" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Communication</field>
+            <field name="name">Postal Mail</field>
+            <field name="field_name">invoice_is_snailmail</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_7" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Communication</field>
+            <field name="name">Print</field>
+            <field name="field_name">invoice_is_print</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_8" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Currencies</field>
+            <field name="name">Main Currency</field>
+            <field name="field_name">currency_id</field>
+            <field name="field_type">string</field>
+            <!-- <field name="default_value_char">USD</field>
+            <field name="current_value_char">USD</field> -->
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="account_config_9" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Currencies</field>
+            <field name="name">Multi Currencies</field>
+            <field name="field_name">group_multi_currency</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_10" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Customer Payments</field>
+            <field name="name">Batch Payments</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="account_config_11" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Customer Payments</field>
+            <field name="name">Default Payment Confirmation</field>
+            <field name="field_type">selection</field>
+            <field name="field_name"></field>
+            <field name="default_value_char"></field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_12" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Customer Payments</field>
+            <field name="name">Enable Online Payments</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">module_enable_payment</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="account_config_13" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Customer Payments</field>
+            <field name="name">Followup Levels</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">module_account_reports_followup</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_14" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Dates</field>
+            <field name="name">Bank Reconciliation Threshold</field>
+            <field name="field_type">date</field>
+            <field name="field_name"></field>
+            <!-- <field name="default_value_date">12/20/2021</field>
+            <field name="current_value_date">12/20/2021</field> -->
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_15" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Dates</field>
+            <field name="name">Fiscal Year Ending</field>
+            <field name="field_type">date</field>
+            <!-- <field name="default_value_date">False</field>
+            <field name="current_value_date">False</field> -->
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_16" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Invoices</field>
+            <field name="name">Cash Rounding</field>
+            <field name="field_name">group_cash_rounding</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_17" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Invoices</field>
+            <field name="name">Default Incoterms</field>
+            <field name="field_name">incoterm_id</field>
+            <field name="field_type">string</field>
+            <field name="default_value_char"></field>
+            <field name="current_value_char"></field>
+        </record>
+
+        <record id="account_config_18" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Invoices</field>
+            <field name="name">Display Tax Each Line</field>
+            <field name="field_name">show_line_subtotals_tax_selection</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_19" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Invoices</field>
+            <field name="name">Use Products in Vendor Bills</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">group_products_in_bills</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_20" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Invoices</field>
+            <field name="name">Warnings</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name">group_warning_account</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_21" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Invoices</field>
+            <field name="name">Automatic Invoicing</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_22" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Invoices</field>
+            <field name="name">Sales Invoicing Policy</field>
+            <field name="field_type">selection</field>
+            <field name="default_value_char">invoice products shipped</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_23" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Multi-Companies</field>
+            <field name="name">Separate Accounting for Each Company</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="account_config_24" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Status</field>
+            <field name="name">Invoice Urgent Interval</field>
+            <field name="field_type">time</field>
+            <!-- <field name="default_value_time"></field>
+            <field name="current_value_time"></field> -->
+            <field name="source">CT</field>
+        </record>
+
+        <record id="account_config_25" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Status</field>
+            <field name="name">Invoice Warning Interval</field>
+            <field name="field_type">time</field>
+            <!-- <field name="default_value_time"></field>
+            <field name="current_value_time"></field> -->
+            <field name="source">CT</field>
+        </record>
+
+        <record id="account_config_26" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">Cash Basis</field>
+            <field name="field_name">cash_exigibility</field>
+            <field name="field_type">boolean</field>
+            <field name="field_name"></field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_27" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">Default Purchase Tax</field>
+            <field name="field_name">purchase_tax_id</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="account_config_28" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">Default Sales Tax</field>
+            <field name="field_name">sale_tax_id</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+        </record>
+
+        <record id="account_config_29" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">Rounding Method</field>
+            <field name="field_name">tax_calculation_rounding_method</field>
+            <field name="field_type">selection</field>
+            <field name="default_value_char">round per line</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_30" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">TaxCloud API ID</field>
+            <field name="field_type">string</field>
+            <field name="default_value_char"></field>
+            <field name="current_value_char"></field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_31" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">TaxCloud API Key</field>
+            <field name="field_type">string</field>
+            <field name="default_value_char"></field>
+            <field name="current_value_char"></field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_32" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">TaxCloud Default Category</field>
+            <field name="field_type">selection</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        <record id="account_config_33" model="system.config">
+            <field name="app_name">Accounting</field>
+            <field name="cat_name">Taxes</field>
+            <field name="name">Verify VAT Numbers</field>
+            <field name="field_name">vat_check_vies</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+    </data>
+</odoo>

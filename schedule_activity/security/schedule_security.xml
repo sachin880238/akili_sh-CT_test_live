@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.module.category" id="module_category_schedule">
+        <field name="name">Schedule</field>
+        <field name="sequence">6</field>
+    </record>
+    <record model="res.groups" id="schedule_user">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_schedule"/>
+    </record>
+    <record model="res.groups" id="schedule_manager">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_schedule"/>
+        <field name="implied_ids" eval="[(4, ref('schedule_activity.schedule_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+    <data noupdate="0">
+        <record id="base.default_user" model="res.users">
+            <field name="groups_id" eval="[(4,ref('schedule_activity.schedule_manager'))]"/>
+        </record>
+    </data>
+</odoo>

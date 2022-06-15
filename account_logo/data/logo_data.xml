@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Users logo data -->
+  <record model="ir.config_parameter" id="user_logo">
+    <field name="key">account_logo.users_icon</field>
+    <field name="value">True</field>
+  </record>
+  <record model="ir.config_parameter" id="user_logo_bg_color">
+    <field name="key">account_logo.users_icon_background_color</field>
+    <field name="value">#5C5C5C</field>
+  </record>
+  <record model="ir.config_parameter" id="user_logo_text_color">
+    <field name="key">account_logo.users_icon_text_color</field>
+    <field name="value">#292929</field>
+  </record>
+  <record model="ir.config_parameter" id="change_existing_user_logo">
+    <field name="key">account_logo.existing_users_icon</field>
+    <field name="value">True</field>
+  </record>
+
+  <!-- Customers logo data -->
+  <record model="ir.config_parameter" id="customer_logo">
+    <field name="key">account_logo.customers_icon</field>
+    <field name="value">True</field>
+  </record>
+  <record model="ir.config_parameter" id="customer_logo_bg_color">
+    <field name="key">account_logo.customers_icon_background_color</field>
+    <field name="value">#4C4C4C</field>
+  </record>
+  <record model="ir.config_parameter" id="customer_logo_text_color">
+    <field name="key">account_logo.customers_icon_text_color</field>
+    <field name="value">#212121</field>
+  </record>
+  <record model="ir.config_parameter" id="change_existing_customer_logo">
+    <field name="key">account_logo.existing_customers_icon</field>
+    <field name="value">True</field>
+  </record>
+
+  <!-- Company logo data -->
+  <record model="ir.config_parameter" id="company_logo">
+    <field name="key">account_logo.company_icon</field>
+    <field name="value">True</field>
+  </record>
+  <record model="ir.config_parameter" id="company_logo_bg_color">
+    <field name="key">account_logo.company_icon_background_color</field>
+    <field name="value">#424242</field>
+  </record>
+  <record model="ir.config_parameter" id="company_logo_text_color">
+    <field name="key">account_logo.company_icon_text_color</field>
+    <field name="value">#232323</field>
+  </record>
+  <record model="ir.config_parameter" id="change_existing_company_logo">
+    <field name="key">account_logo.existing_company_icon</field>
+    <field name="value">True</field>
+  </record>
+
+  <!-- Leads logo data -->
+  <record model="ir.config_parameter" id="lead_logo">
+    <field name="key">account_logo.leads_icon</field>
+    <field name="value">True</field>
+  </record>
+  <record model="ir.config_parameter" id="lead_logo_bg_color">
+    <field name="key">account_logo.leads_icon_background_color</field>
+    <field name="value">#424242</field>
+  </record>
+  <record model="ir.config_parameter" id="lead_logo_text_color">
+    <field name="key">account_logo.leads_icon_text_color</field>
+    <field name="value">#232323</field>
+  </record>
+  <record model="ir.config_parameter" id="change_existing_lead_logo">
+    <field name="key">account_logo.existing_leads_icon</field>
+    <field name="value">True</field>
+  </record>
+</odoo>

@@ -1,0 +1,65 @@
+<odoo>
+  <data>
+    <!-- Rules tree view -->
+    <record id="route_rule_type_tree" model="ir.ui.view">
+      <field name="name">route_rule_type_tree</field>
+      <field name="model">route.rule.type</field>  
+      <field name="arch" type="xml">
+        <tree string="Rules">
+          <field name="picking_type_id"/>
+          <field name="action"/>
+          <field name="origin"/>
+          <field name="destination"/>
+          <field name="sequence" widget="handle"/>
+        </tree>
+      </field> 
+    </record>
+    
+    <!-- Rules form view -->
+    <record id="route_rule_type_form" model="ir.ui.view">
+      <field name="name">route_rule_type_form</field>
+      <field name="model">route.rule.type</field>
+      <field name="arch" type="xml"> 
+        <form string="Rules">
+          <sheet>  
+            <div class="row col-sm-12">
+              <div>
+                <i class="fas fa-map-marker-alt" style="font-size: 40px;margin-left: 31%;"/>
+                <h1>
+                  <field name="name" nolabel='1'/>
+                </h1>
+              </div>
+            </div> 
+            <group>
+              <group string='General'>
+                <field name="picking_type_id"/>
+                <field name="action" string='Action'/> 
+                <field name="origin" />
+                <field name="destination" />
+                <field name="auto" />
+                <field name="procure_method"/>
+              </group>
+            </group> 
+          </sheet>
+        </form>
+      </field> 
+    </record>
+
+    <!-- Rules action -->
+    <record id="action_route_rule_type" model="ir.actions.act_window">
+      <field name="name">Rules</field>
+      <field name="res_model">route.rule.type</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field> 
+    </record>
+
+    <!-- Rules menuitem -->
+    <menuitem id="action_route_rule_type_temp"
+              action="action_route_rule_type" 
+              name="Rules"
+              parent="stock.menu_warehouse_config"
+              sequence="5"
+              groups="stock.group_adv_location"/>
+  </data>
+</odoo>

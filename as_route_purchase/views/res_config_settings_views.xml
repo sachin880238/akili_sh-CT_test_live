@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form_purchase_stock" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.purchase.stock</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[@data-key='purchase']" position="inside">
+        <h2>Shipping</h2>
+        <div class="row mt16 o_settings_container">
+          <div class="col-12 col-lg-6 o_setting_box" title="This allows to apply a special route on purchase order lines (e.g. dropshipping, make-to-order) in case of unusual order scenario. To be available in purchase orders, routes must have 'Purchase Order Line' option checked in their setup form.">
+            <div class="o_setting_left_pane">
+              <field name="group_route_po_lines"/>
+            </div>
+            <div class="o_setting_right_pane">
+              <label for="group_route_po_lines"/>
+              <div class="text-muted">
+                Apply special routes from orders (e.g. dropshipping, MTO)
+              </div>
+              <div class="content-group" attrs="{'invisible': [('group_route_po_lines','=',False)]}">
+                <div class="mt16">
+                  <button name="%(stock.action_routes_form)d" icon="fa-arrow-right" type="action" string="Routes for Pales Order Lines" class="btn-link" context="{'default_purchase_selectable': 1}"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

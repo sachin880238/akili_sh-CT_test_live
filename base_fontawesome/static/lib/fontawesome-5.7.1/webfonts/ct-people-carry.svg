@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
+<defs>
+<font id="ct-people-carry" horiz-adv-x="1000" >
+<font-face font-family="ct-people-carry" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="people-carry" unicode="&#xe910;" d="M250 663c52 0 94 42 94 93s-42 94-94 94-94-42-94-94 42-93 94-93z m750 0c52 0 94 42 94 93s-42 94-94 94-94-42-94-94 42-93 94-93z m246-727l-86 215-81-91-4-36 55-135c9-24 33-39 58-39 7 0 15 1 23 4 32 13 47 50 35 82z m-67 410l-36 156c-9 39-37 72-74 88-36 16-76 13-109-7-45-26-78-67-94-116l-22-66-31-20v188c0 17-15 31-32 31h-312c-17 0-31-14-31-31v-188l-32 20-22 66c-16 49-50 90-94 116-34 20-73 23-109 7-37-16-65-49-74-88l-36-156c-9-40 2-81 28-111l132-148 19-181c4-32 31-56 63-56 2 0 4 0 6 0 35 4 59 35 56 69l-20 182c-3 25-14 49-31 68l-84 96 34 137 14-40c8-24 23-46 47-64l100-63c9-6 24-9 34-10h312c10 1 25 4 34 10l100 63c24 18 40 40 48 64l13 40 34-137-84-96c-17-19-28-43-31-68l-20-182c-3-34 22-65 56-69 2 0 4 0 7 0 31 0 58 24 62 56l19 181 132 148c26 30 37 71 28 111z m-1089-195l-85-215c-13-32 2-69 34-82 33-12 69 4 82 35l54 135-4 36-81 91z" horiz-adv-x="1250" />
+</font>
+</defs>
+</svg>

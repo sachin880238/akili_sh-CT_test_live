@@ -1,0 +1,912 @@
+<odoo>
+    <template id="review_page" name="Review Page">
+        <style>
+
+            .mobile_phone_responsive{
+                display: none !important;
+            }
+
+            .col-md-12 {
+                flex: 0 0 100% !important;
+                max-width: 70% !important;
+                margin-left: 15%;
+            }
+
+            h1.mb32{
+                text-align: center;
+            }
+
+            .page_desc_div{
+                font-size: 20px;
+            }
+
+            .text-left.h4{
+                float: right !important;
+                font-size: 1rem;
+            }
+
+            .page_desc_div{
+                margin-top: -2%;
+                width: 100% !important;
+                margin-left: 0px !important;
+            }
+
+            .price_total{
+                margin-left: -26%;
+            }
+
+            @media only screen and (max-width:1199px){
+                .page_desc_div{
+                    margin-top: -2%;
+                }
+
+            }
+
+            @media only screen and (max-width:991px) {
+
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 1.8125rem !important;
+                }
+                .text-right.h4{
+                    margin-left: -45% !important;
+                }
+                
+            }
+            
+            @media only screen and (max-width:767px) {
+
+                .mobile_phone_responsive{
+                    display: block !important;
+                }
+
+                .normal_responsive{
+                    display: none !important;
+                }
+
+                .td-product_name{
+                    margin-left: 26%;
+                    margin-top: -18%;
+                    width:100%;
+                }
+
+                .text-right.td-qty{
+                    margin-right: 69%;
+                }
+
+                .quantity_multiple{
+                    margin-left: 24%;
+                    margin-right: -24%;
+                }
+
+                .text-right.td-price{
+                    margin-right: 40%;
+                    margin-top: -21px;
+                }
+
+                .equals_to{
+                    margin-left: 13%;
+                    margin-right: -12%;
+                }
+
+                .text-right.td-net-price{
+                    margin-top: -21px;
+                    margin-right: 15%;
+                }
+
+                .text-left.h4{
+                    display:inline-block;
+                    margin-top: -26%;
+                }
+
+                .website_order_attachment{
+                    margin-top: -5%;
+                }
+
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 80% !important;
+                    margin-left: 10%;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-dot {
+                    position: absolute !important;
+                    top: auto !important;
+                    left: 50% !important;
+                    bottom: auto !important;
+                    right: auto !important;
+                    margin: -0.375rem 0 0 -0.3125rem !important;
+                }
+
+                .progress-wizard-step.complete {
+                    display:block !important;
+                }
+                .progress-wizard-step.disabled{
+                    display:block !important;
+                }
+                #wizard-step10 .d-none {
+                    display: block !important;
+                }
+                #wizard-step20 .d-none {
+                    display: block !important;
+                }
+                #wizard-step30 .d-none {
+                    display: block !important;
+                }
+                #wizard-step40 .d-none {
+                    display: block !important;
+                }
+                #wizard-step50 .d-none {
+                    display: block !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 12px !important;
+                    margin: 17px 0px 4px 16px !important;
+                }
+
+               <!--  .progress-wizard .progress-wizard-step.complete .progress-wizard-dot:after{
+                    font-size: 1rem !important;
+                } -->
+
+                h1.mb32{
+                    margin-bottom: 7px !important;
+                    font-size: 22px;
+                    padding-top: 17%;
+                    margin-left: 3%;
+                }
+
+
+                .progress-wizard .progress-wizard-step{
+                    margin-top: 2.5rem !important;
+                }
+
+
+                .page_desc_div{
+                    font-size: 16px !important;
+                    margin-top: 0%;
+                }
+
+                .text-right.h4{
+                    margin-left: 0% !important;
+                    font-size: inherit;
+                }
+
+                .text-left.h4{
+                    float: none !important;
+                    font-size: inherit;
+                    margin-left: -28%;
+                }
+
+                .container{
+                    max-width: 574px !important;
+                }
+
+
+            }
+
+            @media only screen and (max-width:575px) {
+
+                .col-sm-9{
+                    margin-top: 4%;
+                }
+
+                .td-product_name {
+                    margin-left: 26%;
+                    margin-top: -18%;
+                    width: 80%;
+                }
+
+                .text-right.td-price {
+                    margin-right: 44%;
+                    margin-top: -21px;
+                }
+
+                .text-right.td-net-price {
+                    margin-top: -21px;
+                    margin-right: 23%;
+                }
+
+
+
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    margin-top: 16px !important;
+                }
+
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 3.5rem !important;
+                }
+                .td-img {
+                    display: block !important;
+                }
+
+                .page_desc_div{
+                    width: 90% !important;
+                    margin-left: 5% !important;
+                }
+
+                
+            }
+
+            @media only screen and (max-width:470px) {
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 85% !important;
+                    margin-left: 8%;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 21px !important;
+                }
+
+                #wizard-step20 .progress-wizard-steplabel {
+                    margin-left: 7px !important;
+                }
+
+                .col-sm-9 {
+                    margin-top: 1%;
+                }
+
+                .text-right.td-price {
+                    margin-right: 45%;
+                    margin-top: -21px;
+                }
+
+                .text-right.td-net-price {
+                    margin-top: -21px;
+                    margin-right: 24%;
+                }
+
+                .quantity_multiple {
+                    margin-left: 22%;
+                    margin-right: -21%;
+                }
+
+                .equals_to {
+                    margin-left: 10%;
+                    margin-right: -11%;
+                }
+            }
+
+            @media only screen and (max-width:425px) {
+
+                #wizard-step20 .progress-wizard-steplabel {
+                    margin-left: 2px !important;
+                }
+
+                progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 16px !important;
+                }  
+            }
+
+
+            @media only screen and (max-width:414px) {
+
+                progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 9px !important;
+                    margin: 17px 0px 4px 16px !important;
+                } 
+
+                .text-right.td-price {
+                    margin-right: 43%;
+                    margin-top: -21px;
+                }
+
+                .text-right.td-net-price {
+                    margin-top: -21px;
+                    margin-right: 20%;
+                }    
+            }
+
+            @media only screen and (max-width:400px) {
+                <!-- .col-md-12{
+                    width: 114% !important;
+                    margin-left: -8% !important;
+                } -->
+
+                h1.mb32{
+                    margin-bottom: 7px !important;
+                    font-size: 22px;
+                    padding-top: 20%;
+                    margin-left: 4%;
+                }
+            }
+
+            @media only screen and (max-width:360px) {
+                .text-right.td-qty {
+                    margin-right: 67% !important;
+                }
+
+                .text-right.td-price {
+                    margin-right: 38% !important;
+                    margin-top: -21px !important;
+                }
+
+                .text-right.td-net-price {
+                    margin-top: -21px !important;
+                    margin-right: 12% !important;
+                }
+            }
+
+
+        </style>
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container review_page">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <t t-call="website_sale.wizard_checkout">
+                                <t t-set="step" t-value="40"/>
+                                <t t-set="website_sale_order" t-value="website_sale_order"/>
+                            </t>
+                            <h1 class="mb32">Review</h1>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="mb16">
+                            <p class="page_desc_div">
+                                <b>Review everything below for accuracy.</b>make can make changes by selecting any step in the progress bar at the top of the page -- you won’t lose any data you have entered. When you are finished, select the <i>Send</i> button.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container mb16">
+                        <!-- <div class="row" style="margin-left:0px;">
+                           <div class="col-md-3 mt16 col-sm-3 col-xs-3">
+                                <b>Reference:</b>
+                                <span class="ml8">
+                                    <t t-esc="website_sale_order.client_order_ref"/>
+                                </span>
+                                
+                            </div>
+                            <div class="col-md-3 mt16 col-sm-3 col-xs-3" style="margin-left:25%;">
+                                <b>Priority:</b>
+                                <span class="ml8">
+                                    <t t-esc="website_sale_order.customer_priority"/>
+                                </span>
+                                
+                            </div> 
+                        </div>  -->   
+                        <div class="row">
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Date:</b>
+                                <!-- <t t-esc="website_sale_order.date_order"/> -->
+                                <sapn t-esc="datetime.datetime.strptime(str(website_sale_order.date_order), '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y')"/> 
+                                <!-- <span t-esc="datetime.datetime.strptime(o.sale_id.confirmation_date, '%Y-%m-%d %H:%M:%S').strftime('%B %d,%Y')"/> -->
+                                <!-- <span t-esc="time.strftime('%d %B %Y',time.strptime(data['form']['website_sale_order.date_order'],'%Y-%m-%d'))"/>  -->
+                            </div>
+
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Reference:</b>
+                                <span class="ml8">
+                                    <t t-esc="website_sale_order.client_order_ref"/>
+                                </span>
+                            </div>
+
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Account:</b>
+                                <span class="ml8">
+                                    <t t-esc="website_sale_order.partner_id.name"/><!-- t-options="dict(widget='contact', fields=['name'], no_marker=True)"/> -->
+                                </span>
+                            </div>
+
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Priority:</b>
+                                <span class="ml8">
+                                    <t t-esc="website_sale_order.customer_priority"/>
+                                </span>
+                            </div>
+
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Bill To:</b>
+                                <br/>
+                                <t t-esc="website_sale_order.partner_invoice_id" t-options="dict(widget='contact', fields=['name', 'address', 'phone','email'], no_marker=True)"/>
+                            </div>
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Ship To:</b>
+                                <br/>
+                                <t t-esc="website_sale_order.partner_shipping_id" t-options="dict(widget='contact', fields=['name', 'address', 'phone','email'], no_marker=True)"/>
+                            </div>
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Contact:</b>
+                                <br/>
+                                <t t-esc="website_sale_order.partner_contact_id" t-options="dict(widget='contact', fields=['name','phone','email'], no_marker=True)"/>
+                            </div>
+                            <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Comments:</b>
+                                <br/>
+                                <span class="ml8 comment" style="margin-left: 0% !important;">See my attached drawing and call me to discuss.</span>
+                            </div>
+
+                            <!-- <div class="col-md-6 mt16 col-sm-6 col-xs-6">
+                                <b>Account:</b>
+                                <br/>
+                                <t t-esc="website_sale_order.partner_id" t-options="dict(widget='contact', fields=['name', 'address','country_id', 'phone','email'], no_marker=True)"/>
+                            </div> -->
+                        </div>
+                    </div>
+                    <t t-if="error">
+                        <div class="col-md-12">
+                            <h4 class="text-danger" t-esc="error"/>
+                        </div>
+                    </t>
+                    <div class="container">
+                        <div class="review_page_div mb16">
+                            <div class= "normal_responsive">
+                                <table class="table cart-table">
+                                    <thead style="background: #f5f4f0;border: 1px solid #dee2e6;">
+                                        <tr>
+                                            <!-- <th class="td-img">Product</th>
+                                            <th></th>
+                                            <th class="text-center td-qty">Quantity</th>
+                                            <th class="text-center td-price">Unit</th>
+                                            <th class="text-center td-action">Extended</th> -->
+
+
+
+
+                                            <th width="100"/>
+                                            <th class="td-img">Product</th>
+                                            <th class="text-right" width="100">Quantity</th>
+                                            <th class="text-right" width="100">Unit</th>
+                                            <th class="text-right" width="100">Net</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-as="line" t-foreach="website_sale_order.website_order_line">
+                                            <tr>
+                                                <td t-if="line.product_id.product_tmpl_id" class='td-img'>
+                                                    <span t-field="line.product_id.image_small" t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
+                                                </td>
+                                                <td t-if="line.product_id.product_tmpl_id">
+                                                    <span>
+                                                        <!-- <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }"> -->
+                                                        <strong t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+                                                        <!-- </a> -->
+                                                    </span><br/>
+                                                    <span class="text-muted small">
+                                                        <t t-as="name_line" t-foreach="line.name.splitlines()[1:]">
+                                                            <span>
+                                                                <t t-esc="name_line"/>
+                                                            </span>
+                                                        </t>
+                                                    </span>
+                                                </td>
+                                                <td class="text-right" id="td-qty">
+                                                    <span>
+                                                        <t t-esc="int(float(line.product_uom_qty))"/>
+                                                    </span>
+                                                </td>
+                                                <td class="text-right" id="td-price" name="price">
+                                                    <span>$
+                                                        <t t-esc="line.price_unit"/></span>
+                                                </td>
+                                                <td class="text-right" id="td-qty">
+                                                    <span>$
+                                                        <t t-esc="line.price_subtotal"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class= "mobile_phone_responsive">
+                                <table class="table cart-table">
+                                    <thead style="background: #f5f4f0;border: 1px solid #dee2e6;">
+                                        <tr>
+
+                                            <!-- <th width="100"/>
+                                            <th class="td-img">Product</th>
+                                            <th class="text-right" width="100">Quantity</th>
+                                            <th class="text-right" width="100">Unit</th>
+                                            <th class="text-right" width="100">Net</th> -->
+                                        </tr><hr/>
+                                    </thead>
+                                    <tbody>
+                                        <t t-as="line" t-foreach="website_sale_order.website_order_line">
+                                            <tr>
+                                                <div class="col-sm-3">
+                                                    <div t-if="line.product_id.product_tmpl_id" class='td-img'>
+                                                        <span t-field="line.product_id.image_small" t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9">    
+                                                    <div t-if="line.product_id.product_tmpl_id" class="td-product_name">
+                                                        <span>
+                                                            <!-- <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }"> -->
+                                                            <strong t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+                                                            <!-- </a> -->
+                                                        </span><br/>
+                                                        <span class="text-muted small">
+                                                            <t t-as="name_line" t-foreach="line.name.splitlines()[1:]">
+                                                                <span class="product_description">
+                                                                    <t t-esc="name_line"/>
+                                                                </span>
+                                                            </t>
+                                                        </span>
+                                                    </div><br/>
+
+
+                                                    <div class="text-right td-qty" id="td-qty">
+                                                        <span>
+                                                            <t t-esc="int(float(line.product_uom_qty))"/>
+                                                        </span>
+                                                        <span class="quantity_multiple">x</span>
+                                                    </div>
+
+
+                                                    
+                                                    <div class="text-right td-price" id="td-price" name="price">
+                                                        <span>$
+                                                            <t t-esc="line.price_unit"/>
+                                                        </span>
+                                                        <span class="equals_to">=</span>
+                                                    </div>
+
+
+                                                    <div class="text-right td-net-price" id="td-qty">
+                                                        <span>$
+                                                            <t t-esc="line.price_subtotal"/>
+                                                        </span>
+                                                    </div>
+                                                </div>    
+                                            </tr>
+                                            <hr class="between"/>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="row" style="float: right;">
+                                <!-- <div class="col-md-10"><b>Note: Prices do not include sales tax, if applicable, or shipping</b>
+                                </div> -->
+                                <div> 
+                                    <span class="text-left h4">
+                                        <b class="price_total">Total:</b>
+                                        <span t-field="website_sale_order.amount_untaxed" t-options="{'widget': 'monetary','from_currency': website_sale_order.pricelist_id.currency_id,'display_currency': website.currency_id}"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" t-if="website_sale_order.customer_priority">
+                        <!-- <div class="col-md-12">
+                            <b>Priority:</b>
+                            <span class="ml8">
+                                <t t-esc="website_sale_order.customer_priority"/>
+                            </span>
+                        </div> -->
+                        <!-- <div class="col-md-12">
+                            <b>Reference:</b>
+                            <span class="ml8">
+                                <t t-esc="website_sale_order.client_order_ref"/>
+                            </span>
+                        </div> -->
+<!--                         <div class="col-md-12">
+                            <b>Comments:</b>
+                            <span class="ml8">See my attached drawing and call me to discuss.</span>
+                        </div> -->
+                        <t t-if="order_attachments" id="attta1">
+                            <div class="website_order_attachment">
+                                <b>Attacments :</b>
+                                <t t-as="attachment" t-foreach="order_attachments">
+                                    <t t-if="len(order_attachments) == 1">
+                                        <span class="ml8">
+                                            <a t-att-href="'/download-report/%s' % attachment.id">
+                                                <t t-esc="attachment.datas_fname"/>
+                                            </a>
+                                        </span>
+                                    </t>
+                                    <t t-if="len(order_attachments) > 1">
+                                        <span class="ml8">
+                                            <a t-att-href="'/download-report/%s' % attachment.id">
+                                                <t t-esc="attachment.datas_fname"/>
+                                            </a>
+                                        </span>,
+                                    </t>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="container mt16">
+                    <form class="review_send_quotation" method="post" name="/shop/review">
+                        <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                        <input name="submitted" type="hidden" value="1"/>
+                        <div class="clearfix"/>
+                        <div class="btn-address-custom">
+                            <a class="btn btn-default btn-primary mb32" href="/extra/custom_info" style="font-weight:600;">Back</a>
+                            <button class="btn btn-default btn-primary float-right mb32 a-submit a-submit-loading" t-if="website_sale_order.customer_priority" type="submit" style="font-weight:600;">Send
+                        </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="confirm_order_custom" name="Confirm order Page">
+        <style>
+
+            .col-md-12 {
+                flex: 0 0 100% !important;
+                max-width: 70% !important;
+                margin-left: 15%;
+            }
+
+            h1.mb32{
+                text-align: center;
+            }
+
+
+            .page_desc_div{
+                font-size: 20px;
+                margin-top: -2%;
+                width: 96%;
+                margin-left: 2%;
+            }
+
+
+            @media only screen and (max-width:1199px){
+                .page_desc_div{
+                    margin-top: -2%;
+                }
+
+            }
+
+            @media only screen and (max-width:991px) {
+
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 1.8125rem !important;
+                }
+            }
+            
+            @media only screen and (max-width:767px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 80% !important;
+                    margin-left: 10%;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-dot {
+                    position: absolute !important;
+                    top: auto !important;
+                    left: 50% !important;
+                    bottom: auto !important;
+                    right: auto !important;
+                    margin: -0.375rem 0 0 -0.3125rem !important;
+                }
+
+                .progress-wizard-step.complete {
+                    display:block !important;
+                }
+                .progress-wizard-step.disabled{
+                    display:block !important;
+                }
+                #wizard-step10 .d-none {
+                    display: block !important;
+                }
+                #wizard-step20 .d-none {
+                    display: block !important;
+                }
+                #wizard-step30 .d-none {
+                    display: block !important;
+                }
+                #wizard-step40 .d-none {
+                    display: block !important;
+                }
+                #wizard-step50 .d-none {
+                    display: block !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 14px !important;
+                    margin: 17px 0px 4px 16px !important;
+                }
+
+                <!-- .progress-wizard .progress-wizard-step.complete .progress-wizard-dot:after{
+                    font-size: 1rem !important;
+                }
+ -->
+                h1.mb32{
+                    margin-bottom: 7px !important;
+                    font-size: 22px;
+                    padding-top: 23%;
+                    margin-left: 20;
+                }
+
+
+                .progress-wizard .progress-wizard-step{
+                    margin-top: 2.5rem !important;
+                }
+
+
+                .page_desc_div{
+                    font-size: 16px !important;
+                    margin-top: 0%;
+                    margin-top: -3%;
+                }
+
+
+            }
+
+            @media only screen and (max-width:575px) {
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    margin-top: 16px !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 13px !important;
+                    margin: 17px 0px 4px 16px !important;
+                }
+
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 3.5rem !important;
+                }
+
+                .page_desc_div {
+                    font-size: 16px !important;
+                    margin-top: -3%;
+                    width: 84%;
+                    margin-left: 8%;
+                }
+                
+            }
+
+            @media only screen and (max-width:470px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 85% !important;
+                    margin-left: 8%;
+                }
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 12px !important;
+                    margin: 17px 0px 4px 14px !important;
+                }
+            }
+
+            @media only screen and (max-width:440px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 90% !important;
+                    margin-left: 5%;
+                }
+            }
+
+            @media only screen and (max-width:425px) {
+
+                #wizard-step20 .progress-wizard-steplabel {
+                    margin-left: -1px !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 12px !important;
+                    margin: 17px 0px 4px 16px !important;
+                }
+            }    
+
+
+            @media only screen and (max-width:400px) {
+
+                h1.mb32{
+                    margin-bottom: 7px !important;
+                    font-size: 22px;
+                    padding-top: 20%;
+                    margin-left: 5%;
+                }
+            }
+
+            @media only screen and (max-width:390px) {
+
+                #wizard-step20 .progress-wizard-steplabel {
+                    margin-left: 2px !important;
+                }
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 92% !important;
+                    margin-left: 3%;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 16px !important;
+                }
+
+            }    
+
+        </style>
+        <t t-call="website.layout">
+            <div id="wrap" style="margin-top: -28px;">
+                <div class="container oe_website_sale confirmation_page">
+                    <div class="col-md-12 mt32">
+                        <div class="wizard">
+                        <div class="progress-wizard">
+                            <a class="no-decoration" href="/shop/cart">
+                                <div id="wizard-step10" class="progress-wizard-step complete">
+                                    <div class="progress-wizard-bar d-none d-md-block"></div>
+                                    <span class="progress-wizard-dot d-none d-md-inline-block"></span>
+                                    <div class="text-center progress-wizard-steplabel">Cart</div>
+                                </div>
+                            </a>
+                            <a class="no-decoration" href="#">
+                                <div id="wizard-step20"  class="progress-wizard-step complete">
+                                    <div class="progress-wizard-bar d-none d-md-block"></div>
+                                    <span class="progress-wizard-dot d-none d-md-inline-block"></span>
+                                    <div class="text-center progress-wizard-steplabel">Addresses</div>
+                                </div>
+                            </a>
+                            <a class="no-decoration" href="#">
+                                <div id="wizard-step30" class="progress-wizard-step complete">
+                                    <div class="progress-wizard-bar d-none d-md-block"></div>
+                                    <span class="progress-wizard-dot d-none d-md-inline-block"></span>
+                                    <div class="text-center progress-wizard-steplabel">Details</div>
+                                </div>
+                            </a>
+                            <a class="no-decoration" href="#">
+
+                                <div id="wizard-step40" class="progress-wizard-step complete">
+                                    <div class="progress-wizard-bar d-none d-md-block"></div>
+                                    <span class="progress-wizard-dot d-none d-md-inline-block"></span>
+                                    <div class="text-center progress-wizard-steplabel">Review</div>
+                                </div>
+                            </a>
+                            <a class="no-decoration" href="#">
+                                <div id="wizard-step50" class="progress-wizard-step active">
+                                    <div class="progress-wizard-bar d-none d-md-block"></div>
+                                    <span class="progress-wizard-dot d-none d-md-inline-block"></span>
+                                    <div class="text-center progress-wizard-steplabel">Confirmation</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                        <!-- <t t-call="website_sale.wizard_checkout">
+                            <t t-set="step" t-value="50"/>
+                            <t t-set="website_sale_order" t-value="website_sale_order"/>
+                        </t> -->
+                        <h1 class="mb32">Confirmation</h1>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="row mt32">
+                        <div class="page_desc_div">
+                            <b>We have received your request for a quotation.</b> We will review your product list,respond to any questions, verify stock, evaluate shipping, and email a quotation as soon as possible. When you receive the quotation you can easily convert it to an order, or you can just save it for the future. To see a copy of what you sent us,select the View button below.</div>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="row mt32 d-block" style="text-align: center">
+                        <a class="btn btn-default btn-primary mb32" href="/my/sent_carts" style="font-weight:600;text-align: center">View</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="plivo_connection_server_form">
+        <field name="name">Plivo Connection</field>
+        <field name="model">plivo.connection</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="SFTP Connection" >
+                <!-- <header>
+                    <button name="test_connection" type='object' class="btn-primary o_sale_confirm" string='Test Connection'/>
+                </header> -->
+                <sheet>  
+                    <div class="oe_horizontal_separator oe_clear ">
+                        plivo Account Settings
+                    </div>
+                    <group>
+                        <label for="name"/>
+                        <h3>
+                            <field name="name" colspan="4" />
+                        </h3>
+                        <label for="src"/>
+                        <h3>
+                            <field name="src" placeholder="Sender Mobile number" required="1" />
+                        </h3>
+                        <label for="message"/>
+                        <h3>
+                            <field name="message" colspan="4" placeholder="OTP Message." />
+                        </h3>
+                        <label for="email"/>
+                        <h3>
+                            <field name="email" colspan="4" placeholder="OTP Email message." />
+                        </h3>
+                        <field name="credential"/>
+                    </group>
+                    <notebook>
+                        <page string="Credentials" attrs="{'invisible': [('credential','!=', True)]}">
+                            <group>
+                                <group>
+                                    <label for="user"/>
+                                    <h3>
+                                        <field name="user" placeholder="Example: Your AUTH_ID" required="1" />
+                                    </h3>
+                                </group>
+                                <group>
+                                    <label for="password"/>
+                                    <h3>
+                                        <field name="password" placeholder="Example: Your Auth_TOKEN" required="1" />
+                                    </h3>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>  
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="plivo_connection_server_tree">
+        <field name="name">Plivo Connection</field>
+        <field name="model">plivo.connection</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string='Database Information'>
+                <field name="name"></field> 
+                <field name="user"></field>
+                <field name="password" password="True"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="plivo_connection_server">
+        <field name="name">Plivo Connection</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">plivo.connection</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>   
+        <field name="view_id" ref="plivo_connection_server_tree"/>
+    </record>
+   
+    <menuitem 
+        id="menu_plivo_connection"
+        name="Plivo settings"
+        parent="base.menu_security"
+        sequence="8"
+        action="plivo_connection_server"
+    />
+
+    <record id="partner_mobile_otp_tree" model="ir.ui.view">
+        <field name="name">mobile.otp.tree</field>
+        <field name="model">mobile.otp</field> 
+        <field name="arch" type="xml">
+            <tree string="Descriptions" editable='bottom'>
+                <field name="name"/>
+                <field name="send_to"/>
+                <field name="create_date"/>
+                <field name="validity"/>
+                <field name="expiry_date"/>
+                <field name="response"/>
+                <field name="email"/>
+                <field name="user_id"/>
+                <button name="send_otp_email"  type="object" class="oe_highlight" string="Send"  />
+                <button name="action_otp_send"  type="object" class="oe_highlight" string="Send"  />
+            </tree>
+        </field>
+    </record>
+
+    <record id="partner_mobile_otp_form" model="ir.ui.view">
+        <field name="name">mobile.otp.form</field>
+        <field name="model">mobile.otp</field>
+        <field name="arch" type="xml">
+            <form string="Descriptions">
+                <sheet>                   
+                    <group col='4'>
+                        <field name="name" colspan='2'/>
+                        <field name="send_to" colspan='2'/>
+                    </group>  
+                </sheet>
+            </form>
+        </field>
+    </record>
+  
+    <record id="partner_mobile_otp_action" model="ir.actions.act_window">
+        <field name="name">Mobile OTP</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mobile.otp</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field> 
+        <!--<field name="domain">[('for_vendor','=',False)]</field>
+        <field name="view_id" ref="partner_lead_desc_tree"/> --> 
+    </record>
+ 
+    <menuitem
+        id="partner_lead_description"
+        name="Mobile OTP"
+        parent="base.menu_security"
+       action="partner_mobile_otp_action"
+       sequence="9"
+    />
+ 
+</odoo>

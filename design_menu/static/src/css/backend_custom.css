@@ -1,0 +1,207 @@
+
+/* start Samrt button customization */
+
+.o_form_view .oe_button_box {
+    position: relative;
+    display: block;
+    /*margin:-16px;*/
+    float:none;
+    text-align: right;
+    width: 100%;
+    text-align: right !important;
+    box-shadow: none;
+    margin-bottom: 10px;
+}
+
+.o_form_label {
+    font-weight: bold;
+    margin-right: 0px;
+    height: 22px;
+}
+
+.o_form_view .oe_avatar {
+    float: left;
+}
+
+.o_form_view .oe_button_box .btn.oe_stat_button {
+        color: #2d2d2d;
+        font-family: arial;
+        /*border-right: 1px solid;
+        /*border-left: 0px !important;*/
+        border-color: #bfbfbf !important;
+        width: 138px;
+        height: 50px;
+}
+
+.o_form_view .oe_button_box .btn.oe_stat_button > .o_stat_info .o_stat_value {
+    color:#454647 !important;
+    text-align: center;
+
+}
+.dropdown-header {
+    font-size: 1rem;
+                  }
+
+.o_form_view .oe_button_box .btn.oe_stat_button > .custom_warning_alert .o_stat_value {
+    color:red !important;
+}
+
+/* end Samrt button customization */
+
+ /*start partner image customization*/
+.o_form_view .partner_img > img {
+    display: -webkit-inline-box !important;
+}
+
+/*end parner image customization*/
+
+/* Satrt search_view customization */
+
+
+.o_searchview_more {
+     display: none;
+     padding-top: 2%;  
+}
+
+.o_search_options{
+    display: block;
+}
+
+/* End search_view customization */
+
+/*LIST VIEW CSS*/
+
+.o_list_view th{
+    padding: 8px 4px !important;
+}
+/*.o_list_view th{
+    border: 1px solid #bec5c5 !important;
+}*/
+
+/*MENU ICON*/
+.o_main_navbar > .o_user_menu_our > .fa{
+    color: white;
+    font-size: 21px !important;
+}
+li.o_user_menu_our{
+    margin-right: 10px;
+    margin-top: 12px;
+}
+.o_form_view.o_form_editable .o_form_field .o_list_view td.o_readonly {
+    background-color: initial !important;
+}
+
+.o_form_button_cancel {
+    color: #fff;
+    background-color: #7C7BAD;
+    border-color: #7C7BAD;
+}
+
+.o_form_button_cancel:hover {
+  color: #fff;
+  background-color: #7371ad;
+  border-color: #7C7BAD;
+}
+
+
+.breadcrumb {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0;
+    margin-bottom: 0;
+    list-style: none;
+    background-color: white;
+    border-radius: 3px;
+    border-bottom: 1px solid #cccccc;
+}
+
+/*@media (max-width: 767.98px){
+.o_control_panel .o_cp_searchview, .o_control_panel .o_cp_right {
+    flex-basis: 50%;
+}
+}*/
+.o_control_panel > .o_cp_searchview {
+    width: 47%;
+    margin-left: 3%;
+    min-height: 25px;
+    margin-top: 0.5%;
+}
+
+
+.o_control_panel > .breadcrumb {
+    width: 100%;
+    font-size: 18px;
+}
+
+/*.o_control_panel > .o_cp_left {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    margin-top: 2%;
+    justify-content: space-between;
+    width: 48%;
+    margin-left: -18%;
+}
+*/
+
+.btn-group, .btn-group-vertical {
+    width: 33%;
+}
+
+.o_control_panel > .o_cp_left > .o_cp_sidebar {
+    padding-right: 2px;
+    width: 83%;
+    margin-right: -67%;
+}
+
+/* Menu Items */
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #212529;
+    text-decoration: none;
+    background-color: #ffffff; 
+    font-weight: bold;
+
+}
+/*.dropdown-item.active, .dropdown-item:active {
+    color: #212529;
+    text-decoration: none;
+     background-color: #dee2e6; 
+}*/
+
+.text-primary {
+    color: #2b06f5 !important;
+}
+
+/*.o_main_navbar > ul > li > a, .o_main_navbar > ul > li > label {
+    height: 46px;
+    padding: 0 10px;
+    color: #863a3a;
+    line-height: 46px;
+}*/
+
+./*o_main_navbar > ul > li > a:hover, label:hover{ 
+
+    background-color:#deded0;
+            }*/
+
+.o_main_navbar .show .dropdown-toggle {
+    background-color: #deded0;
+}
+
+.o_main_navbar > a:hover, .o_main_navbar > a:focus, .o_main_navbar > button:hover, .o_main_navbar > button:focus {
+    background-color: #deded0;
+    
+}
+
+html .o_web_client > .o_main .o_main_content .o_content > .o_view_controller {
+    position: absolute;
+    top: 0;
+    width: 98%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+}

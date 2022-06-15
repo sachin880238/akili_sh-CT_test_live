@@ -1,0 +1,17 @@
+.move_container_barcode {
+    width : 35% !important;
+    }
+.move_container_type {
+	width : 62% !important;
+    margin-left: 3% !important;
+}
+.move_line_title_image{
+	max-width: 100% !important;
+	width: 100% !important
+}
+.move_line_title{
+	margin: 0.5% 0% 0% 1%;
+}
+.move_to_location{
+	margin-left: 1% !important;
+}

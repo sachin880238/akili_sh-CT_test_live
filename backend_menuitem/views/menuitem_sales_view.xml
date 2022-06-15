@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="base.action_res_groups" model="ir.actions.act_window">
+      <field name="name">Permissions</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.groups</field>
+      <field name="view_type">form</field>
+      <field name="context">{'search_default_no_share': 1}</field>
+    </record>
+
+    <record id="action_discuss" model="ir.actions.client">
+      <field name="name">Messages</field>
+      <field name="tag">mail.discuss</field>
+      <field name="res_model">mail.channel</field>
+      <field name="params" eval="&quot;{
+            'default_active_id': 'mailbox_inbox'
+        }&quot;"/>
+    </record>
+    
+    <!-- Main menus -->
+    <menuitem
+      id="account.menu_finance"
+      name="Accounting"
+      sequence="40"/>
+
+    <menuitem
+      id="sale.sale_menu_root"
+      name="Sales"
+      sequence="7"
+      groups="sales_team.group_sale_manager,sales_team.group_sale_salesman,sales_team.group_sale_salesman_all_leads"/>
+
+    <menuitem
+      id="stock.menu_stock_root"
+      name="Inventory"
+      sequence="30"/>
+
+    <menuitem
+      id="mail.menu_root_discuss"
+      name="Messages"
+      action="action_discuss"
+      sequence="1"
+      groups="base.group_user"
+      web_icon="mail,static/description/icon.png"
+      active="0"/>
+
+<!-- Calendar app main menu -->
+    <menuitem
+        id="calendar.mail_menu_calendar"
+        name="Calendar"
+        sequence="2"
+        action="calendar.action_calendar_event"
+        web_icon="calendar,static/description/icon.png"
+        groups="base.group_user"
+        active="0"/>
+
+<!-- Documents app main menu -->
+    <menuitem
+        id="main_menu_documents"
+        name="Documents"
+        action="calendar.action_calendar_event"
+        />
+        
+<!-- Marketing app main menu -->
+    <menuitem
+        id="main_menu_marketing"
+        name="Marketing"
+        action="calendar.action_calendar_event"
+        />
+
+
+    <menuitem 
+      id="point_of_sale.menu_point_root"
+      name="POS"
+      sequence="20"
+      groups="point_of_sale.group_pos_manager,point_of_sale.group_pos_user"/>
+
+    <menuitem
+      id="project.menu_main_pm"
+      name="Projects"
+      sequence="50"/>
+
+    <menuitem
+      id="base.menu_administration"
+      name="System"
+      sequence="500"/>
+
+    <!-- Sales app main menus -->
+    <menuitem
+      id="menu_customer"
+      name="Customers"
+      parent="sale.sale_menu_root"
+      sequence="2"/>
+
+    <menuitem
+      id="menu_transactions"
+      name="Transactions"
+      parent="sale.sale_menu_root"
+      sequence="3"/>
+
+    <menuitem
+      id='sale.product_menu_catalog'
+      name='Products'
+      parent='sale.sale_menu_root'
+      sequence="4"/>
+
+    <menuitem
+      id="sale.menu_sale_report"
+      name="Reports"
+      parent="sale.sale_menu_root"
+      sequence="5"/>
+
+    <!-- Sales Customers sub-menus -->
+    <menuitem
+      id="sale.res_partner_menu"
+      name="Accounts"
+      parent="menu_customer"
+      action="account_contacts.action_partner_tree_inherit"
+      sequence="1"
+      groups="sales_team.group_sale_salesman"/>
+
+    <menuitem
+      id="res_partner_addresses_menu"
+      parent="menu_customer"
+      action="account_contacts.act_open_address_res_partner_view"
+      sequence="2"
+      groups="sales_team.group_sale_salesman"/>
+
+    <menuitem
+      id="crm.menu_crm_leads"
+      name="Leads"
+      parent="menu_customer"
+      action="crm.crm_lead_all_leads"
+      sequence="3"
+      groups="crm.group_use_lead"/>
+
+    <menuitem
+      id="crm.menu_crm_opportunities"
+      name="Opportunities"
+      parent="menu_customer"
+      action="crm.action_your_pipeline"
+      sequence="4"/>
+
+    <!-- Sales Transactions sub-menus -->
+    <menuitem
+      id="so_workflow.menu_saved_cart_orders"
+      parent="menu_transactions"
+      action="so_workflow.action_saved_carts_orders"
+      sequence="0"/>
+    
+    <menuitem
+      id="sale.menu_sale_quotations"
+      parent="menu_transactions"
+      action="sale.action_quotations_with_onboarding"
+      sequence="1"/>
+
+    <menuitem 
+      id="menu_sale_quotations"
+      name="Orders"
+      parent="menu_transactions"
+      action="so_workflow.action_sales_order"
+      sequence="2"/>
+
+    <menuitem
+      id="sale.menu_sale_order"
+      parent="menu_transactions"
+      action="sale.action_orders"
+      sequence="3"/>
+
+    <menuitem
+      id="sale_menu_action_invoice_tree1"
+      parent="menu_transactions"
+      action="account.action_invoice_tree1"
+      sequence="4"/>
+
+    <menuitem
+      id="menu_view_receipts"
+      name="Receipts"
+      parent="menu_transactions"
+      action="account_voucher.action_sale_receipt"
+      sequence="5"/>
+
+    <menuitem
+      id="returns_menu"
+      name="Returns"
+      parent="menu_transactions"
+      action="account.action_invoice_in_refund"
+      sequence="6"/>
+    
+    <menuitem
+      id="credits_menu"
+      name="Credits"
+      parent="menu_transactions"
+      action="account.action_invoice_out_refund"
+      sequence="7"/>
+
+    <menuitem
+      id="menu_view_disbursements"
+      name="Disbursements"
+      parent="menu_transactions"
+      action="account.action_account_payments"
+      sequence="8"/>
+
+    <menuitem
+      id="quotation_lines_menu"
+      name="Quotation Lines"
+      parent="menu_transactions"
+      action="sale_order_line_button.view_quotation_lines_tree_action"
+      sequence="9"/>
+
+    <menuitem
+      id="sale_order_lines_menu"
+      name="Order Lines"
+      parent="menu_transactions"
+      action="sale_order_line_button.view_order_lines_tree"
+      sequence="10"/>
+
+    <!-- Sales Products sub-menus -->
+    <menuitem
+      id="sale.menu_products"
+      name='Products'
+      parent="sale.product_menu_catalog"
+      action="product.product_normal_action_sell"
+      sequence="1"
+      groups="product.group_product_variant"/>
+
+    <menuitem
+      id="sale.menu_product_template_action"
+      name='Templates'
+      parent="sale.product_menu_catalog"
+      sequence="2"/>
+
+    <!-- System App main menus -->
+    <menuitem
+      id="company_menu"
+      name="Organization"
+      parent="base.menu_administration"
+      sequence="1"/>
+
+    <menuitem
+      id="menu_settings"
+      name="Settings"
+      parent="base.menu_administration"
+      sequence="22"/>
+
+    <menuitem
+      id="system_fields_menu"
+      name="Fields"
+      parent="base.menu_administration"
+      sequence="4"/>
+
+    <menuitem
+      id="base.menu_translation"
+      name="Translations"
+      parent="base.menu_administration"
+      sequence="6"/>
+
+    <!-- System Organization sub-menus -->
+    <menuitem
+      id="child_company_menu"
+      name="Companies"
+      parent="company_menu"
+      action="base.action_res_company_form"
+      sequence="0"/>
+
+    <menuitem
+      id="base.menu_action_res_users"
+      action="base.action_res_users"
+      parent="company_menu"
+      sequence="1"/>
+
+    <!-- System Users sub-menus -->
+    <menuitem
+      id="user_responsibilities"
+      name="Responsibilities"
+      parent="company_menu"
+      action="base.action_res_groups"
+      sequence="15"/>
+
+    <menuitem
+      id="user_roles"
+      name="Roles"
+      parent="company_menu"
+      action="base.action_res_groups"
+      sequence="16"/>
+
+    <menuitem id="auth_oauth.menu_oauth_providers"
+      active="0"/>
+
+    <menuitem
+      id="base.menu_action_res_groups"
+      name="Permissions"
+      parent="company_menu"
+      action="base.action_res_groups"
+      sequence="17"
+      groups="base.group_system"/>
+
+
+    <menuitem
+      id="system_localization_menu"
+      name="Localization"
+      parent="base.menu_administration"
+      sequence="2"/>
+
+    <menuitem
+      id="menu_choices"
+      name="Choices"
+      parent="system_fields_menu"
+      action="base.action_currency_all_form"
+      sequence="1"/>
+
+    <menuitem
+      id="system_list_menu"
+      name="Lists"
+      parent="base.menu_administration"
+      sequence="3"/>
+
+    <menuitem
+      id="menu_colomns"
+      name="Columns"
+      parent="system_list_menu"
+      action="ak_dynamic_listview_backend.action_view_dynamic_list"
+      sequence="0"/>
+
+    <menuitem
+      id="menu_currencies"
+      name="Currencies"
+      parent="system_localization_menu"
+      action="base.action_currency_all_form"
+      sequence="1"/>
+
+    <menuitem
+      id="menu_favorites"
+      name="Favoutires"
+      parent="system_list_menu"
+      action="base.action_country_state"
+      sequence="1"/>
+
+    <menuitem
+      id="menu_filter"
+      name="Filter"
+      parent="system_list_menu"
+      action="base.action_country_state"
+      sequence="2"/>
+
+    <menuitem
+      id="menu_groups"
+      name="Groups"
+      parent="system_list_menu"
+      action="base.action_country_state"
+      sequence="3"/>
+
+    <menuitem 
+      id="base.menu_res_lang_act_window"
+      name="Language"
+      action="base.res_lang_act_window" 
+      parent="system_localization_menu" 
+      sequence="2"/>
+
+    <menuitem 
+      id="base.menu_translation"
+      active="0"
+      />
+    
+    <menuitem
+      id="menu_state"
+      name="States"
+      parent="system_localization_menu"
+      action="base.action_country_state"
+      sequence="3"/>
+
+    <menuitem
+      id="menu_territories_id"
+      name="Territories"
+      parent="system_localization_menu"
+      action="product_team.action_territory_action"
+      sequence="4"/>
+
+    <!-- Inactive menus -->
+    <menuitem
+      id="sale_menu_point_ofsale"
+      name='POS Orders'
+      parent="menu_transactions"
+      action="point_of_sale.action_pos_pos_form"
+      active="0"/>    
+    
+    <menuitem
+      id="sale.report_sales_team"
+      active='0'/>
+
+    <menuitem
+      id="sale.menu_sale_invoicing"
+      active='0'/>
+
+    <menuitem
+      id="crm.crm_menu_root"
+      name="CRM"
+      sequence="6"
+      web_icon="crm,static/description/icon.png"
+      active='0'/>
+    
+    <menuitem
+      id="contacts.menu_contacts"
+      name="Contacts"
+      sequence="4"
+      web_icon="contacts,static/description/icon.png"
+      active='0'/>
+
+    <menuitem
+      id="base.menu_action_res_company_form"
+      parent="base.menu_users"
+      active="0"/>
+
+    <menuitem
+      id="system_other_menu"
+      name="Others"
+      parent="base.menu_administration"
+      sequence="5"/>
+
+    <menuitem
+      id="base_setup.menu_config"
+      name="Configurations"
+      parent="menu_settings"
+      active="0"/>
+    
+    <menuitem
+      id="invoice_dashboard"
+      name="Dashboard"
+      parent="account.menu_finance"
+      action="board.open_board_my_dash_action"
+      sequence="1"
+      active="0"/>
+    
+    <menuitem
+      id="purchase_order_dashboard"
+      name="Dashboard"
+      parent="purchase.menu_purchase_root"
+      action="board.open_board_my_dash_action"
+      sequence="1"
+      active="0"/>
+    
+    <menuitem
+      id="project_dashboard"
+      name="Dashboard"
+      parent="project.menu_main_pm"
+      action="board.open_board_my_dash_action"
+      sequence="1"/>
+    
+    <menuitem
+      id="mrp_order_dashboard"
+      name="Dashboard"
+      parent="mrp.menu_mrp_root"
+      action="board.open_board_my_dash_action"
+      sequence="1"/>
+    
+    <menuitem
+      id="sale.sale_order_menu"
+      name="Records"
+      parent="sale.sale_menu_root"
+      sequence="2"
+      active="0"/>
+    
+    <menuitem
+      id="stock.stock_picking_type_menu"
+      name="Dashboard"
+      parent="stock.menu_stock_root"
+      action="stock.stock_picking_type_action"
+      sequence="0"/>
+
+    <menuitem
+      id="crm.crm_activity_report_menu"
+      name="Activities"
+      parent="menu_customer"
+      action="crm.crm_activity_report_action"
+      sequence="5"
+      active="0"/>
+
+    <menuitem
+      id="sale.menu_sale_config"
+      name="Settings"
+      parent="sale.sale_menu_root"
+      sequence="6"
+      groups="sales_team.group_sale_manager"/>
+  </data>
+</odoo>

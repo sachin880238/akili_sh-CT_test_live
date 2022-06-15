@@ -1,0 +1,8 @@
+.o_list_view {
+    .o_field_x2many_list_search {
+        a:focus, a:active {
+            color: $link-hover-color;
+            outline: none;
+        }
+    }
+}

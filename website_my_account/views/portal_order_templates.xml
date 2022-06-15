@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_portal_my_orders" name="My Sales Orders">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container o_my_saved_carts_table">
+                    <div class="row mt32">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/my/home">Your Account</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <span>Orders</span>
+                            </li>
+                        </ol>
+                        <div class="form-group col-md-12">
+                            <t t-if="not orders">
+                                <p>There are currently no orders for your account.</p>
+                            </t>
+                            <t t-if="orders">
+                                <div class="table_overflow">
+                                    <table class="table table-hover o_my_orders_table">
+                                        <thead>
+                                            <tr class="active">
+                                                <th width="100">Order #</th>
+                                                <th width="100">Date</th>
+                                                <th width="100">Status</th>
+                                                <th width="200">Your Reference</th>
+                                                <th width="100">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-as="order" t-foreach="orders">
+                                            <tr>
+                                                <td>
+                                                    <a t-attf-href="/my/orders/{{order.id}}?{{keep_query()}}">
+                                                        <t t-esc="order.name"/>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span t-field="order.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="order.state == 'sale'">Sale Order
+                                                </t>
+                                                    <t t-if="order.state == 'progress'">Invoiced
+                                                </t>
+                                                    <t t-if="order.state in ['shipping_except','invoice_except']">Problem
+                                                </t>
+                                                    <t t-if="order.state == 'done'">Done
+                                                </t>
+                                                </td>
+                                                <td>
+                                                    <span t-field="order.partner_id"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="order.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                                <div class="o_portal_pager text-center" t-if="pager">
+                                    <t t-call="website.pager"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

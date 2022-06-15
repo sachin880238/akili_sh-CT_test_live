@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="conservation_custom_backend_web" name="account assets" inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+      <link rel="stylesheet" type="text/scss" href="/stock_internal_transfer/static/src/css/stock_transfer.css"/>
+    </xpath>
+  </template>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="pol_set_discount_views" model="ir.ui.view">
+    <field name="name">Pol Set Discount</field>
+    <field name="model">pol.set.discount</field>
+    <field name="arch" type="xml">
+      <form string="Set Discount">
+        <group>
+          <group>
+            <field name="set_discount" widget="radio" nolabel="1"/>
+          </group>
+
+          <group>
+            <field name="set_discount_line" attrs="{'invisible':[('set_discount','not in',['discount_to'])]}" nolabel="1" style="width:32%; margin-left:-70%; margin-top:5.5%; width:43%;"/>
+          </group>
+        </group>
+
+        <footer>
+          <button name="set_discount_selected_orderlines" type="object" string="SET" class="btn-primary"/>
+          <button string="CANCEL" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

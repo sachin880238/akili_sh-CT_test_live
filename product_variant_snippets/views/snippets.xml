@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_btn_1" name="Image">
+        <div class="s_btn text-center pt16 pb16 col product-action-div-snippet" data-name="Inner Image">
+            <div class="row">
+                <div class="col-md-8  offset-md-2 mt16 product_big_image" style="min-height: 350px;">
+                    <img alt="Banner Product Variant Image" class="img-responsive variant_img" src="/product_variant_snippets/static/src/img/product_variant_snippets.jpeg" style="height: 51%;width: 100%;margin-left: 17%;"/>
+                    <strong class="text-muted-dark">
+                        <p></p>
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="product_action_div" name="Product Action Div">
+        
+            <input class="product_tmpl_id" name="product_tmpl_id" type="hidden"/>
+            <input class="product_variant_id" name="product_variant_id" type="hidden"/>
+            <input class="product_id" name="product_id" type="hidden"/>
+            <div class="clearfix"/>
+            <div class="container">
+                  <div class="row">
+                    <div class="col product-action-div-snippet" style="display: flex;">
+                     <a class="mb8 btn btn-secondary minus_quantity js_add_cart_json"  t-attf-href="#" style="border-top-right-radius: inherit;border-bottom-right-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;">
+                            <i class="fa fa-minus"/>
+                        </a>
+                        <span class="qty_product" style="width:57%;border: 1px #1e77c5 solid;height: 81%;line-height: 33px;padding-left: 18px;">1</span>
+                        
+                        <a class="mb8 btn btn-secondary float_left plus_quantity js_add_cart_json" t-attf-href="#" style="border-top-left-radius: inherit;border-bottom-left-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;margin-left: -7%;margin-right: -24%;">
+                            <i class="fa fa-plus"/>
+                        </a>
+                    </div>
+                    <div class="col product-action-div-snippet" style="text-align: center;border: 1px solid #ccc;border-radius: 4px;height: 36px;    margin-left: 5%;margin-right: 4%;">
+                       <div class="product_price" style="line-height: 37px;">
+                        <h4 class="oe_price_h4">
+                            <span>
+                                <span class="currency_symbol" />
+                                <span class="currency_amount">0.00</span>
+                            </span>
+                        </h4>
+                    </div>
+                    </div>
+                    <div class="col product-action-div-snippet">
+                       <a class="btn btn-primary  custom_add_to_cart_product"  style="cursor: pointer;color: white;font-weight: 700;width: 118%;margin-left: -22%;">Add to Cart</a>
+                    </div>
+                     <div class="col product-action-div-snippet">
+                       <a class="btn btn-primary js_check_product float-right" id='product_more_info' style="cursor: pointer;color: white;font-weight: 700;width: 118%;">More Info</a>
+                    </div>
+                  </div>
+                </div>
+                <style>
+                    .modal {
+                      display: none; /* Hidden by default */
+                      position: fixed; /* Stay in place */
+                      z-index: 1; /* Sit on top */
+                      padding-top: 100px; /* Location of the box */
+                      left: 0;
+                      top: 0;
+                      width: 100%; /* Full width */
+                      height: 100%; /* Full height */
+                      overflow: auto; /* Enable scroll if needed */
+                      background-color: rgb(0,0,0); /* Fallback color */
+                      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                    }
+
+                    /* Modal Content */
+                    .modal-content {
+                      background-color: #fefefe;
+                      margin: auto;
+                      padding: 20px;
+                      border: 1px solid #888;
+                      width: 80%;
+                    }
+
+                    /* The Close Button */
+                    .close {
+                      color: #aaaaaa;
+                      float: right;
+                      font-size: 28px;
+                      font-weight: bold;
+                    }
+
+                    .close:hover,
+                    .close:focus {
+                      color: #000;
+                      text-decoration: none;
+                      cursor: pointer;
+                    }
+                </style>
+                <div id="myModal" class="modal">
+
+  
+              <div class="modal-content" style="margin-top: 13%;width: 37%;margin-left: 29%;min-height: 53%;padding-bottom: 0px;">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="modal-header">
+                            <h4 class="modal-title">
+                                Car Red Medium
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <span class="close">close</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                            
+                            
+                            
+                        </div>
+              </div>
+
+            </div>
+            
+    </template>
+    <template id="s_product_variant" name="Product Variant">
+        <style>
+            .snippet_product_desc{
+                margin-left: -25px;
+            }
+
+        </style>    
+        <section class="product_variant_snippet container py-2 oe_website_sale ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mt16 mb16 col-sm-6 order-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-md-8  offset-md-2 mt16 product_big_image" style="min-height: 470px;">
+                                <img alt="Banner Product Variant Image" class="img-responsive variant_img" src="/product_variant_snippets/static/src/img/product_variant_snippets.jpeg" style="height: 51%;width: 100%;margin-left: 17%;"/>
+                                <strong class="text-muted-dark">
+                                    <p></p>
+                                </strong>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 col-sm-6 pull-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                 <span class="products_selector_id" style="display:none;"></span>
+                                <div class="css_non_editable_mode_hidden mt8">
+                                    <div class="text-center">
+                                        <div class="product-selector-placeholder">
+                                            <input class="products_selector" type="hidden"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mt8 mb8">
+                                    <h1 class="snippet_product_name">Product Name</h1>
+                                    <p class="snippet_product_temp_desc mt4 text-muted"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="variant_description_div mt8 mb8">
+                                    <div class="variant_description_div_css">
+                                        <strong class="text-muted-dark">
+                                            <p class="snippet_desc_header">This One is a header of description.</p>
+                                        </strong>
+                                        <p class="snippet_product_desc mt4 text-muted">This one is a description.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="cart-option-form row mt16">
+                                    <div class="col-md-12">
+                                        <t t-call="product_variant_snippets.product_action_div"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+    </template>
+    <template id="product_variant_snippet_options" inherit_id="website.snippets" name="Snippet Blog">
+        <xpath expr="//div[@id='o_scroll']" position="inside">
+            <div class="o_panel">
+                <div class="o_panel_header">
+                    <i class="fa fa-th-large"/>Theme Snippets</div>
+                <div class="o_panel_body">
+                    <t t-snippet="product_variant_snippets.s_product_variant" t-thumbnail="/mass_mailing/static/src/img/blocks/block_banner.png"/>
+                </div>
+                <div class="o_panel_body">
+                    <t t-snippet="product_variant_snippets.s_btn_1" t-thumbnail="/mass_mailing/static/src/img/blocks/block_banner.png"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='snippet_options']" position="inside">
+            <div data-js="product_variant_snippet" data-selector=".product_variant_snippet">
+                <li class="oe_snippet_options dropdown-submenu">
+                    <a href="#" tabindex="-2">
+                        <i class="fa fa-expand"/>Snippet Size</a>
+                    <ul class="dropdown-menu">
+                        <li data-select_class="o_size_1x">
+                            <a href="#">1x</a>
+                        </li>
+                        <li data-select_class="o_size_2x">
+                            <a href="#">2x</a>
+                        </li>
+                        <li data-select_class="o_size_3x">
+                            <a href="#">3x</a>
+                        </li>
+                        <li data-select_class="o_size_4x">
+                            <a href="#">4x</a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+        </xpath>
+    </template>
+    <template id="product_variant_design"  name="Snippet Blog">
+        <div class="row">
+            <div class="col-12">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <t t-esc="product_id.full_name"/>
+                    </h4>
+                </div>
+            </div>    
+        </div>
+        <div class="modal-body">
+            <t t-if="product_id.product_documents_ids"> 
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Attachment</th>
+                            <th scope="col">Product Description</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr t-as="pro_doc_id" t-foreach="product_id.product_documents_ids">
+                            <t t-if="pro_doc_id.public">
+                                <td>
+                                    <t t-esc="pro_doc_id.name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="pro_doc_id.description"/>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" t-att-href="'/download-report/%s' % pro_doc_id.id">Download</a>
+                                </td>
+                            </t>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+            <t t-else="">
+                <div >
+                    <h1>Document is not available</h1>
+                </div>
+            </t>
+        </div>
+        <div class="modal-footer" >
+            <button class="btn btn-default close"  type="button">Close</button>
+        </div>
+    </template>
+
+    
+
+
+   <!--  
+    <div data-js="content"
+        data-selector=".s_btn1_1"
+        data-drop-near=".s_btn_1,"
+        data-drop-in=".content">
+    </div> -->
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='sale_ebay']" position="before">
+                <div>
+                    <h2>Active Days Information</h2>
+                    <div class="row mt16 o_settings_container" id="sale_active_days_settings">
+                        <div class="col-xs-12 col-md-3 o_setting_box">
+                            <label for="active_customer_days"/>
+                        </div>
+                        <div class="col-xs-12 col-md-3 o_setting_box">
+                            <field name="active_customer_days"/>
+                        </div>
+                        <div class="col-xs-12 col-md-3 o_setting_box">
+                            <label for="active_vendor_days"/>
+                        </div>
+                        <div class="col-xs-12 col-md-3 o_setting_box">
+                            <field name="active_vendor_days"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

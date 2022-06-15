@@ -1,0 +1,37 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<!-- Copyright 2016-17 Sodexis 
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo> 
+  <record id="split_line_product_wizard_view" model="ir.ui.view">
+    <field name="name">split.order.line.form</field>
+    <field name="model">split.order.line</field>
+    <field name="arch" type="xml">
+      <form string="Split Line">
+        <group colspan="4" string="Original Line">
+          <field name="product_uom_qty" string="Quantity" readonly="1"/>  
+          <field name="route_id" string="Mode" options="{'no_open': True}" readonly="1"/>
+          <field name="carrier_id" string="Via" options="{'no_open': True}" readonly="1"/>
+          <field name="delivery_date" string="Date" readonly="1" widget="date"/>
+        </group>
+        <group colspan="4" string="Second Line">
+          <field name="product_uom_qty_set" string="Quantity"/>  
+          <field name="route_id_set" string="Mode"/>
+          <field name="carrier_id_set" string="Via"/>
+          <field name="delivery_date_set" string="Date" widget="date"/>
+        </group>
+        <footer>
+          <button name="split_line" string="SPLIT" type="object" class="btn-primary"/>
+          <button string="CANCEL" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+  <record id="action_merge_line_product_wizard" model="ir.actions.act_window">
+    <field name="name">Merge Lines</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">merge.order.line</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+  </record> 
+</odoo>

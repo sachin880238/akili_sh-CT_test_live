@@ -1,0 +1,708 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- <record id="ct_directory_list_view" model="ir.ui.view" >
+    <field name="name">ct.directory.list</field>
+    <field name="model">res.partner</field>
+    <field name="arch" type="xml">
+      <tree string="Customers">
+        <field name="dir_type" string="Type"/>   
+        <field name="name" string="Account" />
+        <field name="name" string="Contact"/>
+        <field name="comp_name" string="Company"/>
+        <field name="primary_tel_type" string="Descriptor"/>
+        <field name="website" string="Identifiers"/>
+        <field name="sequence" widget="handle"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ct_directory_form_view" model="ir.ui.view" >
+    <field name="name">ct.directory.list</field>
+    <field name="model">res.partner</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>           
+          <button 
+            string="QUOTE" 
+            name="has_required_fields" 
+            type="object" 
+            class="oe_highlight" 
+            context="{'search_default_partner_id': active_id,'default_partner_id': active_id,'is_customer':True}" 
+            attrs="{'invisible': ['|',('quotation_count', '>', 0),'|',('supplier','!=',False),'|',('state','=','inactive'),'|',('sale_order_count', '>', 0),('parent_id', '!=',False)]}"
+            help="create a quotation"/>
+          <button 
+            name="account_workflow.act_view_account_to_opportunity_wizard" 
+            type="action" 
+            string="ASSIGN"  
+            help="assign to a salesperson"
+            attrs="{'invisible': ['|',('opportunity_count', '>', 0),'|',('supplier','=',True),'|',('state','=','inactive'),('parent_id', '!=',False)]}"/>
+          <button 
+            string="ORDER" 
+            name="has_required_fields" 
+            type="object" class="oe_highlight"
+            context="{'search_default_partner_id': active_id,'default_partner_id': active_id,'is_customer':False}" 
+            attrs="{'invisible': ['|',('purchase_order_count', '>', 0),'|',('supplier','=',False),('vendor_state','=','inactive')]}"/>
+          <button 
+            name="deactivate" 
+            type="object" 
+            string="DEACTIVATE" 
+            help="not likely to order again"
+            attrs="{'invisible':[('parent_id', '!=',False )]}"/>
+          <button 
+            name="active_partner_address" 
+            type="object" 
+            class="oe_button  oe_statinfo oe_left"
+            string="ACTIVATE" 
+            help="Activate partner address" 
+            attrs="{'invisible':['|',('addr_state','=','active'),('parent_id','=',False)]}"/>
+          <button 
+            name="inactive_partner_address" 
+            type="object" 
+            class="oe_button  oe_statinfo oe_left" 
+            attrs="{'invisible':['|',('addr_state','=','inactive'),('parent_id','=',False)]}"
+            string="DEACTIVATE" 
+            help="no longer valid"/>
+          <button 
+            name="activate" 
+            type="object" 
+            string="ACTIVATE" 
+            states="inactive" 
+            help="restore as active account"/>
+          <field 
+            name="state" 
+            widget="statusbar"  
+            attrs="{'invisible': [('customer','=',False)]}"/>
+          <field 
+            name="vendor_state" 
+            widget="statusbar"  
+            attrs="{'invisible': [('supplier','=',False)]}"/>
+          <field 
+            name="addr_state" 
+            widget="statusbar" 
+            attrs="{'invisible': [('parent_id','=',False)]}"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box" attrs="{'invisible' : [('parent_id','!=',False)]}">
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="get_cart_view"
+              icon="fa-shopping-cart"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Carts" name="cart_count" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="get_quotation_view"
+              context="{'default_partner_id': active_id}"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <i class="fa-downcase-q-link" style="margin-top:-3%; margin-left:2%; font-style:normal;"></i>
+              <field string="Quotations" name="quotation_count" widget="statinfo" style="margin-left:5%;"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object" 
+              name="get_so_view" 
+              groups="sales_team.group_sale_salesman"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <i class="fa-downcase-s-link" style="margin-top:-3%; margin-left:2%; font-style:normal;"></i>
+              <field string="Sales" name="sale_order_count" widget="statinfo" style="margin-left:5%;"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="get_shipments_view"
+              icon="fa-truck"
+              context="{'default_partner_id': active_id}"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Shipments" name="shipment_count" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_return_count_res_part"
+              icon="fa-truck fa-flip-horizontal"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Returns" name="return_count" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              name="get_rfq_view" 
+              type="object"
+              groups="purchase.group_purchase_user"
+              context="{'default_partner_id': active_id}"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <i class="fa-downcase-o-link" style="margin-top:-3%; margin-left:2%; font-style:normal;"></i>
+              <field string="Orders" name="order_count" widget="statinfo" style="margin-left:5%;"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              name="get_purchase_view" 
+              type="object"
+              groups="purchase.group_purchase_user"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <i class="fa-downcase-p-link" style="margin-top:-3%; margin-left:2%; font-style:normal;"></i>
+              <field string="Purchases" name="purchase_count" widget="statinfo" style="margin-left:5%;"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="get_delivery_count"
+              icon="fa-truck fa-flip-horizontal truck_left"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <field string="Deliveries" name="delivery_count" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_return_count_res_part"
+              icon="fa-truck"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <field string="Returns" name="return_count" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button o_res_partner_tip_opp" 
+              type="object"
+              name="get_opportunity_view"
+              icon="fa-search-dollar fa-flip-horizontal"
+              groups="sales_team.group_sale_salesman"
+              context="{'default_partner_id': active_id}">
+              <field string="Opportunities" name="opportunity_count" widget="statinfo"/>
+            </button>
+
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_task_count_res_part"
+              icon="fa-clock">
+              <field string="Tasks" name="task_count" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_project_count_res_part"
+              icon="fa-project-diagram">
+              <field string="Projects" name="project_count" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_project_count_res_part"
+              icon="fa-file"
+              attrs="{'invisible': [('supplier', '=', False)]}">
+              <field string="Documents" name="documents_count" widget="statinfo"/>
+            </button>
+
+            <button 
+              type="object" 
+              class="oe_stat_button" 
+              name="get_invoice_view"
+              attrs="{'invisible': [('customer', '=', False)]}" context="{'default_partner_id': active_id}">
+              <i class="fa-downcase-i-link" style="margin-top:-3%; margin-left:2%; font-style:normal;"></i>
+              <div class="o_form_field o_stat_info">
+                <span class="o_stat_value">
+                  <field name="total_invoiced" widget='monetary' options="{'currency_field': 'currency_id'}" style="margin-left:5%;"/>
+                </span>
+                <span class="o_stat_text" style="margin-left:5%;">Invoices</span>
+              </div>
+            </button>
+
+            <button 
+              class="oe_stat_button" 
+              name="%(purchase.act_res_partner_2_supplier_invoices)d" 
+              type="action"
+              attrs="{'invisible': [('supplier', '=', False)]}" 
+              help="Vendor Bills">
+              <i class="fa-downcase-pi-link" style="margin-top:-3%; margin-left:2%; font-style:normal;"></i>
+              <field string="Invoices" name="supplier_invoice_count" widget="statinfo"/>
+            </button>
+
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_cust_credit_res_part">
+              <i class="fa-downcase-c-link" style="margin-top:-3%; margin-left:2%; font-style:normal;"></i>
+              <field string="Credits" name="cust_credit" widget="statinfo" style="margin-left:5%;"/>
+            </button>
+
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_total_payments_res_part"
+              icon="fa-usd">
+              <field string="Payments" name="total_payments" widget="statinfo"/>
+            </button>
+
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_total_refunds_res_part"
+              icon="fa-usd">
+              <field string="Refunds" name="total_refunds" widget="statinfo"/>
+            </button>
+
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_current_balance_res_part"
+              icon="fa-balance-scale">
+              <field string="Balance" name="current_balance" widget="statinfo"/>
+            </button>
+
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_card_count_res_part"
+              icon="fa-credit-card"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Cards" name="card_count" widget="statinfo"/>
+            </button>
+            
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_support_res_part"
+              icon="fa-question"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Support" name="support" widget="statinfo"/>
+            </button>
+            <button 
+              class="oe_stat_button" 
+              type="object"
+              name="action_documents_count_res_part"
+              icon="fa-file"
+              attrs="{'invisible': [('customer', '=', False)]}">
+              <field string="Documents" name="documents_count" widget="statinfo"/>
+            </button>
+
+            <button  
+              name="website_publish_button"
+              type="object"
+              class="oe_stat_button" 
+              icon="fa-globe">
+              <field name="website_published" widget="website_button"/>
+            </button>
+          </div>
+
+          <div>
+            <field name="image" widget='image' class="oe_avatar oe_left" options='{"preview_image": "image_medium"}'/>
+            <h1 attrs="{'invisible': [('parent_id', '!=', False)]}">
+              <field name="name" style='width: 530px; margin-top: 30px; margin-left: 1%;' default_focus="0" placeholder="Name" />
+            </h1>
+
+            <h1 attrs="{'invisible': [('parent_id', '=', False)]}">
+              <field name="address_title" style='width: 530px; margin-top: 30px; margin-left: 1%;' default_focus="0" readonly="1" nolabel="1" />
+            </h1>
+          </div>
+          <group attrs="{'invisible':[('parent_id','!=',False)]}">
+            <group>
+              <field name="company_type" string="Type"/>
+              <label for="complete_address" string="Address" class="oe_read_only"/>
+              <field name="complete_address" class="oe_read_only" nolabel="1"/>
+              <label for="street" string="Address" class="oe_edit_only"/>
+              <div class="o_address_format oe_edit_only" name="div_address">
+                <field name="street" placeholder="Street..." class="o_address_street"/>
+                <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                <field name="city" placeholder="City" class="o_address_city"/>
+                <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}' />
+                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+              </div>
+              <label for="country_id" string="Country" class="oe_edit_only"/>
+              <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only" options='{"no_open": True, "no_create": True}' nolabel="1"/>
+              <field name="desc" domain="[('type','=',type_extend)]" attrs="{'invisible':[('is_supplier','=',True)]}" context="{'default_type': type_extend}" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+              <field name="icon_letters"/>
+              <field name="category_id" widget="many2many_tags" placeholder="Tags..." options="{'no_create_edit': True}" colspan='4'/>
+              <field name="country_code" invisible='1' />
+            </group>
+            <group class="oe_edit_only">
+            <field name="function" placeholder="e.g. Sales Director" invisible='1'/>
+            <field name="user_ids" invisible="1"/>
+            <field style="width: 100%;" name="email" widget="email" />
+            <label for="div" string="Telephone"/>
+            <div>
+            <field style="width: 68%;" name="phone" widget="phone" string="Telephone"/>
+            <field style="padding-left: 10px;width: 32%" name="primary_tel_type"
+                    context="{'default_for_phone':True}" required='0' options="{'no_open': True,'no_create': True, 'no_create_edit': True}" string=""/>
+            </div>
+            <label for="div" string="Other"/>
+            <div>
+            <field style="width: 68%;" name="alternate_communication_1" widget="phone"  string="Other"/>
+            <field style="padding-left: 10px;width: 32%" name="alternate_commu_type_1"
+                   domain="[('for_other','=',True)]" context="{'default_for_other':True}" string="Other" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+            </div>
+            <label for="div" string="Other"/>
+            <div>
+            <field style="width: 68%;" name="alternate_communication_2"  widget="phone" string=""/>
+            <field style="padding-left: 10px;width: 32%;" name="alternate_commu_type_2"
+                   context="{'default_for_other':True}" domain="[('for_other','=',True)]" string="" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+            </div>
+            <field style="width: 100%;" name="website"/>
+            <field style="width: 100%;" name="lang"/>
+          </group>
+          <group class="oe_read_only">
+            <field name="get_email" attrs="{'required': [('user_ids','!=', [])]}"/>
+            <field name='get_telephone'/>
+            <field name='get_other1'/>
+            <field name='get_other2'/>
+            <field name='get_website' widget="url"/>
+            <field name='get_lang'/>
+          </group>
+          </group>
+          <field name="supplier" invisible="1"/>
+          <field name="customer" invisible="1"/>
+          <field name="purchase_order_count" invisible="1"/>
+          <field name="parent_id" invisible="1"/>
+          <field name="is_supplier" invisible="1"/>
+          <notebook attrs="{'invisible':[('parent_id','!=',False)]}">
+            <page name='addresses' string="ADDRESSES" autofocus="autofocus">
+            <field name="child_ids" string="Address" mode="tree" context="{'default_parent_id': active_id,'default_supplier': False, 'default_customer': False, 'default_street': False, 'default_street2': False, 'default_city': False, 'default_state_id': False, 'default_zip': False, 'default_country_id': False, 'default_lang': lang,'address_view':True}">
+              <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="default_address" string='Default' style="width:10px;text-align:center;"/>
+                <field name="type_extend" string='Type' invisible="1"/>
+                <field name="addr_type" />
+                <field name="vendor_addr_type" string='Type' invisible="1"/>
+                <field name="name" string='Contact'/>
+                <field name="comp_name" string='Company' />
+                <field name="current_default" invisible='1'  />
+                <field name="street" string='Address'  invisible="0"/>
+                <field name="street2" string=' ' invisible="0" />
+                <field name="city" string='City' />
+                <field name="state_code" />
+                <field name="zip" string="Zipcode" invisible="1"/>
+                <field name="country_id" string='Country' options='{"no_open": True, "no_create": True}' />
+                <field name="phone" string="Telephone" invisible="1"/> 
+                <field name="desc" string='Description' />
+              </tree>
+              <form string="Contact">
+                <sheet>
+                  <div style='float:left;' >
+                    <div style='float:left;' >
+                      <div style='float:left;' >
+                        <label for='type_extend' string='Type' attrs="{'invisible':[('is_supplier','=',True)]}"/>
+                        <label for='vendor_addr_type' string='Type' attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                      </div>
+                      <div style='float:left;' >
+                        <field name="type_extend" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',True)]}"/>
+                        <field name="vendor_addr_type" required="1" widget="radio" options="{'horizontal': true}" class="oe_inline" attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                      </div>
+                    </div>
+                    <div style='float:left; margin-left:20px;' >
+                      <label for='default_address' string='Default' />
+                      <field name='default_address'/>
+                    </div>
+                    <div style='float:left; margin-left:20px;'>
+                      <label for='use_acc_comm' string='Same as Account' />
+                      <field name='use_acc_comm' />
+                      <label for='type' string='Type' invisible='1' />
+                      <field name="type" required="1" widget="radio" options="{'horizontal': true}"  invisible='1' />
+                    </div>
+                  </div>
+                 
+                  <group>
+                    <group style='width: 50%;'>
+                      <field name="is_supplier" invisible="1" />
+                      <field name="company_required" invisible="1" />
+                      <field name="name" string="Contact" attrs="{'required':[('type_extend','=','contact')]}" />
+                      <field name="comp_name" string="Company" attrs="{'required':[('company_required','=',True)]}"/>
+                      <field name="icon_letters" string="Icon"/>
+                    </group>
+              
+                    <group>
+                      <field name="image" widget="image"  class="oe_avatar" 
+                        options='{"preview_image": "image", "size": [70, 70]}' style="margin-right: 73%;"/>
+                    </group>
+                  </group>
+                 
+                  <group style="margin-top:0%;">
+                    <group name='address'>
+                      <label for="street" string="Address" class="oe_edit_only"/>
+                      <div>
+                        <div class="o_address_format oe_edit_only" name="div_address">
+                          <field name="street" placeholder="Street..." class="o_address_street" required='0'/>
+                          <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                          <field name="city" placeholder="City" class="o_address_city" required='0' />
+                          <field name="country_code" invisible='1'/>
+                          <field name="state_code" class="o_address_state oe_read_only" />
+                          <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}'
+                          context="{'country_id': country_id, 'zip': zip}"/>
+                          <field name="zip" placeholder="ZIP" class="o_address_zip" required='0'/>
+                          </div>
+                        </div>
+                        <label for="complete_address" string="Address" class="oe_read_only"/>
+                        <field name="complete_address" class="oe_read_only" nolabel="1"/>
+                        <label for="country_id" string="Country" class="oe_edit_only"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only"
+                          options='{"no_open": True, "no_create": True}' required='0' nolabel="1"/>
+                        <field name="category_id" widget="many2many_tags" placeholder="Tags..." options="{'no_create_edit': True, 'no_create': True}" string="Tags" context="{'show_type': is_supplier}" domain="['|',('type','=',type_extend),('type_vendor','=',vendor_addr_type),('for_vendor','=',is_supplier)]" />
+                        <field name="comment" string="Notes" placeholder="internal notes..."/>
+                    </group>
+
+                    <group class="oe_edit_only">
+                      <field name="function" placeholder="e.g. Sales Director" invisible='1'/>
+                      <field name="user_ids" invisible="1"/>
+                      <field style="width: 270px;" name="email" widget="email" attrs="{'required': ['|',('user_ids','!=', [])]}"/>
+                      <label for="div" string="Telephone"/>
+                      <div>
+                      <field style="width: 190px;" name="phone" widget="phone"/>
+                      <field style="padding-left: 10px;width: 80px;" name="primary_tel_type" context="{'default_for_phone':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/><br/>
+                      </div>
+                      <label for="div" string="Other"/>
+                      <div>
+                      <field style="width: 190px;" name="alternate_communication_1" widget="phone" />
+                      <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_1" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}" /><br/>
+                      </div>
+                      <label for="div" string="Other"/>
+                      <div>
+                      <field style="width: 190px;" name="alternate_communication_2"  widget="phone" />
+                      <field style="padding-left: 10px;width: 80px;" name="alternate_commu_type_2" domain="[('for_other','=',True)]" context="{'default_for_other':True}" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                      </div>
+                      <field style="width: 270px;" name="website" invisible="1"/>
+                      <field style="width: 270px;" name="lang"/>
+                      <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                      <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                    </group>
+
+                    <group class="oe_read_only">
+                      <field name="get_email" attrs="{'required': [('user_ids','!=', [])]}"/>
+                      <field name='get_telephone'  />
+                      <field name='get_other1'   />
+                      <field name='get_other2'   />
+                      <field name='get_website' widget="url"/>
+                      <field name='get_lang'  />
+                      <field name="add_date_created" style="width:270px;" widget="date" readonly="1"/>
+                      <field name="add_last_used_date" style="width:270px;" widget="date" readonly="1"/>
+                    </group>
+                  </group>
+                  <field name="supplier" invisible="True"/>
+                  <field name="customer" invisible="True"/>
+                </sheet>
+              </form>
+            </field>
+          </page>
+          <page string="SALES">
+            <group name="container_row_2">
+            <group string="General" name="sale" priority="1" attrs="{'invisible': [('customer', '=', False)]}"> 
+              <field name="ref" string="Account ID"/>
+              <field name="barcode" string="Account Barcode"/>
+              <field name="sale_shipping_terms" string="Ship Terms"/>
+              <field name="backorder" invisible='1' />
+              <field name="property_stock_customer"/>
+              <field name="customer" invisible='1'/>
+              <field name="user_id" invisible='1'/>
+              <field name="company_id" invisible='1' />
+            </group>
+            <group string="Tracking" name="tracking"  attrs="{'invisible': [('customer', '=', False)]}">
+              <field name="date_last_used" string="Created" readonly='1'/>
+              <field name="add_last_used_date" string="Last Transaction"/> 
+              <field name="campaign_id"/>  
+              <field name="medium_id"/>  
+              <field name="source_id"/>  
+              <field name="referred"/>
+            </group>
+            <group string="General" name="purchase" priority="2" attrs="{'invisible': [('customer', '=', True)]}"> 
+              <field name="pur_date_created" readonly='1' widget="date"/>
+              <field name="supplier" invisible='1' />
+              <field name="products_purchased" string="Products Sold"/> 
+              <field name="vendor_ref" string="Vendor ID"/>
+              <field name="ref_customer"/>
+              <field name="ref_company" string="Company ID" invisible='1'/>
+              <field name="vendor_barcode" string="Vendor Barcode"/>
+            </group>
+            <group string="Purchase Orders" name="purchase" attrs="{'invisible': [('customer', '=', True)]}">
+              <field name="min_order" string="Minimum Order"/>
+              <field name="pur_shipping_terms" string="Shipping Terms"/>
+              <field name="free_freight"/>
+              <field name="property_stock_supplier"/>
+            </group>
+            <group style="margin-top:-1.5%;">
+              <group colspan='4' string="Notes" name="messages"  attrs="{'invisible': [('customer', '=', False)]}">
+                <field name="sale_warn" string="Quotation Warning"  invisible='1'/>
+                <field name="quotation_warn_msg" string="Quotation Warning" style="width:247.75%;"/>
+                <field name="picking_warn" string="Picking List Warning"  invisible='1'/>
+                <field name="picking_warn_msg" string="Picking List Warning" style="width:247.75%;"/>
+                <field name="comment" string="Sales Comments" style="width:247.75%;"/>
+              </group>
+              <group colspan='4' string="Notes" attrs="{'invisible': [('customer', '=', True)]}" style="margin-top:6%;">
+              <field name="purchase_warn" string="PO Warning" invisible='1'/>
+              <field name="purchase_warn_msg" string="Purchase Warning" style="width:247.75%;"/>
+                <field name="purchase_notes" string="Purchasing Comments" style="width:247.75%;"/>
+              </group>
+            </group>
+          </group>
+          </page>
+          <page string="ACCOUNTING">
+            <group attrs="{'invisible': [('customer', '=', True)]}">
+            <group string="General" name="general" attrs="{'invisible': [('customer', '=', True)]}">
+              <field name="property_supplier_payment_term_id" string="Payment Terms"/>
+              <field name="vd_tax_id" string="Tax Terms"/>
+              <field name="supp_journal_id"/>
+              <field name="pur_currency_id" string="Purchasing Currency"/>
+              <field name="is_rfq"/>
+              <field name="property_account_payable_id" string="Accounts Payable"/>
+            </group>
+            <group string="Credit" name="current" attrs="{'invisible': [('customer', '=', True)]}">
+              <field name="van_credit_limit"/>
+              <field name="van_acc_bal"/>
+              <field name="unhipped_order"/>
+              <field name="van_credit_avl"/>
+              <field name="draft_order" invisible="1"/>
+              <field name="supp_overdue" string='Current Overdue'/>
+              <field name="supp_avg_days"/>
+             </group>
+             <group>
+              <group colspan='4' string="Notes" attrs="{'invisible': [('customer', '=', True)]}" style="margin-top:-1%;">
+                <field name="invoice_pay_warn_msg" style="width:247.75%;"/>
+                <field name="supp_acc_notes" string="Accounting Comments" style="width:247.75%;"/>
+              </group>
+            </group>
+          </group>
+          <group attrs="{'invisible': [('customer', '=', False)]}">
+            <group string="General" name="general" attrs="{'invisible': [('customer', '=', False)]}">
+              <field name="property_product_pricelist"/>
+              <field name="property_payment_term_id" string="Payment Terms"/>
+              <field name="cust_journal_id"/>
+              <field name="sal_currency_id" string="Sales Currency"/>
+              <field name="statement" string="Issue Statements"/>
+              <field name="ref_po" required='1' string="Require PO"/>
+            </group>
+            <group string="Current" name="current" attrs="{'invisible': [('customer', '=', False)]}">
+              <field name="credit_limit"/>
+              <field name="cus_acc_bal"/>
+              <field name="authorized_cards"/>
+              <field name="credit_avl" string="Credit Available"/>
+              <field name="curr_order"/>
+              <field name="net_avl_balance"/>
+            </group>
+            <group string="Accounts" name="accounting_entries" attrs="{'invisible': [('customer', '=', False)]}">
+              <field name="property_account_receivable_id" string="Accounts Receivable"/>
+              <field name="md_tax_id" string="State Tax ID"/>
+              <field name="property_account_position_id"/>
+            </group>
+            <group string="Evaluation" name="eval" attrs="{'invisible': [('customer', '=', False)]}">
+              <field name="cust_overdue"/>
+              <field name="cust_avg_days"/>
+              <field name="last_credit_rev"/>
+            </group>
+            <group style="margin-top:-1.5%;">
+              <group colspan='4' string="Notes" attrs="{'invisible': [('customer', '=', False)]}">
+                <field name="invoice_warn" invisible='1'/>
+                <field name="invoice_warn_msg" string="Invoice Warning" style="width:247.75%;"/>
+                <field name="cust_acc_notes"  string="Accounting Comments" style="width:247.75%;"/>
+              </group>
+            </group>
+          </group>
+          </page>
+          </notebook>
+          <group attrs="{'invisible':[('parent_id','=',False)]}">
+              <group>
+                <field name="parent_id" string="Account" readonly="1"/>
+                <field name="type_extend" string="Address Type" attrs="{'invisible':[('is_supplier','=',True)]}"/>
+                <field name="vendor_addr_type" string="Address Type" attrs="{'invisible':[('is_supplier','=',False)]}"/>
+                <field name="get_same_as_account" string="Same as Account"  readonly="1"/>
+                <field name="get_default_addr" string="Default" />
+                <field name="name" string="Contact" attrs="{'required' : [('type_extend', '=', 'contact')]}" />
+                <field name="company_required" invisible="1"/>
+                <field name="comp_name" string="Company" attrs="{'required' : [('company_required','=',True)]}" />
+                <label for="street" string="Address" class="oe_edit_only"/>
+                  <div class="o_address_format oe_edit_only" name="div_address">
+                    <field name="is_supplier" invisible="1"/>
+                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                    <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                    <field name="city" placeholder="City" class="o_address_city"/>
+                    <field name="country_code" invisible='1' />
+                    <field name="state_code" class="o_address_state oe_read_only" />
+                    <field name="state_id" class="o_address_state oe_edit_only" placeholder="State" options='{"no_open": True}' />
+                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                  </div>
+                  <label for="complete_address" string="Address" class="oe_read_only"/>
+                  <field name="complete_address" class="oe_read_only" nolabel="1"/>
+                 <field name="desc" domain="[('type','=',type_extend)]" attrs="{'invisible':[('is_supplier','=',True)]}" context="{'default_type': type_extend}" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+              </group>
+              <group class="oe_edit_only">
+                <field name="function" placeholder="e.g. Sales Director" invisible='1'/>
+                <field name="user_ids" invisible="1"/>
+                <field name="email" widget="email" />
+                <label style="font-weight: bold;" for='phone' string='Telephone' />
+                <div>
+                  <field name="phone" style="width: 68%;" widget="phone" />
+                  <field name="primary_tel_type" style="padding-left: 10px;width: 32%"/>
+                  </div>
+                <label style="font-weight: bold;" for='alternate_communication_1' string='Other' />
+                <div>
+                  <field name="alternate_communication_1" widget="phone" style="width: 68%;"/>
+                  <field name="alternate_commu_type_1" style="padding-left: 10px;width: 32%"/>
+                </div>
+                <label style="font-weight: bold;" for='alternate_communication_2' string='Other' />
+                <div>
+                  <field name="alternate_communication_2" style="width: 68%;"  widget="phone"/>
+                  <field name="alternate_commu_type_2" style="padding-left: 10px;width: 32%"/>
+                </div>
+                  <field name="website"/>
+                  <field name="lang"/>
+                  <field name="add_date_created" widget="date"  readonly="1"/>
+                  <field name="add_last_used_date" widget="date"  readonly="1"/>
+              </group>
+              <group class="oe_read_only">
+                <field name="get_email" attrs="{'required': [('user_ids','!=', [])]}"/>
+                <field name='get_telephone'  />
+                <field name='get_other1'   />
+                <field name='get_other2'   />
+                <field name='get_website' widget="url"/>
+                <field name='get_lang'  />
+                <field name="add_date_created" widget="date"/>
+                <field name="add_last_used_date" widget="date"/>
+              </group>
+            </group>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids" widget="mail_followers"/>
+          <field name="message_ids" widget="mail_thread"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <record id="ct_directory_list_view_action" model="ir.actions.act_window">
+    <field name="name">Directory</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'create':False,'edit':False}</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+          (0, 0, {'view_mode': 'tree', 'view_id': ref('ct_directory_list_view')}),
+          (0, 0, {'view_mode': 'form', 'view_id': ref('ct_directory_form_view')})]"/>
+  </record> -->
+
+  <record id="ct_directory_tree_view" model="ir.ui.view" >
+    <field name="name">ct.directory.tree</field>
+    <field name="model">ct.directory</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="directory_type" string="Type"/>   
+        <field name="partner_id" string="Account" />
+        <field name="contact_id" string="Contact"/>
+        <field name="company_id" string="Company"/>
+        <field name="descriptor" string="Descriptor"/>
+        <field name="identifier" string="Identifiers"/>
+        <field name="sequence" widget="handle"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="ct_directory_tree_view_action" model="ir.actions.act_window">
+    <field name="name">Directory</field>
+    <field name="res_model">ct.directory</field>
+    <field name="view_mode">tree</field>
+    <field name="context">{'create':False,'edit':False}</field>
+  </record>
+
+  <menuitem 
+    id="ct_commu_directory" 
+    name="Directory" 
+    parent="ct_communication.menu_ct_commu"
+    action="ct_communication.ct_directory_tree_view_action"
+    sequence="3"/>
+</odoo>

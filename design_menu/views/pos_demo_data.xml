@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+
+       
+
+        <record id="pos_config_2" model="system.config">
+            <field name="app_name">POS</field>
+            <field name="cat_name">Payments</field>
+            <field name="field_name">module_pos_mercury</field>
+            <field name="name">Credit Card Reader</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+        
+
+        <record id="pos_config_4" model="system.config">
+            <field name="app_name">POS</field>
+            <field name="field_name">pos_sales_price</field>
+            <field name="cat_name">Pricing</field>
+            <field name="name">Multiple Product Prices</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment">review</field>
+        </record>
+
+
+    </data>
+</odoo>

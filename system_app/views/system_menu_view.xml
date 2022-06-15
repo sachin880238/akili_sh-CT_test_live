@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="help_view_tree" model="ir.ui.view">
+    <field name="name">erp.help.tree</field>
+    <field name="model">erp.help</field>
+    <field name="arch" type="xml">
+      <tree string="Help" create="false">
+        <field name="sequence" widget="handle" />
+        <field invisible="True" name="description"/>
+        <field invisible="True" name="action_type"/>
+        <field invisible="1" name="model_id"/>
+        <field name="act_window" invisible="1"/>
+        <field invisible="1" name="view_types"/>
+        <field name="default_type" invisible="1"/>
+        <field name="name" string="Title"/>
+        <field name="short_desc"/>
+        <field name="id" string="ID" />
+        <field name="write_date" string="Updated" widget="date"/>
+        <field name="create_uid" string="Author" />
+        <field name="state"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        <field attrs="{'invisible': [('action_type', '=', 'ir.actions.client')]}" name="view_id" invisible="True"/>
+        <field attrs="{'invisible': [('action_type', '=', 'ir.actions.act_window')]}" name="action_action" invisible="True"/>
+      </tree>
+    </field>
+  </record>
+  
+  <record id="help_view_form" model="ir.ui.view">
+    <field name="name">erp.help.form</field>
+    <field name="model">erp.help</field>
+    <field name="arch" type="xml">
+      <form string="Caption" create="false">
+        <header>
+          <button name="publish_help" string="PUBLISH" class="oe_highlight" type="object" states="draft"/>
+          <button name="duplicate_help" string="DUPLICATE" class="btn-secondary" type="object" states="published"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,saved,published"/>
+          <field name="parent_state" invisible="1"/>
+        </header>
+        <sheet>
+         <group class="oe_read_only">
+          <i class="fa fas fa-question" style="font-size: 50px; margin-top: -0.5%;margin-left: 0.75%; color: #808080;"/>
+          <h1 class ="class_help" style="margin-left: -91%; margin-top: 1.0%;">
+            <field name="name"/>
+          </h1>
+        </group>
+        <group class="oe_edit_only">
+          <i class="fa fas fa-question" style="font-size: 50px; margin-top: -0.5%;margin-left: 0.75%; color: #808080;"/>
+          <h1 class ="class_help" style="margin-left: -91%; margin-top: 1.0%;">
+            <field name="name" placeholder="Window"/>
+          </h1>
+        </group>
+          <group>
+            <group>
+              <field name="model_id" invisible="1"/>
+              <field name="action_window" invisible="1"/>
+              <field name="act_window" invisible="1"/>
+              <field name="short_desc"/>
+              <field name="default_type" invisible="1"/>
+              <field name="view_types" invisible="1"/>
+              <field name="view_id" invisible="1"/>
+            </group>
+            <group>
+              <field name="id" string="ID"/>
+              <field name="write_date" widget="date" string="Updated"/>
+              <field name="create_uid" string="Author" options="{'no_open': True}"/>
+            </group>
+          </group>
+          <label class="oe_edit_only" for="description" string="Message"/>
+          <field invisible="False" name="description"/>
+          <group string="Client Action" invisible="True">
+            <field name="action_type"/>
+            <field attrs="{'invisible': [('action_type', '=', 'ir.actions.act_window')]}" domain="[('type', '=', action_type)]" name="action_action" options="{'no_create': True}"/>
+          </group>
+          <group string="Window Action" invisible="True">
+            <field attrs="{'invisible': [('action_type', '=', 'ir.actions.client')]}" name="action_window" options="{'no_create': True}"/>
+            <field attrs="{'invisible': [('action_type', '=', 'ir.actions.client')]}" name="view_id"/>
+            <field attrs="{'invisible': [('action_type', '=', 'ir.actions.client')]}" name="view_types"/>
+            <field invisible="False" name="res_model"/>
+            <field attrs="{'invisible': [('action_type', '=', 'ir.actions.client')]}" name="model_id" options="{'no_create': True}"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="help_view_wizard" model="ir.ui.view">
+    <field name="name">erp.help.wizard</field>
+    <field name="model">erp.help</field>
+    <field name="arch" type="xml">
+      <form string="Caption" create="false">
+        <div class = "oe_read_only">
+          <div class="oe_title" style="margin-top: -4.2%;">
+            <h1 style=" margin-left: -82px ">
+              <field name="name" style="font-size:25px; font-weight:bold; font-family: sans-serif; margin-bottom:-3px"/>
+            </h1>
+          </div>
+        </div>
+        <div class = "oe_edit_only">
+          <div class="oe_title" style="margin-bottom-top: -4.2%;">
+            <h1  style=" margin-left: -82px">
+              <field name="name" style="font-size:25spx; font-weight:bold; font-family: sans-serif;margin-bottom:15px;"/>
+            </h1>
+          </div>
+        </div>
+        <div>
+        </div>
+        <div>
+          <field name="description" style="margin-top: 1%; padding-left:4px;"/>
+        </div>
+      </form>
+    </field>
+  </record>
+  
+  <record id="action_view_help" model="ir.actions.act_window">
+    <field name="name">Help</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">erp.help</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[]</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Create new help</p>
+    </field>
+  </record>
+
+  <!-- State -->
+  <record id="base.view_country_state_tree" model="ir.ui.view">
+    <field name="name">res.country.state.tree</field>
+    <field name="model">res.country.state</field>
+    <field name="arch" type="xml">
+      <tree string="State" create="false">
+        <field name="sequence" widget="handle"/>
+        <field name="name" string="State"/>
+        <field name="code" string="Abbreviation"/>
+        <field name="country_id" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="base.action_country_state" model="ir.actions.act_window">
+    <field name="name">States</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.country.state</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="base.view_country_state_tree"/>
+    <field name="help">If you are working on the American market, you can manage the different federal states you are working on from here. Each state is attached to one country.</field>
+  </record>
+
+  <record id="view_country_tree" model="ir.ui.view">
+    <field name="name">res.country.tree</field>
+    <field name="model">res.country</field>
+    <field name="arch" type="xml">
+      <tree string="Countries" create="false">
+        <field name="sequence" widget="handle"/>
+        <field name="name" string="Country"/>
+        <field name="code" string="Abbreviation"/>
+        <field name="currency_id" />
+      </tree>
+    </field>
+  </record>
+  
+  <record id="action_countries" model="ir.actions.act_window">
+    <field name="name">Countries</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.country</field>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_country_tree"/>
+    <field name="help">If you are working on the American market, you can manage the different federal states you are working on from here. Each state is attached to one country.</field>
+  </record>
+
+  <menuitem id="record_help_config" action="action_view_help" name="Help" parent="backend_menuitem.system_other_menu" sequence="10"/>
+  <menuitem id="menu_countries" action="action_countries" name="Countries" parent="backend_menuitem.system_localization_menu" sequence="0"/>
+</odoo>

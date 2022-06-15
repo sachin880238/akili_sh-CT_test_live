@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!--     <record id="lee_res_users_form_view" model="ir.ui.view">
+        <field name="name">res.users.form.view</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Account Setting">
+                    <group>
+                        <group>
+                            <field name="is_email_auth" />
+                            <field name="is_password_auth" />
+                            <field name="is_mobile_auth" />
+                            <field name="otp_mobile_no" attrs="{'required': [('is_mobile_auth', '=', 'True')]}"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record> -->
+</odoo>

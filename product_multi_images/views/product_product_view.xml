@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+  	<record id="product_normal_form_view_inherit_multi_image" model="ir.ui.view">
+      <field name="name">product.product.form</field>
+      <field name="model">product.product</field>
+      <field name="mode">extension</field>
+      <field eval="8" name="priority"/>
+      <field name="inherit_id" ref="product.product_normal_form_view"/>
+      <field name="arch" type="xml">
+         <!--  <xpath expr="//field[@name='image_medium']" position="attributes">
+          <attribute name="readonly">1</attribute>  
+        </xpath> -->
+        	<xpath expr="//form//notebook" position="inside">
+            <page string='IMAGES'>
+             <field name='product_image_ids'>
+              <tree>
+                <field name="sequence" widget="handle" />
+                <field name="product_variant_image" widget="image" invisible="1"/>
+                <field name='image' widget="image" invisible="1"/>
+                <field name='virtual_image' widget="image" />
+                <field name="is_product_template" invisible="0"/>
+                <field name='main'/>
+                <field name='sequence_selected' invisible='1'/>
+                <field name='selector' />
+                <field name='line' />
+                <field name='name' string='Title'/>
+                <field name='desc' />
+                <field name="file_link" widget="url" invisible="1"/>
+                <field name='create_date' string="Date" widget="date"/>
+                <!-- <field name='parent_id' /> -->
+              </tree>
+              <form string="Product Multi Image">
+                <sheet>
+                  <group>
+                  <group>
+                    <field name='image' widget="image" attrs="{'required':[('parent_id','=',False)], 'invisible':[('parent_id','!=',False)]}"/>
+                    <field name='product_variant_image' widget="image" attrs="{'invisible':[('parent_id','=',False)]}"/>
+                    <field name="parent_id" invisible="1"/>
+                    <field name='main' />
+                    <field name='sequence_selected' invisible='1'/>
+                    <field name='selector'/>
+                    <field name='line' />
+                  </group>
+                  <group>
+                    <field name='name' string='Title' />
+                      <field name='desc' />
+                      <field name="file_link" widget="url" />
+                      <field name="main_change" invisible="1"/>
+                      <field name="line_change" invisible="1"/>
+                  </group>
+                 </group>  
+                </sheet>  
+              </form>
+            </field>
+          </page>
+        	</xpath>
+     	</field>
+    </record> 	
+  </data>
+</odoo>

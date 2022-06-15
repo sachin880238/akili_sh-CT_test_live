@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="product_variants_list" model="ir.actions.act_window">
+      <field name="name">Products</field>
+      <field name="res_model">product.product</field>
+      <field name="view_id" ref="product.product_product_tree_view"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,graph</field>
+      <field name="domain">[('product_tmpl_id','=',context.get('active_id', False))]</field>
+    </record>
+    <!-- search view -->
+    <record id="product.product_template_search_view" model="ir.ui.view">
+      <field name="name">product.template.search</field>
+      <field name="model">product.template</field>
+      <field name="arch" type="xml">
+        <search string="Product">
+          <field name="name" string="Product" filter_domain="['|', '|', ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self)]"/>
+          <field name="website_name" string="Website Product Title"/>
+          <field name="categ_id" filter_domain="[('categ_id', 'child_of', raw_value)]"/>
+          <separator/>
+          <filter string="Services" name="services" domain="[('type','=','service')]"/>
+          <filter string="Products" name="consumable" domain="[('type', 'in', ['consu', 'product'])]"/>
+          <separator/>
+          <filter string="Can be Sold" name="filter_to_sell" domain="[('sale_ok','=',True)]"/>
+          <filter string="Can be Purchased" name="filter_to_purchase" domain="[('purchase_ok', '=', True)]"/>
+          <separator/>
+          <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+          <field string="Attributes" name="attribute_line_ids" groups="product.group_product_variant"/>
+          <field name="pricelist_id" widget="selection" context="{'pricelist': self}" filter_domain="[]" groups="product.group_sale_pricelist"/> <!-- Keep widget=selection on this field to pass numeric `self` value, which is not the case for regular m2o widgets! -->
+          <separator/>
+          <filter string="Late Activities" name="activities_overdue"
+            domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+            help="Show all records which has next action date is before today"/>
+          <filter string="Today Activities" name="activities_today"
+            domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+          <filter string="Future Activities" name="activities_upcoming_all"
+            domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+            ]"/>
+          </search>
+      </field>
+    </record>
+
+    <!-- tree view from product module -->
+    <record id="view_product_template_tree_view_inherit_product_extension" model="ir.ui.view">
+      <field name="name">product.template.product_extention.tree.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_tree_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='default_code']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='name']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='name']" position="before">
+          <field name="website_name" string="Name"/>
+        </xpath>
+        <xpath expr="//field[@name='name']" position="after">
+          <field name="attribute_line_ids" string="Attributes" widget="many2many_tags"/>
+          <field name="product_variant_count" string="Variants"/>
+        </xpath>
+
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="status_color" widget="color" options="{'readonly_mode': 'color'}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='categ_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='product_variant_count']" position="after">
+                <field name="website_selection" string="Selection"/>
+            </xpath>
+
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="string">Type</attribute>
+            </xpath>
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='uom_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='standard_price']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!--end tree view from product module -->
+        
+        <!--tree view from stock module -->
+        <record id="view_stock_product_template_tree_inherit_product_extention" model="ir.ui.view">
+            <field name="name">product.template.stock.product_extention.tree.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_stock_product_template_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='qty_available']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='virtual_available']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!--end tree view from stock module -->
+
+
+        <!-- base structure of product.template, common with product.product -->
+        <record id="product.product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form string="Product">
+                    <header>
+                        <button attrs="{'invisible': [('attribute_line_ids', '&lt;=', 0)]}" groups="product.group_product_variant" name="%(product.product_attribute_value_action)d" string="Configure Variants" type="action"/>
+                    </header>
+                    <sheet>
+                        <field invisible="1" name="product_variant_count"/>
+                        <field invisible="1" name="is_product_variant"/>
+                        <field invisible="1" name="attribute_line_ids"/>
+                        <field invisible="True" name="id"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-archive" name="toggle_active" type="object" invisible="1">
+                                <field name="active" options="{&quot;terminology&quot;: &quot;archive&quot;}" widget="boolean_button"/>
+                            </button>
+                        </div>
+                        <field class="image_radious" name="image_medium" widget="image" style="float: left;"/>
+                        <div class="oe_title" >
+                            <h1 style="width:80%; float: left;margin-left: -2%;">
+                                <field name="name" placeholder="Product Name"/>
+                            </h1>
+                            <h6 style="width:80%; float: left;margin-left: -2%;font-weight: normal;white-space: normal;">
+                                <field name="product_description" placeholder="Website Product Description" style="white-space: normal;"/>
+                            </h6>
+                        
+                            <div groups="base.group_user" name="options">
+                                <div>
+                                    <field name="sale_ok"/>
+                                    <label for="sale_ok"/>
+                                </div>
+                                <div>
+                                    <field name="purchase_ok"/>
+                                    <label for="purchase_ok"/>
+                                </div>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page name="general_information" string="General Information">
+                                <group>
+                                    <group name="group_general">
+                                        <field name="type"/>
+                                        <field name="categ_id" string="Product Category"/>
+                                    </group>
+                                    <group name="group_standard_price">
+                                        <field name="list_price" options="{'currency_field': 'currency_id', 'field_digits': True}" string="Sales Price" widget="monetary"/>
+                                        <label attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}" for="standard_price" groups="base.group_user"/>
+                                        <div attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}" groups="base.group_user" name="standard_price_uom">
+                                            <field name="standard_price" options="{'currency_field': 'currency_id'}" widget="monetary"/>
+                                        </div>
+                                        <field groups="base.group_multi_company" name="company_id" options="{'no_create': True}"/>
+                                        <field groups="uom.group_uom" name="uom_id" options="{'no_create': True}"/>
+                                        <field groups="uom.group_uom" name="uom_po_id" options="{'no_create': True}"/>
+                                        <field invisible="1" name="currency_id"/>
+                                        <field invisible="1" name="product_variant_id"/>
+                                    </group>
+                                </group>
+                                <group string="Internal Notes">
+                                    <field name="description" nolabel="1" placeholder="This note is only for internal purposes."/>
+                                </group>
+                            </page>
+                            <page groups="product.group_stock_packaging" name="inventory" string="INVENTORY">
+                                <group name="inventory">
+                                    <group attrs="{'invisible': [('type', 'not in', ['product', 'consu'])]}" name="group_lots_and_weight" string="Logistics">
+                                        <label for="weight"/>
+                                        <div class="o_row" name="weight">
+                                            <field name="weight"/>
+                                            <span>
+                                                <field name="weight_uom_name"/>
+                                            </span>
+                                        </div>
+                                        <label for="volume"/>
+                                        <div class="o_row" name="volume">
+                                            <field name="volume" string="Volume"/>
+                                            <span>m³</span>
+                                        </div>
+                                    </group>
+                                </group>
+                                <group attrs="{'invisible':['|', ('type', 'not in', ['product', 'consu']), ('product_variant_count', '&gt;', 1)]}" colspan="4" groups="product.group_stock_packaging" name="packaging" string="Packaging">
+                                    <field context="{'tree_view_ref':'product.product_packaging_tree_view2', 'form_view_ref':'product.product_packaging_form_view2'}" name="packaging_ids" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page attrs="{'invisible':[('sale_ok','=',False)]}" name="sales" string="SHIPPING">
+                                <group name="sale">
+                                    <group groups="product.group_product_pricelist" name="pricelists">
+                                        <div groups="product.group_product_pricelist" name="pricelist_item">
+                                            <label for="item_ids" string="Pricing"/>
+                                            <field context="{'default_base':'list_price', 'default_applied_on' :'1_product'}" name="item_ids" nolabel="1">
+                                                <tree editable="bottom" string="Pricelist Items">
+                                                    <field name="pricelist_id" required="1" string="Pricelist"/>
+                                                    <field name="fixed_price" required="1" string="Price"/>
+                                                    <field name="min_quantity"/>
+                                                    <field name="date_start"/>
+                                                    <field name="date_end"/>
+                                                    <field invisible="1" name="applied_on"/>
+                                                </tree>
+                                            </field>
+                                        </div>
+                                    </group>
+                                    <group name="email_template_and_project" invisible="1"/>
+                                </group>
+                                <group invisible="1" name="description" string="Description for Customers">
+                                    <field name="description_sale" nolabel="1" placeholder="This note will show up on sales orders &amp; invoices."/>
+                                </group>
+                            </page>
+                            <page attrs="{'invisible': [('purchase_ok','=',False)]}" invisible="1" name="purchase" string="PURCHASING">
+                                <group name="purchase">
+                                    <group name="bill" string="Vendor Bills"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <!-- view used for product.template only -->
+        <record id="product.product_template_only_form_view" model="ir.ui.view">
+            <field name="name">product.template.product.form</field>
+            <field name="model">product.template</field>
+            <field name="mode">primary</field>
+            <field eval="8" name="priority"/>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="name">Product Template</attribute>
+                </xpath>
+                <button name="toggle_active" position="before">
+                    <button class="oe_stat_button" groups="product.group_product_variant" icon="fa-sitemap" name="get_template_variants_view" type="object">
+                        <field name="product_variant_count" string="Variants" widget="statinfo"/>
+                    </button>
+                    <button type="object"
+                        name="action_values_count_temp"
+                        class="oe_stat_button">
+                        <i class="icon-palette" style="font-size:24px;"/>
+                        <field name="prod_values" string="Values" widget="statinfo"/>
+                    </button>
+                    <button type="object"
+                        name="action_website_temp"
+                        class="oe_stat_button"
+                        icon="fa-globe">
+                        <field name="website" string="Websites" widget="statinfo"/>
+                    </button>
+                    <button name="%(product_extension.custom_action_product_supplierinfo_data)d" type="action"
+                        class="oe_stat_button"
+                        icon="fa-user">
+                        <field name="vendor_count" string="Vendors" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" name="%(mrp.template_open_bom)d" type="action"
+                        attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}" icon="fa-flask">
+                        <field string="BOM" name="bom_count" widget="statinfo" />
+                    </button>
+                    <button type="object"
+                            name="stock.action_view_orderpoints" 
+                            attrs="{'invisible':['|',('type', '!=', 'product'),('nbr_reordering_rules', '==', 1)]}"
+                            class="oe_stat_button" 
+                            icon="fa-refresh">
+                    <field name="nbr_reordering_rules" string="Reordering" invisible="1" widget="statinfo"/>
+
+                    </button>
+                    
+                </button>
+                <xpath expr="//page[@name='general_information']" position="attributes">
+                    <attribute name="string">SALES</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']" position="before">
+                    <page groups="product.group_product_variant" name="variants" string="VARIANTS">
+                        <field context="{'show_attribute': False}" name="attribute_line_ids" widget="one2many_list">
+                            <tree editable="bottom" string="Variants">
+                                <field name="attribute_id"/>
+                                <field context="{'default_attribute_id': attribute_id}" domain="[('attribute_id', '=', attribute_id)]" name="value_ids" options="{'no_create_edit': True}" widget="many2many_tags"/>
+                            </tree>
+                        </field>
+                        <p class="oe_grey">
+                            <strong>Warning</strong>: adding or deleting attributes
+              will delete and recreate existing variants and lead
+              to the loss of their possible customizations.</p>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="account.product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="priority">5</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='purchase']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <page name="purchase" position="after">
+                    <page groups="account.group_account_user" name="invoicing" string="ACCOUNTING">
+                        <group name="properties">
+                            <group string="Receivables">
+                                <field domain="[('internal_type','=','other'),('deprecated','=',False)]" groups="account.group_account_user" name="property_account_income_id"/>
+                            </group>
+                            <group name="payables" string="Payables">
+                                <field domain="[('internal_type','=','other'),('deprecated','=',False)]" groups="account.group_account_user" name="property_account_expense_id"/>
+                            </group>
+                        </group>
+                        <group name="accounting"/>
+                    </page>
+                </page>
+                <field name="list_price" position="after">
+                    <field name="taxes_id" widget="many2many_tags"/>
+                </field>
+                <group name="bill" position="inside">
+                    <field name="supplier_taxes_id" widget="many2many_tags"/>
+                </group>
+            </field>
+        </record>
+        <record id="website_sale.product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.product.website.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <!-- add state field in header -->
+                <!-- <xpath expr="//button[@name='toggle_active']" position="before">
+                    <button attrs="{'invisible': [('sale_ok','=',False)]}" class="oe_stat_button" icon="fa-globe" name="website_publish_button" type="object">
+                        <field name="website_published" widget="website_button"/>
+                    </button>
+                </xpath> -->
+                <xpath expr="//page[@name='invoicing']" position="after">
+                    <page invisible="1" name="shop" string="eCommerce">
+                        <group name="shop">
+                            <group string="Shop">
+                                <field invisible="1" name="website_url"/>
+                                <field groups="website.group_multi_website" name="website_id" options="{'no_create': True}"/>
+                                <field name="public_categ_ids" string="Categories" widget="many2many_tags"/>
+                                <field name="alternative_product_ids" widget="many2many_tags" domain="[('id', '!=', active_id)]"/>
+                                <field name="accessory_product_ids" widget="many2many_tags"/>
+                                <field groups="base.group_no_one" name="website_style_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <group name="extra_images" string="Extra Images">
+                            <field class="o_website_sale_image_list" context="{'default_name': name, 'default_product_tmpl_id': active_id}" name="product_image_ids" nolabel="1">
+                                <kanban class="o_attachments_previews" string="Product Images">
+                                    <field name="id"/>
+                                    <field name="name"/>
+                                    <field name="image"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="o_attachment oe_kanban_global_click o_website_sale_image_card">
+                                                <div class="o_attachment_wrap">
+                                                    <div class="o_image_box">
+                                                        <div class="o_attachment_image" t-attf-style="background-image:url({{kanban_image('product.image', 'image', record.id.raw_value)}});"/>
+                                                        <div t-att-title="record.name.value" t-attf-class="o_image_overlay"/>
+                                                        <div class="o_website_sale_image_card_title" t-att-title="record.name.value">
+                                                            <field name="name"/>
+                                                        </div>
+                                                    </div>
+                                                    <t t-set="size" t-value="[record.image.value][0]"/>
+                                                    <t t-if="size.indexOf('Bytes') !== -1 or ( size.indexOf('Kb') !== -1 and size[2]=='.')" t-set="size_status" t-value="'normal'"/>
+                                                    <t t-elif="( size.indexOf('Kb') !== -1 and size[3]=='.')" t-set="size_status" t-value="'warning'"/>
+                                                    <t t-else="" t-set="size_status" t-value="'danger'"/>
+                                                    <t t-if="size_status == 'normal'" t-set="message" t-value="'Acceptable file size'"/>
+                                                    <t t-elif="size_status == 'warning'" t-set="message" t-value="'Huge file size. The image should be optimized/reduced.'"/>
+                                                    <t t-else="" t-set="message" t-value="'Optimization required! Reduce the image size or increase your compression settings.'"/>
+                                                    <span t-att-title="message" t-attf-class="o_website_sale_image_card_size badge badge-#{size_status}">
+                                                        <t t-esc="record.image.value"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale.product_template_action" model="ir.actions.act_window">
+            <field name="name">Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,kanban,form,activity</field>
+            <field name="view_type">form</field>
+            <!-- <field name="view_id" ref="product.product_template_kanban_view"/> -->
+            <field name="search_view_id" ref="product.product_template_search_view"/>
+            <field name="context">{"search_default_filter_to_sell":0, "sale_multi_pricelist_product_template": 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new product
+                </p><p>
+                    You must define a product for everything you purchase,
+                    whether it's a physical product, a consumable or services.
+                </p>
+            </field>
+        </record>
+        <record id="product_template_kanban_view" model="ir.ui.view">
+            <field name="name">Product.template.product.kanban</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml"> 
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="website_name" force_save="1"/>
+                    <field name="compute_int" force_save="1" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="product_template_view_form_inherit_stock" model="ir.ui.view">
+            <field name="name">product.template.inherit.form</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='action_update_quantity_on_hand']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='%(stock.action_product_replenish)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form/header/button[@name='%(product.product_attribute_value_action)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//header[1]" position="inside">
+                    <button name="generate_variants" string="GENERATE"  attrs="{'invisible': ['|', ('status', 'in', ['private','public','inactive']) ]}" type="object" class="oe_highlight" help="create product variants" />
+                    <button name="publish_action" string="PUBLISH"    attrs="{'invisible': ['|', ('status', 'in', ['draft','public','inactive']) ]}" type="object" class="oe_highlight" help="display on website"/>
+                    <button name="generate" string="GENERATE" attrs="{'invisible': ['|', ('status', 'in', ['draft','inactive']) ]}" type="object" help="create product variants" />
+                    <button name="unpublish_action" string="UNPUBLISH" attrs="{'invisible': ['|', ('status', 'in', ['draft','private','inactive']) ]}" type="object" help="do not display on website"/>
+                    <button name="deactivate_action" string="DEACTIVATE" attrs="{'invisible': ['|', ('status', 'in', ['draft','inactive']) ]}" type="object" help="do not sell" />
+                    <button name="activate_action" string="ACTIVATE" attrs="{'invisible': ['|', ('status', 'in', ['draft','private','public']) ]}" type="object" help="resume selling" />
+                    <field name="status" widget="statusbar" statusbar_visible="draft,private,public,inactive" />
+
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_template_form_view_procurement_button">
+            <field name="name">product.template_procurement</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <button name="toggle_active" position="before">
+                    <button type="object"
+                        name="action_inventory_count_temp"
+                        class="oe_stat_button">
+                        <i class="icon-warehouse-alt" style="font-size:22px;"/>
+                        <field name="inventory_count" string="Inventory" widget="statinfo" style="display:inline-grid;padding-left: 5px;"/>
+                    </button>
+
+                    <button type="object"
+                        name="action_transfer_count_temp"
+                        class="oe_stat_button">
+                        <i class="icon-long-arrow-alt-right" style="font-size:27px;"/>
+                        <field name="transfer_count" string="Transfer" widget="statinfo" />
+                    </button>
+
+                    <button type="object"
+                        name="action_task_count_temp"
+                        class="oe_stat_button"
+                        icon="fa-clock">
+                        <field name="task_count" string="Tasks" widget="statinfo"/>
+                    </button>
+                     <button type="object"
+                        name="action_project_count_temp"
+                        class="oe_stat_button"
+                        icon="fa-project-diagram">
+                        <field name="project_count" string="Projects" widget="statinfo"/>
+                    </button>
+                    <button type="object"
+                        name="get_document_view"
+                        class="oe_stat_button"
+                        icon="fa-file">
+                        <field name="document_count" string="Documents" widget="statinfo"/>
+                    </button>               
+                </button>
+
+                <xpath expr="//p[@class='oe_grey']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='status']" position="after">
+                    <field name="parent_state" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- onhand,forcasted,product move link button -->
+        <record model="ir.ui.view" id="product_template_form_view_procurement_button_inherit">
+            <field name="name">product.template_procurements</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_open_quants']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='%(stock.action_stock_level_forecast_report_template)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_view_stock_move_lines']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='stock.action_view_orderpoints']" position="replace">
+<!--                     <attribute name="string">Reordering</attribute>
+-->
+                          <!-- <attribute name="invisible">1</attribute>       -->
+           </xpath>
+
+                 <xpath expr="//field[@name='responsible_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>  
+
+
+                
+
+ 
+        <!-- manufactured link button -->
+        <record id="product_template_form_view_bom_button_inherite" model="ir.ui.view">
+            <field name="name">product.template.procurement</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="mrp.product_template_form_view_bom_button"/>
+            <field name="groups_id" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_view_mos']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                
+                <xpath expr="//button[@name='%(mrp.template_open_bom)d'][2]" position="replace">
+                  <!-- <attribute name="invisible">1</attribute> -->
+                </xpath>
+
+            </field>
+        </record> 
+
+        <!-- sold link button -->
+        <record model="ir.ui.view" id="product_template_form_view_sale_order_button_inherite">
+            <field name="name">product.template.sale.order.button</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="sale.product_template_form_view_sale_order_button"/>
+            <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_view_sales']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>    
+        </record> 
+
+        <!-- purchased link button -->
+        <record id="view_product_template_purchase_buttons_from_inherite" model="ir.ui.view">
+            <field name="name">product.template.purchase.button.inherit1</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="purchase.view_product_template_purchase_buttons_from"/>
+            <field name="groups_id" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+            <field name="arch" type="xml"> 
+                <xpath expr="//button[@name='action_view_po']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- Last cost readonly -->
+        <record id="view_template_property_form_inherit" model="ir.ui.view">
+          <field name="name">template.property.form.inherit</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="stock_account.view_template_property_form"/>
+          <field name="arch" type="xml">
+            <xpath expr="//field[@name='standard_price']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+          </field>
+        </record>
+
+        <record id="view_attachment_tree_document" model="ir.ui.view">
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <tree string="Attachments">
+                    <field name="name" string="Document"/>
+                    <field name="datas" string="File/Link"/>
+                    <field name="create_date"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        
+    <record id="product_document_list" model="ir.actions.act_window">
+      <field name="name">Products Document</field>
+      <field name="res_model">ir.attachment</field>
+      <field name="view_id" ref="product_extension.view_attachment_tree_document"/>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,graph</field>
+
+      <!-- <field name="domain">[('product_tmp_id','=',context.get('active_id', False))]</field> -->
+    </record>
+
+    <!--Changing reordering rules button icon -->
+    <record  id="reordering_button_inherits_icon" model="ir.ui.view">
+      <field name="name">product.template_procurement</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+      <field name="arch" type="xml">
+        <xpath expr="//button[@icon='fa-refresh']" position="attributes">
+          <attribute name="icon"> </attribute>
+        </xpath>
+
+        <!-- Change Reordering Icon in  Product Template-->
+        <xpath expr="//field[@name='nbr_reordering_rules']" position="before">
+          <i class="icon-sync-alt" style="font-size:24px;"> </i>
+        </xpath>
+
+        <!-- Change Routes Icon in Product Template -->
+        <xpath expr="//button[@name='%(stock.action_stock_rules_report)d']" position="replace">
+          <button type="action"
+                            name="%(stock.action_stock_rules_report)d"
+                            attrs="{'invisible':[('type', '!=', 'product')]}"
+                            class="oe_stat_button"
+                            context="{'default_product_tmpl_id': id}"
+                            groups="stock.group_stock_multi_locations">
+          <i class="icon-route" style="font-size:24px;"/>
+          <span class="o_stat_text">Routes</span>                   
+          </button>
+        </xpath>
+
+        <xpath expr="//field[@name='nbr_reordering_rules']" position="attributes">
+          <attribute name="string">Reordering</attribute>
+        </xpath>
+
+      </field>
+    </record>
+
+    </data>
+</odoo>

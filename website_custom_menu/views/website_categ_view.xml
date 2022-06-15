@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="website_sale.product_public_category_action" model="ir.actions.act_window">
+        <field name="name">Website Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.public.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Define a new category
+          </p><p>
+            Categories are used to browse your products through the
+            touchscreen interface.
+          </p>
+        </field>
+    </record>
+
+
+    <menuitem id="website_sale.menu_catalog_categories"
+        action="website_sale.product_public_category_action" string="Website Categories"
+        parent="website_sale.menu_product_settings" sequence="1"/>
+
+
+
+    <record id="product_public_category_form_view_custom" model="ir.ui.view">
+            <field name="name">Website.Categories.intrastat</field>
+            <field name="model">product.public.category</field>
+            <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet" position="before">
+                    <header>
+                    	<button string="inactive" type="object" name="action_inactive" class="oe_highlight"  attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                    	<button string="Active" type="object" name="action_active" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'inactive')]}"/>
+                    	<field name="state" widget="statusbar"/>
+                    </header>
+                </xpath>
+                <xpath expr="/form/sheet" position="replace">
+                	<sheet>
+                    <div class="row col-sm-12">
+                      <div class="col-12 col-md-8">
+            <i class="fa fa-fw o_button_icon fa fa-bars" style="width:50%;float:left;font-size: xxx-large;margin-left: -23%;color: black !important;"/>
+            <h1 class="name_web">
+              <field name="display_name" />
+              <field name="name" default_focus="0" placeholder="Name" invisible="1"/>
+
+            </h1>
+          </div>
+        </div>
+          <group>
+          	<group>
+          		<field name="parent_id"/>
+          		<field name="name" string="Category"/>
+          		<field name="childern_name"/>
+          		<field name="comment"/>
+              <field name="image" widget="image"/>
+          	</group>
+          </group>
+      </sheet>
+                </xpath>
+            </field>
+        </record>
+
+
+    <record id="product_public_category_tree_view_cutom" model="ir.ui.view">
+            <field name="name">Website.Categories.intrastat</field>
+            <field name="model">product.public.category</field>
+            <field name="inherit_id" ref="website_sale.product_public_category_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='display_name']" position="after">
+                	<field name="state"/>
+                	
+                </xpath>
+            </field>
+        </record>
+</odoo>

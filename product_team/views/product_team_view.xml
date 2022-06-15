@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="review_categories_form_id">
+      <field name="name">Product Team</field>
+      <field name="model">crm.team</field>
+      <field name="arch" type="xml">
+        <form string="Review Categories">
+          <header>
+            <button name="get_team_state" type="object" class="oe_button  oe_statinfo oe_left"
+            string="ACTIVATE" help="Activate team." attrs="{'invisible':[('state','=','active')]}"/>
+            <button name="get_team_state" type="object" class="oe_button  oe_statinfo oe_left"
+                    attrs="{'invisible':[('state','=','inactive')]}"
+            string="DEACTIVATE" help="Deactivate team."/>
+            <field name="state" widget="statusbar"/>
+            <field name="parent_state" widget="statusbar" invisible="1"/>
+          </header>
+          <sheet string="Review Categories">
+            <group>
+              <group>
+                <field name="name" required='1' string="Name"/>
+                <field name="sales_team" />
+                <field name="warehouse_team" />
+                <field name="purchase_team"  />
+              </group>
+              <group>
+                <field name="pro_manager" string="Leader" options='{"no_open": True, "no_create": True}'/>
+                <field name="company_id" options='{"no_open": True, "no_create": True}'/>
+                <field name="desc"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Product Specialists" name="product_specialists">
+                <field name="user_ids"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="review_categories_tree_id">
+      <field name="name">Product Team</field>
+      <field name="model">crm.team</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="sequence" widget="handle"/>
+          <field name="name" string="Team"/>
+          <field name="company_id"/>
+          <field name="pro_manager" string="Leader"/>
+          <field name="desc"/>
+          <field name="state"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_review_categories_id" model="ir.actions.act_window">
+      <field name="name">Product Team</field>
+      <field name="res_model">crm.team</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="context">{'default_customer': False,  "default_sales_team":1}</field>
+    </record>
+
+    <menuitem id="menu_product_team" name="Product Team" parent="sale.menu_sale_config"
+              action="action_review_categories_id" sequence="2"/>
+
+    <record id="product_category_form_view" model="ir.ui.view">
+      <field name="name">product.category.form</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="product.product_category_form_view" />
+      <field name="arch" type="xml">
+        <xpath expr="/form/sheet/group[@name='first']" position="after">
+          <group>
+            <label for="review_category" string="Review Categories" style="font-size:1.625rem;font-style:italic;font-weight:100;color: #4c4c4c;"/>
+            <group name="review_category">
+              <field name="review_category_id" style="width:40%%" context="{'default_sales_team': True}" />
+              <field name="purchase_review_category_id" style="width:40%%" context="{'default_purchase_team': True}"/>
+              <field name="team_ids" widget="many2many_tags"/>
+            </group>
+          </group>
+        </xpath>
+      </field>
+    </record>
+    <!-- <record id="product_template_form_view" model="ir.ui.view">
+      <field name="name">product.template.common.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="priority">5</field>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='categ_id']" position="after">
+          <field name="product_team_id" string="Product Team" />
+        </xpath>
+      </field>
+    </record> -->
+  </data>
+</odoo>

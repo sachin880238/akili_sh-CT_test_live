@@ -1,0 +1,83 @@
+<odoo>
+	<template id="add_update_card" name="Add Update card">
+		<t t-call="website.layout">
+			<div id="wrap">
+				<div class="container oe_website_sale">
+					<form action="/Add_update/card" method="post">
+						<h1 class="mb32">Add Update Card</h1>
+						<div class="col-md-12 extra_info-custom address-kanban-info">
+							<div class="col-md-12 col-sm-11 col-xs-12 t_para_size">
+								<b>Select a method of payment and approve your order.</b>If the shipping terms in
+						    your quotation are marked “estimated”, that means we are unable to determine the
+						    exact shipping cost until we pack your order. If the cost is higher than estimated, we
+						    will contact you to confirm you wish to proceed. For your protection, financial
+						    information you provide is encrypted in compliance with PCI DSS standards.</div>
+						</div>
+						<br/>
+						<br/>
+						<div class="row">
+							<div class="clearfix"/>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="debit_card_no">Credit or debit card No
+                            </label>
+								<input class="form-control" id="debit_card_no" maxlength="16" name="debit_card_no" pattern="[0-9]{16}" required="True" type="text"/>
+							</div>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="card_holder_name">Card Holder Name</label>
+								<input class="form-control" id="card_holder_name" name="card_holder_name" required="True" type="text"/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="clearfix"/>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="month">Month</label>
+								<select class="form-control" id="month" name="month" required="True">
+									<option class="select-placeholder" selected="selected" value="">Month</option>
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="year">Year</label>
+								<select class="form-control" id="year" name="year" required="True">
+									<option class="select-placeholder" selected="selected" value="">Year</option>
+									<option value="2016">2016</option>
+									<option value="2017">2017</option>
+									<option value="2018">2018</option>
+									<option value="2019">2019</option>
+									<option value="2020">2020</option>
+									<option value="2021">2021</option>
+									<option value="2022">2022</option>
+									<option value="2023">2023</option>
+									<option value="2024">2024</option>
+									<option value="2025">2025</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="clearfix"/>
+							<div class="form-group col-sm-6">
+								<label class="control-label" for="cvv_code">CVV code
+                            </label>
+								<input class="form-control" id="cvv_code" maxlength="16" name="cvv_code" pattern="[0-9]" required="True" type="text"/>
+							</div>
+							<div class="form-group col-sm-6">
+								
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</t>
+	</template>
+</odoo>

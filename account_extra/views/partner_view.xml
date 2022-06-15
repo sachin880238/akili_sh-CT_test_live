@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_partner_form"  model="ir.ui.view" >
+      <field name="name">res.partner.form.inherit1</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="account_sale_purchase_accounting.view_partner_form" />
+      <field name="arch" type="xml"> 
+         <xpath expr="//field[@name='sale_shipping_terms']" position="after">
+                <field name="property_delivery_carrier_id" string="Ship Via"/>
+          </xpath>
+         <xpath expr="//field[@name='free_freight']" position="after"> 
+                <field name="pur_property_delivery_carrier_id" string="Ship Via"/>
+          </xpath>
+      </field>
+    </record> 
+
+  <!--..........ADDING DRAG & DROP IN LIST VIEW OF SALE INVOICE INHERIT ACCOUNT INVOICE VIEW TREE............... -->
+    
+    <record id="inherit_invoice_tree" model="ir.ui.view">
+      <field name="name">account.invoice.tree</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_tree" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="before">
+          <field name="sequence" widget="handle" />
+        </xpath>
+        <xpath expr="//field[@name='state']" position="after">
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="invoice_form_acount_inherit" model="ir.ui.view">
+        <field name="name">invoice.form.cancel.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="after">
+              <field name="dash_icon" value="fas fa-rectangle-portrait" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="after">
+              <field name="parent_state" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

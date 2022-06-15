@@ -1,0 +1,1673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="custom_selection_product_variants">
+		<div class="row col-md-12 margin-bottom">
+			<!-- <strong>optionswww</strong> -->
+			
+			<t t-if="selected_product_id">
+				<select t-attf-class="form-control js_variant_selection_change"  onchange="check_product_bindle(this.value);">
+					<t t-as="value_id" t-foreach="product.product_variant_ids">
+						<t t-if="value_id.unpublish_product == False">
+
+						<option t-att-selected="value_id.id == product_variant.id" t-att-data-attribute_value_ids="value_id.product_template_attribute_value_ids.ids" t-att-data-lst_price="value_id.lst_price" t-att-data-product_tmpl_id="value_id.product_tmpl_id.id" t-att-value="value_id.id">
+							<span t-esc="value_id.full_name"/>
+						</option>
+					</t>
+					</t>
+				</select>
+			</t>
+			<t t-else="">
+                <t t-if="len(product.product_variant_ids) > 1">
+				<t t-set="j" t-value="0" />
+				<select t-attf-class="form-control js_variant_selection_change">
+					<option t-att-data-product_tmpl_id="product.id" value="template_only">
+						<span>Select</span>
+					</option>
+					<t t-as="value_id" t-foreach="product.product_variant_ids">
+						<t t-if="value_id.unpublish_product == False">
+						<t t-set="j" t-value="j+1" />
+						<t t-if="j==1">
+							<t t-set="first_variant_id" t-value="value_id.id" />
+						</t>
+						<option  t-att-data-attribute_value_ids="value_id.product_template_attribute_value_ids.ids" t-att-data-lst_price="value_id.lst_price" t-att-data-product_tmpl_id="value_id.product_tmpl_id.id" t-att-value="value_id.id">
+							<span t-esc="value_id.full_name"/>
+						</option>
+					</t>
+					</t>
+				</select>
+            </t>
+			</t>
+		</div>
+	</template>
+
+
+
+	<template  id="custom_shop_product_carousel" inherit_id="website_sale.shop_product_carousel" name="custom Shop Product Carousel"> 
+        <xpath expr="//t[@t-set='image_ids']" position="replace">
+            <t t-set="image_ids"  t-value="product_variant and product_variant.get_selector_images() or product and product.get_selector_images()"/>
+        </xpath>     
+    </template>
+
+    <template id="product_inherit1" inherit_id="website_sale.product" name="Product">
+        <xpath expr="//div/section/div/div/p[@class='text-muted']" position="replace">
+        </xpath>
+        <xpath expr="//div/section/div/div/hr[2]" position="replace">
+        </xpath> 
+        <xpath expr="//ol[@class='breadcrumb']" position="replace">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/find-a-product">Find a Product</a>
+                </li>
+                <li t-if="category"  class="breadcrumb-item">
+                    <a t-att-href="keep('/shop/category/%s' % slug(category), category=0)" t-field="category.name"/>
+                </li>
+                <li class="breadcrumb-item active">
+                    <span t-field="product.website_name">
+                        <t t-esc="product.name"/>
+                    </span>
+                </li>
+            </ol>
+        </xpath>
+        <xpath expr="//t[@t-call='website_sale.search']" position="replace">
+        </xpath>    
+    </template>    
+
+	<template id="custom_product_quantity" inherit_id="website_sale.product_quantity" name="custom Select Quantity">
+		<xpath expr="//div[@class='css_quantity input-group oe_website_spinner']" position="replace"/>
+		<xpath expr="//h1[@t-field='product.name']" position="replace">
+			<h1 itemprop="name" t-field="product.website_name">Product Name</h1>
+			<h2 class="template_description_main_div d-none" style="font-size:16px;" t-field="product.product_description">No Product Description</h2>
+
+            <h2 t-attf-class="template_description_main_div #{'' if (len(product.product_variant_ids) == 1) else 'd-none'}" style="font-size:16px;color: #6c757d;margin-bottom: 3%;margin-left: 1%;" t-field="product.product_description">No Product Description</h2>
+
+			<div class="row col-md-12">
+				<t t-set="j" t-value="0" />
+				<div class="container" t-as="value_id" t-foreach="product.product_variant_ids">
+					<t t-if="len(value_id.product_variant_ids) > 1">
+                    <div t-att-id="'variant_description_main_div_%s'%(value_id.id)" t-attf-class="variant_description_main_div #{'d-none' if (str(value_id.id) != selected_product_id and j != 0) else ''}">
+                        <h2 t-field="value_id.product_description" class="text-muted" style="font-size:16px;margin-left: 1%;">No Product Description</h2>
+                    </div>
+                </t>
+                <t t-if="len(value_id.product_variant_ids) == 1">
+                    <div t-att-id="'variant_description_main_div_%s'%(value_id.id)" t-attf-class="variant_description_main_div #{'' if (str(value_id.id) != selected_product_id and j != 0) else ''}">
+                        <div class="variant_description_div_css">
+                            <strong style="font-size:15px;margin-left: 1%;">
+                                <t t-esc="value_id.product_variant_ids.full_name"/>
+                            </strong>
+                            <h2 t-field="value_id.description_sale" class="text-muted" style="font-size:15px;margin-left:1%;    margin-top: 4px;">No Product Description</h2>
+                        </div>    
+                    </div>
+                </t>
+					<t t-set="j" t-value="j+1" />
+				</div>
+			</div>
+		</xpath>
+		<xpath expr="//a[@id='add_to_cart']" position="replace"/>
+	</template>
+
+     <template id="website_sale.cart_line_product_link" name="Shopping Cart Line Product Link">
+        <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }/#{ slug(line.product_id) }">
+            <t t-raw="0"/>
+        </a>
+    </template>
+
+
+	<template id="custom_product" inherit_id="website_sale.product" name="custom Products">
+
+		<xpath expr="//div[@id='o-carousel-product']" position="replace">
+				<t t-if="product.website_selection=='attribute'">
+                    <t t-if="variant_found == False">
+                    <!-- <t t-esc="product"/> -->
+                     <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0" >
+                      <div class="carousel-outer">
+                        <div class="carousel-inner">
+                            
+                            <t t-as="value_id" t-foreach="product">
+                                
+                        <t t-if="len(value_id.product_variant_ids) > 1"> 
+                        <t t-if="value_id.product_image_ids">
+                            <div  t-attf-class="carousel-item active new_image_ext " t-field="product.image" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or ''), 'itemprop': 'image'}" style="min-height: 470px;"/>
+                        </t>
+                        <t t-else="">
+                            
+                            <div  t-attf-class="carousel-item#{'' if value_id.product_image_ids else ' active'}" t-field="product.image_medium" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'], 'itemprop': 'image'}" style="min-height: 470px;"/>
+                        </t>
+                    </t>
+                    <t t-else="len(value_id.product_variant_ids) == 1">
+                        <div  t-attf-class="carousel-item active new_image_ext " t-field="value_id.product_variant_ids.image" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or ''), 'itemprop': 'image'}" style="min-height: 470px;"/>
+                        
+
+                    </t>
+                        </t>
+
+                             <t t-if="len(product.product_image_ids)" t-foreach="product.product_image_ids" t-as="pimg">
+                                <t t-if="pimg.main != true and pimg.selector == True">
+                                <div t-attf-class="carousel-item  " t-field="pimg.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                                <!-- <div id="fade_text_content" t-attf-class="text-block #{'fade_text_block' if (product_variant.unpublish_product == False) else ''}">Out Of Stock</div> -->
+                            </t>
+                            </t>
+                        
+                        </div>
+                        
+                        <t t-if="len(product.product_image_ids) or variant_img">
+                            <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev" >
+                                <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                            </a>
+                            <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                                <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                            </a>
+                        </t>
+                    
+                      </div>
+                      <t t-if="len(product.product_variant_ids) > 1">
+                      <t t-set="j" t-value="-1" />
+                     <ol class="carousel-indicators" style="margin-top: -16%;">
+                        <t t-if="product.product_image_ids">
+                            <!-- <input type="text" t-att-value="product_variant"/> -->
+
+                            <li data-target="#o-carousel-product" data-slide-to="0" class="active">
+                                <t t-set="j" t-value="j+1" />
+                                <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                            </li>
+                        </t>
+                        <t t-else="">
+                            <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if product_variant.product_image_ids else 'active'">
+                                <t t-set="j" t-value="j+1" />
+                                <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                            </li>
+                        </t>
+                        <t t-if="len(product.product_image_ids)" t-foreach="product.product_image_ids" t-as="pimg">
+                            <t t-if="pimg.main != true and pimg.selector == True">
+                                <t t-set="j" t-value="j+1" />
+                            <li data-target="#o-carousel-product" t-att-data-slide-to="j">
+                                <t t-if="pimg.is_product_template == False">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                            </t>
+                            <t t-if="pimg.is_product_template == True">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.parent_id.id}}/image/90x90" t-att-alt="pimg.name"/>
+                            </t>
+                            
+                            </li>
+                        </t>
+                        </t>
+                      </ol>
+                  </t>
+                  <t t-if="len(product.product_variant_ids) == 1">
+                    <t t-set="j" t-value="-1" />
+                    <ol class="carousel-indicators" style="margin-top: -16%;">
+                        <t t-if="product.product_variant_ids.product_image_ids">
+                            <!-- <input type="text" t-att-value="product_variant"/> -->
+
+                        <li  data-target="#o-carousel-product" data-slide-to="0" class="active">
+                            <t t-set="j" t-value="j+1" />
+                            <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product.product_variant_ids.id}}/image/90x90" t-att-alt="product.product_variant_ids.name"/>
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if product_variant.product_image_ids else 'active'">
+                            <t t-set="j" t-value="j+1" />
+                            <img class="img img-fluid" t-attf-src="/website/image/product.product/{{product.product_variant_ids.id}}/image/90x90" t-att-alt="product.name"/>
+                        </li>
+                    </t>
+                        <t t-if="len(product.product_variant_ids.product_image_ids)" t-foreach="product.product_variant_ids.product_image_ids" t-as="pimg">
+                            <t t-if="pimg.main != true and pimg.selector == True">
+                                <t t-set="j" t-value="j+1" />
+                            <li data-target="#o-carousel-product" t-att-data-slide-to="j">
+                                <t t-if="pimg.is_product_template == False">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                            </t>
+                            <t t-if="pimg.is_product_template == True">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.parent_id.id}}/image/90x90" t-att-alt="pimg.parent_id.name"/>
+                            
+                            </t>
+                            </li>
+                        </t>
+                        </t>
+                      </ol>
+                    </t>
+                      <input type="hidden" id="product_name" t-att-value="product_variant.full_name"/>
+                    </div>
+                </t>
+                <t t-else="">
+                    <!-- <t t-esc="product"/> -->
+                     <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0" >
+                      <div class="carousel-outer">
+                        <div class="carousel-inner">
+                            
+                           
+                                
+                        
+                    
+                        <div  t-attf-class="carousel-item active new_image_ext " t-field="cart_selected_product.image" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or ''), 'itemprop': 'image'}" style="min-height: 470px;"/>
+                        
+
+                    
+
+                             <t t-if="len(cart_selected_product.product_image_ids)" t-foreach="cart_selected_product.product_image_ids" t-as="pimg">
+                                <t t-if="pimg.main != true and pimg.selector == True">
+                                <div t-attf-class="carousel-item  " t-field="pimg.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                                <!-- <div id="fade_text_content" t-attf-class="text-block #{'fade_text_block' if (product_variant.unpublish_product == False) else ''}">Out Of Stock</div> -->
+                            </t>
+                            </t>
+                        
+                        </div>
+                        
+                        <t t-if="len(cart_selected_product.product_image_ids) or variant_img">
+                            <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev" >
+                                <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                            </a>
+                            <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                                <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                            </a>
+                        </t>
+                    
+                      </div>
+                      
+                    <t t-set="j" t-value="-1" />
+                    <ol class="carousel-indicators" style="margin-top: -16%;">
+                        <t t-if="cart_selected_product.product_image_ids">
+                            <!-- <input type="text" t-att-value="product_variant"/> -->
+
+                        <li  data-target="#o-carousel-product" data-slide-to="0" class="active">
+                            <t t-set="j" t-value="j+1" />
+                            <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{cart_selected_product.id}}/image/90x90" t-att-alt="cart_selected_product.name"/>
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li data-target="#o-carousel-product" t-att-data-slide-to="1 if cart_selected_product.product_image_ids else '0'" t-att-class="'' if cart_selected_product.product_image_ids else 'active'">
+                            <t t-set="j" t-value="j+1" />
+                            <img class="img img-fluid" t-attf-src="/website/image/product.product/{{cart_selected_product.id}}/image/90x90" t-att-alt="product.name"/>
+                        </li>
+                    </t>
+                        <t t-if="len(cart_selected_product.product_image_ids)" t-foreach="cart_selected_product.product_image_ids" t-as="pimg">
+                            <t t-if="pimg.main != true and pimg.selector == True">
+                                <t t-set="j" t-value="j+1" />
+                            <li data-target="#o-carousel-product" t-att-data-slide-to="j">
+                                <t t-if="pimg.is_product_template == False">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                            </t>
+                            <t t-if="pimg.is_product_template == True">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.parent_id.id}}/image/90x90" t-att-alt="pimg.parent_id.name"/>
+                            
+                            </t>
+                            </li>
+                        </t>
+                        </t>
+                      </ol>
+                    
+                      <input type="hidden" id="product_name" t-att-value="product_variant.full_name"/>
+                    </div>
+                </t>
+        			
+                </t>
+                <t t-if="product.website_selection=='selection'">
+                	 <t t-set="temp" t-value="0" />
+        			<div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0" >
+        					
+        				<!-- <t t-as="value_id" t-foreach="product.product_variant_ids">
+        					<t t-if="value_id.unpublish_product == True">
+        						<t t-set="temp" t-value="temp+1" /> -->
+
+
+                      <div class="carousel-outer">
+                        <div class="carousel-inner">
+                            <!-- <input type="text" t-att-value="value_id"/> -->
+                            <div  t-attf-class="carousel-item active new_image_ext " t-field="product.image" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or ''), 'itemprop': 'image'}" style="min-height: 470px;"/>
+                        
+                        	
+                        		
+                        	
+                        		<!-- <t t-if="value_id.unpublish_product == 'False'">
+                        		
+                        	
+                        <t t-if="value_id.product_image_ids">
+                            <div  t-attf-class="carousel-item active new_image_ext #{'' if (value_id.unpublish_product == False) else 'opacoty-for-out-for-stock'}" t-field="value_id.image" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or ''), 'itemprop': 'image'}" style="min-height: 470px;"/>
+                        </t>
+                        
+                        <t t-else="">
+                        	
+                            
+                            <div  t-attf-class="carousel-item#{'' if value_id.product_image_ids else ' active'} #{'' if (value_id.unpublish_product == False) else 'opacoty-for-out-for-stock'}" t-field="product.image_medium" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'], 'itemprop': 'image'}" style="min-height: 470px;"/>
+                        </t>
+                        
+                            
+                            <div id="fade_text_content" t-attf-class="text-block #{'fade_text_block' if (value_id.unpublish_product == False) else ''}">Out Of Stock</div>
+                       
+                        
+                        
+                        </t>
+
+
+                        
+                            <t t-if="len(value_id.product_image_ids)" t-foreach="value_id.product_image_ids" t-as="pimg">
+                            	<t t-if="value_id.unpublish_product == False">
+                            	<t t-if="pimg.main != true and pimg.selector == True">
+                                <div t-attf-class="carousel-item  #{'' if (value_id.unpublish_product == False) else 'opacoty-for-out-for-stock'}" t-field="pimg.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                                
+                            </t>
+                            </t>
+                        </t> -->
+                        <t t-if="len(product.product_image_ids)" t-foreach="product.product_image_ids" t-as="pimg">
+                                <t t-if="pimg.main != true and pimg.selector == True">
+                                <div t-attf-class="carousel-item  " t-field="pimg.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                                <!-- <div id="fade_text_content" t-attf-class="text-block #{'fade_text_block' if (product_variant.unpublish_product == False) else ''}">Out Of Stock</div> -->
+                            </t>
+                            </t>
+                        
+                        </div>
+                        
+                       
+                 
+              <!-- </t> -->
+
+         <!--  </t> -->
+                    </div>
+                    <t t-if="len(product.product_image_ids) or variant_img">
+                            <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev" >
+                                <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                            </a>
+                            <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                                <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                            </a>
+                        </t>
+                        <t t-set="j" t-value="-1" />
+                     <ol class="carousel-indicators" style="margin-top: -16%;">
+                        <t t-if="product.product_image_ids">
+                            <!-- <input type="text" t-att-value="product_variant"/> -->
+
+                        <li  data-target="#o-carousel-product" data-slide-to="0" class="active">
+                            <t t-set="j" t-value="j+1" />
+                            <!-- <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/> -->
+                        </li>
+                    </t>
+                    <t t-else="">
+                        <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if product_variant.product_image_ids else 'active'">
+                            <t t-set="j" t-value="j+1" />
+                            <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                        </li>
+                    </t>
+                        <t t-if="len(product.product_image_ids)" t-foreach="product.product_image_ids" t-as="pimg">
+                            <t t-if="pimg.main != true and pimg.selector == True">
+                                <t t-set="j" t-value="j+1" />
+                            <li data-target="#o-carousel-product" t-att-data-slide-to="j">
+                                <t t-if="pimg.is_product_template == False">
+                            
+                                <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                            </t>
+                            </li>
+                        </t>
+                        </t>
+                      </ol>
+                </div>
+
+                </t>
+		</xpath>
+
+		<xpath expr="//t[@t-set='first_possible_combination']" position="replace">
+			<t t-if="selected_product_id">
+				<t t-set="first_possible_combination" t-value="product._get_selected_possible_combination(selected_product_id)"/>
+			</t>
+			<t t-else="">
+				<t t-set="first_possible_combination" t-value="product._get_first_possible_combination()"/>
+			</t>
+		</xpath>
+		<xpath expr="//t[@t-set='product_variant']" position="replace">
+			<t t-if="selected_product_id">
+				<t t-set="product_variant" t-value="selected_product"/>
+			</t>
+			<t t-else="">
+				<t t-set="product_variant" t-value="product.env['product.product'].browse(combination_info['product_id'])"/>
+			</t>
+		</xpath>
+		<xpath expr="//t[@t-if='first_possible_combination']" position="replace">
+			<t t-if="product.website_selection == 'selection'">
+				<!-- <t t-if="not product.product_type == 'bundle'"> -->
+					<t t-call="website_product_detail_page.custom_selection_product_variants" t-if="first_possible_combination">
+						<t t-set="ul_class" t-value="'flex-column'"/>
+						<t t-set="parent_combination" t-value="None"/>
+					</t>
+				<!-- </t> -->				
+			</t>
+			<t t-if="product.website_selection == 'attribute'">
+				<t t-call="sale.variants" t-if="first_possible_combination">
+					<t t-set="ul_class" t-value="'flex-column'"/>
+					<t t-set="parent_combination" t-value="None"/>
+				</t>
+			</t>
+		</xpath>
+		<!-- <xpath expr="//form[@action='/shop/cart/update']" position="attributes">
+			<attribute name="action"/>
+			<attribute name="method"/>
+		</xpath> -->
+		<xpath expr="//div[@class='col-md-6 col-xl-4 offset-xl-2']" position="attributes">
+			<attribute name="class">col-md-6 col-xl-6</attribute>
+		</xpath>
+		<!-- <xpath expr="//hr[@t-if='product.description_sale']" position="attributes">
+			<attribute name="class">d-none</attribute>
+		</xpath> -->
+		<xpath expr="//div[@class='o_not_editable']" position="attributes">
+			<attribute name="class">o_not_editable d-none</attribute>
+		</xpath>
+		<xpath expr="//t[@t-call='website_sale.product_price']" position="replace">
+            <style>
+                .product_price{
+                    margin-right: 4%;
+                }
+                .js_add_cart_variants{
+                    width: 94%;
+                }
+
+                .form-control .quantity{
+                    width: 25px;
+                }
+                .variant_description_div_css ul{
+                    margin-left: -5%;
+                }
+
+                @media only screen and (max-width:1199px) {
+
+                    .add_to_cart_process1{
+                        width: 112% !important;
+                    }
+
+                    .form-control .quantity1{
+                        width: 26px;
+                    }
+
+                    .col-md-12 {
+                        flex: 0 0 100% !important;
+                        max-width: 200% !important;
+                    }
+
+                    .add_to_cart_process{
+                        width:112% !important;
+                    }
+                    .variant_description_div_css{
+                        width: 112%;
+                    }
+                    .js_add_cart_variants{
+                        width: 104%;
+                    }
+
+                    .variant_description_div_css{
+                        width: 112%;
+                    }
+                    #add_to_cart_custom{
+                        margin-left: -2%;
+                    }
+                }
+
+                @media only screen and (max-width:991px) {
+
+                    .form-control.quantity1{
+                        width: 36px;
+                        height: 30px;
+                    }
+
+                    .add_to_cart_process1{
+                        width: 131% !important;
+                        margin-left: -15%;
+                    }
+
+                    .minus_for_single{
+                        margin-left: 25%;
+                    }
+
+                    .product_price1 {
+                        width: 141% !important;
+                        margin-left: -40%;
+                    }
+
+                    .fa-plus:before {
+                        margin-left: -68%;
+                    }
+
+                    .fa-minus:before {
+                        margin-left: -68%;
+                    }
+
+                    .breadcrumb{
+                        margin-top:10%;
+                        width: 104%;
+                    }
+
+                    .col-md-12 {
+                        flex: 0 0 100% !important;
+                        max-width: 200% !important;
+                    }
+
+                    .plus_for_single{
+                        margin-right: 21%;
+                    }
+
+                    .add_to_cart_process{
+                        width:121% !important;
+                    }
+                    .js_add_cart_json{
+                        height: 30px;
+                        width: 1%;
+                    }
+
+                    .form-control .quantity{
+                        width: 40px;
+                    }
+
+                    .product_price{
+                        margin-right: -1%;
+                        width: 108% !important;
+                    }
+
+                    .variant_description_div_css{
+                        width: 122%;
+                    }
+
+                    .js_add_cart_variants{
+                        width: 111%;
+                    }
+
+                    #add_to_cart_custom{
+                        margin-left: 2%;
+                    }
+                }
+
+                @media only screen and (max-width:767px) {
+
+                    .fa-plus:before {
+                        margin-left: -0%;
+                    }
+
+                    .fa-minus:before {
+                        margin-left: 0%;
+                    }
+
+                    .col-md-12 {
+                        flex: 0 0 100% !important;
+                        max-width: 200% !important;
+                    }
+                    .add_to_cart_process{
+                        width:100% !important;
+                    }
+                    .js_add_cart_json{
+                        height: 35px;
+                        width: 30%;
+                    }
+                    .product_price{
+                        margin-right: 4%;
+                        width: 102% !important;
+                    }
+
+                    .variant_description_div_css{
+                        width: 100%;
+                    }
+                    .js_add_cart_variants{
+                        width: 94%;
+                    }
+
+                    #add_to_cart_custom{
+                        margin-left: -2%;
+                    }
+
+                    .minus_for_single{
+                        height: 30px;
+                        width: 20%;
+                    }
+
+                    .plus_for_single{
+                        height: 30px;
+                        width: 20%;
+                    }
+
+                    .product_price1 {
+                        width: 77% !important;
+                        margin-left: -9%;
+                    }
+                    
+                }
+
+                @media only screen and (max-width:500px) {
+                    .fa-plus:before {
+                        margin-left: -0%;
+                    }
+
+                    .fa-minus:before {
+                        margin-left: 0%;
+                    }
+
+                    .add_to_cart_process1{
+                        width: 117% !important;
+                        margin-left: -12%;
+                    }
+
+
+                    .form-control.quantity1{
+                        width: 36px;
+                        height: 30px;
+                    }
+
+                    .product_price1 {
+                        width: 87% !important;
+                        margin-left: 8%;
+                    }
+
+                    .breadcrumb{
+                        margin-top:8%;
+                    }
+
+                    .col-md-12 {
+                        flex: 0 0 100% !important;
+                        max-width: 200% !important;
+                    }
+                    .add_to_cart_process{
+                        width:109% !important;
+                    }
+                    .js_add_cart_json{
+                        height: 30px;
+                    }
+                    .product_price{
+                        margin-right: 1%;
+                    }
+
+                    .variant_description_div_css{
+                        width: 109%;
+                    }
+
+                    .js_add_cart_variants{
+                        width: 93%;
+                        margin-left: 5%;
+                    }
+                    #add_to_cart_custom {
+                        margin-left:10%;
+                    }
+                    .product-action-div#product_price {
+                        margin-left: 33px;
+                    }
+
+                }
+
+                @media only screen and (max-width:460px) {
+                    .product-action-div#product_price {
+                        margin-left: 27px;
+                    }
+                    #add_to_cart_custom {
+                        margin-left:6%;
+                    }
+                }
+
+                @media only screen and (max-width:440px) {
+
+                    .fa-plus:before {
+                        margin-left: -85%;
+                    }
+
+                    .fa-minus:before {
+                        margin-left: -85%;
+                    }
+                    #add_to_cart_custom {
+                        margin-left:3%;
+                    }
+                }
+                @media only screen and (max-width:423px) {
+                    .product_price1 {
+                        width: 87% !important;
+                        margin-left: 4%;
+                    }
+
+                    .breadcrumb{
+                        margin-top:10%;
+                    }
+                    .product-action-div#product_price {
+                        margin-left: 22px;
+                    }
+                }
+
+                @media only screen and (max-width:406px) {
+                    .product-action-div#product_price {
+                        margin-left: 29px;
+                    }
+                }
+
+                @media only screen and (max-width:393px) {
+                    .product-action-div#product_price {
+                        margin-left: 45px;
+                    }
+                }
+                @media only screen and (max-width:380px) {
+                    .add_to_cart_process1 {
+                        width: 119% !important;
+                        margin-left: -14%;
+                    }
+                    .product_price1 {
+                        width: 120% !important;
+                        margin-left: -28%;
+                    }
+
+                    .product-action-div#product_price {
+                        margin-left: 45px;
+                        margin-right: -2px;
+                    }
+                }
+                @media only screen and (max-width:375px) {
+                    .product-action-div#product_price {
+                        margin-left: 32px;
+                        margin-right: -1px;
+                    }
+                    #add_to_cart_custom {
+                        margin-left: 4%;
+                    }
+                }
+                @media only screen and (max-width:364px) {
+
+                    .product_price {
+                        margin-right: 5%;
+                        width: 109% !important;
+                    }
+
+                    .breadcrumb{
+                        margin-top:12%;
+                    }
+                    .product-action-div#product_price {
+                        margin-left: 32px;
+                        margin-right: -4px;
+                    }
+                    #add_to_cart_custom {
+                        margin-left: 5%;
+                    }
+                }
+
+                @media only screen and (max-width:360px) {
+                    .product-action-div#product_price {
+                        margin-left: 32px;
+                        margin-right: -7px;
+                    }
+                    #add_to_cart_custom {
+                        margin-left: 3%;
+                    }
+                }
+
+                @media only screen and (max-width:355px) {
+                    .product-action-div#product_price {
+                        margin-left: 32px;
+                        margin-right: -8px;
+                    }
+                    #add_to_cart_custom {
+                        margin-left: 7%;
+                    }
+                }
+
+
+            </style> 
+			<div class="row col-md-12">
+				<t t-set="j" t-value="0" />
+                <t t-set="temp_variable" t-value="0"/>
+                <t t-foreach="product._get_valid_product_template_attribute_lines()" t-as="product_variant">
+                    <t t-if="product_variant.attribute_id.type=='select'">
+                        <t t-set="temp_variable" t-value="temp_variable+1"/>
+                    </t>
+                </t>
+				<t t-if="product.website_selection=='attribute'">
+				<div class="container" t-as="value_id" t-foreach="product.product_variant_ids">
+					<div t-att-id="'variant_description_div_%s'%(value_id.id)" t-attf-class="variant_description_div ">
+						<t t-set="j" t-value="j+1" />
+                        <!-- <t t-esc="value_id.id"/> -->
+                        <!-- <t t-esc="cart_selected_product.id"/>
+                        <t t-esc="product.product_variant_ids"/> -->
+                        <t t-if="variant_found == True and value_id.id == cart_selected_product.id">
+						<div t-attf-class="form-group custom_product_name" >
+							<!-- <label class="control-label" for="email">details</label> -->
+							<div class="variant_description_div_css">
+								<strong class="text-muted-dark">
+									<p t-esc="value_id.with_context().display_name"/>
+								</strong>
+								<p class="mt4 text-muted" t-field="value_id.pro_description_sale"/>
+							</div>
+						</div>
+                    </t>
+                    <t t-else="">
+                        <div t-attf-class="form-group custom_product_name #{'d-none' if (temp_variable==0) else 'd-none'}" >
+                            <!-- <label class="control-label" for="email">details</label> -->
+                            <div class="variant_description_div_css">
+                                <strong class="text-muted-dark">
+                                    <p t-esc="value_id.with_context().display_name"/>
+                                </strong>
+                                <p class="mt4 text-muted" t-field="value_id.pro_description_sale"/>
+                            </div>
+                        </div>
+                    </t>
+						<t t-set="i" t-value="0" />
+                        <t t-as="bundle_id" t-foreach="value_id.variant_bom_ids">
+                            <t t-if = "bundle_id.type =='bundle'">
+                                <t t-if = "bundle_id.state =='active'">
+                                <t t-set="bundle_line_count" t-value="0"/>
+                                <div >
+                                    <div class="col product-action-div" style="margin-top: 0%;" >
+                                <input type="hidden" class="max_quantity_bomb" t-att-value="bundle_id.max_quantity"/>
+                                        
+										<t t-as="temp_id" t-foreach="bundle_id.bom_line_component_ids">
+											<div class="css_quantity input-group oe_website_spinner" contenteditable="false" style="float: left;width: 25%;margin-top: 4%;">
+												<a class="btn btn-secondary minus_button" id="minus_quantity"   style="pointer-events: none;opacity: 0.5;" onclick="minus_quantity(this);">
+													<i class="fa fa-minus" style="color: white;"/>
+                                                    <input type="hidden" class="max_quantity" name="max_quantity" t-att-value="temp_id.maximum_product"/>
+                                                    <input type="hidden" class="min_quantity" name="min_quantity  " t-att-value="temp_id.minimum_product"/>
+												</a>
+                                                <input class="form-control quantity_bomb add_qty_bomb" data-min="1" name="add_qty_bomb" type="text" t-att-value="temp_id.minimum_product" disabled="disabled"/>
+												 <t t-set="i" t-value="i+1" />
+                                                 <t t-set="bundle_line_count" t-value="bundle_line_count+1"/>
+												<a t-attf-class="btn btn-secondary float_left plus_button #{'equal_quantity' if bundle_id.temp_quantity_equal == True else ''}" onclick="add_quantity(this);" style="pointer:cursor;" id="add_quantity_value">
+													<i class="fa fa-plus" style="color: white;"/>
+                                                    <input type="hidden" name="max_quantity" t-att-value="temp_id.maximum_product"/>
+                                                    <input type="hidden" name="min_quantity  " t-att-value="temp_id.minimum_product"/>
+												</a>
+											</div><br/>
+                                            <t t-if="temp_id.select_product_variant">
+                                                <input class="form-control "   type="text" t-att-value="temp_id.select_product_variant.display_name" disabled="disabled" style="margin-left: 158px;width: 68%;"/>
+                                                <select t-attf-class="form-control variant_select d-none" name="variant_select" style="width: 65%; margin-left: 34%;" >
+                                                
+                                                <option t-att-value="temp_id.select_product_variant.id" selected="1"><span t-esc="temp_id.select_product_variant.full_name" />
+                                                </option> 
+                                                <br/>
+                                            </select>
+                                            </t>
+                                            <t t-else="">
+											<select t-attf-class="form-control variant_select" name="variant_select" style="width: 67%;margin-left: 31%;" >
+												<t t-foreach="temp_id.select_product_temp.product_variant_ids" t-as="variant_id">
+												<option t-att-value="variant_id.id"><span t-esc="variant_id.full_name" />
+												</option> 
+												</t><br/>
+											</select>
+                                        </t>
+                                        </t>
+
+										
+                                <input type="hidden" class="bundel_line_count" t-att-value="bundle_line_count"/>
+                                    </div>
+                                </div>
+                            </t>
+                            </t>
+                        </t>   
+                        <input type="hidden" class="hidden_for_type_input_field" t-att-value="i"/> 
+                    </div>
+				</div>
+			</t>
+			<t t-if="product.website_selection=='selection'">
+				<div class="container" t-as="value_id" t-foreach="product.product_variant_ids">
+					<t t-if="value_id.unpublish_product == False">
+					<t t-set="j" t-value="j+1" />
+							<t t-if="j==1">
+								<t t-set="first_vriant" t-value="value_id.id"/>
+							</t>
+						</t>
+					<div t-att-id="'variant_description_div_%s'%(value_id.id)" t-attf-class="variant_description_div d-none">
+						
+						<t t-if="value_id.unpublish_product == False">
+
+    						<div class="form-group">
+    							<!-- <label class="control-label" for="email">details</label> -->
+    							<div class="variant_description_div_css">
+    								<strong class="text-muted-dark">
+    									<p t-esc="value_id.with_context().display_name"/>
+    								</strong>
+    								<p class="mt4 text-muted" t-field="value_id.pro_description_sale"/>
+    							</div>
+    						</div>
+					    </t>
+						<t t-set="i" t-value="0" />
+                        <!-- <t t-as="bundle_id" t-foreach="value_id.variant_bom_ids">
+                            <t t-if = "bundle_id.type =='bundle'">
+                                <t t-set="bundle_line_count" t-value="0"/>
+                                <div >
+                                    <div class="col product-action-div" style="margin-top: 0%;" >
+                                        <input type="hidden" class="max_quantity_bomb" t-att-value="bundle_id.max_quantity"/>
+
+										<t t-as="temp_id" t-foreach="bundle_id.bom_line_component_ids">
+
+											<div class="css_quantity input-group oe_website_spinner" contenteditable="false" style="float: left;width: 25%;margin-top: 4%;">
+												<a class="btn btn-secondary js_add_cart_json" t-attf-href="#">
+													<i class="fa fa-minus"/>
+												</a>
+												 <t t-set="i" t-value="i+1" />
+												<input class="form-control quantity_bomb" data-min="1" name="add_qty_bomb" type="text" value="1"/>
+												<a class="btn btn-secondary float_left js_add_cart_json" t-attf-href="#">
+													<i class="fa fa-plus"/>
+												</a>
+                                                <a class="btn btn-secondary " id="minus_quantity"   style="pointer-events: none;opacity: 0.5;" onclick="minus_quantity(this);">
+                                                    <i class="fa fa-minus" style="color: white;"/>
+                                                    <input type="hidden" name="max_quantity" t-att-value="temp_id.maximum_product"/>
+                                                    <input type="hidden" name="min_quantity  " t-att-value="temp_id.minimum_product"/>
+                                                </a>
+                                                <input class="form-control quantity_bomb add_qty_bomb" data-min="1" name="add_qty_bomb" type="text" t-att-value="temp_id.minimum_product" disabled="disabled"/>
+                                                 <t t-set="i" t-value="i+1" />
+                                                <a t-attf-class="btn btn-secondary float_left plus_button #{'equal_quantity' if bundle_id.temp_quantity_equal == True else ''}" onclick="add_quantity(this);" style="pointer:cursor;" id="add_quantity_value">
+                                                    <i class="fa fa-plus" style="color: white;"/>
+                                                    <input type="hidden" name="max_quantity" t-att-value="temp_id.maximum_product"/>
+                                                    <input type="hidden" name="min_quantity  " t-att-value="temp_id.minimum_product"/>
+                                                </a>
+											</div><br/>
+                                            <t t-if="temp_id.select_product_variant">
+                                                <input class="form-control "   type="text" t-att-value="temp_id.select_product_variant.display_name" disabled="disabled" style="margin-left: 158px;width: 68%;"/>
+                                                <select t-attf-class="form-control variant_select d-none" name="variant_select" style="width: 65%; margin-left: 34%;" >
+                                                
+                                                <option t-att-value="temp_id.select_product_variant.id" selected="1"><span t-esc="temp_id.select_product_variant.full_name" />
+                                                </option> 
+                                                <br/>
+                                            </select>
+                                            </t>
+                                            <t t-else="">
+                                            <select t-attf-class="form-control variant_select" name="variant_select" style="width: 67%;margin-left: 31%;" >
+                                                <t t-foreach="temp_id.select_product_temp.product_variant_ids" t-as="variant_id">
+                                                <option t-att-value="variant_id.id"><span t-esc="variant_id.full_name" />
+                                                </option> 
+                                                </t><br/>
+                                            </select>
+                                        </t>
+											
+										</t>
+										
+
+									</div>
+								</div>
+							</t>
+						</t> -->
+                        <t t-as="bundle_id" t-foreach="value_id.variant_bom_ids">
+                            <t t-if = "bundle_id.type =='bundle'">
+                                <t t-if = "bundle_id.state =='active'">
+                                <t t-set="bundle_line_count" t-value="0"/>
+                                <div >
+                                    <div class="col product-action-div" style="margin-top: 0%;" >
+                                <input type="hidden" class="max_quantity_bomb" t-att-value="bundle_id.max_quantity"/>
+                                        
+                                        <t t-as="temp_id" t-foreach="bundle_id.bom_line_component_ids">
+                                            <div class="css_quantity input-group oe_website_spinner" contenteditable="false" style="float: left;width: 25%;margin-top: 4%;">
+                                                <a class="btn btn-secondary minus_button" id="minus_quantity"   style="pointer-events: none;opacity: 0.5;" onclick="minus_quantity(this);">
+                                                    <i class="fa fa-minus" style="color: white;"/>
+                                                    <input type="hidden" class="max_quantity" name="max_quantity" t-att-value="temp_id.maximum_product"/>
+                                                    <input type="hidden" class="min_quantity" name="min_quantity  " t-att-value="temp_id.minimum_product"/>
+                                                </a>
+                                                <input class="form-control quantity_bomb add_qty_bomb" data-min="1" name="add_qty_bomb" type="text" t-att-value="temp_id.minimum_product" disabled="disabled"/>
+                                                 <t t-set="i" t-value="i+1" />
+                                                 <t t-set="bundle_line_count" t-value="bundle_line_count+1"/>
+                                                <a t-attf-class="btn btn-secondary float_left plus_button #{'equal_quantity' if bundle_id.temp_quantity_equal == True else ''}" onclick="add_quantity(this);" style="pointer:cursor;" id="add_quantity_value">
+                                                    <i class="fa fa-plus" style="color: white;"/>
+                                                    <input type="hidden" name="max_quantity" t-att-value="temp_id.maximum_product"/>
+                                                    <input type="hidden" name="min_quantity  " t-att-value="temp_id.minimum_product"/>
+                                                </a>
+                                            </div><br/>
+                                            <t t-if="temp_id.select_product_variant">
+                                                <input class="form-control "   type="text" t-att-value="temp_id.select_product_variant.display_name" disabled="disabled" style="margin-left: 158px;width: 68%;"/>
+                                                <select t-attf-class="form-control variant_select d-none" name="variant_select" style="width: 65%; margin-left: 34%;" >
+                                                
+                                                <option t-att-value="temp_id.select_product_variant.id" selected="1"><span t-esc="temp_id.select_product_variant.full_name" />
+                                                </option> 
+                                                <br/>
+                                            </select>
+                                            </t>
+                                            <t t-else="">
+                                            <select t-attf-class="form-control variant_select" name="variant_select" style="width: 67%;margin-left: 31%;" >
+                                                <t t-foreach="temp_id.select_product_temp.product_variant_ids" t-as="variant_id">
+                                                <option t-att-value="variant_id.id"><span t-esc="variant_id.full_name" />
+                                                </option> 
+                                                </t><br/>
+                                            </select>
+                                        </t>
+                                        </t>
+
+                                        
+                                <input type="hidden" class="bundel_line_count" t-att-value="bundle_line_count"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        </t>  	
+                        <input type="hidden" class="hidden_for_type_input_field" t-att-value="i"/>
+					</div>
+				</div>
+			</t>
+			</div>
+            <!-- <input type="text" t-att-value="temp_variable"/> -->
+            <t t-if="len(product.product_variant_ids) >1">
+               
+            <t t-if="variant_found == True">
+			<div t-attf-class="row col-md-12 add_to_cart_process" style="margin-top: -0.9%;">
+				<div class="col product-action-div" style="width: 1%;margin-left: 0%;">
+					<div class="css_quantity input-group oe_website_spinner" contenteditable="false" style=" width: 115%;">
+						<a class="btn btn-secondary js_add_cart_json" t-attf-href="#" style="border-top-right-radius: inherit;border-bottom-right-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;">
+							<i class="fa fa-minus"></i>
+						</a>
+						<input class="form-control quantity" data-min="1" name="add_qty" type="text" value="1" style="border: 1px #1e77c5 solid;"/>
+						<a class="btn btn-secondary float_left js_add_cart_json" t-attf-href="#" style="border-top-left-radius: inherit;border-bottom-left-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;">
+							<i class="fa fa-plus"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col product-action-div text-muted" id="product_price" >
+					<div class="product_price" style="border:none;">
+						<t t-call="website_sale.product_price"/>
+					</div>
+				</div>
+                
+				<t t-set="j" t-value="0" />
+				<div t-attf-class="col product-action-div">
+					<t t-if="product.website_selection == 'attribute'">
+					<t t-as="value_id" t-foreach="product.product_variant_ids">
+					
+					<a t-attf-class="btn btn-primary btn-sm  custom_add_to_cart_bundle #{'' if (j == 0 ) else 'd-none'}  #{'add-to-cart-fade' if ( value_id.unpublish_product == True) else ''} " id="add_to_cart_custom" style="color:white;font-weight: 600;width: 100%;">Add to Cart</a>
+					<t t-set="j" t-value="j+1" />
+				</t>
+			</t>
+			<t t-if="product.website_selection=='selection'">
+					<t t-as="value_id" t-foreach="product.product_variant_ids">
+					
+					<a t-attf-class="btn btn-primary btn-sm  custom_add_to_cart_bundle #{'' if (j == 0 ) else 'd-none'}  " id="add_to_cart_custom" style="color:white;font-weight: 600;width: 100%;">Add to Cart</a>
+					<t t-set="j" t-value="j+1" />
+				</t>
+			</t>
+				</div>
+				<div class="col product-action-div">
+					<t t-call="website_product_detail_page.product_document"/>
+				</div>
+			</div>
+        </t>
+        <t t-else="">
+            <div t-attf-class="row col-md-12 add_to_cart_process #{'' if (temp_variable==0) else 'd-none'}" style="margin-top: -0.9%;">
+                <div class="col product-action-div" style="width: 1%;margin-left: 0%;">
+                    <div class="css_quantity input-group oe_website_spinner" contenteditable="false" style=" width: 115%;">
+                        <a class="btn btn-secondary js_add_cart_json" t-attf-href="#" style="border-top-right-radius: inherit;border-bottom-right-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <input class="form-control quantity" data-min="1" name="add_qty" type="text" value="1" style="border: 1px #1e77c5 solid;"/>
+                        <a class="btn btn-secondary float_left js_add_cart_json" t-attf-href="#" style="border-top-left-radius: inherit;border-bottom-left-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col product-action-div text-muted" id="product_price" >
+                    <div class="product_price" style="border:none;">
+                        <t t-call="website_sale.product_price"/>
+                    </div>
+                </div>
+                
+                <t t-set="j" t-value="0" />
+                <div t-attf-class="col product-action-div">
+                    <t t-if="product.website_selection == 'attribute'">
+                    <t t-as="value_id" t-foreach="product.product_variant_ids">
+                    
+                    <a t-attf-class="btn btn-primary btn-sm  custom_add_to_cart_bundle #{'' if (j == 0 ) else 'd-none'}  #{'add-to-cart-fade' if ( value_id.unpublish_product == True) else ''} " id="add_to_cart_custom" style="color:white;font-weight: 600;width: 100%;">Add to Cart</a>
+                    <t t-set="j" t-value="j+1" />
+                </t>
+            </t>
+            <t t-if="product.website_selection=='selection'">
+                    <t t-as="value_id" t-foreach="product.product_variant_ids">
+                    
+                    <a t-attf-class="btn btn-primary btn-sm  custom_add_to_cart_bundle #{'' if (j == 0 ) else 'd-none'}  " id="add_to_cart_custom" style="color:white;font-weight: 600;width: 100%;">Add to Cart</a>
+                    <t t-set="j" t-value="j+1" />
+                </t>
+            </t>
+                </div>
+                <div class="col product-action-div">
+                    <t t-call="website_product_detail_page.product_document"/>
+                </div>
+            </div>
+        </t>
+        
+        </t>
+        <t t-else="len(product.product_variant_ids) == 1">
+            <t t-if="product.product_variant_ids.unpublish_product == False">
+            <div t-attf-class="row col-md-12 add_to_cart_process1" style="margin-top: 1%;">
+                <div class="col product-action-div">
+                    <div class="css_quantity input-group oe_website_spinner" contenteditable="false" style="width: 115%;">
+                        <a class="btn btn-secondary js_add_cart_json minus_for_single" t-attf-href="#" style="border-top-right-radius: inherit;border-bottom-right-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;">
+                            <i class="fa fa-minus" />
+                        </a>
+                        <input class="form-control quantity quantity1" data-min="1" name="add_qty" type="text" value="1" style="border: 1px #1e77c5 solid;"/>
+                        <a class="btn btn-secondary float_left js_add_cart_json plus_for_single" t-attf-href="#" style="border-top-left-radius: inherit;border-bottom-left-radius: inherit;background-color: #1e77c5;border-color: #1e77c5;">
+                            <i class="fa fa-plus"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="col product-action-div text-muted" id="product_price">
+                    <div class="product_price1" style="border:none;">
+                        <t t-call="website_sale.product_price"/>
+                    </div>
+                </div>
+                
+                <t t-set="j" t-value="0" />
+                <div t-attf-class="col product-action-div" style="margin-left: 3%;" >
+                    <t t-if="product.website_selection=='attribute'">
+                    <t t-as="value_id" t-foreach="product.product_variant_ids">
+                    
+                    <a t-attf-class="btn btn-primary btn-sm  custom_add_to_cart_bundle #{'' if (j == 0 ) else 'd-none'}  #{'add-to-cart-fade' if ( value_id.unpublish_product == True) else ''} " id="add_to_cart_custom " style="color:white;font-weight: 600;width: 100%; margin-left: -6%;"> Add to Cart</a>
+                    <t t-set="j" t-value="j+1" />
+                </t>
+            </t>
+            <t t-if="product.website_selection=='selection'">
+                    <t t-as="value_id" t-foreach="product.product_variant_ids">
+                    
+                    <a t-attf-class="btn btn-primary btn-sm  custom_add_to_cart_bundle #{'' if (j == 0 ) else 'd-none'}  " id="add_to_cart_custom" style="color:white;font-weight: 600;width: 100%;margin-left: -6%;">Add to Cart</a>
+                    <t t-set="j" t-value="j+1" />
+                </t>
+            </t>
+                </div>
+                <div class="col product-action-div">
+                    <t t-call="website_product_detail_page.product_document"/>
+                </div>
+            </div>
+        </t>
+        <t t-if="product.product_variant_ids.unpublish_product == True">
+            <div style="color: red;font-size: 19px;">
+            This product is not published on website.</div>
+        </t>
+        </t>
+		</xpath>
+	</template>
+	<template id="custom_product_price" inherit_id="website_sale.product_price" name="custom product_price">
+		<xpath expr="//div[@class='product_price mt16']" position="attributes">
+			<attribute name="class">product_price</attribute>
+		</xpath>
+	</template>
+	<template id="product_document" name="Product Document">
+
+        
+        <t t-if="len(product.product_variant_ids) == 1">
+            <t t-set="temp_docu" t-value="0"/>
+            <t t-foreach="product.product_variant_ids.product_documents_ids" t-as="document">
+                <t t-if="document.public == true">
+                    <t t-set="temp_docu" t-value="temp_docu+1"/>
+                </t>
+            </t>
+            <a t-attf-class="btn btn-primary btn-sm float-right document_button #{'' if (temp_docu != 0 ) else 'add-to-cart-fade'} " data-target="product_more_info_modal" data-toggle="modal" id="product_more_info" style="color:white;font-weight: 600;margin-right: -2%;">Documents</a>
+        </t>
+        <t t-if="len(product.product_variant_ids) > 1">
+            <a class="btn btn-primary btn-sm float-right document_button" data-target="product_more_info_modal" data-toggle="modal" id="product_more_info" style="color:white;font-weight: 600;margin-right: -2%;">Documents</a>
+        </t>
+
+		<t t-as="value_id" t-foreach="product.product_variant_ids">
+			<div class="modal fade modal_product_more_info" role="dialog" t-att-id="'product_more_info_modal_'+str(value_id.id)">
+				<div class="modal-dialog">
+					<div class="modal-content" style="width:100%;">
+						<div class="modal-header">
+							<h4 class="modal-title">
+								<t t-esc="value_id.display_name"/>
+							</h4>
+						</div>
+						<div class="modal-body">
+							<t t-set="doc_published" t-value="value_id.have_published_document()"/>
+							<table class="table" t-if="doc_published">
+								<thead>
+									<tr>
+										<th scope="col">Product Attachment</th>
+										<th scope="col">Product Decription</th>
+										<th scope="col"/>
+									</tr>
+								</thead>
+								<tbody>
+									<tr t-as="pro_doc_id" t-foreach="value_id.product_documents_ids">
+										<t t-if="pro_doc_id.public">
+											<td>
+												<t t-esc="pro_doc_id.name"/>
+											</td>
+											<td>
+												<t t-esc="pro_doc_id.description"/>
+											</td>
+											<td>
+												<a class="btn btn-success" t-att-href="'/download-report/%s' % pro_doc_id.id">Download</a>
+											</td>
+										</t>
+									</tr>
+								</tbody>
+							</table>
+							<div t-if="not doc_published">
+								<h1>Document is not available</h1>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</t>
+	</template>
+	<template id="product_data_change_through_javascript_in_website" name="Shop Product Carousel">
+        <t t-set="variant_img" t-value="product_variant and product_variant.image_variant"/>
+        <t t-set="image_ids"  t-value="product.product_image_ids"/>
+       
+            <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0" >
+              <div class="carousel-outer">
+                <div class="carousel-inner">
+                	
+                	<t t-as="value_id" t-foreach="product_variant">
+                		
+                	
+                <t t-if="value_id.product_image_ids">
+                    <div  t-attf-class="carousel-item active new_image_ext #{'' if (value_id.unpublish_product == False) else 'opacoty-for-out-for-stock'}" t-field="product_variant.image" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or ''), 'itemprop': 'image'}" style="min-height: 470px;"/>
+                </t>
+                <t t-else="">
+                    
+                    <div  t-attf-class="carousel-item#{'' if value_id.product_image_ids else ' active'}" t-field="product.image_medium" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'], 'itemprop': 'image'}" style="min-height: 470px;"/>
+                </t>
+                
+                    
+                    <div id="fade_text_content" t-attf-class="text-block #{'fade_text_block' if (value_id.unpublish_product == False) else ''}">Out Of Stock</div>
+                
+                
+                
+                </t>
+
+                
+                     <t t-if="len(product_variant.product_image_ids)" t-foreach="product_variant.product_image_ids" t-as="pimg">
+                    	<t t-if="pimg.main != true and pimg.selector == True">
+                            <t t-if="pimg.is_product_template == False">
+                        <div t-attf-class="carousel-item  #{'' if (product_variant.unpublish_product == False) else 'opacoty-for-out-for-stock'}" t-field="pimg.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                    </t>
+                        <t t-if="pimg.is_product_template == True">
+                        <div t-attf-class="carousel-item  #{'' if (product_variant.unpublish_product == False) else 'opacoty-for-out-for-stock'}" t-field="pimg.parent_id.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                    </t>
+                        <!-- <div id="fade_text_content" t-attf-class="text-block #{'fade_text_block' if (product_variant.unpublish_product == False) else ''}">Out Of Stock</div> -->
+                    </t>
+                    </t>
+                
+                </div>
+                
+                <t t-if="len(product_variant.product_image_ids) or variant_img">
+                    <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev" >
+                        <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                    </a>
+                    <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                        <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                    </a>
+                </t>
+            
+              </div>
+              <t t-set="j" t-value="-1" />
+             <ol class="carousel-indicators" style="margin-top: -16%;">
+             	<t t-if="product_variant.product_image_ids">
+             		<!-- <input type="text" t-att-value="product_variant"/> -->
+
+                <li  data-target="#o-carousel-product" data-slide-to="0" class="active">
+                	<t t-set="j" t-value="j+1" />
+                    <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
+                </li>
+            </t>
+            <t t-else="">
+                <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if product_variant.product_image_ids else 'active'">
+                	<t t-set="j" t-value="j+1" />
+                    <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                </li>
+            </t>
+                <t t-if="len(product_variant.product_image_ids)" t-foreach="product_variant.product_image_ids" t-as="pimg">
+                	<t t-if="pimg.main != true and pimg.selector == True">
+                		<t t-set="j" t-value="j+1" />
+                    <li data-target="#o-carousel-product" t-att-data-slide-to="j">
+                        <t t-if="pimg.is_product_template == False">
+                        <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                    </t>
+                    <t t-if="pimg.is_product_template == True">
+                        <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.parent_id.id}}/image/90x90" t-att-alt="pimg.parent_id.name"/>
+                    
+                    </t>
+                    </li>
+                </t>
+                </t>
+              </ol>
+              <input type="hidden" id="product_name" t-att-value="product_variant.full_name"/>
+            </div>
+
+        
+    </template>
+     <template id="website_select_option" name="Shop Product Carousel">
+       <t t-set="variant_img" t-value="product_variant and product_variant.image_variant"/>
+        <t t-set="image_ids"  t-value="product.product_image_ids"/>
+       
+            <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0" >
+              <div class="carousel-outer">
+                <div class="carousel-inner">
+                    
+                    <t t-as="value_id" t-foreach="product">
+                        
+                    
+                <t t-if="value_id.product_image_ids">
+                    <div  t-attf-class="carousel-item active new_image_ext " t-field="product.image" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) or ''), 'itemprop': 'image'}" style="min-height: 470px;"/>
+                </t>
+                <t t-else="">
+                    
+                    <div  t-attf-class="carousel-item#{'' if value_id.product_image_ids else ' active'}" t-field="product.image_medium" t-options="{'widget': 'image', 'style':'height: 80%;width: 80%;margin-top: -17%;', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'], 'itemprop': 'image'}" style="min-height: 470px;"/>
+                </t>
+                
+                </t>
+
+                
+                     <t t-if="len(product.product_image_ids)" t-foreach="product.product_image_ids" t-as="pimg">
+                        <t t-if="pimg.main != true and pimg.selector == True">
+                            <t t-if="pimg.is_product_template == False">
+                        <div t-attf-class="carousel-item  " t-field="pimg.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                    </t>
+                    <t t-if="pimg.is_product_template == True">
+                        <div t-attf-class="carousel-item  " t-field="pimg.parent_id.image" t-options='{"widget": "image", "style":"height: 80%;width: 80%;margin-top: -17%;", "class": "product_detail_img", "alt-field": "name", "zoom": "image", "itemprop": "image"}' style="min-height: 470px;"/>
+                    </t>
+                        <!-- <div id="fade_text_content" t-attf-class="text-block #{'fade_text_block' if (product_variant.unpublish_product == False) else ''}">Out Of Stock</div> -->
+                    </t>
+                    </t>
+                
+                </div>
+                
+                <t t-if="len(product.product_image_ids) or variant_img">
+                    <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev" >
+                        <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                    </a>
+                    <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                        <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                    </a>
+                </t>
+            
+              </div>
+              <t t-set="j" t-value="-1" />
+             <ol class="carousel-indicators" style="margin-top: -16%;">
+                <t t-if="product.product_image_ids">
+                    <!-- <input type="text" t-att-value="product_variant"/> -->
+
+                <li  data-target="#o-carousel-product" data-slide-to="0" class="active">
+                    <t t-set="j" t-value="j+1" />
+                    <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                </li>
+            </t>
+            <t t-else="">
+                <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if product_variant.product_image_ids else 'active'">
+                    <t t-set="j" t-value="j+1" />
+                    <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                </li>
+            </t>
+                <t t-if="len(product.product_image_ids)" t-foreach="product.product_image_ids" t-as="pimg">
+                    <t t-if="pimg.main != true and pimg.selector == True">
+                        <t t-set="j" t-value="j+1" />
+                    <li data-target="#o-carousel-product" t-att-data-slide-to="j">
+                        <t t-if="pimg.is_product_template == False">
+                        <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                    </t>
+                    <t t-if="pimg.is_product_template == True">
+                        <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.parent_id.id}}/image/90x90" t-att-alt="pimg.parent_id.name"/>
+                    
+                    </t>
+                    </li>
+                </t>
+                </t>
+              </ol>
+              <input type="hidden" id="product_name" t-att-value="product_variant.full_name"/>
+            </div>
+
+    </template>
+    <template id="custom_variant_template" inherit_id="sale.variants" >
+        <xpath expr="//ul" position="replace">
+            <!-- <style>
+                .js_add_cart_variants{
+                    width: 94% !important;
+                }
+            </style>  -->
+            <ul t-attf-class="list-unstyled js_add_cart_variants #{ul_class}" t-att-data-attribute_exclusions="json.dumps(attribute_exclusions)" style="margin-top: 2%;">
+                
+            <t t-foreach="product._get_valid_product_template_attribute_lines()" t-as="variant_id">
+                <!-- Attributes selection is hidden if there is only one value available and it's not a custom value -->
+                <li t-att-data-attribute_id="variant_id.attribute_id.id"
+                    t-att-data-attribute_name="variant_id.attribute_id.name"
+                    t-attf-class="variant_attribute #{'d-none' if len(variant_id.product_template_value_ids) == 1 and not variant_id.product_template_value_ids[0].is_custom else ''}">
+
+                    <t t-if="variant_id.attribute_id.type == 'select'">
+                        <t t-if="variant_found == True">
+
+                        <select
+                            t-att-data-attribute_id="variant_id.attribute_id.id"
+                            t-attf-class="form-control js_variant_change #{variant_id.attribute_id.create_variant}"
+                            t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)" style="font-style: italic;border-color: #ced4da;">
+
+                            <option  value="none" style="font-style: italic;">Select <t t-esc="variant_id.attribute_id.name" /></option>
+                            <t t-foreach="variant_id.product_template_value_ids" t-as="value_id">
+                               <!--  <input type="text" t-att-value="temp_list"/> -->
+                                <t t-if="value_id.product_attribute_value_id.id in temp_list">
+
+                            
+                                
+                                <option t-att-value="value_id.id"
+                                    t-att-selected="value_id.id in value_list"
+                                    t-att-data-value_id="value_id.product_attribute_value_id.id"
+                                    t-att-data-value_name="value_id.name"
+                                    t-att-data-attribute_name="value_id.attribute_id.name"
+                                    t-att-data-is_custom="value_id.is_custom"
+                                    style="font-style: italic;"
+                                    >
+                                    <span t-field="value_id.name"/>
+                                    <t t-esc="variant_id.uom_ids.name" />
+                                    <span t-if="value_id.price_extra" class="badge badge-pill badge-secondary">
+
+                                        <!--
+                                            price_extra is displayed as catalog price instead of
+                                            price after pricelist because it is impossible to
+                                            compute. Indeed, the pricelist rule might depend on the
+                                            selected variant, so the price_extra will be different
+                                            depending on the selected combination. The price of an
+                                            attribute is therefore variable and it's not very
+                                            accurate to display it.
+                                         -->
+                                        <t t-esc="value_id.price_extra > 0 and '+' or '-'"/>
+                                        <span t-esc="abs(value_id.price_extra)" class="variant_price_extra" style="white-space: nowrap;"
+                                            t-options='{
+                                                "widget": "monetary",
+                                                "from_currency": product.currency_id,
+                                                "display_currency": (pricelist or product).currency_id
+                                            }'/>
+                                    </span>
+                                </option>
+                                
+                            </t>
+
+                            </t>
+                           <!--  <option selected="" value="none" style="font-style: italic;">select <t t-esc="variant_id.uom_ids.name" /></option>
+                            <t t-foreach="variant_id.uom_ids" t-as="uom_ids">
+                               <!-  <t t-if="uom_ids.uom_ids.id in temp_list">
+                        </t> --> 
+                    
+                        </select>
+                    </t>
+                    <t t-else="">
+                        <select
+                            t-att-data-attribute_id="variant_id.attribute_id.id"
+                            t-attf-class="form-control js_variant_change #{variant_id.attribute_id.create_variant}"
+                            t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)" style="font-style: italic;border-color: #ced4da;">
+
+                            <option selected="" value="none" style="font-style: italic;">Select <t t-esc="variant_id.attribute_id.name" /></option>
+                            <t t-foreach="variant_id.product_template_value_ids" t-as="value_id">
+                               <!--  <input type="text" t-att-value="temp_list"/> -->
+                                <t t-if="value_id.product_attribute_value_id.id in temp_list">
+
+                            
+                                
+                                <option t-att-value="value_id.id"
+                                    t-att-data-value_id="value_id.product_attribute_value_id.id"
+                                    t-att-data-value_name="value_id.name"
+                                    t-att-data-attribute_name="value_id.attribute_id.name"
+                                    t-att-data-is_custom="value_id.is_custom"
+                                    style="font-style: italic;"
+                                    >
+                                    <span t-field="value_id.name"/>
+                                    <t t-esc="variant_id.uom_ids.name" />
+                                    <span t-if="value_id.price_extra" class="badge badge-pill badge-secondary">
+
+                                        <!--
+                                            price_extra is displayed as catalog price instead of
+                                            price after pricelist because it is impossible to
+                                            compute. Indeed, the pricelist rule might depend on the
+                                            selected variant, so the price_extra will be different
+                                            depending on the selected combination. The price of an
+                                            attribute is therefore variable and it's not very
+                                            accurate to display it.
+                                         -->
+                                        <t t-esc="value_id.price_extra > 0 and '+' or '-'"/>
+                                        <span t-esc="abs(value_id.price_extra)" class="variant_price_extra" style="white-space: nowrap;"
+                                            t-options='{
+                                                "widget": "monetary",
+                                                "from_currency": product.currency_id,
+                                                "display_currency": (pricelist or product).currency_id
+                                            }'/>
+                                    </span>
+                                </option>
+                                
+                            </t>
+
+                            </t>
+                           <!--  <option selected="" value="none" style="font-style: italic;">select <t t-esc="variant_id.uom_ids.name" /></option>
+                            <t t-foreach="variant_id.uom_ids" t-as="uom_ids">
+                               <!-  <t t-if="uom_ids.uom_ids.id in temp_list">
+                        </t> --> 
+                    
+                        </select>
+                    </t>
+                    </t>
+
+                    <t t-if="variant_id.attribute_id.type == 'radio'">
+                        <strong t-field="variant_id.attribute_id.name" class="attribute_name"/>
+                        <ul t-att-data-attribute_id="variant_id.attribute_id.id" class="list-unstyled">
+                            <t t-foreach="variant_id.product_template_value_ids" t-as="value_id">
+                                <li class="form-group js_attribute_value" style="margin: 0;">
+                                    <label class="col-form-label">
+                                        <div>
+                                            <input type="radio"
+                                                t-attf-class="js_variant_change radio_input #{variant_id.attribute_id.create_variant}"
+                                                t-att-data-attribute_id="variant_id.attribute_id.id"
+                                                t-att-checked="first_possible_combination[variant_id_index] == value_id"
+                                                t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)"
+                                                t-att-value="value_id.id"
+                                                t-att-data-value_id="value_id.product_attribute_value_id.id"
+                                                t-att-data-value_name="value_id.name"
+                                                t-att-data-attribute_name="value_id.attribute_id.name"
+                                                t-att-data-is_custom="value_id.is_custom" />
+                                            <div class="radio_input_value">
+                                                <span t-field="value_id.name"/>
+                                                <span class="badge badge-pill badge-secondary" t-if="value_id.price_extra">
+                                                    <!-- see note above about price_extra -->
+                                                    <t t-esc="value_id.price_extra > 0 and '+' or '-'"/>
+                                                    <span t-esc="abs(value_id.price_extra)" class="variant_price_extra" style="white-space: nowrap;"
+                                                        t-options='{
+                                                            "widget": "monetary",
+                                                            "from_currency": product.currency_id,
+                                                            "display_currency": (pricelist or product).currency_id
+                                                        }'/>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </li>
+                            </t>
+                        </ul>
+                    </t>
+
+                    <t t-if="variant_id.attribute_id.type == 'color'">
+                        <strong t-field="variant_id.attribute_id.name" class="attribute_name"/>
+                        <ul t-att-data-attribute_id="variant_id.attribute_id.id" class="list-inline">
+                            <li t-foreach="variant_id.product_template_value_ids" t-as="value_id" class="list-inline-item">
+                                <label t-attf-style="background-color:#{value_id.html_color or value_id.name if not value_id.is_custom else ''}"
+                                    t-attf-class="css_attribute_color #{'active' if first_possible_combination[variant_id_index] == value_id else ''} #{'custom_value' if value_id.is_custom else ''}">
+                                    <input type="radio"
+                                        t-attf-class="js_variant_change  #{variant_id.attribute_id.create_variant}"
+                                        t-att-checked="first_possible_combination[variant_id_index] == value_id"
+                                        t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)"
+                                        t-att-value="value_id.id"
+                                        t-att-title="value_id.name"
+                                        t-att-data-value_id="value_id.product_attribute_value_id.id"
+                                        t-att-data-value_name="value_id.name"
+                                        t-att-data-attribute_name="value_id.attribute_id.name"
+                                        t-att-data-is_custom="value_id.is_custom"/>
+                                </label>
+                            </li>
+                        </ul>
+                    </t>
+                </li>
+            </t>
+        </ul>
+        </xpath>
+        
+    </template>
+
+    <!-- Inherit backend -->
+    <template id="sale.product_configurator_configure" name="Configure">
+        <div class="js_product main_product">
+            <t t-set="first_possible_combination" t-value="product._get_first_possible_combination()"/>
+            <t t-set="combination_info" t-value="product._get_combination_info(first_possible_combination, add_qty=add_qty or 1, pricelist=pricelist)"/>
+            <t t-set="product_variant" t-value="product.env['product.product'].browse(combination_info['product_id'])"/>
+
+            <input type="hidden" class="product_template_id" t-att-value="product.id"/>
+            <input type="hidden" class="product_id" t-attf-name="product_id" t-att-value="product_variant.id"/>
+            <div t-if="product._is_add_to_cart_possible()">
+                <t t-if="first_possible_combination" t-call="website_product_detail_page.dynamic_variants">
+                    <t t-set="parent_combination" t-value="None"/>
+                </t>
+            </div>
+        </div>
+        <div class="col-lg-5 d-inline-block align-top text-left">
+            <img t-if="product_id" t-att-src="'/web/image/product.product/%s/image' % product_id" class="d-block product_detail_img" alt="Product Image" style="margin-left: auto; margin-right: auto;max-height: 150px;"/>
+            <img t-else="" t-att-src="'/web/image/product.template/%s/image' % product.id" class="d-block product_detail_img" alt="Product Image" style="margin-left: auto; margin-right: auto;max-height: 150px;"/>
+        </div>
+    </template>
+
+    <template id="dynamic_variants">
+        <t t-set="attribute_exclusions" t-value="product._get_attribute_exclusions(parent_combination)"/>
+        <ul t-attf-class="list-unstyled js_add_cart_variants #{ul_class}" t-att-data-attribute_exclusions="json.dumps(attribute_exclusions)" style="margin-top: 2%;">
+            <t t-foreach="product._get_valid_product_template_attribute_lines()" t-as="variant_id">
+                <!-- Attributes selection is hidden if there is only one value available and it's not a custom value -->
+                <li t-att-data-attribute_id="variant_id.attribute_id.id"
+                    t-att-data-attribute_name="variant_id.attribute_id.name"
+                    t-attf-class="variant_attribute #{'d-none' if len(variant_id.product_template_value_ids) == 1 and not variant_id.product_template_value_ids[0].is_custom else ''}">
+
+                    <t t-if="variant_id.attribute_id.type == 'select'">
+                        <select
+                            t-att-data-attribute_id="variant_id.attribute_id.id"
+                            t-attf-class="js_variant_change #{variant_id.attribute_id.create_variant} o_input o_field_widget custom_select"
+                            t-att-name="'attribute-%s-%s' % (product.id, variant_id.attribute_id.id)">
+                            <option selected="" value="none" style="font-style: italic;">Select <t t-esc="variant_id.attribute_id.name" /></option>
+                            <t t-foreach="variant_id.product_template_value_ids" t-as="value_id">
+                               <!--  <input type="text" t-att-value="temp_list"/> -->
+                                <!-- <t t-if="value_id.product_attribute_value_id.id in temp_list"> -->
+
+                            
+                                
+                                <option t-att-value="value_id.id"
+                                    t-att-data-value_id="value_id.product_attribute_value_id.id"
+                                    t-att-data-value_name="value_id.name"
+                                    t-att-data-attribute_name="value_id.attribute_id.name"
+                                    t-att-data-is_custom="value_id.is_custom"
+                                    style="font-style: italic;"
+                                    >
+                                    <span t-field="value_id.name"/>
+                                    <t t-esc="variant_id.uom_ids.name" />
+                                    <span t-if="value_id.price_extra" class="badge badge-pill badge-secondary">
+
+                                        <!--
+                                            price_extra is displayed as catalog price instead of
+                                            price after pricelist because it is impossible to
+                                            compute. Indeed, the pricelist rule might depend on the
+                                            selected variant, so the price_extra will be different
+                                            depending on the selected combination. The price of an
+                                            attribute is therefore variable and it's not very
+                                            accurate to display it.
+                                         -->
+                                        <t t-esc="value_id.price_extra > 0 and '+' or '-'"/>
+                                        <span t-esc="abs(value_id.price_extra)" class="variant_price_extra" style="white-space: nowrap;"
+                                            t-options='{
+                                                "widget": "monetary",
+                                                "from_currency": product.currency_id,
+                                                "display_currency": (pricelist or product).currency_id
+                                            }'/>
+                                    </span>
+                                </option>
+                                
+                            <!-- </t> -->
+
+                            </t>
+                           <!--  <option selected="" value="none" style="font-style: italic;">select <t t-esc="variant_id.uom_ids.name" /></option>
+                            <t t-foreach="variant_id.uom_ids" t-as="uom_ids">
+                               <!-  <t t-if="uom_ids.uom_ids.id in temp_list">
+                        </t> --> 
+                    
+                        </select>
+                    </t>
+                </li>
+            </t>
+        </ul>
+    </template>
+</odoo>

@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="find_a_product_category" name="Find a Product Category">
+        <div class="search_menu" id="search_menu">
+            <input id="user_id" name="user_id" t-att-value="user_id.id" type="hidden"/>
+            <form action="/find-a-product" id="find-a-product" method="post">
+                <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                <div class="form-group">
+                    <label class="control-label" for="parent_categ">
+                        <b>Select a category</b>
+                    </label>
+                    <select class="product_category form-control" id="parent_categ" name="parent_category">
+                        <option class="select-placeholder" value="">all products</option>
+                        <t t-as="category" t-foreach="parent_category_ids or []">
+                            <option t-att-selected="str(category.id) == parent_category" t-att-value="category.id">
+                                <t t-esc="category.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class="form-group" t-if="sub_category_1_ids">
+                    <label class="control-label" for="child_categ_1">
+                        <b>Select a sub-category</b>
+                    </label>
+                    <select class="product_category form-control" id="child_categ_1" name="child_categ_1">
+                        <option class="select-placeholder" value="">All</option>
+                        <t t-as="category" t-foreach="sub_category_1_ids or []">
+                            <option t-att-selected="str(category.id) == child_categ_1" t-att-value="category.id">
+                                <t t-esc="category.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class="form-group" t-if="sub_category_2_ids and parent_category_ids and sub_category_1_ids">
+                    <label class="control-label" for="child_categ_2">
+                        <b>Select a sub-category</b>
+                    </label>
+                    <select class="product_category form-control" id="child_categ_2" name="child_categ_2">
+                        <option class="select-placeholder" value="">All</option>
+                        <t t-as="category" t-foreach="sub_category_2_ids or []">
+                            <option t-att-selected="str(category.id) == child_categ_2" t-att-value="category.id">
+                                <t t-esc="category.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class="clearfix"/>
+                <div class="form-group">
+                    <t t-if="parent_category_ids and not sub_category_1_ids">
+                        <label class="control-label" for="search_product_by_name">
+                            <b>Search category for</b>
+                        </label>
+                    </t>
+
+                    <t t-elif="parent_category_ids and sub_category_1_ids and not sub_category_2_ids">
+                        <label class="control-label" for="search_product_by_name">
+                            <b>Search sub-category for</b>
+                        </label> 
+
+                    </t>
+
+                    <t t-elif="parent_category_ids and sub_category_1_ids and sub_category_2_ids">
+                        <label class="control-label" for="search_product_by_name">
+                            <b>Search sub-category results for</b>
+                        </label>
+
+                    </t>
+
+                    <t t-else="">
+                        <label class="control-label" for="search_product_by_name">
+                            <b>Search for</b>
+                        </label>
+
+                    </t>
+
+                    <div class="clearfix"/>
+                    <div class="col-9 seach-box-div" style="padding-left: 0px;">
+                        <input class="search-query form-control oe_search_box" id="search_product_by_name" name="search_product_by_name" t-att-value="search_product_by_name" type="text"/>
+                    </div>
+                    <div class="col-3 search_btn" style="top: -35px; float: right;width: 31%;">
+                        <button style="font-weight: 600;" class="btn btn-primary search_btn find-a-product-name" type="submit">
+                            <t>Search</t>
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="clearfix"/>
+                <div class="form-group product-search-stock">
+                    <label class="control-label" for="search_product_by_stock">
+                        <b>Search category by stock number</b>
+                    </label>
+                    <div class="col-9 seach-box-div" style="padding-left: 0px;">
+                        <input class="search-query form-control oe_search_box" id="search_product_by_stock" name="search_product_by_stock" t-att-value="search_product_by_stock" type="text"/>
+                    </div>
+                    <div class="col-3 search_btn" style="top: -35px; float: right;">
+                        <button class="btn btn-primary search_btn find-a-product-stock" type="submit">
+                            <t>Search</t>
+                        </button>
+                    </div>
+                </div> -->
+            </form>
+        </div>
+    </template>
+    <template customize_show="True" id="find_a_product" name="Find a Product">
+
+        <style>
+
+            .form-group{
+                width: 163%;
+                margin-left: -32%;
+            }
+
+            .page_desc_div{
+                background: #f5f4f0;
+                padding: 10px;
+                font-size: 20px;
+                border: 1px solid #eeeeee;
+                width: 100%;
+
+            }
+
+            @media only screen and (max-width:1199px) {
+                h1.mb32{
+                    margin-top: 3%;
+                }
+                .container{
+                    max-width: 1043px !important;
+                }
+            }
+
+            @media only screen and (max-width:991px) {
+                .container{
+                    max-width: 825px !important;
+                }
+
+                h1.mb32{
+                    margin-top: 5%;
+                }
+
+                .form-group{
+                    width: 173%;
+                    margin-left: -37%;
+                }
+
+                .col-9 {
+                    flex: 0 0 65% !important;
+                    max-width: 69% !important;
+                }
+
+                .col-3 {
+                    flex: 0 0 100% !important;
+                    max-width: 33% !important;
+                }
+                            
+            }
+
+            @media only screen and (max-width:767px) {
+
+                .container{
+                    max-width: 596px !important;
+                }
+
+                h1.mb32{
+                    margin-top: 8%;
+                }
+
+                .form-group{
+                    width: 116%;
+                    margin-left: -10%;
+                }
+
+               .col-9 {
+                    flex: 0 0 70% !important;
+                    max-width: 70% !important;
+                }
+
+                .col-3 {
+                    flex: 0 0 100% !important;
+                    max-width: 50% !important;
+                }
+
+            }
+
+            @media only screen and (max-width:575px) {
+
+                h1.mb32{
+                    margin-top: 10%;
+                }
+
+                .form-group{
+                    width: 102%;
+                    margin-left: 1%;
+                }
+                .col-3 {
+                    flex: 0 0 100% !important;
+                    max-width: 100% !important;
+                }
+
+                .oe_product_template_extension{
+                    width: 94% !important;
+                } 
+            }
+
+            @media only screen and (max-width:470px) {
+                h1.mb32{
+                    margin-top: 12%;
+                }
+
+                .control-label{
+                    margin-left: -5%;
+                }
+                .seach-box-div{
+                    margin-left: -2%;
+                }
+
+                .page_desc_div{
+                    margin-left: 0% !important;
+                } 
+            }
+
+            @media only screen and (max-width:390px) {
+               h1.mb32{
+                    margin-top: 15%;
+                } 
+            }
+        </style>    
+
+        <t t-call="website.layout">
+            <div class="mt16 find-a-product" id="find_prodcut_with_category">
+                <div class="container">
+                    <h1 class="mb32" >Find a Product</h1>
+                    <div class="clearfix"/>
+                    <div class="mb32" >
+                        <div class="page_desc_div">Narrow the selection by product category and and sub-categories. Search the results by product name,stock number, or key words. Select the blue links to see more details about a product or to add to your cart. For advice about comparing products and selecting the best ones for your project, select the “Learn” section in the website menu.</div>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="row">
+                        <div class="offset-md-4 col-md-4 offset-sm-3 col-sm-6">
+                            <t t-call="website_find_a_product.find_a_product_category"/>
+                        </div>
+                    </div>
+                    <div class="clearfix"/>
+                    <div class="mt32 mb64">
+                      <!--   <div class="text-center">
+                            <t t-call="website.pager"/>
+                        </div> -->
+                        <!-- <div class="offset-md-2 col-md-8">
+                            <div class="search_detail" id="search_detail">
+                               <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) {
+      pagination_work();
+  });
+</script>
+                                <t t-if="not products">
+                                    <div class="product_not_found">
+                                        <b>no products found</b>
+                                    </div>
+                                </t>
+                                <t t-if="products">
+                                    <t t-as="product" t-foreach="products">
+                                        <div class="row pt8 pb8 product_line">
+                                            <div class="col-sm-2 col-xs-3">
+                                                <span t-field="product.image_small" t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
+                                            </div>
+                                            <div class="col-sm-10 col-xs-9">
+                                                <strong>
+                                                    <a t-att-href="'/shop/product/%s?variant-id=%s'%(product.product_tmpl_id.id, product.id)" style="color: #1e77c5;">
+                                                        <span t-esc="product.full_name    "/>
+                                                    </a>
+                                                </strong>
+                                                <p class="text-muted">
+                                                    <t t-esc="product.description_sale"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </div> -->
+
+                        <div class="search_detail" id="search_detail" itemscope="itemscope" itemtype="http://schema.org/Product">
+                            <script type="text/javascript">
+                                      document.addEventListener("DOMContentLoaded", function(event) {
+                                          pagination_work();
+                                      });
+
+                                      $(window).scroll(function() {
+                                       if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                                           // $(window).unbind('scroll');
+                                           loadMore();
+                                       }
+                                    });
+                                    $(window).on('beforeunload', function(){
+                                      $(window).scrollTop(0);
+                                    });
+                                    function offBeforeUnload(event) {
+                                        $(window).off('beforeunload');
+                                    }
+                                    $(document).on('mousedown', 'a[href]', offBeforeUnload)
+                                </script>
+                            <!-- <div class="ribbon-wrapper">
+                                <a href="#" role="button" class="ribbon btn btn-danger">Sale</a>
+                            </div> -->
+                            <div class="row">
+                            <t t-as="product" t-foreach="products">
+                                <div class="col-3 product-div" style="padding: 0px;">
+                                <div class="oe_product_template_extension" style="border-radius: 2px;">
+                                    <div class="oe_product_image">
+                                        <a itemprop="url" t-att-href="'/shop/product/%s'%( product.id)">
+                                            <span t-field="product.image" t-options="{'widget': 'image', 'resize': None if product_image_big else '300x300'}"/>
+                                        </a>
+                                    </div>
+                                    <t t-if="show_publish">
+                                        <div id="website_published_button" class="" groups="sales_team.group_sale_manager">
+                                            <t t-call="website.publish_management">
+                                                <t t-set="object" t-value="product" />
+                                                <t t-set="publish_edit" t-value="True"/>
+                                                <t t-set="action" t-value="'product.product_template_action'" />
+                                            </t>
+                                        </div>
+                                    </t>
+                                    <section>
+                                        <h2>
+                                            <a class="search-branch" style="text-align: center;color: black;font-weight: 800;" itemprop="name"  t-att-content="product.name" t-field="product.name" t-att-href="'/shop/product/%s'%( product.id)"/>
+                                            <a role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
+                                        </h2>
+                                        <!-- <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
+                                            <b>
+                                                <t t-if="True">
+                                                    <del t-attf-class="text-danger mr8 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                                                </t>
+                                                <span t-if="combination_info['price']" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                <span itemprop="price" style="display:none;" t-esc="combination_info['price']" />
+                                                <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
+                                            </b>
+                                            </div> -->
+                                    </section>
+                                    <div class="product_desc">
+                                        <span t-field="product.product_description" style="height: 90px;"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </t>
+                        </div>
+
+                            </div>
+                        <!-- <div class="clearfix"/>
+                        <div class="text-center">
+                            <t t-call="website.pager"/>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template customize_show="True" id="find_a_product_menu" name="Find a product menu">
+
+        <style>
+
+            .form-group{
+                width: 163%;
+                margin-left: -32%;
+            }
+
+            @media only screen and (max-width:1199px) {
+                h1.mb32{
+                    margin-top: 3%;
+                }
+                .container{
+                    max-width: 1043px !important;
+                }
+            }
+
+            @media only screen and (max-width:991px) {
+                .container{
+                    max-width: 825px !important;
+                }
+
+                h1.mb32{
+                    margin-top: 5%;
+                }
+
+                .form-group{
+                    width: 173%;
+                    margin-left: -37%;
+                }
+
+                .col-9 {
+                    flex: 0 0 65% !important;
+                    max-width: 69% !important;
+                }
+
+                .col-3 {
+                    flex: 0 0 100% !important;
+                    max-width: 33% !important;
+                }
+                            
+            }
+
+            @media only screen and (max-width:767px) {
+
+                .container{
+                    max-width: 596px !important;
+                }
+
+                h1.mb32{
+                    margin-top: 8%;
+                }
+
+                .form-group{
+                    width: 116%;
+                    margin-left: -10%;
+                }
+
+               .col-9 {
+                    flex: 0 0 70% !important;
+                    max-width: 70% !important;
+                }
+
+                .col-3 {
+                    flex: 0 0 100% !important;
+                    max-width: 50% !important;
+                }
+
+            }
+
+            @media only screen and (max-width:575px) {
+
+                h1.mb32{
+                    margin-top: 10%;
+                }
+
+                .form-group{
+                    width: 100%;
+                    margin-left: 0%;
+                }
+                .col-3 {
+                    flex: 0 0 100% !important;
+                    max-width: 100% !important;
+                }
+
+                .oe_product_template_extension{
+                    width: 94% !important;
+                } 
+            }
+
+            @media only screen and (max-width:470px) {
+               h1.mb32{
+                    margin-top: 12%;
+                }
+            }
+
+            @media only screen and (max-width:390px) {
+               h1.mb32{
+                    margin-top: 15%;
+                } 
+            }
+
+            .img-fix{
+                max-width: 100px;
+                height: auto;
+                position: relative;
+                left: 90%;
+                margin-top: -8%;
+            }
+
+            @media (max-width:975px){
+                .img-fix{
+                    left: 87% !important;
+                    margin-top: -10% !important;
+                }
+            }
+
+            @media (max-width:750px){
+                .img-fix{
+                    left: 83% !important;
+                    margin-top: -15% !important;
+                }
+            }
+
+            @media (max-width:448px){
+                .img-fix{
+                    left: 78% !important;
+                    margin-top: -19% !important;
+                }
+            }
+        </style>    
+
+        <t t-call="website.layout">
+            <div class="mt16 find-a-product" id="find_prodcut_with_category">
+                <div class="container">
+                    <h1 class="mb32" style="position: relative;left: 1.2%;" >
+                        <t t-if="website_menu_name_child">
+                            <t t-esc="website_menu_name_child"/>
+                        </t>
+                        <t t-else="">
+                            <t t-esc="website_menu_name"/>
+                        </t>
+                    </h1>
+                    <t t-if="website_menu_image_child">
+                        <img t-att-src="'data:image/png;base64,%s' % to_text(website_menu_image_child)" widget="image" class="img-fix" />
+                    </t>
+                    <t t-else="">
+                        <img t-att-src="'data:image/png;base64,%s' % to_text(website_menu_image)" widget="image" class="img-fix" />
+                    </t>
+                    <div class="clearfix"/>
+                    <div class="mb32" >
+                        <div class="page_desc_div">
+                            <t t-if="website_menu_comment_child">
+                                <t t-esc="website_menu_comment_child"/>
+                            </t>
+                            <t t-else="">
+                                <t t-esc="website_menu_comment"/>
+                            </t>
+                        </div>
+                    </div>
+                    <!-- <span>
+                        <t t-if="website_menu_image_child">
+                            <img t-att-src="'data:image/png;base64,%s' % to_text(website_menu_image_child)" widget="image" style="width: 7%;position: relative;left: 41%;"/>
+                        </t>
+                        <t t-else="">
+                            <img t-att-src="'data:image/png;base64,%s' % to_text(website_menu_image)" style="width: 7%;position: relative;left: 41%;"/>
+                        </t> 
+                    </span> -->
+                    <div class="clearfix"/>
+                    <!-- <div class="row">
+                        <div class="offset-md-4 col-md-4 offset-sm-3 col-sm-6">
+                            <t t-call="website_find_a_product.find_a_product_category"/>
+                        </div>
+                    </div> -->
+                    <div class="clearfix"/>
+                    <div class="mt32 mb64">
+                      <!--   <div class="text-center">
+                            <t t-call="website.pager"/>
+                        </div> -->
+                        <!-- <div class="offset-md-2 col-md-8">
+                            <div class="search_detail" id="search_detail">
+                               <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) {
+      pagination_work();
+  });
+</script>
+                                <t t-if="not products">
+                                    <div class="product_not_found">
+                                        <b>no products found</b>
+                                    </div>
+                                </t>
+                                <t t-if="products">
+                                    <t t-as="product" t-foreach="products">
+                                        <div class="row pt8 pb8 product_line">
+                                            <div class="col-sm-2 col-xs-3">
+                                                <span t-field="product.image_small" t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
+                                            </div>
+                                            <div class="col-sm-10 col-xs-9">
+                                                <strong>
+                                                    <a t-att-href="'/shop/product/%s?variant-id=%s'%(product.product_tmpl_id.id, product.id)" style="color: #1e77c5;">
+                                                        <span t-esc="product.full_name    "/>
+                                                    </a>
+                                                </strong>
+                                                <p class="text-muted">
+                                                    <t t-esc="product.description_sale"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </div> -->
+
+                        <div class="search_detail" id="search_detail" itemscope="itemscope" itemtype="http://schema.org/Product">
+                            <script type="text/javascript">
+                                      document.addEventListener("DOMContentLoaded", function(event) {
+                                          pagination_work();
+                                      });
+
+                                      $(window).scroll(function() {
+                                       if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                                           // $(window).unbind('scroll');
+                                           loadMore();
+                                       }
+                                    });
+                                    $(window).on('beforeunload', function(){
+                                      $(window).scrollTop(0);
+                                    });
+                                    function offBeforeUnload(event) {
+                                        $(window).off('beforeunload');
+                                    }
+                                    $(document).on('mousedown', 'a[href]', offBeforeUnload)
+                                </script>
+                            <!-- <div class="ribbon-wrapper">
+                                <a href="#" role="button" class="ribbon btn btn-danger">Sale</a>
+                            </div> -->
+                            <div class="row" style="position: relative; left: 1.2%;">
+                            <t t-as="product" t-foreach="products">
+                                <div class="col-3" style="padding: 0px;">
+                                <div class="oe_product_template_extension" style="border-radius: 2px;">
+                                    <div class="oe_product_image">
+                                        <a itemprop="url" t-att-href="'/shop/product/%s'%( product.id)">
+                                            <span t-field="product.image" t-options="{'widget': 'image', 'resize': None if product_image_big else '300x300'}"/>
+                                        </a>
+                                    </div>
+                                    <t t-if="show_publish">
+                                        <div id="website_published_button" class="" groups="sales_team.group_sale_manager">
+                                            <t t-call="website.publish_management">
+                                                <t t-set="object" t-value="product" />
+                                                <t t-set="publish_edit" t-value="True"/>
+                                                <t t-set="action" t-value="'product.product_template_action'" />
+                                            </t>
+                                        </div>
+                                    </t>
+                                    <section>
+                                        <h2>
+                                            <a style="text-align: center;color: black;font-weight: 800;" itemprop="name"  t-att-content="product.name" t-field="product.name" t-att-href="'/shop/product/%s'%( product.id)"/>
+                                            <a role="button" t-if="not show_publish and not product.website_published" t-att-href="product_href" class="btn btn-secondary btn-sm btn-danger" title="This product is unpublished.">Unpublished</a>
+                                        </h2>
+                                        <!-- <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price">
+                                            <b>
+                                                <t t-if="True">
+                                                    <del t-attf-class="text-danger mr8 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                                                </t>
+                                                <span t-if="combination_info['price']" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                <span itemprop="price" style="display:none;" t-esc="combination_info['price']" />
+                                                <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
+                                            </b>
+                                            </div> -->
+                                    </section>
+                                    <div class="product_desc">
+                                        <span t-field="product.product_description" style="height: 90px;"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </t>
+                        </div>
+
+                            </div>
+                        <!-- <div class="clearfix"/>
+                        <div class="text-center">
+                            <t t-call="website.pager"/>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="alternative_product_fix" inherit_id="website_sale.product" customize_show="True" name="Alternative Products Fix">
+		<xpath expr="//div/div[@class='row mt16']" position="replace">
+			<div class="row mt16" style="">
+                    <t t-foreach="product.alternative_product_ids" t-as="alt_product">
+                        <a t-attf-href="/shop/product/#{ slug(alt_product) }" style="display: block">
+	                        <div class="col-lg-2" style="width: 170px; height:130px; float:left; display:inline; margin-right: 10px; overflow:hidden;">
+	                            <div class="mt16 text-center" style="height: 100%;">
+	                                <t t-set="combination_info" t-value="alt_product._get_combination_info()"/>
+	                                <t t-set="product_variant" t-value="alt_product.env['product.product'].browse(combination_info['product_id'])"/>
+	                                <div t-if="product_variant" t-field="product_variant.image_small" t-options="{'widget': 'image', 'class': 'rounded shadow o_alternative_product' }" />
+	                                <div t-else="" t-field="alt_product.image_small" t-options="{'widget': 'image', 'class': 'rounded shadow o_alternative_product' }" />
+	                                <h6>
+	                                    <a t-attf-href="/shop/product/#{ slug(alt_product) }" style="display: block">
+	                                        <span t-att-title="alt_product.name" t-field="alt_product.name" class="o_text_overflow" style="display: block;" />
+	                                    </a>
+	                                </h6>
+	                            </div>
+	                        </div>
+	                    </a>
+                    </t>
+                </div>
+		</xpath>
+	</template>
+</odoo>

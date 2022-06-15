@@ -1,0 +1,19 @@
+.fa_downcase_transfer_link:before {
+    font-weight: bold;
+    font-style: normal !important;
+    content: 'TO';
+    font-size: 35px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid;
+    padding-left: 8px;
+    border-radius: 9px;
+    color: white;
+    background: black;
+}
+
+.transfer_order_title{
+    margin: 5% 0% 0% 10%;
+    width: 100%;
+}

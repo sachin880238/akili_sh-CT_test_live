@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_portal_my_statement" name="My Statement">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container o_my_saved_carts_table">
+                    <div class="row mt32">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/my/home">Your Account</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <span>Statement</span>
+                            </li>
+                        </ol>
+                        <div class="form-group col-md-12">
+                            <t t-if="not statments">
+                                <p>There are currently no Statement for your account.</p>
+                            </t>
+                            <t t-if="statments">
+                                <div class="table_overflow">
+                                    <table class="table table-hover o_my_invoice_table">
+                                        <thead>
+                                            <tr class="active">
+                                                <th>Date</th>
+                                                <th>Transaction</th>
+                                                <th>ID</th>
+                                                <th>Debit</th>
+                                                <th>Credit</th>
+                                                <th>Balance</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-as="statement" t-foreach="statments">
+                                            <tr>
+                                                <td class="cell_overflow">
+                                                    <span t-field="statement.date"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="statement.journal_id.code"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="statement.move_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="statement.debit"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="statement.credit"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="statement.debit"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td class="cell_overflow"/>
+                                            <td/>
+                                            <td/>
+                                            <td/>
+                                            <td>
+                                                <span>
+                                                    <strong>Total Due Amount</strong>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    <t t-esc="due_balance"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

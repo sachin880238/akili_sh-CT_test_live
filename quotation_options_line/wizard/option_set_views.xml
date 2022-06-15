@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="option_set_form_views" model="ir.ui.view">
+        <field name="name">Add Product</field>
+        <field name="model">options.set</field>
+        <field name="arch" type="xml">
+            <form string="Add a Product">
+                <group>
+                    <field name="product_id" context="{'order_line_type': 'set',  'quaotation_line_bom': True}" options="{'no_create': True}"/>
+                </group> 
+                <footer>
+                    <button name="add_set_product_in_options" type="object"
+                        string="Add" class="btn-primary" />
+                    <button string="Cancel" class="btn-default"
+                        special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

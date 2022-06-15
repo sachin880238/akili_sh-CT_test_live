@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2021 by original authors @ fontello.com</metadata>
+<defs>
+<font id="ct-route" horiz-adv-x="1000" >
+<font-face font-family="ct-route" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="route" unicode="&#xe901;" d="M813 225h-188c-34 0-62 28-62 63s28 62 62 62h188s187 209 187 313-84 187-187 187-188-84-188-187c0-50 43-124 89-188h-89c-103 0-187-84-187-187s84-188 187-188h188c34 0 62-28 62-62s-28-63-62-63h-451c-31-48-66-93-92-125h543c103 0 187 84 187 188s-84 187-187 187z m0 500c34 0 62-28 62-62s-28-63-62-63-63 28-63 63 28 62 63 62z m-625-375c-104 0-188-84-188-187s188-313 188-313 187 209 187 313-84 187-187 187z m0-250c-35 0-63 28-63 63s28 62 63 62 62-28 62-62-28-63-62-63z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

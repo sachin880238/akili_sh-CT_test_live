@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="set_discount_orderline_views" model="ir.ui.view">
+        <field name="name">Set Discount</field>
+        <field name="model">set.discount.orderline</field>
+        <field name="arch" type="xml">
+            <form string="Set Discount">
+                <group>
+                    <group>
+                        <field name="set_discount" widget="radio" nolabel="1"/>
+                    </group>
+
+                    <group>
+                        <field name="set_discount_line" attrs="{'invisible':[('set_discount','not in',['discount_to'])]}" nolabel="1" style="width:32%; margin-left:-70%; margin-top:5.5%; width:43%;"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button name="set_discount_selected_orderlines" type="object" string="SET" class="btn-primary"/>
+                    <button string="CANCEL" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_set_discount_orderline" model="ir.actions.act_window">
+        <field name="name">Set Discount OrderLine</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">set.discount.orderline</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

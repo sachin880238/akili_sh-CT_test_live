@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="set_date_orderline_views" model="ir.ui.view">
+        <field name="name">Set Date</field>
+        <field name="model">set.date.orderline</field>
+        <field name="arch" type="xml">
+            <form string="Set Delevery Date">
+                <group>
+                    <group>
+                        <field name="set_date" widget="radio" nolabel="1"/>
+                    </group>
+                    
+                    <group>
+                        <field name="delivery_date" attrs="{'invisible':[('set_date','not in',['date_to'])]}" nolabel="1" style="margin-left:-75%; margin-top:17%; width:43%;"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="set_date_selected_orderlines" type="object" string="SET" class="btn-primary"
+                        attrs="{'invisible':[('set_date','in',['do_not_change'])]}" />
+                    <button string="CANCEL" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_set_date_orderline" model="ir.actions.act_window">
+        <field name="name">Set Date OrderLine</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">set.date.orderline</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

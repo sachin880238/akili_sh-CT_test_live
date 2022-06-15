@@ -1,0 +1,39 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="convert_cart_to_quotation" model="ir.ui.view">
+	    <field name="name">Convert cart to quotation</field>
+	    <field name="model">convert.cart.quotation</field>
+	    <field name="arch" type="xml">
+	    	<form>
+	    		<group>
+	    			<group>
+	    				<field name="team_id"/>
+	    				<field name="user_id" domain="[('sale_team_id.id','=',team_id)]" required="1"/>
+	    			</group>
+	    		</group>
+	    		<footer>
+	    			<button name="action_convert_cart_to_quotation" 
+	    				type="object" 
+	    				class="btn-primary"
+	    				string="ASSIGN" 
+	    				help="Convert cart to Quotation"/>
+	    			<button string="CANCEL"
+	    				class="btn-secondary" 
+	    				special="cancel"/> 
+	    		</footer>
+	    	</form>
+	    </field>
+	  </record>
+
+  	<record id="act_view_assign_cart_to_quotation" model="ir.actions.act_window">
+		  <field name="name">Convert cart to Quotation</field>
+		  <field name="type">ir.actions.act_window</field>
+		  <field name="res_model">convert.cart.quotation</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">form</field>
+		  <field name="context">{}</field>
+		  <field name="target">new</field>
+		</record>
+	</data>
+</odoo>

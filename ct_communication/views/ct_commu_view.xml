@@ -1,0 +1,348 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+    <record id="mail.view_message_tree" model="ir.ui.view" >
+      <field name="name">mail.message.tree</field>
+      <field name="model">mail.message</field>
+      <field name="priority">20</field>
+      <field name="arch" type="xml">
+        <tree string="Messages">
+          <field name="sequence" widget="handle"/>
+          <field name="channel_id" string="Channel"/>
+          <field name="email_from" string="From"/>
+          <field name="author_name" string="To"/>
+          <field name="subject"/>
+          <field name="time"/>
+          <field name="date" widget="date"/>
+          <field name="priority" widget="priority"/>
+          <field name="state" string="Stage"/>
+          <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- mail.message form: short view !-->
+    <record model="ir.ui.view" id="mail.view_message_form">
+      <field name="name">mail.message.form</field>
+      <field name="model">mail.message</field>
+      <field name="priority">20</field>
+      <field name="arch" type="xml">
+        <form string="Message" create="false">
+          <header>
+            <button name="reply_msg"
+                    type="object" string="REPLY" 
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state','not in',['in','hold'])]}"/>
+
+            <button name="msg_hold"
+                    type="object" string="HOLd" 
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state','not in',['in'])]}"/>
+
+
+            <button name="msg_forward"
+                    type="object" string="FORWARD" 
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state','not in',['in','hold'])]}"/>
+
+            <button name="msg_trash"
+                    type="object" string="SAVE" 
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state','not in',['in','hold'])]}"/>
+
+            <button name="msg_trash"
+                    type="object" string="DELETE" 
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state','not in',['in','hold'])]}"/>
+
+            <button name="msg_send"
+                    type="object" string="SEND" 
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state','not in',['draft'])]}"/>
+
+            <button name="msg_draft"
+                    type="object" string="DRAFT"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state','not in',['out'])]}"/>
+
+            <button name="msg_trash"
+                    type="object" string="DELETE"
+                    attrs="{'invisible': [('state','not in',['draft','out'])]}"/>
+
+            <button name="msg_duplicate"
+                    type="object" string="DUPLICATE"
+                    attrs="{'invisible': [('state','not in',['sent'])]}"/>
+
+            <button name="msg_open"
+                    type="object" string="OPEN"
+                    attrs="{'invisible': [('state','not in',['saved','trash'])]}"/>
+
+            <field name="state" widget="statusbar"/>
+            <field name="parent_state" invisible="1"/>
+          </header>
+          <sheet>
+            <div attrs="{'invisible':[('message_type','!=','email')]}">
+              <div>
+                <i class="fas fa-envelope" style="font-size:60px;color:red;margin-top: 0.5%;margin-left: 0.75%; float:left;"></i>
+              </div>
+              <div>
+                <h1>
+                  <field name="email_from" class="communication_title"/>
+                </h1>
+              </div>
+            </div>
+
+            <div attrs="{'invisible':[('message_type','!=','notification')]}">
+              <div>
+                <i class="fa fa-info-circle name_space_icon" style="font-size:60px; color:green; float:left;"></i>
+              </div>
+              <div>
+                <h1>
+                  <field name="email_from" class="communication_title"/>
+                </h1>
+              </div>
+            </div>
+
+            <div attrs="{'invisible':[('message_type','!=','comment')]}">
+              <div>
+                <i class="fa fa-comment" style="font-size:60px; color:green; float:left;"></i>
+              </div>
+              <div>
+                <h1>
+                  <field name="email_from" class="communication_title"/>
+                </h1>
+              </div>
+            </div>
+            <group>
+              <group>
+                <field name="channel_ids" invisible="1"/>
+                <field name="message_type" invisible="1"/>
+                <field name="channel_id" string="Channel" options="{'no_open': True,'no_create': True, 'no_create_edit': True}"/>
+                <!-- <field name="channel_name"/> -->
+                <field name="identifier" string = "Identifier"  options = "{'no_create_edit' : True,'no_create': True}" domain="[('descriptor','=',channel_name),('partner_id','=',author_id)]" />
+                <field name="channel_name" invisible="1" />
+                <field name="skype_id" attrs="{'invisible': [('channel_name','!=','Skype')]}"/>
+                <field name="skype_password" password='true' attrs="{'invisible': [('channel_name','!=','Skype')]}"/>
+                <field name="send_to" attrs="{'invisible': [('channel_name','!=','Skype')]}"/>
+                <field name="email_from" attrs="{'invisible':[('channel_id','=',True)]}"/>
+                <label for="author_id" string="To"/>
+                <div>
+                  <field name="author_id" string="To" class="oe_edit_only" nolabel="true"/>
+                  <field name="author_name" class="oe_read_only" nolabel="true"/>
+                </div>
+                <field name="subject" string="Subject"/>
+                <field name="file_attached"/>
+                <field name="res_id" string="Link" invisible="1"/>
+                <field name="record_name" string="Link" invisible="1"/>
+                <field name="moderator_id" invisible="1"/>
+              </group>
+              <group>
+                <field name="date"/>
+                <field name="time"/>
+                <field name="priority"/>
+                <field name="tag"/>
+                <field name="res_id" string="Reference" invisible="1"/>
+                <field name="document_name" string="Reference"/>
+                <field name="parent_id" invisible="1"/>
+                <field name="model" invisible="1"/>  
+                <field name="subtype_id" invisible="1"/>
+                <field name="moderation_status" invisible="1"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="MESSAGE">
+                <field name="body" style="margin-top:1.5%;"/>
+              </page>
+              <page string="HISTORY">
+              </page>
+              <page string="FOLLOWERS">
+              </page>
+              <page string="Gateway" invisible="1">
+                <group>
+                  <group>
+                    <field name="reply_to"/>
+                    <field name="no_auto_thread"/>
+                  </group>
+                  <group>
+                    <field name="message_id"/>
+                    <field name="mail_server_id"/>
+                  </group>
+                </group>
+              </page>
+              <page string="Recipients" invisible="1">
+                <group>
+                  <group>
+                    <field name="partner_ids" widget="many2many_tags"/>
+                    <field name="channel_ids" widget="many2many_tags"/>
+                  </group>
+                  <group>
+                    <field name="needaction_partner_ids" widget="many2many_tags"/>
+                    <field name="starred_partner_ids" widget="many2many_tags"/>
+                  </group>
+                </group>
+                <group>
+                  <field name="notification_ids">
+                    <tree>
+                      <field name="res_partner_id"/>
+                      <field name="is_read"/>
+                      <field name="is_email"/>
+                      <field name="email_status"/>
+                    </tree>
+                  </field>
+                </group>
+              </page>
+              <page string="Tracking" invisible="1">
+                <field name="tracking_value_ids"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_view_mail_messages_only" model="ir.actions.act_window">
+      <field name="name">Messages</field>
+      <field name="res_model">mail.message</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('message_type' ,'=', 'email')]</field>
+    </record>
+
+    <record id="action_view_messages_only" model="ir.actions.act_window">
+      <field name="name">Messages</field>
+      <field name="res_model">mail.message</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <!-- <field name="domain">[('message_type' ,'!=', 'notification')]</field> -->
+    </record>
+
+    <record model="ir.ui.view" id="communication_channel_list_view">
+      <field name="name">communication.channel.list.view</field>
+      <field name="model">communication.channel</field>
+      <field name="priority">20</field>
+      <field name="arch" type="xml">
+        <tree string="Communication Channel" create="false">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="communication_channel_form_view">
+      <field name="name">communication.channel.form.view</field>
+      <field name="model">communication.channel</field>
+      <field name="priority">20</field>
+      <field name="arch" type="xml">
+        <form string="Communication Channel">
+          <group>
+            <group>
+              <field name="name" string="Channel"/>
+            </group>
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_view_communication_channel" model="ir.actions.act_window">
+      <field name="name">Channels</field>
+      <field name="res_model">communication.channel</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Communication menus -->
+    <menuitem
+      id="menu_ct_commu"
+      name="Communication"
+      groups="communication_user,communication_manager"/>
+
+    <menuitem 
+    	id="ct_commu_dashboard" 
+    	name="Dashboard" 
+    	parent="menu_ct_commu"
+      groups="communication_user,communication_manager"
+    	sequence="1"/>
+
+    <menuitem 
+      id="ct_commu_messages_sms" 
+      name="Messages" 
+      parent="menu_ct_commu"
+      action="ct_communication.action_view_messages_only"
+      groups="communication_user,communication_manager"
+      sequence="2"/>  
+
+    <menuitem
+      id="menu_reporting"
+      name="Reports"
+      parent="menu_ct_commu"
+      groups="communication_user,communication_manager"
+      sequence="4"/>
+      
+    <menuitem 
+      id="ct_communication_settings" 
+      name="Settings" 
+      parent="menu_ct_commu"
+      groups="communication_manager"
+      sequence="6"/>
+
+    <menuitem 
+      id="ct_commu_settings" 
+      name="Settings" 
+      parent="ct_communication_settings"
+      action="base_setup.action_general_configuration"
+      groups="communication_manager"
+      sequence="1"/>
+
+    <menuitem 
+      id="ct_communication_channel" 
+      name="Channels" 
+      parent="ct_communication_settings"
+      action="action_view_communication_channel"
+      groups="communication_manager"
+      sequence="2"/>
+
+    <record model="ir.ui.menu" id="utm.menu_link_tracker_root">
+      <field name="active" eval="False"/>
+    </record>
+
+    <record model="ir.ui.menu" id="mail.menu_mail_mail">
+      <field name="active" eval="False"/>
+    </record>
+
+    <record model="ir.ui.menu" id="fetchmail.menu_action_fetchmail_server_tree">
+      <field name="active" eval="False"/>
+    </record>
+
+    <record model="ir.ui.menu" id="mail.menu_mail_message">
+      <field name="active" eval="False"/>
+    </record>
+    <!-- <menuitem name="Emails" id="menu_mail_mail" parent="base.menu_email" action="action_view_mail_mail" /> -->
+  </data>
+
+  <data noupdate="1">
+    <record id="email_communication_channel" model="communication.channel">
+      <field name="name">Email</field>
+    </record>
+    <record id="notification_communication_channel" model="communication.channel">
+      <field name="name">System Notification</field>
+    </record>
+    <record id="comments_communication_channel" model="communication.channel">
+      <field name="name">Comment</field>
+    </record>
+    <record id="chat_communication_channe" model="communication.channel">
+      <field name="name">Chat</field>
+    </record>
+    <record id="phone_communication_channel" model="communication.channel">
+      <field name="name">Phone</field>
+    </record>
+    <record id="fax_communication_channel" model="communication.channel">
+      <field name="name">Fax</field>
+    </record>
+    <record id="skype_communication_channel" model="communication.channel">
+      <field name="name">Skype</field>
+    </record>
+    <record id="whatsapp_communication_channel" model="communication.channel">
+      <field name="name">Whatsapp Chat</field>
+    </record>
+  </data>
+</odoo>

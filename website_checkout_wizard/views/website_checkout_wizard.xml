@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_sale.wizard_checkout" name="Wizard checkout custom">
+        <xpath expr="//div[@class='wizard']" position="replace">
+            <div class="wizard">
+                <div class="progress-wizard">
+                    <a class="no-decoration" t-att-href="website_sale_order.wizard_cart and '/shop/cart' or step&gt;=10 and '/shop/cart' or '#'">
+                        <div id="wizard-step10" t-att-class="'progress-wizard-step %s' % (step == 10 and 'active' or step&gt;10 and 'complete' or website_sale_order.wizard_cart and 'complete'  or 'disabled')">
+                            <div class="progress-wizard-bar d-none d-md-block"/>
+                            <span class="progress-wizard-dot d-none d-md-inline-block"/>
+                            <div class="text-center progress-wizard-steplabel">Cart</div>
+                        </div>
+                    </a>
+                    <a class="no-decoration" t-att-href="website_sale_order.disabled_wizard and '#' or not website_sale_order and '#'  or step&gt;=20 and '/shop/checkout' or website_sale_order.wizard_address and '/shop/checkout'  or '#'">
+                        <div id="wizard-step20" t-att-class="'progress-wizard-step %s' % (step == 20 and 'active' or website_sale_order.disabled_wizard and 'disabled' or not website_sale_order and 'disabled' or step&gt;20 and 'complete' or website_sale_order.wizard_address and 'complete' or 'disabled')">
+                            <div class="progress-wizard-bar d-none d-md-block"/>
+                            <span class="progress-wizard-dot d-none d-md-inline-block"/>
+                            <div class="text-center progress-wizard-steplabel">Addressess</div>
+                        </div>
+                    </a>
+                    <a class="no-decoration" t-att-href="website_sale_order.disabled_wizard and '#' or not website_sale_order and '#' or step&gt;=30 and '/extra/custom_info' or website_sale_order.wizard_details and '/extra/custom_info' or '#'">
+                        <div id="wizard-step30" t-att-class="'progress-wizard-step %s' % (step == 30 and 'active' or website_sale_order.disabled_wizard or not website_sale_order and 'disabled' and 'disabled' or step&gt;30 and 'complete' or website_sale_order.wizard_details and 'complete' or 'disabled')">
+                            <div class="progress-wizard-bar d-none d-md-block"/>
+                            <span class="progress-wizard-dot d-none d-md-inline-block"/>
+                            <div class="text-center progress-wizard-steplabel">Details</div>
+                        </div>
+                    </a>
+                    <a class="no-decoration" t-att-href="website_sale_order.disabled_wizard and '#' or not website_sale_order and '#' or step&gt;=40 and '/shop/review' or website_sale_order.wizard_reviews and '/shop/review' or '#'">
+                        <div id="wizard-step40" t-att-class="'progress-wizard-step %s' % (step == 40 and 'active' or website_sale_order.disabled_wizard and 'disabled' or not website_sale_order and 'disabled' or step&gt;40 and 'complete' or website_sale_order.wizard_reviews and 'complete' or 'disabled')">
+                            <div class="progress-wizard-bar d-none d-md-block"/>
+                            <span class="progress-wizard-dot d-none d-md-inline-block"/>
+                            <div class="text-center progress-wizard-steplabel">Review</div>
+                        </div>
+                    </a>
+                    <a class="no-decoration" t-att-href="website_sale_order.disabled_wizard and '#' or not website_sale_order and '#' or step&gt;=50 and '/shop/confirm_order_custom' or website_sale_order.wizard_confirm and '/shop/confirm_order_custom' or '#'">
+                        <div id="wizard-step50" t-att-class="'progress-wizard-step %s' % (step == 50 and 'active' or website_sale_order.disabled_wizard and 'disabled' or not website_sale_order and 'disabled' or step&gt;50 and 'complete' or website_sale_order.wizard_confirm and 'complete' or 'disabled')">
+                            <div class="progress-wizard-bar d-none d-md-block"/>
+                            <span class="progress-wizard-dot d-none d-md-inline-block"/>
+                            <div class="text-center progress-wizard-steplabel">Confirmation</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

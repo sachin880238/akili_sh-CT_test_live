@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Container tree view -->
+  <record id="view_stock_container_tree" model="ir.ui.view">
+    <field name="name">stock.container.tree</field>
+    <field name="model">stock.container</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="container_barcode" string="Container"/>
+        <field name="container_type" string="Type"/>
+        <field name="location_id" string="Location"/>
+        <field name="container_function"/>
+        <field name="document"/>
+        <field name="container_for"/>
+        <field name="stage" string="Stage"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        <field name="sequence" widget="handle"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Container form view -->
+  <record id="view_stock_container_form" model="ir.ui.view">
+    <field name="name">stock.container.form</field>
+    <field name="model">stock.container</field>
+    <field name="arch" type="xml">
+      <form string="Container">
+        <header>
+          <field name="stage" widget="statusbar"/>
+          <field name="parent_state" widget="statusbar" invisible="1"/>
+        </header>
+        <sheet>
+          <div class="row col-sm-12">
+            <div>
+              <h1>
+                <field name="image" widget="image" class="oe_avatar" nolable="1"/>
+              </h1>
+            </div>
+            <div style="margin: 1.5% 0% 0% 2%;">
+              <h1>
+                <div>
+                  <field name="name" nolable="1" invisible="1"/>
+                  <field name="full_name" nolable="1"/>
+                </div>
+              </h1>
+            </div>
+          </div>
+          <group>
+            <group>
+              <field name="assigned"/>
+              <field name="location_id" options='{"no_open": True}'/>
+              <field name="parent_id" string="Within"/>
+            </group>
+            <group>
+              <field name="container_barcode"/>
+              <field name="container_type" string="Container Type"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="CONTAINERS" invisible="1">
+              <field name="child_ids"/>
+            </page>
+            <page string="CONTENTS">
+              <field name="stock_content_ids" editable_bottom="1">
+                <tree>
+                  <field name="contents_qty" string="Quantity"/>
+                  <field name="product_id"/>
+                  <field name="stock_container_id"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Container action -->
+  <record id="stock_container_action" model="ir.actions.act_window">
+    <field name="name">Containers</field>
+    <field name="res_model">stock.container</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'create':False}</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_stock_container_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_stock_container_form')})]"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a container
+      </p>
+    </field>
+  </record>
+
+  <!-- Container one2many tree view -->
+  <record id="view_one2many_container_tree" model="ir.ui.view">
+    <field name="name">one2many.container.tree</field>
+    <field name="model">stock.container</field>
+    <field name="priority">16</field>
+    <field name="arch" type="xml">
+      <tree create="1">
+        <field name="container_barcode"/>
+        <field name="container_type" string="Container"/>
+        <field name="location_barcode"/>
+        <field name="location_id" string="Location"/>
+        <field name="desc"/>
+        <field name="dim1" string="Dim1"/>
+        <field name="dim2" string="Dim2"/>
+        <field name="dim3" string="Dim3"/>
+        <field name="act_weight" string="Weight"/>
+        <field name="stage"/>
+        <field name="partner_id" invisible="1"/>
+        <field name="picking_id" invisible="1"/>
+      </tree>
+    </field>
+  </record>
+  
+  <!-- Container one2many form view -->
+  <record id="view_one2many_container_form" model="ir.ui.view">
+    <field name="name">one2many.container.form</field>
+    <field name="model">stock.container</field>
+    <field name="priority">16</field>
+    <field name="arch" type="xml">
+      <form string="Container">
+        <sheet>
+          <div class="row col-sm-12">
+            <div>
+              <field name="image" nolable="1" widget="image" class="move_line_title_image"/>
+            </div>
+            <div>
+              <h1>
+                <field name="container_barcode" readonly="1"/>
+                <br/>
+                <field name="name"/>
+              </h1>
+            </div>
+          </div>
+          <group>
+            <group>
+              <field name="parent_id" invisible="1"/>
+              <field name="partner_id" invisible="1"/>
+              <field name="picking_id" invisible="1"/>
+              <field name="so_id" placeholder="select document" string="Document" attrs="{'invisible' : [('so_id','=',False)]}"/>
+              <field name="po_id" placeholder="select document" string="Document" attrs="{'invisible' : [('po_id','=',False)]}"/>
+              <field name="to_id" placeholder="select document" string="Document" attrs="{'invisible' : [('to_id','=',False)]}"/>
+              <field name="location_id" readonly="0" string="Location" options='{"no_open": True}'/>
+            </group>
+          </group>
+          <notebook>
+            <page string="DETAILS" name='container_type_details'>
+              <group>
+                <group>
+                  <field name="container_type" string="Container Type"/>
+                  <field name="dim1"/>
+                  <field name="dim2"/>
+                  <field name="dim3"/>
+                  <field name="est_weight"/>
+                  <field name="act_weight"/>
+                  <field name="shipping_warning"/>
+                  <field name="desc"/>
+                </group>
+              </group>
+              <script>
+                $(document).ready(function(){
+                $(".modal-footer").hide();
+                });
+              </script>
+              <hr/>
+              <div>
+                <button string="CLOSE" 
+                  class="btn btn-secondary" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"/>
+              </div>
+            </page>
+            <page string="CONTENTS">
+              <field name="stock_content_ids">
+                <tree>
+                  <field name="contents_qty" string="Quantity"/>
+                  <field name="name" string="Contents"/>
+                </tree>
+              </field>
+              <hr/>
+              <div>
+                <button string="CLOSE" 
+                  class="btn btn-secondary" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"/>
+              </div>
+            </page>
+            <page string="MOVE" attrs="{'invisible' : [('stage','in',['release','ship'])]}">
+              <group>
+                <group class="oe_edit_only">
+                  <field name="picking_id" invisible="1"/>
+                  <field name="so_id" placeholder="select document" string="Link to Document" attrs="{'invisible' : [('so_id','=',False)]}"/>
+                  <field name="po_id" placeholder="select document" string="Link to Document" attrs="{'invisible' : [('po_id','=',False)]}"/>
+                  <field name="to_id" placeholder="select document" string="Link to Document" attrs="{'invisible' : [('to_id','=',False)]}"/>
+                  <label for="new_container_barcode" string="Move to Container"/>
+                  <div>
+                    <field name="new_container_barcode" placeholder="scan or enter" class="move_container_barcode" nolabel="1"/>
+                    <field name="new_container_type" placeholder="select container type" class="move_container_type" nolabel="1" options='{"no_open": True, "no_create": True}'/>
+                  </div>
+                  <label for="new_location_barcode" string="Move to Location"/>
+                  <div>
+                    <field name="new_location_barcode" placeholder="scan or enter" class="move_container_barcode" nolabel="1"/>
+                    <field name="new_location_id" placeholder="select location" class="move_container_type" nolabel="1" options='{"no_open": True, "no_create": True}'/>
+                  </div>
+                  <field name="move_comments" string="Comment"/>
+                </group>
+                <group class="oe_read_only">
+                  <field name="picking_id" invisible="1"/>
+                  <field name="so_id" placeholder="select document" string="Link to Document" attrs="{'invisible' : [('so_id','=',False)]}"/>
+                  <field name="po_id" placeholder="select document" string="Link to Document" attrs="{'invisible' : [('po_id','=',False)]}"/>
+                  <field name="to_id" placeholder="select document" string="Link to Document" attrs="{'invisible' : [('to_id','=',False)]}"/>
+                  <label for="new_container_name" string="Move to Container"/>
+                  <div>
+                    <field name="new_container_name"/>
+                    <field name="new_container_type" class="move_to_location"/>
+                  </div>
+                  <label for="new_location_name" string="Move to Location"/>
+                  <div>
+                    <field name="new_location_name"/>
+                    <field name="new_location_id" class="move_to_location"/>
+                  </div>
+                  <field name="move_comments"/>
+                </group>
+              </group>
+              <script>
+                $(document).ready(function(){
+                $(".modal-footer").hide();
+                });
+              </script>
+              <hr/>
+              <div>
+                <button name="move_container_to_container" 
+                  string="MOVE" 
+                  class="btn-primary oe_edit_only" 
+                  type="object"/>
+                <button name="get_barcode" 
+                  string="BARCODE" 
+                  class="btn-primary oe_edit_only" 
+                  type="object"
+                  style="margin-left:0.5%"/>
+                <button string="CLOSE"
+                  class="btn btn-secondary oe_edit_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+                <button string="CLOSE" 
+                  class="btn btn-primary oe_read_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+              </div>
+            </page>
+            <page string="RELEASE" invisible="1">
+              <group>
+                <group>
+                  <field name="product_id" options='{"no_open": True, "no_create": True}' domain="[('product_type','=','container')]"/>
+                  <field name="dim1"/>
+                  <field name="dim2"/>
+                  <field name="dim3"/>
+                  <field name="est_weight"/>
+                  <field name="act_weight"/>
+                  <field name="stage" readonly="1"/>
+                </group>
+              </group>
+              <hr/>
+              <div>
+                <button name="release_container" 
+                  string="RELEASE" 
+                  class="btn-primary oe_edit_only" 
+                  type="object"/>
+                <button string="CLOSE"
+                  class="btn btn-secondary oe_edit_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+                <button string="CLOSE" 
+                  class="btn btn-primary oe_read_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+              </div>
+            </page>
+            <page string="SHIP" attrs="{'invisible' : ['|',('stage','=','ship'),('parent_id','!=',False)]}">
+              <group>
+                <group>
+                  <field name="container_type"/>
+                  <field name="dim1"/>
+                  <field name="dim2"/>
+                  <field name="dim3"/>
+                  <field name="est_weight"/>
+                  <field name="act_weight"/>
+                  <field name="stage" readonly="1"/>
+                  <field name="shipping_warning"/>
+                </group>
+              </group>
+              <hr/>
+              <div>
+                <button name="ship_container"
+                  string="RELEASE"
+                  class="btn-primary oe_edit_only"
+                  type="object"/>
+                <!-- <button name="get_label" 
+                  string="LABEL" 
+                  class="btn-primary oe_edit_only" 
+                  type="object"
+                  style="margin-left:0.5%"/> 
+                <button name="get_packlist" 
+                  string="PACKLIST" 
+                  class="btn-primary oe_edit_only" 
+                  type="object"
+                  style="margin-left:0.5%"/>
+                <button name="get_documents" 
+                  string="DOCUMENTS" 
+                  class="btn-primary oe_edit_only" 
+                  type="object"
+                  style="margin-left:0.5%"/> -->
+                <button string="CLOSE"
+                  class="btn btn-secondary oe_edit_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+                <!-- <button string="CLOSE" 
+                  class="btn btn-primary oe_read_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/> -->
+              </div>
+            </page>
+            <page string="CONTAINERS" invisible="1">
+              <field name="child_ids"/>
+              <hr/>
+              <div>
+                <button string="CLOSE" 
+                  class="btn btn-primary" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+              </div>
+            </page>
+            <page string="PHOTOS">
+              <hr/>
+              <div>
+                <button string="CLOSE"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="TARGET-2"
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+              </div>
+            </page>
+          </notebook>
+        </sheet>
+       <!--  <style>
+          .modal-lg footer {
+          display: none !important;
+          }
+        </style> -->
+      </form>
+    </field>
+  </record>  
+</odoo>     

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="assets_backend_inherit_sales" inherit_id="web.assets_backend" name="Sales backend assets">
+    <xpath expr="//script[@src='/sale/static/src/js/product_configurator_controller.js']" position="replace">
+      <script type="text/javascript" src="/so_workflow/static/src/js/product_configurator_controller.js"></script>
+    </xpath>
+    <xpath expr="//script[@src='/sale/static/src/js/product_configurator_mixin.js']" position="replace">
+      <script type="text/javascript" src="/so_workflow/static/src/js/product_configurator_mixin.js"></script>
+    </xpath>
+    <xpath expr="//script[@src='/sale/static/src/js/product_configurator_renderer.js']" position="replace">
+      <script type="text/javascript" src="/so_workflow/static/src/js/product_configurator_renderer.js"></script>
+    </xpath>
+  </template>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="product_template_tree_view" model="ir.ui.view">
+    <field name="name">vendor.product.template.product.tree</field>
+    <field name="model">vendor.product.template</field>
+    <field name="arch" type="xml">
+      <tree string="Product Templates">
+        <field name="sequence" widget="handle"/>
+        <field name="name"/>
+        <field name="vendor_id"/>
+        <field name="uom_ids" string="Units" widget="many2many_tags"/>
+        <field name="state"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="product_template_only_form_view" model="ir.ui.view">
+  <field name="name">vendor.product.template.product.form</field>
+  <field name="model">vendor.product.template</field>
+  <field name="mode">primary</field>
+  <field name="priority" eval="8" />
+  <field name="inherit_id" ref="vendor_product.product_template_form_view"/>
+  <field name="arch" type="xml">
+    <xpath expr="//form" position="attributes">
+      <attribute name="name">Product Template</attribute>
+    </xpath>
+    <xpath expr="//field[@name='state']" position="after">
+      <field name="parent_state" invisible="1"/>
+    </xpath>
+    <button name="product_documents" position="after">
+      <button name="%(vendor_product.product_variant_action)d" type="action"
+              icon="fa-sitemap" class="oe_stat_button"
+              attrs="{'invisible': [('product_variant_count', '&lt;=', 1)]}">
+              <field string="Variants" name="product_variant_count" widget="statinfo" />
+      </button>
+      </button>
+      <xpath expr="//page[@name='product_information']" position="before">
+        <page name="variants" string="VARIANTS">
+          <field name="attribute_line_ids" widget="one2many_list" context="{'show_attribute': False}">
+            <tree string="Variants" editable="bottom">
+              <field name="sequence" widget="handle"/>
+              <field name="attribute_id"/>
+              <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True}" domain="[('attribute_id', '=', attribute_id)]" context="{'default_attribute_id': attribute_id}"/>
+              <field name="before"/>
+              <field name="after"/>
+            </tree>
+          </field>
+          <p class="oe_grey">
+            <strong>Warning</strong>: adding or deleting attributes
+            will delete and recreate existing variants and lead
+            to the loss of their possible customizations.
+          </p>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="product_template_kanban_view" model="ir.ui.view">
+    <field name="name">vendor.product.template.product.kanban</field>
+    <field name="model">vendor.product.template</field>
+    <field name="arch" type="xml">
+      <kanban>
+        <field name="id"/>
+        <field name="image_small"/>
+        <field name="product_variant_count"/>
+        <templates>
+          <t t-name="kanban-box">
+            <div class="oe_kanban_global_click">
+              <div class="o_kanban_image">
+                <img t-att-src="kanban_image('vendor.product.template', 'image_small', record.id.raw_value)" alt="Product"/>
+              </div>
+              <div class="oe_kanban_details">
+                <strong class="o_kanban_record_title">
+                  <field name="name"/>
+                </strong>
+                <div t-if="record.product_variant_count.value &gt; 1">
+                  <strong>
+                    <t t-esc="record.product_variant_count.value"/> Variants
+                  </strong>
+                </div>
+                <div name="tags"/>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <record id="product_template_action" model="ir.actions.act_window">
+    <field name="name">Vendor Product Templates</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">vendor.product.template</field>
+    <field name="view_mode">tree,kanban,form</field>
+    <field name="view_type">form</field>
+    <field name="context">{'active_test':False}</field>
+    <field name="search_view_id" ref="vendor_product.product_template_search_view"/>
+    <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            Create a new product
+        </p>
+    </field>
+  </record>
+</odoo>

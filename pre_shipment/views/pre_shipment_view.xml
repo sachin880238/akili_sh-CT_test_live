@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>  
+    <record id="pre_shipment_tree_view" model="ir.ui.view">
+      <field name="name">pre.shipment.tree</field>
+      <field name="model">pre.shipment</field>
+      <field name="arch" type="xml">
+        <tree string="Product">
+          <field name="name"/>
+          <field name="shipping_quantity" attrs="{'column_invisible':[('parent.state','in',['sale','done'])]}"/>
+          <field name="route_id"/>
+          <field name="ship_via"/>
+          <field name="del_date"/>
+          <field name="shipment_price_unit" attrs="{'column_invisible':[('parent.state','in',['sale','done'])]}"/>
+          <field name="shipment_discount" attrs="{'column_invisible':[('parent.state','in',['sale','done'])]}"/>
+          <field name="shipment_discount_unit" attrs="{'column_invisible':[('parent.state','in',['sale','done'])]}"/>
+          <field name="shipment_price_subtotal" attrs="{'column_invisible':[('parent.state','in',['sale','done'])]}"/>
+          <field name="priority" attrs="{'column_invisible':[('parent.state','not in',['sale','done'])]}"/>
+          <field name="state" attrs="{'column_invisible':[('parent.state','not in',['sale','done'])]}"/>
+          <field name="pro_cost" invisible="1"/>
+          <field name="service_cost" invisible="1"/>
+          <field name="tax_id" invisible="1"/>
+          <field name="ship_cost" attrs="{'column_invisible':[('parent.state','not in',['sale','done'])]}"/>
+          <field name="total" attrs="{'column_invisible':[('parent.state','not in',['sale','done'])]}"/>
+          <field name="required" attrs="{'column_invisible':[('parent.state','not in',['sale','done'])]}"/>
+        </tree>
+      </field>
+    </record>
+    <record id="pre_shipment_form_view" model="ir.ui.view">
+      <field name="name">pre.shipment.form</field>
+      <field name="model">pre.shipment</field>
+      <field name="mode">primary</field>
+      <field name="arch" type="xml">
+        <form string="Product">
+          <sheet>
+            <div class="oe_title">
+              <label class="oe_edit_only" for="name" string="Shipment"/>
+              <div class='oe_inline'>
+                <h1>
+                  <field name="name" style='width:75%' placeholder="Product Name"/>
+                </h1>
+              </div>
+            </div>
+            <group>
+              <group>
+                <field name="route_id"/>
+                <field name="ship_via"/>
+              </group> 
+              <group>
+                <field name="del_date"/>
+              </group>   
+            </group> 
+            <group>
+              <group>
+                <field name="pro_cost"/>
+                <field name="tax_id"/>
+                <field name="total" />
+              </group> 
+              <group>
+                <field name="service_cost"/>
+                <field name="ship_cost" />
+              </group>   
+            </group> 
+            <notebook>
+              <page string="Shipping Lines">
+                <field name="ship_lines" readeonly='1' >
+                  <tree create='false' delete='false'>
+                    <field name="product_id" readeonly='1'/>
+                    <field name="name" string='Description' />
+                    <field name="product_uom_qty" string="Quantity"  />  
+                    <field name="price_unit" string="Unit" />
+                    <field name="total_price" widget="monetary" string="Subtotal" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form> 
+      </field>
+    </record>
+  </data>
+</odoo>

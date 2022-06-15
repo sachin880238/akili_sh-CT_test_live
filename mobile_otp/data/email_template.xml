@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<odoo>
+  
+    <!-- Mail template are declared in a NOUPDATE block so users can freely customize/delete them -->
+    <data noupdate="1">
+        <!-- EDI related Email Templates menu -->
+        <!--Email template -->
+        <record id="email_template_otp" model="mail.template">
+            <field name="name">OTP Email</field>
+            <field name="email_from">${(object.user_id.email and '%s &lt;%s&gt;' % (object.user_id.name, object.user_id.email) or '')|safe}</field>
+            <field name="reply_to">noreply@testmail.com</field>
+            <field name="subject">Conservation Login OTP</field>
+            <field name="email_to">${object.email}</field> 
+            <field name="model_id" ref="mobile_otp.model_mobile_otp"/>
+            <field name="auto_delete" eval="True"/> 
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; "> 
+                        <p>${object.get_email_message()}</p>
+                    </div>      
+            ]]></field>
+        </record>
+    </data>
+
+</odoo>

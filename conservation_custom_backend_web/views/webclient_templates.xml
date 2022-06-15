@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend" name="Website Product Dropdown">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/conservation_custom_backend_web/static/src/js/views/form_renderer_custom.js"></script>
+            <script type="text/javascript" src="/conservation_custom_backend_web/static/src/js/views/list_render.js"/>
+            <script type="text/javascript" src="/conservation_custom_backend_web/static/src/js/views/dialog.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/jquery.tinymce.min.js"></script>
+<!--             <script type="text/javascript" src="/conservation_custom_backend_web/static/src/js/views/search_view.js"></script>
+ -->           <!--  <script type="text/javascript" src="/conservation_custom_backend_web/static/src/js/widgets/sidebar.js"></script> -->
+        </xpath>
+    </template>
+</odoo>

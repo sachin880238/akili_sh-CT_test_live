@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="route_type_sc" model="route.type">
+      <field name="code">SC</field>
+      <field name="description">Ship to Customer</field>
+      <field name="application">sale</field>
+      <field name="rule_lines_ids" eval="[(6,0,[ref('route_rule_type_sc')])]"/> 
+    </record>
+
+    <record id="route_type_sv" model="route.type">
+      <field name="code">SV</field>
+      <field name="description">Ship to Vendor</field>
+      <field name="application">purchase</field>
+      <field name="rule_lines_ids" eval="[(6,0,[ref('route_rule_type_sv')])]"/>
+    </record>
+
+    <record id="route_type_psc" model="route.type">
+      <field name="code">PSC</field>
+      <field name="description">Pick and Ship to Customer</field>
+      <field name="application">sale</field>
+      <field name="rule_lines_ids" eval="[(6,0,[ref('route_rule_type_psc1')
+          ,ref('route_rule_type_psc2')])]"/>
+    </record>
+
+    <record id="route_type_psv" model="route.type">
+      <field name="code">PSV</field>
+      <field name="description">Pick and Ship to Vendor</field>
+      <field name="application">purchase</field>
+      <field name="rule_lines_ids" eval="[(6,0,[ref('route_rule_type_psv1')
+          ,ref('route_rule_type_psv2')])]"/>
+    </record>
+
+    <record id="route_type_ppsc" model="route.type">
+      <field name="code">PPSC</field>
+      <field name="description">Pick, Pack, and Ship to Customer</field>
+      <field name="application">sale</field>
+      <field name="rule_lines_ids" eval="[(6,0,[ref('route_rule_type_ppsc1')
+          ,ref('route_rule_type_ppsc2'),ref('route_rule_type_ppsc3')])]"/>
+    </record>
+
+    <record id="route_type_ppsv" model="route.type">
+      <field name="code">PPSV</field>
+      <field name="description">Pick, Pack, and Ship to Vendor</field>
+      <field name="application">purchase</field>
+      <field name="rule_lines_ids" eval="[(6,0,[ref('route_rule_type_ppsv1')
+          ,ref('route_rule_type_ppsv2'),ref('route_rule_type_ppsv3')])]"/>
+    </record>
+        
+    <record id="route_type_bsc" model="route.type">
+      <field name="code">BSC</field>
+      <field name="description">Buy and Ship to Customer</field>
+      <field name="application">sale</field>
+      <field name="rule_lines_ids" eval="[(6,0,[ref('route_rule_type_bsc1')
+          ,ref('route_rule_type_bsc2')])]"/>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,27 @@
+.parent_content{
+	height: 20px;
+}
+.merge_crm_account{
+	width:33%;
+	float: left;
+}
+.merge_crm_label{
+	width: 33%;
+	float: left;
+	padding-left: 70px;
+}
+.label_name{
+	font-size: 20px; 
+	font-style: italic;
+}
+.crm_acc_fields{
+	width: 33%;
+	float: left; 
+	font-size: 1.0rem;
+}
+.crm_acc_email_fields{
+	width: 33%;
+	float: left; 
+	font-size: 1.0rem;
+	height: 30px;
+}

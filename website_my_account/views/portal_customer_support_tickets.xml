@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="customer_support_tickets" name="Customer Support tickets">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container account_settings_my_portal">
+                    <div class="row mt32">
+                        <div class="col-md-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/my/home">Your Account</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <span>Customer Support Tickets</span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <h2>Customer Support Tickets</h2>
+                            <br/>
+                            <t t-if="not customer_ticket">
+                                <p>Currently there are not generated tickets for your account</p>
+                            </t>
+                            <t t-if="customer_ticket">
+                                <div class="table_overflow">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Date</th>
+                                            <th>Ticket</th>
+                                            <th>Summary</th>
+                                            <th>Status</th>
+                                        </thead>
+                                        <t t-as="ticket" t-foreach="customer_ticket">
+                                            <tr>
+                                                <td class="href" id="date">
+                                                    <a t-attf-href="/my/ticket_details/#{ticket.id}?#{keep_query()}">
+                                                        <t t-esc="ticket.create_date"/>
+                                                    </a>
+                                                </td>
+                                                <td class="href" id="ticket" t-esc="ticket.name or '-'"/>
+                                                <td class="href" id="summary" t-esc="ticket.description or '-'"/>
+                                                <td class="href" id="state" t-esc="ticket.stage_id.name or '-'"/>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="customer_support_tickets_details" name="Customer Support tickets details">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container account_settings_my_portal">
+                    <div class="mt32">
+                        <div class="col-md-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/my/home">Your Account</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="/my/ticket">Customer Support Tickets</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <span>
+                                        <t t-esc="customer_ticket.name"/>
+                                    </span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="clearfix"/>
+                        <div class="col-md-12">
+                            <h2 class="page_desc_div">
+                                <strong>
+                                    <t t-esc="customer_ticket.name"/>
+                                </strong>
+                            </h2>
+                        </div>
+                        <form class="customer-ticket-form">
+                            <div class="form-group col-sm-12">
+                                <label class="control-label" for="name">Summary</label>
+                                <input class="form-control" name="name" readonly="True" t-att-value="customer_ticket.name" type="text"/>
+                            </div>
+                            <div class="clearfix"/>
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="priority">Priority</label>
+                                <select class="form-control select-placeholder" name="priority" readonly="True" t-att-selected="customer_ticket.priority">
+                                    <option value="">Select</option>
+                                    <option value="0" t-att-selected="customer_ticket.priority == '0'">All</option>
+                                    <option value="1" t-att-selected="customer_ticket.priority == '1'">Low Priority</option>
+                                    <option value="2" t-att-selected="customer_ticket.priority == '2'">High Priority</option>
+                                    <option value="3" t-att-selected="customer_ticket.priority == '3'">Urgent</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="control-label" for="assign_date">Date Created</label>
+                                <input class="form-control" name="create_date" readonly="True" t-att-value="customer_ticket.assign_date" type="text"/>
+                            </div>
+                            <div class="clearfix"/>
+                            <!-- Adress field -->
+                            <div class="form-group col-md-12">
+                                <label class="control-label" for="description">Details</label>
+                                <textarea class="form-control" name="description" readonly="True" t-att-value="customer_ticket.description" rows="15"><t t-esc="customer_ticket.description"/></textarea>
+                            </div>
+                            <div class="clearfix"/>
+                            <div class="form-group col-md-12">
+                                <div class="inline-form-control">
+                                    <label class="control-label" for="ticket_attachment">Documents, drawings, photos</label>
+                                    <a class="ticket_attah_file" id="ticket_attach_file" t-att-data="customer_ticket.id">attach a file 
+                                    
+                                    
+                                        
+                                        <i class="fa fa-plus-square"/></a>
+                                </div>
+                                <t t-if="attachments">
+                                    <b>Attacments :</b>
+                                    <t t-as="attachment" t-foreach="attachments">
+                                        <span>
+                                            <a class="btn btn-success" t-att-href="'/download-report/%s' % attachment.id">
+                                                <t t-esc="attachment.name"/>
+                                            </a>
+                                        </span>
+                                    </t>
+                                </t>
+                            </div>
+                        </form>
+                        <div class="oe_structure mb32"/>
+                        <div class="form-group col-md-12 support-chatter">
+                            <section class="hidden-print" id="discussion">
+                                <h1 class="page_desc_div">
+                                    <strong>Messages</strong>
+                                </h1>
+                                <h4>
+                                    <strong>Ask questions or request changes:</strong>
+                                </h4>
+                                <t t-call="portal.message_thread">
+                                    <t t-set="object" t-value="customer_ticket"/>
+                                    <t t-set="token_field" t-value="'access_token'"/>
+                                    <t t-set="chatter_mode" t-value="'json'"/>
+                                </t>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <!-- Upload Document POP-UP -->
+        <div class="modal fade" id="oe_upload_document">
+            <div class="modal-dialog modal-content" style="width:87% !important">
+                <form action="" enctype="multipart/form-data" id="upload_document_form" method="post">
+                    <div class="modal-header alert alert-info mb0">
+                        <button class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                        <h4 class="modal-title">Upload Documents or Drawings</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                        <input id="upload_attachment" name="upload_attachment" t-att-value="upload_attachment" type="hidden"/>
+                        <input id="ticket_doc" name="ticket_doc" type="file"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="upload_attachment_submit" type="submit">Upload</button>
+                        <button class="btn btn-primary" data-dismiss="modal" id="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+</odoo>

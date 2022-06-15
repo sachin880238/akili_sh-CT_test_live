@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Inherited form view of Website -->
+    <record id="view_website_config_settings_ext" model="ir.ui.view">
+        <field name="name">Website settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='website_selection_settings']" position="after">
+
+                <h2>SVG Colour</h2>
+                <div class="row mt16 o_settings_container" id="website_svg_color">
+                    <div class="col-xs-12 col-md-6 o_setting_box" id="website">
+                        <div class="o_setting_right_pane">
+                            <label string="Website" for="website_id"/>
+                            <div class="text-muted">
+                                Settings on this page will apply to this website
+                            </div>
+                            <div class="mt16">
+                                <field name="svg_colour"/>
+                            </div>
+                            <div>
+                                <button name="change_svg_colour" type="object" string="Change SVG Color" class="btn-secondary" icon="fa-arrow-right"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+   
+     
+
+
+     <t t-name="Printbutton">
+        
+     </t>
+     <t t-name="mail.chatter.Buttons">
+        <button t-if="newMessageButton" type="button" class="btn btn-link o_chatter_button_new_message" title="Send a message" disabled="disabled" style="background: #1e77c5;color: white;font-weight: bold;">
+            MESSAGE
+        </button>
+        <button t-if="logNoteButton" class="btn btn-link o_chatter_button_log_note" title="Log a note. Followers will not be notified." disabled="disabled" style="background: #1e77c5;color: white;margin-left: 10px;font-weight: bold;margin-left: 2px;">
+            CALL
+        </button>
+        <button t-if="scheduleActivityButton" class="btn btn-link o_chatter_button_schedule_activity" title="Log or schedule an activity" disabled="disabled" style="background: #1e77c5;color: white;margin-left: 10px;font-weight: bold;margin-left: 2px;">
+            <!-- <i class="fa " role="img" aria-label="Dates" title="Dates"/>  -->
+            <t t-if="isMobile">Activity</t><t t-else="">TASK</t>
+        </button>
+
+          <button t-attf-class='CommentButton btn btn-link' class="btn btn-link " disabled="disabled" style="background: #1e77c5;color: white; margin-left: 2px; padding-top: 2px;font-weight: bold; " >
+                
+                    COMMENT
+                
+            </button>
+        
+
+    </t>
+    <t t-name="mail.chatter.Buttons.customs">
+        <style>
+            .o_mail_thread .o_thread_message.o_mail_not_discussion, .o_mail_activity .o_thread_message.o_mail_not_discussion{
+                background-color: white !important;
+                border-bottom: 1px solid #ced4da;
+            }
+        </style>
+            
+
+          <!-- <button t-if="newMessageButton" type="button" class="btn btn-link o_chatter_button_new_message" title="Send a message" disabled="disabled" style="background: #1e77c5;color: white;font-weight: bold;">
+            MESSAGE
+        </button>
+        <button t-if="logNoteButton" class="btn btn-link o_chatter_button_log_note" title="Log a note. Followers will not be notified." disabled="disabled" style="background: #1e77c5;color: white;margin-left: 10px;font-weight: bold;">
+            CALL
+        </button>
+        <button t-if="scheduleActivityButton" class="btn btn-link o_chatter_button_schedule_activity" title="Log or schedule an activity" disabled="disabled" style="background: #1e77c5;color: white;margin-left: 10px;font-weight: bold;">
+            
+            <t t-if="isMobile">Activity</t><t t-else="">TASK</t>
+        </button> -->
+
+          <button type="button" t-attf-class='btn btn-link CommentButton ' class="btn btn-link message_button" disabled="disabled" style="background: #1e77c5;color: white;margin-left: 10px;width: 85px;font-weight: bold; " >
+                
+                    MESSAGE
+                
+            </button>
+        
+
+    </t>
+    <t t-extend="mail.widget.Thread.Content.DESC">
+      <t t-jquery=".o_mail_thread_content" t-operation="replace">
+        <div class="o_mail_thread_content" style="padding: 2%;border: 1px solid #ccc;">
+             <style>
+            .tab {
+                  
+                  background-color: white;
+                  border-bottom: 1px solid #ccc;
+                }
+
+                /* Style the buttons inside the tab */
+                .tab button {
+                  background-color: inherit;
+                  float: left;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    padding: 7px 16px;
+                    font-weight: 700;
+                    color: #1e77c5;
+                  font-size: 14px;
+                }
+
+                /* Change background color of buttons on hover */
+                .tab button:hover {
+                  
+                }
+
+                /* Create an active/current tablink class */
+                .tab button.active {
+                  background-color: white;
+                  margin-bottom: -1px;
+                    border-bottom: 1px  transparent;
+                    border-left: 1px solid #ccc;
+                    border-right: 1px solid #ccc;
+                    border-top: 1px solid #ccc;
+
+                    color: black;
+                }
+
+                /* Style the tab content */
+                .tabcontent {
+                  display: none;
+                  padding: 6px 12px;
+                  
+                  
+                }
+                </style>
+                        <div class="tab">
+                  <button class="tablinks active" onclick="openCity(event, 'Internal')">COMPANY</button>
+                  <button class="tablinks" onclick="openCity(event, 'External')">CUSTOMER</button>
+                  <button class="tablinks" onclick="openCity(event, 'Tasks')">TASKS</button>
+                </div>
+
+                <div id="Internal" class="tabcontent" style="display: block;">
+                  <div >
+                    <!-- <div style="padding: 3%;font-weight: bold;">
+                        COMPANY
+                    </div> -->
+                     <t t-call="mail.chatter.Buttons.customs"/>
+                     <!-- <t t-call="mail.Followers"/> -->
+                     <div class="o_followers_title_box" style="float: right;">
+                        <button  class="btn btn-link search_users"  style="color: #007bff;">
+                    <i id="search_icon" aria-label="Followers" class="fa fa-search fa fa-rotate-90" role="img"></i>
+                    <span class="o_followers_count"></span>
+                </button>
+                <button  class="btn btn-link " style="color: #007bff;">
+                    <i aria-label="Followers" class="fas fa-user-friends" role="img" style="font-size: 23px;"></i>
+                    <span class="o_followers_count"></span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right o_followers_list" role="menu"></div>
+            </div>
+                        <t t-set="check_data" t-value="0"/>
+                    <t t-if="options.messagesSeparatorPosition == 'top'" t-call="mail.MessagesSeparator"/>
+                    <t t-set="messages" t-value="messages.slice().reverse()"/>
+                    <t t-if="thread.hasTypingNotification()" t-call="mail.widget.Thread.TypingNotificationBar"/>
+                    <t t-call="mail.widget.Thread.Messages"/>
+                    <t t-if="options.displayLoadMore" t-call="mail.widget.Thread.LoadMore"/>
+                </div>
+                </div>
+
+                <div id="External" class="tabcontent" >
+                  <div >
+                <!-- <div style="padding: 3%;font-weight: bold;">
+                        CUSTOMER
+                    </div> -->
+                    <t t-call="mail.chatter.Buttons.customs"/>
+                    <div class="o_followers_title_box" style="float: right;">
+                    <button  class="btn btn-link search_users"  style="color: #007bff;">
+                    <i id="search_icon" aria-label="Followers" class="fa fa-search fa fa-rotate-90" role="img"></i>
+                    <span class="o_followers_count"></span>
+                </button>
+                <button  class="btn btn-link " style="color: #007bff;">
+                    <i aria-label="Followers" class="fas fa-user-friends" role="img" style="font-size: 23px;"></i>
+                    <span class="o_followers_count"></span>
+                </button>
+            </div>
+                 <!-- <t t-call="mail.chatter.Buttons.customs"/>
+                 <t t-call="mail.Followers"/> -->
+            <t t-set="check_data" t-value="1"/>
+            <t t-if="options.messagesSeparatorPosition == 'top'" t-call="mail.MessagesSeparator"/>
+            <t t-set="messages" t-value="messages.slice().reverse()"/>
+            <t t-if="thread.hasTypingNotification()" t-call="mail.widget.Thread.TypingNotificationBar"/>
+            <t t-call="mail.widget.Thread.Messages"/>
+            <t t-if="options.displayLoadMore" t-call="mail.widget.Thread.LoadMore"/>
+        </div>
+                </div>
+
+                <div id="Tasks" class="tabcontent">
+                  <h3>TASKS</h3>
+                  <p>TASKS</p>
+                </div>
+
+                <script>
+
+                </script>
+
+            <div class="row">
+            <div class="col-6">
+                <!-- <div style="border:1px solid #ced4da;padding: 3%;">
+                    <div style="padding: 3%;font-weight: bold;">
+                        INTERNAL
+                    </div>
+                     <t t-call="mail.chatter.Buttons.customs"/>
+                      <t t-call="mail.Followers"/>
+                <t t-set="check_data" t-value="0"/>
+            <t t-if="options.messagesSeparatorPosition == 'top'" t-call="mail.MessagesSeparator"/>
+            <t t-set="messages" t-value="messages.slice().reverse()"/>
+            <t t-if="thread.hasTypingNotification()" t-call="mail.widget.Thread.TypingNotificationBar"/>
+            <t t-call="mail.widget.Thread.Messages"/>
+            <t t-if="options.displayLoadMore" t-call="mail.widget.Thread.LoadMore"/>
+        </div> -->
+        </div>
+        <div class="col-6">
+            <!-- <div style="border:1px solid #ced4da;padding: 3%;">
+                <div style="padding: 3%;font-weight: bold;">
+                        EXTERNAL
+                    </div>
+                 <t t-call="mail.chatter.Buttons.customs"/>
+                 <t t-call="mail.Followers"/>
+            <t t-set="check_data" t-value="1"/>
+            <t t-if="options.messagesSeparatorPosition == 'top'" t-call="mail.MessagesSeparator"/>
+            <t t-set="messages" t-value="messages.slice().reverse()"/>
+            <t t-if="thread.hasTypingNotification()" t-call="mail.widget.Thread.TypingNotificationBar"/>
+            <t t-call="mail.widget.Thread.Messages"/>
+            <t t-if="options.displayLoadMore" t-call="mail.widget.Thread.LoadMore"/>
+        </div> -->
+        </div>
+    </div>
+        </div>
+      </t>
+    </t>
+    <t t-name="mail.widget.Thread.Messages">
+
+      
+         <t t-set="current_day" t-value="0"/>
+        <t t-foreach="messages" t-as="message">
+            
+            <t t-if="check_data == '0'">
+            <!-- <t t-esc="message._serverAuthorID[2]"/> -->
+            <!-- <t t-if="message._serverAuthorID[2]" t-esc="message._serverAuthorID[2]"/> -->
+            <!-- <t t-esc="message.getDisplayedAuthor()"/> -->
+            <div t-if="current_day !== message.getDateDay()" class="o_thread_date_separator">
+                <span class="o_thread_date">
+                    <t t-esc="message.getDateDay()"/>
+                </span>
+                <t t-set="current_day" t-value="message.getDateDay()"/>
+            </div>
+
+            <t t-call="mail.widget.Thread.Message"/>
+        </t>
+        <t t-if="check_data == '1'">
+            <!-- <t t-esc="message._serverAuthorID[2]"/> -->
+            <t t-if="message._serverAuthorID[2] != 1">
+           <!--  <t t-esc="message._serverAuthorID[2]"/> -->
+            <!-- <t t-if="message._serverAuthorID[2]" t-esc="message._serverAuthorID[2]"/> -->
+            <!-- <t t-esc="message.getDisplayedAuthor()"/> -->
+            <div t-if="current_day !== message.getDateDay()" class="o_thread_date_separator">
+                <span class="o_thread_date">
+                    <t t-esc="message.getDateDay()"/>
+                </span>
+                <t t-set="current_day" t-value="message.getDateDay()"/>
+            </div>
+
+            <t t-call="mail.widget.Thread.Message"/>
+        </t>
+    </t>
+        </t>
+      </t>
+
+
+    <t t-name="mail.widget.Thread.Message">
+        <div t-att-class="'o_thread_message' + (message.getID() === options.selectedMessageID ? 'o_thread_selected_message ' : ' ') + (message.isDiscussion() or message.isNotification() ? ' o_mail_discussion' : ' o_mail_not_discussion')" t-att-data-message-id="message.getID()">
+            <div t-if="options.displayAvatars" class="o_thread_message_sidebar">
+                
+                    <t t-set="temp" t-value="0"/>
+                    <t t-if="options.displayEmailIcons and (message.hasCustomerEmailData() or ['exception', 'bounce'].indexOf(message._customerEmailStatus) > -1)">
+                    <span >
+                        <t t-set="temp" t-value="1"/>
+                        <i class="fa fa-envelope"  style="font-size: 36px;color:green;padding-left: 0px;" t-att-data-message-id="message.getID()"/>
+                    </span>
+                </t>
+                <t t-if="message._isNote == true">
+                    <t t-set="temp" t-value="1"/>
+                    <i class="fa fa-phone fa-rotate-180"  style="font-size: 36px;color:red;padding-left: 0px;" t-att-data-message-id="message.getID()"/>
+
+                </t>
+                <t t-if="temp == 0">
+                    <t t-if="message.hasAuthor()">
+                    <img t-if="displayAuthorMessages[message.getID()]"
+                        alt=""
+                        t-att-src="message.getAvatarSource()"
+                        data-oe-model="res.partner"
+                        t-att-data-oe-id="message.shouldRedirectToAuthor() ? message.getAuthorID() : ''"
+                        t-attf-class="o_thread_message_avatar rounded-circle #{message.shouldRedirectToAuthor() ? 'o_mail_redirect' : ''}"/>
+
+                    </t>
+                    <t t-else="">
+                    <img t-if="displayAuthorMessages[message.getID()]"
+                        alt=""
+                        t-att-src="message.getAvatarSource()"
+                        class="o_thread_message_avatar rounded-circle"/>
+                </t>
+                </t>
+                
+                <span t-if="!displayAuthorMessages[message.getID()]" t-att-title="message.getDate().format(dateFormat)" class="o_thread_message_side_date">
+                    <t t-esc="message.getDate().format('hh:mm')"/>
+                </span>
+                <i t-if="!displayAuthorMessages[message.getID()] and options.displayStars and message.getType() !== 'notification'"
+                    t-att-class="'fa o_thread_message_star o_thread_icon ' + (message.isStarred() ? 'fa-star' : 'fa-star-o')"
+                    t-att-data-message-id="message.getID()" title="Mark as Todo" role="img" aria-label="Mark as todo"/>
+            </div>
+            <div class="o_thread_message_core">
+                <p t-if="displayAuthorMessages[message.getID()]" class="o_mail_info text-muted">
+                    <input t-if="message.needsModeration() and message.needsModerationByUser() and options.displayModerationCommands" type="checkbox" class="moderation_checkbox" t-att-data-message-id="message.getID()"/>
+                    <t t-if="message.isNote()">
+                        Note by
+                    </t>
+
+                    <strong t-if="message.hasAuthor()"
+                            data-oe-model="res.partner" t-att-data-oe-id="message.shouldRedirectToAuthor() ? message.getAuthorID() : ''"
+                            t-attf-class="o_thread_author #{message.shouldRedirectToAuthor() ? 'o_mail_redirect' : ''}">
+                        <t t-esc="message.getDisplayedAuthor()"/>
+                    </strong>
+                    <strong t-elif="message.hasEmailFrom()">
+                        <a class="text-muted" t-attf-href="mailto:#{message.getEmailFrom()}?subject=Re: #{message.hasSubject() ? message.getSubject() : ''}">
+                            <t t-esc="message.getEmailFrom()"/>
+                        </a>
+                    </strong>
+                    <strong t-else="" class="o_thread_author">
+                        <t t-esc="message.getDisplayedAuthor()"/>
+                    </strong>
+
+                    - <div><small class="o_mail_timestamp" t-att-title="message.getDate().format(dateFormat)"><t t-esc="message.getTimeElapsed()"/></small></div>
+                    <t t-if="message.isLinkedToDocumentThread() and options.displayDocumentLinks">
+                        on <a t-att-href="message.getURL()" t-att-data-oe-model="message.getDocumentModel()" t-att-data-oe-id="message.getDocumentID()" class="o_document_link"><t t-esc="message.getDocumentName()"/></a>
+                    </t>
+                    <t t-if="message.originatesFromChannel() and (message.getOriginChannelID() !== thread.getID())">
+                        (from <a t-att-data-oe-id="message.getOriginChannelID()" href="#">#<t t-esc="message.getOriginChannelName()"/></a>)
+                    </t>
+                    <span t-if="options.displayEmailIcons and (message.hasCustomerEmailData() or ['exception', 'bounce'].indexOf(message._customerEmailStatus) > -1)" class="o_thread_tooltip_container">
+
+                        <t t-set="fatype" t-value="''"/>
+                        <t t-if="message.getCustomerEmailStatus() === 'sent' or message.getCustomerEmailStatus() === 'ready'">
+                            <t t-set="fatype" t-value="'-o'"/>
+                        </t>
+                        <i t-att-class="'o_thread_tooltip o_thread_message_email o_thread_message_email_' + message.getCustomerEmailStatus() + ' fa fa-envelope-o'" t-att-data-message-id="message.getID()"/>
+                    </span>
+                    <span t-attf-class="o_thread_icons">
+                        <i t-if="options.displayStars and !message.isSystemNotification() and !message.needsModeration()"
+                            t-att-class="'fa fa-lg o_thread_icon o_thread_message_star ' + (message.isStarred() ? 'fa-star' : 'fa-star-o')"
+                            t-att-data-message-id="message.getID()" title="Mark as Todo" role="img" aria-label="Mark as Todo"/>
+                       <i t-if="message.isLinkedToDocumentThread() and options.displayReplyIcons"
+                           class="fa fa-reply o_thread_icon o_thread_message_reply"
+                           t-att-data-message-id="message.getID()" title="Reply" role="img" aria-label="Reply"/>
+                        <i t-if="message.isNeedaction() and options.displayMarkAsRead"
+                           class="fa fa-check o_thread_icon o_thread_message_needaction"
+                           t-att-data-message-id="message.getID()" title="Mark as Read" role="img" aria-label="Mark as Read"/>
+
+                        <t t-if="message.needsModeration() and message.originatesFromChannel()">
+                            <t t-call="mail.MessageModeration"/>
+                        </t>
+                    </span>
+                </p>
+                <div class="o_thread_message_content">
+                    <t t-raw="message.getBody()"/>
+                    <t t-if="message.hasTrackingValues()">
+                        <t t-if="message.hasSubtypeDescription()">
+                            <p><t t-esc="message.getSubtypeDescription()"/></p>
+                        </t>
+                        <t t-call="mail.widget.Thread.MessageTracking"/>
+                    </t>
+                    <p t-if="options.displaySubjectOnMessages and message.shouldDisplaySubject()" class="o_mail_subject">Subject: <t t-esc="message.getSubject()"/></p>
+                    <t t-if="message.hasAttachments()">
+                        <div t-if="message.hasImageAttachments()" class="o_attachments_previews">
+                            <t t-foreach="message.getImageAttachments()" t-as="attachment">
+                                <t t-call="mail.AttachmentPreview">
+                                    <t t-set="isNotDeletable" t-value="!options.areMessageAttachmentsDeletable"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div t-if="message.hasNonImageAttachments()" class="o_attachments_list">
+                            <t t-foreach="message.getNonImageAttachments()" t-as="attachment">
+                                <t t-call="mail.Attachment">
+                                    <t t-set="isNotDeletable" t-value="!options.areMessageAttachmentsDeletable"/>
+                                </t>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+        <t t-if="options.messagesSeparatorPosition == message.getID()">
+            <t t-call="mail.MessagesSeparator"/>
+        </t>
+    </t>
+    
+
+     
+</templates>
+
+

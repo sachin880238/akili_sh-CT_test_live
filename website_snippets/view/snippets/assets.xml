@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="_assets_primary_variables" inherit_id="portal._assets_primary_variables">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/primary_variables.scss"/>
+
+        <!-- Those files will be automatically edited by users -->
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/options/user_values.scss"/>
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/options/colors/user_color_palette.scss"/>
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/options/colors/user_theme_color_palette.scss"/>
+    </xpath>
+</template>
+<!-- <template id="_assets_secondary_variables_custom" inherit_id="web_editor._assets_secondary_variables">
+    <xpath expr="//link" position="before">
+        <link rel="stylesheet" type="text/scss" href="/website/static/src/scss/secondary_variables.scss"/>
+    </xpath>
+</template> -->
+
+
+<template id="assets_backend" inherit_id="web.assets_backend" name="Website Backend Assets (used in backend interface)">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/website.backend.scss"/>
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/website_visitor_views.scss"/>
+    </xpath>
+    
+</template>
+
+
+<template id="_assets_frontend_helpers_custom" inherit_id="portal._assets_frontend_helpers">
+    <xpath expr="//link" position="before">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/bootstrap_overridden.scss"/>
+    </xpath>
+</template>
+
+<template id="_assets_frontend_helpers_user_custom" inherit_id="web._assets_frontend_helpers" priority="99">
+    <xpath expr="//link" position="before">
+        <!-- Custom empty file for user custom bootstrap override -->
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/user_custom_bootstrap_overridden.scss"/>
+    </xpath>
+</template>
+
+<template id="assets_frontend" inherit_id="portal.assets_frontend" name="Website Assets">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/website.scss"/>
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/website.ui.scss"/>
+    </xpath>
+
+</template>
+
+<template id="assets_frontend_user_custom1" inherit_id="web.assets_frontend" name="Website Assets user custom" priority="99">
+    <xpath expr="//link[last()]" position="after">
+        <!-- Custom empty file for user custom rules -->
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/user_custom_rules.scss"/>
+    </xpath>
+</template>
+
+<template id="assets_frontend_compatibility_for_12_0_custom" inherit_id="website.assets_frontend" active="False">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/compatibility/bs3_for_12_0.scss"/>
+    </xpath>
+</template>
+
+<template id="website.assets_editor" name="Website Editor Assets (used in website editor)">
+    <t t-call="web._assets_helpers"/>
+
+    <link rel="stylesheet" type="text/scss" href="/website_snippets/static/src/scss/website.editor.ui.scss"/>
+</template>
+
+</odoo>

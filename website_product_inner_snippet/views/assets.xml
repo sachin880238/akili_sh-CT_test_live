@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" name="Assets" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/website_product_inner_snippet/static/src/js/action_block.js"></script>
+        </xpath>
+    </template>
+
+    <template id="assets_editor" inherit_id="website.assets_editor">
+        <xpath expr=".">
+            <link  type="text/css" href="/website_product_inner_snippet/static/src/css/product_inner_snippet.css" rel="stylesheet"/>
+            <script type="text/javascript" src="/website_product_inner_snippet/static/src/js/product_inner_snippet_editor.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

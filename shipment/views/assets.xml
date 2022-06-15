@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="conservation_custom_backend_web" name="account assets" inherit_id="web.assets_backend">
+    <xpath expr="//script[@src='/web/static/src/js/fields/relational_fields.js']" position="replace">
+      <script type="text/javascript" src="/shipment/static/src/js/relational_fields.js"></script>
+    </xpath>
+
+    <xpath expr="." position="inside">
+    	<link href="/shipment/static/src/css/stock_move.css" rel="stylesheet" type="text/css"/>
+			<script src="/shipment/static/src/js/table-dragger-dev/dist/table-dragger.min.js"></script>
+      <script type="text/javascript" src="/shipment/static/src/js/barcode_scanner.js"></script>
+    </xpath>
+  </template>
+</odoo>    

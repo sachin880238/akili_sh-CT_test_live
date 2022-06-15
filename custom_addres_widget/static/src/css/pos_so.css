@@ -1,0 +1,167 @@
+@media only screen and (min-device-width:768px) and (max-device-width: 820px) {
+                     .search_icon{
+                      margin-left: -165% !important;
+                      }
+                      .delete_icon{
+                      margin-left: -1% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+/*@media only screen and (min-device-width:900px) and (max-device-width: 1024px) {
+                      .search_icon{
+                      margin-left: -46% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }*/
+
+
+/*@media only screen and (min-device-width:1440px) and (max-device-width: 1550px) {
+                      .search_icon{
+                      margin-left: 16% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }*/
+
+
+/*@media only screen and (min-device-width:1700px) and (max-device-width: 1920px) {
+                      .search_icon{
+                      margin-left: 7% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }*/
+
+@media only screen and (min-device-width:2200px) and (max-device-width: 2560px) {
+                      .search_icon{
+                      margin-left: 37% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+
+@media only screen and (min-device-width:1500px) and (max-device-width: 1699px) {
+                      .search_icon{
+                      margin-left: 24% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+
+@media only screen and (min-device-width:1300px) and (max-device-width:1430px){
+                     .search_icon{
+                      margin-left: 2% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+@media only screen and (min-device-width:1000px) and (max-device-width: 1200px) {
+                     .search_icon{
+                      margin-left: 37% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+@media only screen and (min-device-width:1800px) and (max-device-width: 1955px) {
+                     .search_icon{
+                      margin-left: 37% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+@media only screen and (width: 1024px) {
+                      .search_icon{
+                      margin-left: -45% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+@media only screen and (width: 1440px) {
+                      .search_icon{
+                      margin-left: 16% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }
+
+
+@media only screen and (width: 1920px) {
+                      .search_icon{
+                      margin-left: 7% !important;
+                      }
+                      .delete_icon{
+                      margin-left: 0% !important;
+                      }
+
+                      .edit_icon{
+                      margin-left: 0% !important;
+                      }
+                      }

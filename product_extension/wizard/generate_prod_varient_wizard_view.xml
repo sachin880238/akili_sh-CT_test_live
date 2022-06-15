@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+	<record id="generate_prod_variant_wizard_view" model="ir.ui.view">
+    <field name="name">Generate Product Variant View</field>
+    <field name="model">generate.prod.variant</field>
+   	<field name="arch" type="xml">
+      <form>
+        <field name="load_attribute" invisible="1"/>
+        <field name="prod_attribute_line_ids">
+          <tree editable='bottom' create="false" delete='false'>
+              <field name="product_attribute_id" string="Attribute" options="{'no_open': True,'no_create_edit': True}" readonly="1"/>
+              <field name="product_attribute_values_ids" widget="many2many_tags"  string="Value"
+                     domain="[('id', 'in', template_variants_values_ids)]" options="{'no_create_edit': True}" context="{'default_product_attribute_id':product_attribute_id}"/>
+              <field name="template_variants_values_ids"  widget='many2many_tags' string="Temp Vals" invisible="1"/>
+          </tree>
+        </field>
+      <footer>
+        <button name="generate_prod_variants" string="GENERATE" type="object" class="btn-primary"/>
+        <button string="CANCEL" class="btn-secondary" special="cancel"/>
+      </footer>
+      </form>
+   	</field>
+  </record>
+
+   	<record id="generate_prod_variant_wizard_action" model="ir.actions.act_window">
+      <field name="name">generate.prod.variant</field>
+      <field name="res_model">generate.prod.variant</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+  </data>
+</odoo>

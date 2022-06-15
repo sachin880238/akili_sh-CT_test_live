@@ -1,0 +1,9 @@
+.quotation_option_line_button {
+	display: inline-block;
+	position: relative;
+	/*z-index: 2;*/
+}
+
+.sale_order_option_line_custom_button{
+	margin-right:4px;
+}

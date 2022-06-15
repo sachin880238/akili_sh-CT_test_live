@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="login" inherit_id="web.login" name="Login">
+        <xpath expr="//div[@class='form-group field-password']" position="replace">
+            <div class="form-group field-password hidden" t-if="not is_password_auth">
+                <label class="control-label" for="password">Password</label>
+                <input autocomplete="current-password" class="form-control" id="password" maxlength="4096" name="password" t-att-autofocus="'autofocus' if login else None" type="password"/>
+            </div>
+            <div class="form-group field-password" t-if="login and is_password_auth">
+                <label class="control-label" for="password">Password</label>
+                <input autocomplete="current-password" class="form-control" id="password" maxlength="4096" name="password" required="required" t-att-autofocus="'autofocus' if login else None" type="password"/>
+            </div>
+            <div class="form-group field-otp" t-if="login and is_mobile_auth">
+                <label class="control-label" for="otp">OTP</label>
+                <input class="form-control" id="otp" maxlength="4096" name="otp" type="text"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//button[@type='submit']" position="before">
+            <input type="hidden" name="login_via_otp" value=""/>
+            <a t-if="is_email_auth and login"  class="btn btn-link float-right">Login via email</a>
+            <a t-if="is_mobile_auth and login" id="login_via_otp" class="btn btn-link float-right">Login via otp</a>
+        </xpath>
+    </template>
+</odoo>

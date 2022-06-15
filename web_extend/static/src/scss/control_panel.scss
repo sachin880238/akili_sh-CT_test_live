@@ -1,0 +1,20 @@
+.o_x2m_control_panel {
+    display: flex;
+    flex-flow: row wrap;
+
+    .o_cp_buttons {
+        display: flex;
+        margin-right: auto;
+        > div {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .o-kanban-button-new {
+            margin-left: $o-kanban-record-margin;
+        }
+    }
+    .o_cp_pager {
+        display: flex;
+        margin-left: auto;
+    }
+}

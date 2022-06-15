@@ -1,0 +1,373 @@
+<odoo>
+    <template customize_show="True" id="extra_info_lee" name="Extra Information">
+
+        <t t-call="website.layout">
+                    <style>
+
+            .col-md-12 {
+                flex: 0 0 100% !important;
+                max-width: 70% !important;
+                margin-left: 15%;
+            }
+            .col-md-121 {
+                width: 97%;
+                margin-left: 16px;
+            }
+
+            .details1{
+                text-align: center;
+            }
+
+            h4.mb32{
+                font-size: 20px;
+            }
+
+            .modal-body{
+                margin-left: -2.6%;
+            }
+
+            .modal-header{
+                padding: 2rem;
+            }
+
+            @media only screen and (max-width:991px) {
+
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 1.8125rem !important;
+                }
+
+                .col-md-121 {
+                    width: 95%;
+                    margin-left: 16px;
+                }
+                
+            }
+            
+            @media only screen and (max-width:767px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 80% !important;
+                    margin-left: 10%;
+                }
+
+                .col-md-121 {
+                    width: 94%;
+                    margin-left: 16px;
+                }
+
+                .btn-address-custom{
+                    width: 105% ;
+                    margin-left: -2% ;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-dot {
+                    position: absolute !important;
+                    top: auto !important;
+                    left: 50% !important;
+                    bottom: auto !important;
+                    right: auto !important;
+                    margin: -0.65rem 0 0 -0.3125rem !important;
+                }
+
+                .progress-wizard-step.complete {
+                    display:block !important;
+                }
+                .progress-wizard-step.disabled{
+                    display:block !important;
+                }
+                #wizard-step10 .d-none {
+                    display: block !important;
+                }
+                #wizard-step20 .d-none {
+                    display: block !important;
+                }
+                #wizard-step30 .d-none {
+                    display: block !important;
+                }
+                #wizard-step40 .d-none {
+                    display: block !important;
+                }
+                #wizard-step50 .d-none {
+                    display: block !important;
+                }
+
+                #wizard-step20 .progress-wizard-steplabel{
+                    margin-left: 2px !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 12px;
+                    margin: 17px 0px 4px 16px !important;
+                }
+
+               <!--  .progress-wizard .progress-wizard-step.complete .progress-wizard-dot:after{
+                    font-size: 1rem !important;
+                } -->
+
+                .details1{
+                    margin-bottom: 7px !important;
+                    font-size: 22px;
+                    padding-top: 24%;
+                    margin-left: 2%;
+                }
+
+
+                .progress-wizard .progress-wizard-step{
+                    margin-top: 2.5rem !important;
+                }
+
+                .client_order_ref1{
+                    width:110% !important;
+                }
+
+                h4.mb32{
+                    font-size: 16px !important;
+                }
+
+                .a-submit-loading{
+                    margin-right: 5.5% !important;
+                }
+                .a-back{
+                    margin-left: 5% !important;
+                }
+
+            }
+
+            @media only screen and (max-width:575px) {
+
+                .col-md-121 {
+                    width: 94% !important;
+                    margin-left: 16px !important;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    margin-top: 16px !important;
+                }
+
+                .progress-wizard .progress-wizard-step {
+                    margin-top: 3.5rem !important;
+                }
+
+
+                .client_order_ref1{
+                    width:110% !important;
+                    margin-left: 3%;
+                }
+                #client_order_ref{
+                    width: 97%;
+                    margin-left: 3%;
+                }
+                #customer_priority{
+                    width: 97%;
+                }
+
+                .a-submit-loading{
+                    margin-right: 1.5% !important;
+                }
+                .a-back{
+                    margin-left: 1% !important;
+                }
+                
+            }
+
+            @media only screen and (max-width:470px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 85% !important;
+                    margin-left: 8%;
+                }
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 14px !important;
+                }
+            }
+
+            @media only screen and (max-width:440px) {
+
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 90% !important;
+                    margin-left: 5%;
+                }
+
+            }
+
+            @media only screen and (max-width:425px) {
+
+                .progress-wizard {
+                    padding: 0 0px !important;
+                }
+                .client_order_ref1{
+                    width:110% !important;
+                    margin-left: 4%;
+                }
+                #client_order_ref{
+                    width: 97%;
+                    margin-left: 4%;
+                }
+
+            }
+
+            @media only screen and (max-width:390px) {
+                .col-md-12 {
+                    flex: 0 0 100% !important;
+                    max-width: 92% !important;
+                    margin-left: 3%;
+                }
+
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 10px !important;
+                    margin: 17px 0px 4px 10px !important;
+                }
+            }
+
+            @media only screen and (max-width: 375px)
+                .progress-wizard .progress-wizard-step .progress-wizard-steplabel {
+                    font-size: 9px;
+                    margin: 17px 0px 4px 16px !important;
+                }
+            }        
+
+        </style>
+            <div id="wrap" style="margin-top: -28px;">
+                <div class="container oe_website_sale detail_page">
+                    <div class="col-md-12 mt32" style="height: 90px;">
+                        
+                            <t t-call="website_sale.wizard_checkout">
+                                <t t-set="step" t-value="30"/>
+                                <t t-set="website_sale_order" t-value="order"/>
+                            </t>
+                            <h1 class="mb32 details1">Details</h1>
+                        
+                    </div>
+                    <div>
+                        <h4 class="mb32" style="background: #f5f4f0; padding: 10px; font-size: 20px; border: 1px solid #eeeeee;margin-left: 18px;margin-right:20px; margin-top:50px"><b>Provide additional details about your project.</b> Select a priority so we know how quickly to respond. Supply additional information if you would like our staff to answer your questions, review drawings, or provide advice.</h4>
+                        <t t-as="content_id" t-foreach="website.website_content_id.content_ids">
+                            <t t-if="content_id.page == 'details'">
+                                <div class="page_desc_div" t-field="content_id.content"/>
+                            </t>
+                        </t>
+                    </div>
+                    <div class="clearfix"/>
+                    <t t-if="error">
+                        <div class="col-md-12 mt16">
+                            <p class="alert alert-danger">
+                                <t t-foreach="error" t-as="err">
+                                    <t t-esc="error.get(err)" />
+                                </t>
+                            </p>
+                        </div>
+                    </t>
+                    <div class="mt32">
+                        <form class="checkout_autoformat" id="order_detail_form" method="post" name="/extra/custom_info">
+
+                            <div class="row">
+                                <div t-attf-class="form-group col-sm-6 #{error.get('customer_priority') and 'has-error' or ''}" style="padding-left: 31px;">
+                                    <label class="control-label" for="customer_priority">Priority</label>
+                                    <span class="asterisks">*</span>
+                                    <select class="form-control" id="customer_priority" name="customer_priority"  t-att-value='customer_priority'>
+                                        <option value="" class="select-placeholder">Select</option>
+                                        <option t-att-selected="str(order and order['customer_priority']) == 'ready'" value="ready">I’m ready to order</option>
+                                        <option t-att-selected="str(order and order['customer_priority']) == 'plan'"  value="plan">I plan to order soon</option>
+                                        <option t-att-selected="str(order and order['customer_priority']) == 'estimate'" value="estimate">I need an estimate for a future project</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-6" style="padding-right: 31px;">
+                                    <label class="control-label client_order_ref1" for="client_order_ref">Purchase Order or Project Reference</label>
+                                    <input class="form-control" id="client_order_ref" name="client_order_ref" t-att-value="'client_order_ref' in order and order['client_order_ref'] or client_order_ref" type="text"/>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-md-121">
+                                <label class="control-label" for="note">Questions or Comments</label>
+                                <textarea class="form-control" cols="100" id="note" name="note" rows="15" t-esc="'note' in order and order['note'] or note or ''"/>
+                            </div>
+                            <div class="form-group col-md-121">
+
+                                <div class="inline-form-control">
+                                    <label class="control-label" for="order_attachment">Documents or Drawings</label>
+                                    <a class="order_attah_file" id="order_attach_file" t-att-data="order.id" style="color: #1e77c5;">
+                                        <t>attach a file</t>
+                                        <i class="fa fa-plus-square"/>
+                                    </a>
+                                </div>
+                                <t t-if="order_attachments">
+                                    <div class="attachment_block" id="atttaa">
+                                        <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                                        <t t-as="attachment" t-foreach="order_attachments">
+                                            <t t-if="len(order_attachments) == 1">
+                                                <span>
+                                                    <a t-att-href="'/download-report/%s' % attachment.id">
+                                                        <t t-esc="attachment.datas_fname" class="js_quantity"/>
+                                                    </a>
+                                                    <a class="fa fa-trash js_delete_product" id="trash" name="del_att"><input type="hidden" t-att-value="attachment.id"/></a>
+                                                </span>
+                                            </t>
+                                            <t t-if="len(order_attachments) > 1">
+                                                <span>
+                                                    <a t-att-href="'/download-report/%s' % attachment.id">
+                                                        <t t-esc="attachment.datas_fname" class="js_quantity"/>
+                                                    </a>
+                                                    <a class="fa fa-trash js_delete_product" id="trash" name="del_att"><input type="hidden" t-att-value="attachment.id"/></a>
+                                                </span>
+                                            </t>
+                                            <!-- <a href='#' aria-label="Remove from cart" title="Remove from cart" class='js_delete_product no-decoration' id="trash" > <small><i class='fa fa-trash-o'></i></small></a> -->
+                                         
+                              
+                                        </t>
+                                    </div>
+                                </t>       
+                            </div>
+                            <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                            <input name="order" t-att-value="order or '0'" type="hidden"/>
+                            <input name="submitted" type="hidden" value="1"/>
+                            <div class="clearfix"/>
+                            <div class="col-md-121 btn-address-custom">
+                                <a class="btn btn-default btn-primary mb32 a-back" href="/shop/checkout" style="font-weight:600;">
+                                    <!-- <span class="fa fa-long-arrow-left"/> -->
+                                    <t>Back</t>
+                                </a>
+                                <a class="btn btn-default btn-primary float-right mb32 a-submit a-submit-disable a-submit-loading" style="color: white;font-weight:600;">
+                                    <t>Next  </t>
+                                    <!-- <span class="fa fa-long-arrow-right"/> -->
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <!-- Upload Document POP-UP -->
+        <div class="modal fade" id="oe_upload_document">
+            <div class="modal-dialog modal-content">
+                <form action="/extra/custom_info/save_document" enctype="multipart/form-data" id="upload_document_form" method="post">
+                    <div class="modal-header alert alert-info mb0">
+                        <button class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                        <h4 class="modal-title">Upload Documents or Drawings</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                        <input id="upload_attachment" name="upload_attachment" type="hidden"/>
+                        <input id="customer_priority_1" name="customer_priority_1" type="hidden"/>
+                        <input id="client_order_ref_1" name="client_order_ref_1" type="hidden"/>
+                        <input id="note_1" name="note_1" type="hidden"/>
+                        <input id="slae_order_doc" name="slae_order_doc" type="file"/>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="container">
+                            <div class="row">
+                                <button class="btn btn-primary" onclick="submit_form();" type="submit" style="font-weight:600;margin-left: -2.6%;">Upload</button>
+                            
+                                <button class="btn btn-primary" data-dismiss="modal" id="cancel" style="font-weight:600;margin-left: auto;margin-right: -2.6%;">Cancel</button>
+                            </div>
+                        </div>        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+</odoo>

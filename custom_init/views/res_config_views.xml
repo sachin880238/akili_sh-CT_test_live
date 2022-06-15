@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_website_config_settings_inherit" model="ir.ui.view">
+        <field name="name">Website settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//div[@id='cdn_setting']" position="after"> -->
+            <xpath expr="//div[@id='website_selection_settings']" position="after">
+                <h2>Website Content</h2>
+                <div class="row mt16 o_settings_container" id="website_content_info">
+                    <div class="col-xs-12 col-md-6 o_setting_box" id="website">
+                        <div class="o_setting_right_pane">
+                            <label string="Website" for="website_id"/>
+                            <div class="mt16">
+                                <field name="website_content_id"/>
+                                <field name="logout_timer"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="col-12 col-lg-6 o_setting_box">
+                    <group name="website_content" string="Website Content">
+                        <label for="id" string="Content"/>
+                        <div>
+                            
+                        </div>
+                        
+                    </group>
+                </div> -->
+            </xpath>
+        </field>
+    </record>
+</odoo>

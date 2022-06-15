@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <!-- Multi States data -->
+    <record model="stock.picking.states" id="assign_state">
+      <field name="name">ASSIGN</field>
+      <field name="sequence">1</field>
+    </record>
+    <record model="stock.picking.states" id="wait_state">
+      <field name="name">WAIT</field>
+      <field name="sequence">2</field>
+    </record>
+    <record model="stock.picking.states" id="move_state">
+      <field name="name">MOVE</field>
+      <field name="sequence">3</field>
+    </record>
+    <record model="stock.picking.states" id="release_state">
+      <field name="name">RELEASE</field>
+      <field name="sequence">4</field>
+    </record>
+    <record model="stock.picking.states" id="ship_state">
+      <field name="name">SHIP</field>
+      <field name="sequence">5</field>
+    </record>
+    <record model="stock.picking.states" id="invoice_state">
+      <field name="name">INVOICE</field>
+      <field name="sequence">6</field>
+    </record>
+    <record model="stock.picking.states" id="closed_state">
+      <field name="name">CLOSED</field>
+      <field name="sequence">7</field>
+    </record>
+  </data>
+</odoo>

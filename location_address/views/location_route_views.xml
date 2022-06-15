@@ -1,0 +1,151 @@
+<odoo>
+  <data>
+    <!-- Route tree view -->
+    <record id="location_route_tree_inherit" model="ir.ui.view">
+      <field name="name">location_route_inherit.tree</field>
+      <field name="model">stock.location.route</field>
+      <field name="arch" type="xml">
+        <tree string="Routes">
+          <field name="applications"/>
+          <field name="route_type_id"/>
+          <field name="code"/>
+          <field name="identifier"/>
+          <field name="company_id"/>
+          <field name="stage"/>
+          <field name="sequence" widget="handle"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Route form view -->
+    <record id="location_route_form_inherit" model="ir.ui.view">
+      <field name="name">location_route_inherit.form</field>
+      <field name="model">stock.location.route</field>
+      <field name="arch" type="xml"> 
+        <form string="Routes">
+          <header>
+            <button 
+              class="btn btn-primary"
+              name="activate_route" 
+              type="object"
+              string="ACTIVE"
+              attrs="{'invisible':[('stage','=', 'active')]}"/>
+            <button
+              class="btn btn-secondary" 
+              name="inactivate_route" 
+              type="object"
+              string="INACTIVE"
+              attrs="{'invisible':[('stage','in', ['inactive','draft'])]}"/>
+            <button
+              class="btn btn-secondary"
+              name="reset_route"
+              type="object"
+              string="RESET TO DRAFT"
+              attrs="{'invisible':[('stage','=', 'draft')]}"/>
+            <field name="stage" widget="statusbar"/>
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button
+                string="Products"
+                class="oe_stat_button"
+                icon="fa-filter"
+                name="%(stock.act_product_location_open)d"
+                type="action"
+                context="{'location_id': active_id}"/>
+              <button
+                string="Categories"
+                class="oe_stat_button"
+                icon="fa-building-o"
+                name="%(stock.location_open_quants)d"
+                type="action"/>
+            </div>
+            <div class="row col-sm-12">
+              <div>
+                <i class="fas fa-route" style="font-size: 40px;margin-left: 31%;"/>
+                <h1>
+                  <field name="name" nolabel='1' class="name_carts name_left2 location_name" readonly="1" force_save="1"/>
+                </h1>
+              </div>
+            </div> 
+            <group>
+              <group>
+                <field name="applications"/>
+                <field name="route_type_id" string='Type' domain="[('application','=', applications)]"/>
+                <field name="code"/>
+                <field name="identifier"/>
+                <field name="company_id" options="{'no_create': True}"/>
+              </group>
+              <group>
+                <field name="product_selectable"/>
+                <field name="product_categ_selectable" string='Type' domain="[('application','=', applications)]"/>
+                <field name="warehouse_selectable"/>
+                <field name="sale_selectable"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Operations">  
+                <field name="rule_ids" widget="one2many_checkbox" readonly="1" string='Operation' force_save="1">
+                  <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="location_src_id" string="Origin"/>
+                    <field name="location_id" string="Destination"/>
+                    <field name="action" invisible="1"/>
+                    <field name="picking_type_id" invisible="1"/>
+                    <field name="sequence" widget="handle"/>
+                  </tree>
+                  <form>
+                    <group>
+                      <group>
+                        <field name="picking_type_id" string="Type" readonly="1" options="{'no_open': True}"/>
+                        <field name="description" readonly="1" force_save="1"/>
+                        <field name="location_src_id" string="Origin"/>
+                        <field name="location_id" string="Destination"/>
+                        <field name="action" invisible="1"/>
+                        <field name="picking_type_id" invisible="1"/>
+                      </group>
+                    </group>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field> 
+    </record>
+
+    <!-- Route action -->
+    <record id="action_routes_form_custom" model="ir.actions.act_window">
+      <field name="name">Routes</field>
+      <field name="res_model">stock.location.route</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="location_route_tree_inherit"/>
+      <field name="view_ids" eval="[(5, 0, 0),
+                      (0, 0, {'view_mode': 'tree', 'view_id': ref('location_route_tree_inherit')}),
+                      (0, 0, {'view_mode': 'form', 'view_id': ref('location_route_form_inherit')})]"/>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Add a new route
+        </p>
+        <p>
+          You can define here the main routes that run through
+          your warehouses and that define the flows of your products. These
+          routes can be assigned to a product, a product category or be fixed
+          on procurement or sales order.
+        </p>
+      </field>
+    </record>
+
+    <!-- Routes menuitem -->
+    <menuitem id="stock.menu_routes_config"
+              action="action_routes_form_custom" 
+              name="Routes"
+              parent="stock.menu_warehouse_config"
+              sequence="3"
+              groups="stock.group_adv_location"/>
+  </data>
+</odoo>

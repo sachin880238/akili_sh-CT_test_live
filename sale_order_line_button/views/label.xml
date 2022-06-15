@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="res_config_settings_view_form2" model="ir.ui.view">
+			<field name="name">res.config.settings.view.form.inherit.sale</field>
+			<field name="model">res.config.settings</field>
+			<field name="priority" eval="10"/>
+			<field name="inherit_id" ref="base.res_config_settings_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr = "//form/div/header/button[@name='cancel']" position="replace">
+					<button string="CANCEL" type="object" name="cancel" special="cancel"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_partner_stock_warnings_form" model="ir.ui.view">
+			<field name="name">res.partner.stock.warning</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='picking_warn_msg']" position='attributes'>
+					<attribute name = "string">Picking List Warning</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="project_inherited" model="ir.ui.view">
+			<field name="name">project.project.view.form.simplified</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/footer/button[2]" position="replace">
+					<button string="CANCEL" class="btn-secondary" special="cancel"/>
+				</xpath>
+			</field>
+		</record>
+
+
+	</data>
+</odoo>

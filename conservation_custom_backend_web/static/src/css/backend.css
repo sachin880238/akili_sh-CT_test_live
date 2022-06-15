@@ -1,0 +1,101 @@
+
+/* start Samrt button customization */
+
+.o_form_view .oe_button_box {
+    position: relative;
+    display: block;
+    /*margin:-16px;*/
+    float:none;
+    text-align: left;
+    width: 100%;
+    text-align: left !important;
+    box-shadow: none;
+    margin-bottom: 10px;
+}
+
+.o_form_label {
+    font-weight: bold;
+    margin-right: 0px;
+    height: 22px;
+    /*color: #000000;*/
+}
+
+.o_form_view .oe_avatar {
+    float: left;
+}
+
+.o_form_view .oe_button_box .btn.oe_stat_button {
+        color: #2d2d2d;
+        font-family: arial;
+        /*border-right: 1px solid;
+        /*border-left: 0px !important;*/
+        border-color: #bfbfbf !important;
+        width: 138px;
+        height: 50px;
+}
+
+.o_form_view .oe_button_box .btn.oe_stat_button > .o_stat_info .o_stat_value {
+    color:#454647 !important;
+    text-align: center;
+
+}
+.dropdown-header {
+    font-size: 1rem;
+                  }
+
+.o_form_view .oe_button_box .btn.oe_stat_button > .custom_warning_alert .o_stat_value {
+    color:red !important;
+}
+
+/* end Samrt button customization */
+
+ /*start partner image customization*/
+.o_form_view .partner_img > img {
+    display: -webkit-inline-box !important;
+}
+
+/*end parner image customization*/
+
+/* Satrt search_view customization */
+
+
+.o_searchview_more {
+     display: none;   
+}
+
+.o_search_options{
+    display: block;
+    
+}
+
+/* End search_view customization */
+
+/*LIST VIEW CSS*/
+
+.o_list_view th{
+    padding: 8px 4px !important;
+}
+/*.o_list_view th{
+    border: 1px solid #bec5c5 !important;
+}*/
+
+/*MENU ICON*/
+
+li.o_user_menu_our{
+    margin-right: 10px;
+    margin-top: 12px;
+}
+.o_form_view.o_form_editable .o_form_field .o_list_view td.o_readonly {
+    background-color: initial !important;
+}
+
+.o_form_button_cancel {
+    color: #1e77c5;
+    border-color: #fff;
+}
+
+.o_form_button_cancel:hover {
+  color: #fff;
+  background-color: #1e77c5;
+  border-color: #1e77c5;
+}

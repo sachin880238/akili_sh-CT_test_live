@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	
+  <record id="stock.view_move_tree" model="ir.ui.view">
+    <field name="name">stock.move.tree</field>
+    <field name="model">stock.move</field>
+    <field eval="8" name="priority"/>
+    <field name="arch" type="xml">
+      <tree decoration-muted="state == 'cancel'" decoration-danger="(state not in ('cancel','done')) and date > current_date" string="Moves" create="0">
+        <field name="date" groups="base.group_no_one"/>
+        <field name="reference" invisible="1"/>
+        <field name="picking_type_id" invisible="1"/>
+        <field name="create_date" invisible="1" groups="base.group_no_one"/>
+        <field name="product_id" string="Stock"/>
+        <field name="location_id" groups="stock.group_stock_multi_locations" string="Origin"/>
+        <field name="container_barcode" string="Container"/>
+        <field name="location_dest_id" groups="stock.group_stock_multi_locations" string="Destination"/>
+        <field name="stock_container_id" string="Container"/>
+        <field name="product_uom_qty" invisible="1"/>
+        <field name="product_uom" options="{'no_open': True, 'no_create': True}" invisible="1" string="Unit of Measure" groups="uom.group_uom"/>
+        <field name="state" string="State"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        <field name="sequence" widget="handle"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_move_line_tree" model="ir.ui.view">
+    <field name="name">stock.move.line.tree</field>
+    <field name="model">stock.move.line</field>
+    <field name="inherit_id" ref="stock.view_move_line_tree"/>
+    <field name="arch" type="xml">
+      <field name="state" position="after">
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </field>
+      <field name="state" position="attributes">
+        <attribute name="string">State</attribute>
+      </field>
+    </field>
+  </record>
+  <record id="view_move_line_form" model="ir.ui.view">
+    <field name="name">stock.move.line.form</field>
+    <field name="model">stock.move.line</field>
+    <field name="inherit_id" ref="stock.view_move_line_form"/>
+    <field name="arch" type="xml">
+      <field name="state" position="after">
+        <field name="parent_state" invisible="1"/>
+      </field>
+    </field>
+  </record>
+</odoo>

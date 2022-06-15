@@ -1,0 +1,4 @@
+Odoo Partner Changes
+---------------
+
+ 

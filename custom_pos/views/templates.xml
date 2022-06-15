@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <template id="hide_numpad_assets" inherit_id="point_of_sale.assets" name="point_of_sale assets">
+            <xpath expr="." position="inside">
+                 <script type="text/javascript" src="/custom_pos/static/src/js/custom.js"></script>
+                 <link rel="stylesheet" href="/custom_pos/static/src/css/pos_so.css" />
+            </xpath>
+      </template>
+
+      <template id="assets_inherit" inherit_id="point_of_sale.assets">
+            <xpath expr="//script[@src='/point_of_sale/static/src/js/models.js']" position="replace">
+                <script type="text/javascript" src="/custom_pos/static/src/js/model.js"></script>
+            </xpath>
+        </template>
+  </data>
+</odoo>

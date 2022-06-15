@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+   <template id="portal_my_home_menu_sale" name="Portal layout : sales menu entries" inherit_id="sale.portal_my_home_menu_sale" priority="25">
+        <xpath expr="//li" position="before">
+            <li>
+                <a href="/my/carts" t-att-class="'active' if (default_url == '/my/carts') else ''">Carts</a>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[1]/a" position="replace">
+            <!-- <a href="/my/quotes" t-att-class="'active' if (default_url == '/my/quotes') else ''">Quotes</a> -->
+        </xpath>
+
+        <xpath expr="//li[2]/a" position="replace">
+            <!-- <a href="/my/orders" t-att-class="'active' if (default_url == '/my/orders') else ''">Orders</a> -->
+        </xpath>
+
+        <!--<xpath expr="//li/a[@href='/my/invoices']" position="replace">-->
+            <!--<a href="/my/invoices" t-att-class="'active' if (default_url == '/my/invoices') else ''">Invoices</a>-->
+        <!--</xpath>-->
+
+        <!--<xpath expr="//ul[contains(@class,'o_portal_submenu')]" position="inside">-->
+            <!--<li>-->
+                <!--<a href="/my/issues" t-att-class="'active' if (default_url == '/my/issues') else ''">Issues</a>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<a href="/my/account" t-att-class="'active' if (default_url == '/my/account') else ''">Addresses</a>-->
+            <!--</li>-->
+        <!--</xpath>-->
+    </template>
+
+    <!--<template id="portal.portal_layout" name="Portal Layout">-->
+        <!--<t t-call="website.layout">-->
+            <!--<div class="container mt16">-->
+                <!--<div class="navbar navbar-default">-->
+                    <!--<div class="navbar-header">-->
+                        <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#oe-help-navbar-collapse">-->
+                            <!--<span class="sr-only">Toggle navigation</span>-->
+                        <!--</button>-->
+                        <!--<a class="navbar-brand" href="/my/home"><t t-esc="user.partner_id.name"/></a>-->
+                    <!--</div>-->
+                    <!--<div class="collapse navbar-collapse" id="oe-help-navbar-collapse">-->
+                        <!--<ul class="nav navbar-nav o_portal_submenu">-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div id="wrap">-->
+                <!--<div class="container mb64">-->
+                    <!--<div class="col-md-12">-->
+                        <!--<t t-raw="0"/>-->
+                    <!--</div>-->
+                    <!--<div id="o_my_sidebar" class="col-md-3 offset-md-1 o_my_sidebar" style="display:none">-->
+                        <!--<div class="o_my_contact" t-if="sales_rep">-->
+                            <!--<t t-call="website_portal.contact"/>-->
+                        <!--</div>-->
+                        <!--<div class="o_my_details o_portal_my_details">-->
+                            <!--<h3 class="page-header">Your Details <a href="/my/account" class="btn btn-default btn-xs">Change</a></h3>-->
+                            <!--<div t-field="user.partner_id" t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>-->
+                        <!--</div>-->
+                        <!--<div class="o_my_archives" t-if="archive_groups">-->
+                            <!--<t t-call="website_portal.portal_archive_groups"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</t>-->
+    <!--</template>-->
+
+    <!--<template id="portal_my_home_sale" name="Portal My Home : sales entries" inherit_id="sale.portal_my_home_sale">-->
+
+        <!--<xpath expr="//div[contains(@class,'o_my_home_content')]//h3" position="before">-->
+            <!--<h3 class="page-header">-->
+                <!--<a href="/my/carts">Saved Carts-->
+                    <!--<small class="ml8">-->
+                        <!--<t t-if="saved_cart_count">-->
+                            <!--<span class='badge'><t t-esc="saved_cart_count"/></span>-->
+                        <!--</t>-->
+                        <!--<t t-if="not saved_cart_count">-->
+                            <!--There are currently no quotes for your account.-->
+                        <!--</t>-->
+                    <!--</small>-->
+                <!--</a>-->
+            <!--</h3>-->
+        <!--</xpath>-->
+
+        <!--<xpath expr="//h3[@class='page-header']/a[@href='/my/quotes']" position="replace">-->
+            <!--<a href="/my/quotes">Quotations-->
+                <!--<small class="ml8">-->
+                    <!--<t t-if="quotation_count">-->
+                        <!--<span class='badge'><t t-esc="quotation_count"/></span>-->
+                    <!--</t>-->
+                    <!--<t t-if="not quotation_count">-->
+                        <!--There are currently no quotes for your account.-->
+                    <!--</t>-->
+                <!--</small>-->
+            <!--</a>-->
+        <!--</xpath>-->
+
+        <!--<xpath expr="//h3[@class='page-header']/a[@href='/my/orders']" position="replace">-->
+            <!--<a href="/my/orders">Orders-->
+                <!--<small class="ml8">-->
+                    <!--<t t-if="order_count">-->
+                        <!--<span class='badge'><t t-esc="order_count"/></span>-->
+                    <!--</t>-->
+                    <!--<t t-if="not order_count">-->
+                        <!--There are currently no orders for your account.8-->
+                    <!--</t>-->
+                <!--</small>-->
+            <!--</a>-->
+        <!--</xpath>-->
+
+        <!--<xpath expr="//h3[@class='page-header']/a[@href='/my/invoices']" position="replace">-->
+            <!--<a href="/my/invoices">Invoices -->
+                <!--<small class="ml8">-->
+                    <!--<t t-if="invoice_count">-->
+                        <!--<span class='badge'><t t-esc="invoice_count"/></span>-->
+                    <!--</t>-->
+                    <!--<t t-if="not invoice_count">-->
+                        <!--There are currently no invoices for your account.-->
+                    <!--</t>-->
+                <!--</small>-->
+            <!--</a>-->
+        <!--</xpath>-->
+
+        <!--<xpath expr="//div[contains(@class,'o_my_home_content')]" position="inside">-->
+            <!--<h3 class="page-header">-->
+                <!--<a href="/my/carts">Issues-->
+                    <!--<small class="ml8">-->
+                        <!--<t t-if="quotation_count">-->
+                            <!--<span class='badge'><t t-esc="quotation_count"/></span>-->
+                        <!--</t>-->
+                        <!--<t t-if="not quotation_count">-->
+                            <!--There are currently no quotes for your account.-->
+                        <!--</t>-->
+                    <!--</small>-->
+                <!--</a>-->
+            <!--</h3>-->
+
+            <!--<h3 class="page-header">-->
+                <!--<a href="/my/account">Addresses</a>-->
+            <!--</h3>-->
+        <!--</xpath>-->
+    <!--</template>-->
+</odoo>

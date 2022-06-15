@@ -1,0 +1,27 @@
+.note-popover .popover .popover-body > .btn-group,
+.panel-heading.note-toolbar > .btn-group {
+  margin-top: 30px;
+  margin-left: 0;
+  margin-right: 5px;
+}
+.communication_title{
+	margin: 1.5% 0% 0% 2%;
+	width: 50%;
+}
+.communication_mail{
+	font-size:60px;
+	color:red;
+	margin-top: -0.5%;
+	margin-left: 0.75%; 
+	float:left;
+}
+.communication_com{
+	font-size:60px; 
+	color:green; 
+	float:left;
+}
+.communication_mess{
+	font-size:60px; 
+	color:green;
+	float:left;
+}

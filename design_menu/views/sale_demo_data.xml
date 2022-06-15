@@ -1,0 +1,697 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="sales_config_107" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Access</field>
+            <field name="name">Allow Customer Log-In</field>
+            <field name="field_name"></field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+
+        <record id="sales_config_108" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Access</field>
+            <field name="name">Customer Log-In</field>
+            <field name="field_name">auth_signup_uninvited</field>
+            <field name="field_type">selection</field>
+            <field name="default_auth_signup_uninvited">b2c</field>
+            <field name="current_auth_signup_uninvited">b2c</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+
+        <record id="sales_config_109" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Customers</field>
+            <field name="name">Account Inactive Days</field>
+            <field name="field_name"></field>
+            <field name="field_type">integer</field>
+            <field name="default_value_integer">0</field>
+            <field name="current_value_integer">0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+
+       
+        <record id="sales_config_111" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Icons</field>
+            <field name="name">Account Icon Background Color</field>
+            <field name="field_name"></field>
+            <field name="field_type">color</field>
+            <field name="default_value_char">any customer can sign up</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_112" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Icons</field>
+            <field name="name">Account Icon Content Color</field>
+            <field name="field_name"></field>
+            <field name="field_type">color</field>
+            <field name="default_value_char"></field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+
+
+        <record id="sales_config_114" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Icons</field>
+            <field name="name">Lead Icon Content Color</field>
+            <field name="field_name"></field>
+            <field name="field_type">color</field>
+            <field name="default_value_char"></field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_115" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Leads</field>
+            <field name="name">Enable Leads</field>
+            <field name="field_name">group_use_lead</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+                <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_116" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Leads</field>
+            <field name="name">Generate Leads Based on IP</field>
+            <field name="field_name">module_crm_reveal</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment">need to develop interface to a lead IP service</field>
+        </record>
+        <record id="sales_config_117" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Leads</field>
+            <field name="name">Manual Assign Incoming Email</field>
+            <field name="field_name">generate_lead_from_alias</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_118" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Numbering</field>
+            <field name="name">Cart Prefix</field>
+            <field name="field_name"></field>
+            <field name="field_type">text</field>
+            <field name="default_value_text"></field>
+            <field name="current_value_text"></field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_119" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Numbering</field>
+            <field name="name">Quotation Prefix</field>
+            <field name="field_name"></field>
+            <field name="field_type">text</field>
+            <field name="default_value_text"></field>
+            <field name="current_value_text"></field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_120" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Numbering</field>
+            <field name="name">Sale Order Prefix</field>
+            <field name="field_name"></field>
+            <field name="field_type">text</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_121" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Payment</field>
+            <field name="name">Add Prepayment Testfield</field>
+            <field name="field_name"></field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_122" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Payment</field>
+            <field name="name">Display Incoterms</field>
+            <field name="field_name"></field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean"></field>
+            <field name="current_value_boolean"></field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_123" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Payment</field>
+            <field name="name">Enable Over-Credit Limit Warning</field>
+            <field name="field_name"></field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_124" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Pricing</field>
+            <field name="name">Coupons and Promotions</field>
+            <field name="field_name">module_sale_coupon</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_125" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Pricing</field>
+            <field name="name">Enable Discounts</field>
+            <field name="field_name">group_discount_per_so_line</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+                <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_126" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Pricing</field>
+            <field name="name">Multiple Sales Prices per Product</field>
+            <field name="field_name">multi_sales_price</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_127" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Pricing</field>
+            <field name="name">Pricing Method</field>
+            <field name="field_name">multi_sales_price_method</field>
+            <field name="field_type">selection</field>
+            <field name="default_multi_sales_price_method">formula</field>
+            <field name="current_multi_sales_price_method">formula</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_128" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Pricing</field>
+            <field name="name">Show Margins on Orders</field>
+            <field name="field_name">module_sale_margin</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_129" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Products</field>
+            <field name="name">Deliver Content by Email</field>
+            <field name="field_name">module_product_email_template</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment">add to Product + Template</field>
+        </record>
+        <record id="sales_config_130" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Products</field>
+            <field name="name">Enable Units of Measure</field>
+            <field name="field_name">group_uom</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_131" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Products</field>
+            <field name="name">Enable Variants</field>
+            <field name="field_name">group_product_variant</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        
+        <record id="sales_config_250" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Products</field>
+            <field name="name">Product Packaging</field>
+            <field name="field_name">group_stock_packaging</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+
+        <record id="sales_config_133" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Enable Pro-Forma Invoices</field>
+            <field name="field_name">group_proforma_sales</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_134" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="name">Enable Quotation Templates</field>
+            <field name="cat_name">Quotations</field>
+            <field name="field_name">group_sale_order_template</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_135" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Create Quotation Warning Time</field>
+            <field name="field_name"></field>
+            <field name="field_type">time</field>
+            <!-- <field name="default_value_time">ddd:hh:mm</field>
+            <field name="current_value_time"></field> -->
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        
+        <record id="sales_config_138" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Create Quotation Urgent Time</field>
+            <field name="field_name"></field>
+            <field name="field_type">time</field>
+<!--             <field name="default_value_time">ddd:hh:mm</field>
+            <field name="current_value_time"></field> -->
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_139" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Approve Quotation Warning Time</field>
+            <field name="field_name"></field>
+            <field name="field_type">time</field>
+<!--             <field name="default_value_time">ddd:hh:mm</field>
+            <field name="current_value_time"></field> -->
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_140" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Approve Quotation Urgent Time</field>
+            <field name="field_name"></field>
+            <field name="field_type">time</field>
+<!--             <field name="default_value_time">ddd:hh:mm</field>
+            <field name="current_value_time"></field> -->
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_141" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Send Quotation Warning Time</field>
+            <field name="field_name"></field>
+            <field name="field_type">time</field>
+            <!-- <field name="default_value_time">ddd:hh:mm</field>
+            <field name="current_value_time"></field> -->
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_142" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Send Quotation Urgent Time</field>
+            <field name="field_name"></field>
+            <field name="field_type">time</field>
+            <!-- <field name="default_value_time">ddd:hh:mm</field>
+            <field name="current_value_time"></field> -->
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_143" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Quotation Valid Days</field>
+            <field name="field_name"></field>
+            <field name="field_type">integer</field>
+            <field name="default_value_integer">30</field>
+            <field name="current_value_integer">30</field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_144" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Request On-Line Signature</field>
+            <field name="field_name">portal_confirmation_sign</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_145" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations</field>
+            <field name="name">Use Billing and Shipping Addresses</field>
+            <field name="field_name">group_sale_delivery_address</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_146" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Quotations/Orders</field>
+            <field name="name">Show Default Terms and Conditions</field>
+            <field name="field_name">use_sale_note</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_147" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Routes</field>
+            <field name="name">Allow Order Specific Routes</field>
+            <field name="field_name"></field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_148" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Sales</field>
+            <field name="name">Document Sequence Prefix</field>
+            <field name="field_name"></field>
+            <field name="field_type">text</field>
+            <field name="default_value_text">no</field>
+            <field name="current_value_text"></field>
+            <field name="is_editable">True</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_149" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Sales</field>
+            <field name="name">Enable Sales Warnings</field>
+            <field name="field_name">group_warning_sale</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_150" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Sales</field>
+            <field name="name">Lock Confirmed Sales</field>
+            <field name="field_name">auto_done_setting></field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable">False</field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_151" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping</field>
+            <field name="name">Compute Shipping Costs on Orders</field>
+            <field name="field_name">module_delivery</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        
+        <record id="sales_config_153" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping</field>
+            <field name="name">Delivery Date</field>
+            <field name="field_name">group_sale_order_dates</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_154" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping</field>
+            <field name="name">Incoterms</field>
+            <field name="field_name">group_display_incoterm</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">True</field>
+            <field name="current_value_boolean">True</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_155" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping</field>
+            <field name="name">Order Specific Routes</field>
+            <field name="field_name">group_route_so_lines</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_156" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping</field>
+            <field name="name">Over Credit Warnings</field>
+            <field name="field_name">over_credit_limit</field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean">False</field>
+            <field name="current_value_boolean">False</field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_157" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping</field>
+            <field name="name">Shipping Cost</field>
+            <field name="field_name"></field>
+            <field name="field_type">boolean</field>
+            <field name="default_value_boolean"></field>
+            <field name="current_value_boolean"></field>
+            <field name="is_editable"></field>
+            <field name="source">Odoo</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_158" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Boxed Packing Factor</field>
+            <field name="field_name">boxed_packing_factor</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_159" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Dim Weight Divider</field>
+            <field name="field_name">dim_weight_divider</field>
+            <field name="field_type">integer</field>
+            <field name="default_value_integer">0</field>
+            <field name="current_value_integer">0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_160" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Flexible Packing Factor</field>
+            <field name="field_name">flexible_packing_factor</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_161" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Flowable Packing Factor</field>
+            <field name="field_name">flowable_packing_factor</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_162" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Insurance Multiplier</field>
+            <field name="field_name">insurance_multiplier</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_163" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Long Packing Factor </field>
+            <field name="field_name">long_packing_factor</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_164" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Maximum Clearance </field>
+            <field name="field_name">maximum_clearance</field>
+            <field name="field_type">integer</field>
+            <field name="default_value_integer">0</field>
+            <field name="current_value_integer">0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_165" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Minimum Clearance </field>
+            <field name="field_name">minimum_clearance</field>
+            <field name="field_type">integer</field>
+            <field name="default_value_integer">0</field>
+            <field name="current_value_integer">0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        
+        <record id="sales_config_167" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Minimum Shipping Charge</field>
+            <field name="field_name">minimum_shipping_charge</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_168" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Rigid Packing Factor</field>
+            <field name="field_name">rigid_packing_factor</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>
+        <record id="sales_config_169" model="system.config">
+            <field name="app_name">Sales</field>
+            <field name="cat_name">Shipping Estimator</field>
+            <field name="name">Shipping Cost Multiple</field>
+            <field name="field_name">shipping_cost_multiplier</field>
+            <field name="field_type">float</field>
+            <field name="default_value_float">0.0</field>
+            <field name="current_value_float">0.0</field>
+            <field name="is_editable">True</field>
+            <field name="source">CT</field>
+            <field name="comment"></field>
+        </record>  
+         
+    </data>
+</odoo>

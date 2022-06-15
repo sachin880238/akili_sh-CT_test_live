@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="purchase_order_form" model="ir.ui.view">
+    <field name="name">purchase.order.form.inherit.stock</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='order_line']/form/sheet/group/group/field[@name='price_unit']" position="before">
+        <field name="picking_type_id" groups="as_route_purchase.group_route_po_lines" options="{'no_create': True}"/>
+        <field name="route_id" groups="as_route_purchase.group_route_po_lines" options="{'no_create': True}"/>
+      </xpath>
+      <xpath expr="//field[@name='order_line']//tree" position="inside">
+        <field name="picking_type_id" groups="as_route_purchase.group_route_po_lines" options="{'no_create': True}"  force_save="1"/>
+        <field name="route_id" groups="as_route_purchase.group_route_po_lines" options="{'no_create': True}"  force_save="1"/>
+      </xpath>
+    </field>
+  </record>
+  <record id="purchase_order_line_view_form_inherit_stock" model="ir.ui.view">
+    <field name="name">purchase.order.line.form.inherit.stock</field>
+    <field name="model">purchase.order.line</field>
+    <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='price_unit']" position="before">
+        <field name="picking_type_id" groups="as_route_purchase.group_route_po_lines" options="{'no_create': True}"/>
+        <field name="route_id" groups="as_route_purchase.group_route_po_lines" options="{'no_create': True}"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>

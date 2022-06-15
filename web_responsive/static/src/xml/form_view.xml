@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 LasLabs Inc.
+    Copyright 2018 Alexandre Díaz
+    Copyright 2018 Tecnativa - Jairo Llopis
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<templates id="form_view" xml:space="preserve">
+
+    <!-- Template for buttons that display only the icon in xs -->
+    
+
+    
+
+    <t t-extend="mail.Chatter">
+        <t t-jquery=".o_chatter_topbar" t-operation="replace">
+            <div class="o_chatter_header_container">
+                <div class="o_chatter_topbar">
+                    <div class="o_topbar_right_area"/>
+                </div>
+            </div>
+        </t>
+    </t>
+
+
+    <t t-name="web_responsive.MenuStatusbarButtons">
+        <div class="dropdown">
+            <button class="o_statusbar_buttons_dropdown btn btn-secondary dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+            </button>
+            <!-- A div.o_statusbar_buttons.dropdown-menu
+                 is appended here from JS -->
+        </div>
+    </t>
+
+</templates>
+
+
+

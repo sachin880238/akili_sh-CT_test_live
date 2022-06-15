@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit_sale_management" inherit_id="sale.report_saleorder_document">
+        <!-- <xpath expr="//t[@t-set='address']" position="replace">
+        </xpath> -->
+        <xpath expr="//t/t/div" position="replace">
+        </xpath>
+        <xpath expr="//t[@t-set='information_block']" position="replace">
+            
+            <t t-set="information_block">
+                <strong t-if="doc.partner_shipping_id == doc.partner_invoice_id">Invoicing and shipping address:</strong>
+                <div class="row">
+                    <div class='col-6'>
+                        <strong t-if="doc.partner_id">Account:</strong>
+                        <span t-field="doc.partner_id"
+                        t-options='{"widget": "contact", "fields": ["name"], "no_marker": True}' style="position:relative;bottom:1.5rem;left:30%;"/>
+                    </div>
+                    <div t-if="doc.client_order_ref" class="col-6" style="position:relative;left:34rem;">
+                        <strong>Reference:</strong>
+                        <span t-field="doc.client_order_ref"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-6'>
+                        <strong t-if="doc.date_order">Date:</strong>
+                        <span t-esc="datetime.datetime.strptime(context_timestamp(doc.date_order).strftime('%Y-%m-%d'), '%Y-%m-%d').strftime('%d %B %Y')"/>
+                        
+                    </div>
+                    <div t-if="doc.priority" class="col-6" style="position:relative;left:34rem;">
+                        <strong>Priority:</strong>
+                        <p t-field="doc.priority" style="position:relative;bottom:1.5rem;left:27%;"/>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-6'>
+                <strong t-if="doc.partner_shipping_id != doc.partner_invoice_id">Bill To:</strong>
+                <div t-field="doc.partner_invoice_id"
+                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/></div>
+                <div class='col-6' style="position:relative;left:34rem;">
+                <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                    <strong>Ship To:</strong>
+                    <div t-field="doc.partner_shipping_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+
+                </t>
+            </div>
+            </div>
+                <strong t-if="doc.partner_contact_phone">Contact:</strong>
+                    <div t-field="doc.partner_contact_phone" />
+            </t>
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="replace">
+        </xpath>
+
+    </template>
+
+
+</odoo>
+                
+
+

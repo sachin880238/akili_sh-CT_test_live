@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_website_content,access_website_content,model_website_content,,1,0,0,0
+access_content_page,access_content_page,model_content_page,,1,0,0,0

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="AppsMenu" t-extend="AppsMenu">
+        <t t-jquery='.dropdown' t-operation='replace'>
+            <li class="dropdown">
+		        <a class="full" data-toggle="dropdown" data-display="static" href="#">
+		            <i class="fa fa-bars" style="font-size:22px; margin-top: 11px;margin-left: -17px;"></i>
+		        </a>
+		        <div class="dropdown-menu" role="menu">
+		            <t t-foreach="widget.getApps()" t-as="app">
+		            	<t t-if="app.name == 'Home'">
+		            <a role="menuitem" t-attf-href="#menu_id=#{app.menuID}"
+		                class="dropdown-item o_app"
+		                t-att-data-menu-id="app.menuID"
+		                t-att-data-menu-xmlid="app.xmlID"
+		                t-att-data-action-id="app.actionID">
+		                    <t t-esc="app.name"/>
+		                </a>
+		            </t>
+		            </t>
+		            <t t-foreach="widget.getApps()" t-as="app">
+		            	<t t-if="app.name != 'Home'">
+		            <a role="menuitem" t-attf-href="#menu_id=#{app.menuID}"
+		                class="dropdown-item o_app"
+		                t-att-data-menu-id="app.menuID"
+		                t-att-data-menu-xmlid="app.xmlID"
+		                t-att-data-action-id="app.actionID">
+		                    <t t-esc="app.name"/>
+		                </a>
+		            </t>
+		            </t>
+		        </div>
+		    </li>
+        </t>
+    </t>
+    <div t-name="SearchView.FacetView" tabindex="0" class="o_searchview_facet" role="img" aria-label="search">
+	    <span t-if="widget.model.get('icon') == 'fa-star'" class="fa fa-star o_searchview_facet_label"/>
+	    <span t-if="widget.model.get('icon') == 'fa-filter'" class="fa fa-filter o_searchview_facet_label input_search_filter'"/>
+	    <span t-if="widget.model.get('icon') == 'fa-bars'" class="fa fa-align-right fa-flip-vertical o_searchview_facet_label"/>
+	    <span t-if="!widget.model.has('icon')" class="o_searchview_facet_label">
+	        <t t-esc="widget.model.get('category')"/>
+	    </span>
+	    <div class="o_facet_values"/>
+	    <div class="fa fa-sm fa-trash-o o_facet_remove" role="img" aria-label="Remove" title="Remove"/>
+		</div>
+
+</templates>

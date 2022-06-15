@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- List view for Sales Cart -->
+  <record id="view_cart_tree" model="ir.ui.view">
+    <field name="name">sale.order.tree.new</field>
+    <field name="model">sale.order</field>
+    <field name="arch" type="xml">
+      <tree decoration-muted="state=='cancel'">
+        <field name="sequence" widget="handle" />
+        <field name="date_order" string="Date" widget="date"/>
+        <field name="priority" widget="priority"/>
+        <field name="name" string="Cart"/>
+        <field name="partner_id" string="Account"/>
+        <field name="source_id" string="Website"/>
+        <field name="user_id" string="Reference"/>
+        <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+        <field name="cart_state"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+        <field name="currency_id" invisible="1"/>
+        <field name="state" invisible="1"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_order_form_cart" model="ir.ui.view">
+    <field name="name">sale.order.form</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//button[@name='action_recovery_email_send']" position="replace"/>
+      <xpath expr="//form/sheet/div" position="inside">
+        <button type="object" name="action_view_reserved" class="oe_stat_button" icon="fa-home" groups="base.group_user" attrs="{'invisible': ['|',('reserve_count', '=', 0),('state','!=','sent')]}">
+          <field name="reserve_count" widget="statinfo" string="Reserved"/>
+        </button>
+        <button name="action_view_payments" type="object"  class="oe_stat_button"  icon="fa-dollar">
+          <field name="payment_count" widget="statinfo" string="Payments"/>
+        </button>
+        <button name="action_view_cards" type="object"  class="oe_stat_button"  icon="fa-credit-card">
+          <field name="card_count" widget="statinfo" string="Cards"/>
+        </button>
+        <button name="action_view_invoice" type="object"  class="oe_stat_button"  icon="fa-file">
+          <field name="doc_count" widget="statinfo" string="Documents"/>
+        </button>
+      </xpath>
+   <!--    </xpath>
+      <xpath expr="//div[@class='oe_title']" position="before">
+        <div style="float:left;">
+          <i class="fa fa-shopping-cart" style="font-size: 45px;margin-left: -33%;" attrs="{'invisible': [('state', '=', 'sale')]}" />
+          <i class="fa-downcase-s" style="font-style: inherit !important;" attrs="{'invisible': [('state', 'not in', ['sale'])]}" />
+        </div>
+      </xpath>
+      <xpath expr="//field[@name='name']" position="replace">
+        <field name="name" invisible='1'/>
+        <field style="margin-left: -2%;padding-top: 8px;" name="cart_name" nolabel='1'/>
+      </xpath>  -->
+ <xpath expr="//field[@name='name']" position="replace">
+           <field name="name" invisible='1'/>
+
+          </xpath>
+             <xpath expr="//div[@class='oe_title']" position="before">
+              <div class="row col-sm-12">
+
+            
+             
+               <i class="fa fa-shopping-cart name_space" attrs="{'invisible': [('state', '=', 'sale')]}" style="font-size: 45px;padding-left: 0px;"/>
+          <i class="fa-downcase-so" style="font-style: inherit !important;" attrs="{'invisible': [('state', 'not in', ['sale'])]}" />
+       
+           <h1>
+                  <field  name="cart_name" nolabel='1' class="name_carts name_left"/>
+              </h1>
+            
+            </div>
+          </xpath> 
+
+
+      <xpath expr="//notebook/page[@name='other_information']" position="before">
+        <page string="WEBSITE" name='cart_lines'>
+          <field name="cart_line" readonly='1'>
+            <tree>
+              <field name="name"/>
+              <field name="product_uom_qty"/> 
+              <field name="list_price"/>
+              <field name="cart_discount"/>
+              <field name="price_unit"/>
+              <field name="net_price"/>
+            </tree>
+            <form>
+              <script>
+                $(document).ready(function(){
+                  $('.modal-dialog').css({'width': '50%'});
+                });
+              </script>
+              <group>
+                <field name="product_id"/>
+                <field name="product_description"/>
+                <field name="warning_message"/>
+                <field name="product_uom_qty"/>
+                <field name="product_uom"/> 
+                <field name="list_price"/>
+                <field name="cart_discount"/>
+                <field name="price_unit"/>
+                <field name="net_price"/>
+                <field name="price_tax"/>
+              </group>
+            </form>
+          </field>
+          <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+            <field name="cart_amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}" readonly="1"/>
+            <field name="cart_amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}" readonly="1"/>
+            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+              <label for="amount_total" />
+            </div>
+            <field name="cart_amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' readonly="1" options="{'currency_field': 'currency_id'}"/>
+          </group>
+          <field name="note" class="oe_inline"/>
+          <div class="oe_clear"/>
+        </page>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Action for Sales Cart -->
+  <record id="action_saved_carts_orders" model="ir.actions.act_window">
+    <field name="name">Carts</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">sale.order</field>
+    <field name="view_id" ref="view_cart_tree"/>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'create':False,'edit':False}</field>
+    <field name="domain">[('state', 'in', ['draft', 'cancel']), ('order_stage', '!=', 'cancel'), ('quote_stage', '!=', 'cancel')]</field>
+  </record>
+
+  <menuitem
+    id="menu_saved_cart_orders"
+    parent="sale.sale_order_menu"
+    action="action_saved_carts_orders"
+    sequence="1"/>
+</odoo>

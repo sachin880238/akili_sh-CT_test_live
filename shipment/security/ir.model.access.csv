@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_content,stock.content,model_stock_content,base.group_user,1,1,1,1
+access_stock_container,stock.container,model_stock_container,base.group_user,1,1,1,1
+access_stock_picking_states,stock.picking.states,model_stock_picking_states,base.group_user,1,1,1,1
+access_stock_documents,stock.documents,model_stock_documents,base.group_user,1,1,1,1
+access_stock_container_type,stock.container.type,model_stock_container_type,base.group_user,1,1,1,1
+access_stock_container_type_icon,stock.container.type.icon,model_stock_container_type_icon,base.group_user,1,1,1,1   

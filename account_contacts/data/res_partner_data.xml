@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="0">
+    <record id="phone_communication_type" model="communication.type">
+      <field name="name">Phone</field>
+      <field name="for_phone" eval="True"/>
+    </record>
+    <record id="fax_communication_type" model="communication.type">
+      <field name="name">Fax</field>
+      <field name="for_other" eval="True"/>
+    </record>
+    <record id="mobile_communication_type" model="communication.type">
+      <field name="name">Mobile</field>
+      <field name="for_other" eval="True"/>
+    </record>
+    <record id="skype_communication_type" model="communication.type">
+      <field name="name">Skype</field>
+      <field name="for_other" eval="True"/>
+    </record>
+  </data>
+</odoo>

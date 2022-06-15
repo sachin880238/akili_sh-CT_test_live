@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ct_directory,model_ct_directory,model_ct_directory,base.group_user,1,1,1,1
+access_communication_channel,model_communication_channel,model_communication_channel,base.group_user,1,1,1,1
+access_ct_directory_user,model_ct_directory_user,model_ct_directory,communication_user,1,0,0,0
+access_mail_message_user,model_mail_message_user,model_mail_message,communication_user,1,0,0,0
+access_communication_channel_user,model_communication_channel_user,model_communication_channel,communication_user,1,0,0,0
+access_ct_directory_manager,model_ct_directory_manager,model_ct_directory,communication_manager,1,1,1,1
+access_communication_channel_manager,model_communication_channel_manager,model_communication_channel,communication_manager,1,1,1,1
+

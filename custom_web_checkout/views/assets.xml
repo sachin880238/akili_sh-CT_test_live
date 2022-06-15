@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets_frontend" inherit_id="website.assets_frontend" name="web checkout form">
+		<xpath expr="." position="inside">
+            <link rel="stylesheet" href="/custom_web_checkout/static/src/css/ct_web_checkout.css"/>
+            <script type="text/javascript" src="/custom_web_checkout/static/src/js/ct_web_checkout.js"/>
+            <script type="text/javascript" src="/custom_web_checkout/static/src/js/delete.js"/>
+            <!-- <script type="text/javascript" src="/custom_web_checkout/static/src/js/product_update_price.js"/> -->
+		</xpath>
+	</template>
+</odoo>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!--  Shipment Product Lines tree view  -->
+  <record id="shipment_lines_tree_view" model="ir.ui.view">
+    <field name="name">shipment.lines.tree.view</field>
+    <field name="model">stock.move</field>
+    <field name="arch" type="xml">
+      <tree string="Shipment Lines">
+        <field name="product_id" />
+        <field name="location_id" string="Location"/>
+        <field name="picking_id" string="Shipment"/>
+        <field name="picking_partner_id" string="Customer"/>
+        <field name="team_id"/>
+        <field name="assigned_to"/>
+        <field name="date_due" string="Due"/>
+        <field name="priority1"/>
+        <field name="state" string="State"/>
+        <field name="status" widget="color" options="{'readonly_mode': 'color'}"/>
+      </tree>
+    </field>
+  </record>
+
+  <!--  Shipment Product Lines action  -->
+  <record id="custom_shipping_lines_action" model="ir.actions.act_window">
+    <field name="name">Shipment Product Lines</field>
+    <field name="res_model">stock.move</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="shipment.shipment_lines_tree_view"></field>
+    <field name="view_mode">tree</field>
+    <field name="context">{'create': False}</field>
+    <field name="domain" eval="[('picking_id.picking_type_id.code','=','outgoing')]"/>    
+  </record>
+  
+  <record id="view_move_form_reserve" model="ir.ui.view">
+    <field name="name">stock.move.form.reserve</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_move_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='origin']" position="after">
+        <field name="res_stock_so_id"/>
+      </xpath>
+      <field name="state" position="after">
+        <field name="parent_state" invisible="1"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="view_move_picking_form_inherit" model="ir.ui.view">
+    <field name="name">stock.move.One2many.form.inherit</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_move_picking_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//form/header" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//form/group[1]" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//form/group[2]" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='location_dest_id']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//form" position="inside">
+        <field name="_barcode_scanned" widget="picking_barcode_handler" invisible="1"/>
+        <sheet>
+          <div class="row col-sm-12">
+            <div>
+              <field class="image_medium move_line_title_image" widget="image" name="image" nolabel="1"/>
+            </div>
+            <div class="move_line_title">
+              <h1>
+                <field name="product_stock_code" nolabel="1" readonly="1"/><br />
+                <field name="product_name" nolabel="1" readonly="1"/>
+              </h1>
+            </div>
+          </div>
+          <group>
+            <group class="oe_edit_only">
+              <field name="move_doc_name"/>
+              <field name="product_uom_qty" string="Remaining" readonly="1"/>
+              <field name="available_qty" string="Available" readonly="1"/>
+              <field name="location_ids" wiget="many2many_tags" string="Location" invisible='1'/>
+              <field name="available_loc" context="{'product_id': product_id}" domain="[('usage','=','internal'),('id','in',location_ids)]" placeholder="Select" options='{"no_open": True, "no_create": True}'/>
+            </group>
+            <group class="oe_read_only">
+              <field name="move_doc_name"/>
+              <field name="partner_id" invisible="1"/>
+              <field name="product_uom_qty" string="Remaining"/>
+              <field name="available_qty" string="Available"/>
+              <field name="location_ids" wiget="many2many_tags" invisible='1'/>
+              <field name="loc_stock"/> 
+            </group>
+          </group>
+          <notebook>
+            <page string="MOVE">
+              <group>               
+                <group>
+                  <field name="transfer_now" string="Move Now"/>
+                  <field name="lot_id" string="Serial/Lot Number" placeholder="scan or enter" options='{"no_open": True, "no_create": True}' attrs="{'invisible':[('product_tracking','=', 'none')]}"/>
+                  <label for="container_barcode" string="Move to Containier"/>
+                  <div>
+                    <field name="container_barcode" placeholder="scan or enter" class="move_container_barcode" nolabel="1"/>
+                    <field name="container_type" placeholder="select container type" class="move_container_type" nolabel="1" options='{"no_open": True, "no_create": True}'/>
+                  </div>
+                  <field name="picking_id" invisible="1"/>
+
+                  <field name="so_id" string="Link to Document" placeholder="select a document" attrs="{'invisible':[('so_id','=',False)]}" options='{"no_open": True, "no_create": True}'/>
+
+                  <field name="po_id" string="Link to Document" placeholder="select a document" attrs="{'invisible':[('po_id','=',False)]}" options='{"no_open": True, "no_create": True}'/>
+
+                   <field name="to_id" string="Link to Document" placeholder="select a document" attrs="{'invisible':[('to_id','=',False)]}" options='{"no_open": True, "no_create": True}'/>
+
+                  <label for="location_barcode" string="Move to Location"/>
+                  <div>
+                    <field name="location_barcode" placeholder="scan or enter" class="move_container_barcode" nolabel="1"/>
+                    <field name="container_location" placeholder="select location" options='{"no_open": True, "no_create": True}' nolabel="1" class="move_container_type"/>
+                  </div>
+                  <field name="instructions"/>
+                  <field name="product_tracking" invisible="1"/>
+                </group>
+              </group>
+              <script>
+                $(document).ready(function(){
+                $(".modal-footer").hide();
+                });
+              </script>
+              <hr/>
+              <div>
+                <button 
+                  name="create_products_contents" 
+                  type="object" 
+                  class="btn-primary oe_edit_only" 
+                  string="MOVE"/>
+                <button 
+                  name="generate_container_barcode" 
+                  type="object" 
+                  class="btn-primary oe_edit_only" 
+                  string="BARCODE"
+                  style="margin-left:0.5%"/>
+                <button string="CLOSE"
+                  class="btn btn-secondary oe_edit_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+                <button string="CLOSE" 
+                  class="btn btn-primary oe_read_only" 
+                  data-toggle="modal" 
+                  data-target="TARGET-2" 
+                  data-dismiss="modal"
+                  style="margin-left:0.5%"/>
+              </div>
+            </page>
+            <page string="CONTAINERS">
+              <field name="stock_container_ids">
+                <tree>
+                  <field name="container_qty"/>
+                  <field name="full_name" string="Container"/>
+                </tree>
+              </field>
+              <group>
+                <div>
+                  <field name="all_containers" nolabel="1" style='margin-left: 1.30%;'/>
+                  <span style='margin-left: 25.25%;'>All Containers</span>
+                </div>
+              </group>
+              <script>
+                $(document).ready(function(){
+                $(".modal-footer").hide();
+                });
+              </script>
+              <hr/>
+              <div>
+                <button string="CLOSE"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="TARGET-2"
+                  data-dismiss="modal"/>
+              </div>
+            </page>
+          </notebook>
+        </sheet>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_move_tree_reserve" model="ir.ui.view">
+    <field name="name">stock.move.form.reserve</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_move_tree_receipt_picking"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='date_expected']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='date']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='origin']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='product_uom_qty']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='product_uom']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='product_uom_qty']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='state']" position="attributes">
+        <attribute name="string">Status</attribute>
+      </xpath>
+      <xpath expr="//field[@name='product_id']" position="after">
+        <field name="packer"/>
+        <field name="date_due" string="Due"/>
+        <field name="priority1" widget="priority1"/>
+        <field name="carrier_id" string="via"/>
+        <field name="origin" string="Document"/>
+        <field name="location_id" string="Location"/>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="custom_action_receipt_picking_move" model="ir.actions.act_window">
+    <field name="name">Incoming  Products</field>
+    <field name="res_model">stock.move</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="view_move_picking_form_inherit"></field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain" eval="[('picking_id.picking_type_id.code','=','outgoing')]"/>       
+  </record>
+</odoo>

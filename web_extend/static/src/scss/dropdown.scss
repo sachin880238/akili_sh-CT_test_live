@@ -1,0 +1,20 @@
+.ui-autocomplete {
+    .ui-menu-item {
+        &.ui-state-focus {
+            background-color: #d3d3d3;
+            > a {
+                color: #4c4c4c;
+            }
+        }
+        &.o_m2o_dropdown_option {
+            padding-left: 0;
+            > a {
+                color: #4c4c4c;
+                font-style: italic;
+            }
+            &.ui-state-focus > a {
+                color: #4c4c4c;
+            }
+        }
+    }
+}

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dynamic_list_view,access.ak.backend.listview,model_ak_backend_listview,base.group_user,1,1,1,1
+access_dynamic_field,access.ak.dynamic.field,model_ak_dynamic_field,base.group_user,1,1,1,1

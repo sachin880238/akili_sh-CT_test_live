@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="layout" inherit_id="website.layout">
+        <xpath expr="//div[@id='wrapwrap']/header" position="after">
+            <style>
+                .close:not(:disabled):not(.disabled):hover {
+                    color: #6c757d;
+                }
+
+                .modal-footer > :not(:last-child) {
+                    margin-right: 63%;
+                }
+                .modal-title{
+                    font-size: 23px;
+                }
+                .exp_des{
+                    font-size: 18px;
+                    opacity: 0.5;
+                }
+                @media only screen and (max-width: 425px)  {
+                    .modal-footer > :not(:last-child) {
+                        margin-right: 33%;
+                    }
+                    .modal-title{
+                        font-size: 20px;
+                    }
+                    .exp_des{
+                        font-size: 13px;
+                    }
+                    .modal-header .close{
+                        margin-right: -15%;
+                    }
+                }
+                @media only screen and (max-width: 375px)  {
+                    .modal-footer > :not(:last-child) {
+                        margin-right: 22%;
+                    }
+                    .modal-title{
+                        font-size: 18px;
+                    }
+                    .exp_des{
+                        font-size: 12px;
+                    }
+                    .modal-header .close{
+                        margin-right: -15%;
+                    }
+                }  
+            </style>    
+            <div class="d-none">
+                <input type="hidden" name="logout_timer" id="logout_timer" t-att-value="website.logout_timer"/>
+                <input type="hidden" name="user_id" id="user_id" t-att-value="user_id.id"/>
+            </div>
+
+            <div id="logoutModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Session Timeout Warning</h3>
+                            <button type="button" class="close" data-dismiss="modal"><i class="icon-times" style="font-size: 18px;"/></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="exp_des">Your session is about to expire.Yout session will be disconnected in</p>
+                            <p class="logout-count-down" style="text-align: center;font-size: 28px;padding-top: 1%;">00:00</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary continue_ok" data-dismiss="modal" style="font-weight:600;">Renew Session</button>
+                            <button type="button" class="btn btn-danger logout_ok" data-dismiss="modal" style="font-weight:600;">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

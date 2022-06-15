@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vendor_product_template,vendor.product.template,model_vendor_product_template,,1,1,1,1
+access_vendor_product_product,vendor.product.product ,model_vendor_product_product,,1,1,1,1
+access_vendor_product_attribute,vendor.product.attribute ,model_vendor_product_attribute,,1,1,1,1
+access_vendor_product_attr_value,vendor.product.attr.value ,model_vendor_product_attr_value,,1,1,1,1
+access_vendor_product_vendor_product_attribute,vendor.product.template.attribute.value ,model_vendor_product_template_attribute_value,,1,1,1,1
+access_vendor_product_template_attribute_exclusion,vendor.product.template.attribute.exclusion ,model_vendor_product_template_attribute_exclusion,,1,1,1,1
+access_vendor_product_template_attr_line,vendor.product.template.attr.line ,model_vendor_product_template_attr_line,,1,1,1,1
+access_vendor_price,vendor.price,model_vendor_price,,1,1,1,1
+access_vendor_product_equivalents,vendor.product.equivalents,model_vendor_product_equivalents,,1,1,1,1
+access_hts_description,hts.description,model_hts_description,,1,1,1,1
+access_product_sources,product.sources,model_product_sources,,1,1,1,1
+access_nmfc_class,nmfc.class,model_nmfc_class,,1,1,1,1

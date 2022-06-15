@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="help.template">
+        <li class="o_mail_navbar_item">
+            <a t-att-title="widget.title" style="margin-left:2%;" >
+                <i t-attf-class="fa #{widget.img}"/>
+            </a>
+        </li>
+    </t>
+
+
+    <t t-name="telephone.template">
+        <li class="o_mail_navbar_item">
+            <a t-att-title="widget.title" >
+                <i t-attf-class="fa #{widget.img}"/>
+            </a>
+        </li>
+    </t>
+</templates>
+

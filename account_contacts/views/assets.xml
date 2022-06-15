@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="assets_backend" name="Assets" inherit_id="web.assets_backend">
+		<xpath expr="//script[81]" position="replace">
+			<script type="text/javascript" src="/account_contacts/static/src/js/view_dialogs.js"/>
+			<link type="text/css" rel="stylesheet" href="/account_contacts/static/src/css/image.css"/>
+		</xpath>
+		<xpath expr="//script[83]" position="replace">
+			<script type="text/javascript" src="/account_contacts/static/src/js/form_controller.js"/>
+		</xpath>
+	</template>
+</odoo>

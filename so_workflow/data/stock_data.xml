@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+	    <!-- <record id="ir_cron_release_stock_reservation" model="ir.cron">
+	        <field name="name">Release the stock reservation having a passed validity date</field>
+	        <field name="interval_number">1</field>
+	        <field name="interval_type">days</field>
+	        <field name="numbercall">-1</field>
+	        <field name="doall" eval="False"/>
+	        <field name="model_id" ref="model_stock_reservation"/>
+	        <field name="code">model.release_validity_exceeded()</field>
+	        <field name="state">code</field>
+	    </record> -->
+
+	    <!-- stock.location -->
+	    <record model="stock.location" id="stock_reservation_location">
+	    	<field name="name">Reserve Stock</field>
+	    	<field name="usage">internal</field>
+	    	<field name="is_loc_reservable">True</field>
+	    	<field name="barcode">WH-RESERVE-STOCK</field>
+	    </record>
+
+	    <!-- ir.sequence -->
+	    <record model="ir.sequence" id="stock_reservation_sequence">
+	    	<field name="name">Reserve Stock Sequence</field>
+	    	<field name="implementation">standard</field>
+	    	<field name="prefix">WH/RES/</field>
+	    	<field name="padding">5</field>
+	    	<field name="number_increment">1</field>
+	    	<field name="number_next_actual">1</field>
+	    	<field name="active">True</field>
+	    </record>
+
+	    <!-- stock.picking.type -->
+	    <record model="stock.picking.type" id="stock_reservation_operation_type">
+	    	<field name="name">Reserve Stock Transfers</field>
+	    	<field name="sequence_id" ref='stock_reservation_sequence'/>
+	    	<field name="code">internal</field>
+	    	<field name="barcode">WH-RESERVE</field>
+	    	<field name="show_operations">True</field>
+	    	<field name="show_reserved">True</field>
+	    	<field name="default_location_src_id" ref='stock.stock_location_stock'/>
+	    	<field name="default_location_dest_id" ref='stock_reservation_location'/>
+	    </record>
+
+	    <!-- stock.location.route -->
+	    <record id="route_warehouse_reserved" model='stock.location.route'>
+            <field name="name">Reserved</field>
+            <field name="company_id"></field>
+            <field name="sequence">4</field>
+            <field name="product_selectable">False</field>
+            <field name="sale_selectable">False</field>
+        </record>
+
+        <!-- stock.rule -->
+        <record id="stock_rule_reserve_shipping" model="stock.rule">
+            <field name="name">WH: Stock → Reserved</field>
+            <field name="action">pull</field>
+            <field name="location_src_id" ref="stock.stock_location_stock"/>
+            <field name="location_id" ref="stock_reservation_location"/>
+            <field name="procure_method">make_to_stock</field>
+            <field name="route_id" ref="route_warehouse_reserved"/>
+            <field name="picking_type_id" ref="stock_reservation_operation_type"/>
+            <field name="warehouse_id" ref="stock.warehouse0" />
+        </record>
+	</data>
+</odoo>

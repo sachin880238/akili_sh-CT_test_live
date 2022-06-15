@@ -1,0 +1,76 @@
+<?xml version ="1.0" encoding="utf-8"?>
+
+<odoo>
+  <record id="view_tree_shipping_container" model="ir.ui.view">
+    <field name="name">shipping.container.tree</field>
+    <field name="model">shipping.container</field>
+    <field name="arch" type="xml">
+      <tree>
+      	<field name="sequence" widget="handle" />
+        <field name="container_name" />
+	<field name="container_type" />
+      </tree>
+    </field>
+  </record>
+  <record id="view_form_shipping_container" model="ir.ui.view">
+    <field name="name">shipping.container.form</field>
+    <field name="model">shipping.container</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>Container</header>
+	  <sheet>
+	    <group>
+	      <group>
+		<field name="container_name" />
+		<field name="container_type" />
+	      </group>
+	    </group>
+	    <notebook>
+	      <page string="Container Dimensions" name="container_dimensions">
+	        <group>
+		  <group>
+		    <field name="container_dim1" />
+		    <field name="container_dim2" />
+		    <field name="container_dim3" />
+		  </group>
+		</group>
+	      </page>
+	      <page string="Container Billing" name="container_billing">
+	        <group>
+		  <group>
+		    <field name="container_billing_dim1" />
+		    <field name="container_billing_dim2" />
+		    <field name="container_billing_dim3" />
+		  </group>
+		</group>
+	      </page>
+	      <page string="Container Details" name="container_details">
+	        <group>
+		  <group>
+		    <field name="container_section" />
+		    <field name="container_volume" />
+		  </group>
+		  <group>
+		    <field name="container_weight" />
+		    <field name="container_surcharge" />
+	          </group>
+		</group>
+	      </page>
+	    </notebook>
+	  </sheet>
+	</form>
+      </field>
+    </record>
+
+    <record id="action_shipping_container" model="ir.actions.act_window">
+      <field name="name">Shipping Container</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">shipping.container</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+    </record>
+
+    <menuitem name="Shipping Estimator" id="menu_shipping_estimator" parent="sale.menu_sale_config" />
+    <menuitem name="Shipping Container" id="menu_shipping_container" action="action_shipping_container" parent="shipping_estimator.menu_shipping_estimator"/>
+</odoo>
